@@ -4,18 +4,35 @@
 
 .header_inner {
     display: flex;
+    height: 70px;
     justify-content: space-between;
+    padding: 0 40px 0 40px;
+}
+
+.logo img {
+    height: 35px;
+    width: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
 }
 
 .navList {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 }
 
 .navItem {
     font-family: 'Inconsolata';
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
 
     a {
         color: #8892A3;
@@ -24,4 +41,31 @@
             color: #29BF12;
         }
     }
+}
+
+.navItem:not(:last-child) {
+    margin-right: 20px;
+}
+
+.navItem a {
+    transition: color 0.3s ease;
+}
+
+.navItem a:hover {
+    color: #29BF12;
+}
+
+.navItem a button {
+    color: #29BF12;
+    border: 1px solid #29BF12;
+    border-radius: 5px;
+    padding: 10px 15px;
+    background-color: transparent;
+    box-shadow: 0px 0px 0 #29BF12;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navItem a button:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0 #29BF12;
 }

@@ -1,0 +1,64 @@
+.heroInner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.intro {
+    font-family: 'Inconsolata';
+    font-weight: 500;
+    font-size: 16px;
+    color: #29BF12;
+    margin-bottom: 15px;
+}
+
+.title {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 64px;
+    color: #d9f2e1;
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 36px;
+    color: #A1A1A1;
+    margin-bottom: 15px;
+}
+
+.text {
+    font-family: 'Inria Sans';
+    font-weight: 500;
+    font-size: 16px;
+    color: #A1A1A1;
+    margin-bottom: 25px;
+    width: 30%;
+    text-align: center;
+}
+
+.btn_group {
+    display: flex;
+    gap: 50px;
+}
+
+.btn {
+    font-family: 'Inconsolata';
+    font-weight: 500;
+    font-size: 16px;
+    color: #29BF12;
+    border: 1px solid #29BF12;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 0 0 #29BF12;
+
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.btn:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 3px 3px 0 #29BF12;
+}
