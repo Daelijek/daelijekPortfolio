@@ -7,12 +7,14 @@ function Header() {
                 <div className={styles.header_inner}>
                     <div className={styles.logo}></div>
                     <nav className={styles.nav}>
-                        <li className={styles.navItem}><a href="#home">Home</a></li>
-                        <li className={styles.navItem}><a href="#about">01. About</a></li>
-                        <li className={styles.navItem}><a href="#exp">02. Experience</a></li>
-                        <li className={styles.navItem}><a href="#projects">03. Projects</a></li>
-                        <li className={styles.navItem}><a href="#contact">04. Contact</a></li>
-                        <li className={styles.navItem}><a href=""><button>Resume</button></a></li>
+                        <ul className={styles.navList}>
+                            <li className={styles.navItem}><a href="#home">Home</a></li>
+                            <li className={styles.navItem}><a href="#about"><span>01.</span> About</a></li>
+                            <li className={styles.navItem}><a href="#exp"><span>02.</span> Experience</a></li>
+                            <li className={styles.navItem}><a href="#projects"><span>03.</span> Projects</a></li>
+                            <li className={styles.navItem}><a href="#contact"><span>04.</span> Contact</a></li>
+                            <li className={styles.navItem}><a href=""><button>Resume</button></a></li>
+                        </ul>
                     </nav>
                 </div>
             </div>

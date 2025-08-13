@@ -1,3 +1,27 @@
 .header {
     color: #8892A3;
 }
+
+.header_inner {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navList {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navItem {
+    font-family: 'Inconsolata';
+    font-weight: 500;
+    font-size: 15px;
+
+    a {
+        color: #8892A3;
+
+        span {
+            color: #29BF12;
+        }
+    }
+}
