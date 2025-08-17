@@ -1,0 +1,27 @@
+.projects {
+    width: 1000px;
+    margin: auto;
+    padding: 50px 0;
+}
+
+.title {
+    font-family: 'Inter';
+    font-size: 32px;
+    font-weight: 700;
+    color: #CCD6F6;
+
+    span {
+        color: #29BF12;
+    }
+}
+
+img {
+    width: 550px;
+    height: auto;
+    filter: sepia(1) saturate(3) hue-rotate(80deg) brightness(0.6) grayscale(0.4); /* зелёный оттенок */
+    transition: 0.5s;
+}
+
+img:hover {
+    filter: none; /* исходные цвета */
+}

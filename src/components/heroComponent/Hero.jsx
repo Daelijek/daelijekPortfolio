@@ -2,7 +2,7 @@ import styles from './hero.module.css'
 
 function Hero() {
     return (
-        <div className={styles.hero}>
+        <div id='home' className={styles.hero}>
             <div className={styles.heroInner}>
                 <div className={styles.intro}>Hi, my name is</div>
                 <h1 className={styles.title}>Dias Yermek</h1>

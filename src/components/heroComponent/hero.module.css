@@ -59,6 +59,6 @@
 }
 
 .btn:hover {
-    transform: translate(-5px, -5px);
+    transform: translate(-3px, -3px);
     box-shadow: 3px 3px 0 #29BF12;
 }

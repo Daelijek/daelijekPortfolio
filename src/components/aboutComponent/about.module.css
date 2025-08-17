@@ -1,0 +1,58 @@
+.about {
+    max-width: 1000px;
+    margin: auto;
+    padding: 76px 0;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 32px;
+    font-family: 'Inter';
+    color: #CCD6F6;
+    margin-bottom: 25px;
+
+    span {
+        color: #29BF12;
+    }
+}
+
+.group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.text {
+    font-weight: 500;
+    font-size: 20px;
+    font-family: 'Inria Sans';
+    color: #8892A3;
+    margin-bottom: 25px;
+    width: 80%;
+
+    span {
+        text-decoration: underline;
+        color: #29BF12;
+    }
+}
+
+.skills {
+    font-family: 'Inria Sans';
+    font-weight: 500;
+    font-size: 16px;
+    color: #8892A3;
+    columns: 2;
+
+    span {
+        color: #29BF12;
+    }
+}
+
+.skillsItem:not(:last-child) {
+    margin-bottom: 13px;
+}
+
+.image img {
+    width: 300px;
+    max-width: none;
+    height: auto;
+}
