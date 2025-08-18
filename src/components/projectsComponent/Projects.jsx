@@ -9,7 +9,7 @@ function Projects() {
             <div id='projects' className={styles.projects}>
                 <div className={styles.projectsInner}>
                     <div className={styles.title}>
-                        <span>03.</span> Projects
+                        <span>03.</span> Some of My Work
                     </div>
                     <div className={styles.projectsGrid}>
                         <div className={styles.left}>
