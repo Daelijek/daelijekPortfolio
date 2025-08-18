@@ -1,5 +1,6 @@
 .projects {
-    width: 1000px;
+    max-width: 1000px;
+    width: 100%;
     margin: auto;
     padding: 50px 0;
 }
@@ -15,13 +16,116 @@
     }
 }
 
-img {
-    width: 550px;
-    height: auto;
-    filter: sepia(1) saturate(3) hue-rotate(80deg) brightness(0.6) grayscale(0.4); /* зелёный оттенок */
-    transition: 0.5s;
+.projectsGrid {
+    display: grid;
+    gap: 100px;
+    margin: 100px 0;
 }
 
-img:hover {
-    filter: none; /* исходные цвета */
+.other {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.archive {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.archive a {
+    font-family: 'Inconsolata';
+    font-weight: 500;
+    font-size: 16px;
+    color: #29BF12;
+    position: relative;
+    text-decoration: none;
+    margin-bottom: 60px;
+}
+
+.archive a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: #29BF12;
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.2s ease-in-out;
+}
+
+.archive a:hover::after {
+    transform: scaleX(1);
+}
+
+.otherProjects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px;
+}
+
+.holographic_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.holographic_card {
+    width: 30%;
+    height: 70px;
+    margin: auto;
+    background: #00192B;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.holographic_card h2 {
+    font-family: 'Inconsolata';
+    color: #29BF12;
+    font-size: 30px;
+    font-weight: 700;
+    position: relative;
+    z-index: 2;
+}
+
+.holographic_card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(0deg,
+            transparent,
+            transparent 30%,
+            rgba(41, 191, 18, 0.3));
+    transform: rotate(-45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+.holographic_card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(41, 191, 18, 0.5);
+}
+
+.holographic_card:hover::before {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(100%);
 }

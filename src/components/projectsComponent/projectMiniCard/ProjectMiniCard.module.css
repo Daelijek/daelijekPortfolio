@@ -1,0 +1,83 @@
+.projectMiniCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #00192B;
+    border-radius: 10px;
+    padding: 30px;
+    width: 300px;
+    height: 300px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
+}
+
+.projectMiniCard:hover {
+    transform: translateY(-10px);
+}
+
+.projectMiniCard:hover .title {
+    color: #29BF12;
+}
+
+.icon {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.folderIcon {
+    color: #29BF12;
+}
+
+.iconGroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.iconGroup a {
+    color: #8892A3;
+    transition: color 0.3s ease;
+}
+
+.iconGroup a:hover {
+    color: #29BF12;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.title {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 18px;
+    color: #CCD6F6;
+    margin-bottom: 10px;
+    transition: color 0.5s ease;
+}
+
+.description {
+    font-family: 'Inria Sans';
+    font-weight: 400;
+    font-size: 16px;
+    color: #8892A3;
+    margin-bottom: 25px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #8892A3;
+    font-family: 'Inconsolata';
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: auto;
+}
