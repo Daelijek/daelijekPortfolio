@@ -19,11 +19,11 @@
     position: relative;
     z-index: 0;
     filter: sepia(1) saturate(3) hue-rotate(80deg) brightness(0.6) grayscale(0.6);
-    transition: filter 0.5s ease;
+    transition: 0.5s ease;
 }
 
 .cardImage img:hover {
-    filter: brightness(0.9);
+    filter: none;
 }
 
 .cardImage {
