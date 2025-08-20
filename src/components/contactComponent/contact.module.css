@@ -1,0 +1,130 @@
+.contactContainer {
+    width: 1000px;
+    height: 70vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.numeration {
+    font-family: 'Inconsolata';
+    font-weight: 500;
+    font-size: 16px;
+    color: #29BF12;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 48px;
+    color: #CCD6F6;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-family: 'Inria Sans';
+    font-weight: 500;
+    font-size: 18px;
+    color: #8892A3;
+    text-align: center;
+    max-width: 60%;
+    margin-bottom: 50px;
+}
+
+.button {
+    width: 200px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid #29BF12;
+    cursor: pointer;
+    box-shadow: 0px 0px 0 #29BF12;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button a {
+    width: 100%;
+    height: 100%;
+    font-family: 'Inconsolata';
+    font-weight: 500;
+    font-size: 16px;
+    color: #29BF12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 0 #29BF12;
+}
+
+.socialContainer {
+    position: fixed;
+    bottom: 0;
+    left: 40px;
+    /* или ваш отступ */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100vh;
+    /* на всю высоту экрана */
+    pointer-events: none;
+    /* чтобы иконки сами управлялись кликами */
+}
+
+.iconsWithLine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    /* расстояние между иконками */
+    position: relative;
+    pointer-events: auto;
+    padding-bottom: 120px;
+    /* восстановить кликовые события */
+}
+
+.iconsWithLine::after {
+    content: '';
+    position: absolute;
+    top: 350px;
+    bottom: 0;
+    /* линия будет заканчиваться на 40px выше низа экрана */
+    width: 2px;
+    background-color: #8892A3;
+}
+
+.iconStyle {
+    width: 40px !important;
+    height: 40px !important;
+    color: #8892A3;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.iconStyle:hover {
+    transform: translateY(-3px);
+    color: #29BF12;
+}
+
+footer {
+    width: 100%;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer a {
+    font-family: 'Inconsolata';
+    color: #8892A3;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #29BF12;
+    text-decoration: none;
+}

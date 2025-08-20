@@ -15,7 +15,7 @@ function Experience() {
                                 title="ASTANA IT UNIVERSITY"
                                 subtitle="Software Engineering"
                                 date="2022-2025"
-                                info="Candidate for Bachelor of Science in Information Science with a concentration in Human Computer Interaction (HCI) and a minor in Interaction Design. Graduating in May 2018."
+                                info="Graduated with a Bachelor's degree in Software Engineering. These years laid the foundation of my career, shaping my passion for frontend development and modern web technologies."
                                 position="left"
                             />
                         </div>
@@ -23,8 +23,8 @@ function Experience() {
                             <TimelineCard
                                 title="REACT NATIVE DEVELOPER"
                                 subtitle="STOLOVKA (Startup Company)"
-                                date="Sep 2023- Nov 2024"
-                                info="Candidate for Bachelor of Science in Information Science with a concentration in Human Computer Interaction (HCI) and a minor in Interaction Design. Graduating in May 2018."
+                                date="Sep 2023 - Nov 2024"
+                                info="Worked on building and maintaining mobile applications using React Native. Gained hands-on experience in a fast-paced startup environment, delivering functional and user-focused features."
                                 position="right"
                             />
                         </div>
@@ -32,8 +32,8 @@ function Experience() {
                             <TimelineCard
                                 title="FRONTEND DEVELOPER (Internship)"
                                 subtitle="QB Solutions"
-                                date="Jan 2025- May 2025"
-                                info="Candidate for Bachelor of Science in Information Science with a concentration in Human Computer Interaction (HCI) and a minor in Interaction Design. Graduating in May 2018."
+                                date="Jan 2025 - May 2025"
+                                info="Focused on creating responsive websites, integrating APIs, and collaborating with a professional team. Improved skills in modern frontend frameworks and best practices."
                                 position="left"
                             />
                         </div>
@@ -41,8 +41,8 @@ function Experience() {
                             <TimelineCard
                                 title="JUNIOR FRONTEND DEVELOPER"
                                 subtitle="TrustMe"
-                                date="Nov 2024- Present"
-                                info="Candidate for Bachelor of Science in Information Science with a concentration in Human Computer Interaction (HCI) and a minor in Interaction Design. Graduating in May 2018."
+                                date="Nov 2024 - Present"
+                                info="Contributing to the development of web applications by building user-friendly interfaces, working with APIs, and ensuring performance and accessibility across projects."
                                 position="right"
                             />
                         </div>

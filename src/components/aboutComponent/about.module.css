@@ -35,6 +35,30 @@
     }
 }
 
+.text b {
+    color: #29BF12;
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+}
+
+.text b::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    display: inline-block;
+    height: 2px;
+    width: 0;
+    border-radius: 5px;
+    background-color: #29BF12;
+    transition: width 0.3s ease;
+}
+
+.text b:hover::after {
+    width: 100%;
+}
+
 .skills {
     font-family: 'Inria Sans';
     font-weight: 500;
@@ -51,8 +75,102 @@
     margin-bottom: 13px;
 }
 
+.skillsItem span{
+    margin-right: 10px;
+}
+
 .image img {
     width: 300px;
+    height: 300px;
     max-width: none;
-    height: auto;
+}
+
+.image {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+    max-height: 500px;
+}
+
+.image::before,
+.image::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.image:nth-child(1):before,
+.image:nth-child(1):after {
+    background: conic-gradient(from var(--angle), #0c63e7, #060c21, #d11149, #060c21, #0c63e7);
+    border-radius: 10px;
+}
+
+.image:nth-child(2)::before,
+.image:nth-child(2)::after {
+    background: conic-gradient(from var(--angle),
+            #29BF12 0deg,
+            #0D1B0C 45deg,
+            #3DFF6D 90deg,
+            #121619 135deg,
+            #29BF12 180deg,
+            #1A1F1C 225deg,
+            #3DFF6D 270deg,
+            #121619 315deg,
+            #29BF12 360deg);
+    border-radius: 10px;
+}
+
+.image:nth-child(3):before,
+.image:nth-child(3):after {
+    background: conic-gradient(from var(--angle), #dfff00, #060c21, #9600ff, #060c21, #dfff00);
+    border-radius: 10px;
+}
+
+.image::after {
+    z-index: -2;
+    filter: blur(20px);
+}
+
+.image:hover::before,
+.image:hover::after {
+    animation: glowing-border 4.5s linear infinite;
+    opacity: 1;
+}
+
+.image:hover::after {
+    animation: glowing-border 4.5s linear infinite, blur-effect 4.5s linear infinite;
+}
+
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 53deg;
+    inherits: false;
+}
+
+@keyframes glowing-border {
+    from {
+        --angle: 53deg;
+    }
+
+    to {
+        --angle: 413deg;
+    }
+}
+
+@keyframes blur-effect {
+    from {
+        filter: blur(20px);
+    }
+
+    to {
+        filter: blur(19px);
+    }
 }

@@ -1,4 +1,11 @@
+.projectCardWrapper {
+    width: 300px;
+    position: relative;
+    display: inline-block;
+}
+
 .projectMiniCard {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,6 +16,81 @@
     height: 300px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.5s ease;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.projectCardWrapper::before,
+.projectCardWrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    border-radius: 10px;
+}
+
+.projectCardWrapper::before,
+.projectCardWrapper::after {
+    background: conic-gradient(from var(--angle),
+            #29BF12 0deg,
+            #0D1B0C 45deg,
+            #3DFF6D 90deg,
+            #121619 135deg,
+            #29BF12 180deg,
+            #1A1F1C 225deg,
+            #3DFF6D 270deg,
+            #121619 315deg,
+            #29BF12 360deg);
+    border-radius: 10px;
+
+}
+
+.projectCardWrapper::after {
+    z-index: -2;
+    filter: blur(20px);
+}
+
+.projectCardWrapper:hover::before,
+.projectCardWrapper:hover::after {
+    animation: glowing-border 4.5s linear infinite;
+    opacity: 1;
+    z-index: -1;
+    transform: translateY(-10px);
+    /* Убедитесь, что они остаются сзади при наведении */
+}
+
+.projectMiniCard:hover::after {
+    animation: glowing-border 4.5s linear infinite, blur-effect 4.5s linear infinite;
+    filter: blur(20px);
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 53deg;
+    inherits: false;
+}
+
+@keyframes glowing-border {
+    from {
+        --angle: 53deg;
+    }
+
+    to {
+        --angle: 413deg;
+    }
+}
+
+@keyframes blur-effect {
+    from {
+        filter: blur(20px);
+    }
+
+    to {
+        filter: blur(19px);
+    }
 }
 
 .projectMiniCard:hover {

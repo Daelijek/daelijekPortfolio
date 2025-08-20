@@ -3,13 +3,13 @@
     margin: auto;
 }
 
-.cardImage {
+.card {
     position: relative;
     display: flex;
 }
 
 /* Левая ориентация */
-.left .cardImage {
+.left .card {
     flex-direction: row;
 }
 
@@ -19,11 +19,109 @@
     position: relative;
     z-index: 0;
     filter: sepia(1) saturate(3) hue-rotate(80deg) brightness(0.6) grayscale(0.6);
-    transition: 0.5s;
+    transition: filter 0.5s ease;
 }
 
 .cardImage img:hover {
-    filter: none;
+    filter: brightness(0.9);
+}
+
+.cardImage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardImage::before,
+.cardImage::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.cardImage:nth-child(1):before,
+.cardImage:nth-child(1):after {
+    background: conic-gradient(from var(--angle),
+            #2f73f0,
+            #39ff14,
+            #060c21,
+            #00ffcc,
+            #2f73f0);
+    border-radius: 17px;
+}
+
+.cardImage:nth-child(2)::before,
+.cardImage:nth-child(2)::after {
+    background: conic-gradient(from var(--angle),
+            #29BF12 0deg,
+            #0D1B0C 45deg,
+            #3DFF6D 90deg,
+            #121619 135deg,
+            #29BF12 180deg,
+            #1A1F1C 225deg,
+            #3DFF6D 270deg,
+            #121619 315deg,
+            #29BF12 360deg);
+}
+
+.cardImage:nth-child(3):before,
+.cardImage:nth-child(3):after {
+    background: conic-gradient(from var(--angle),
+            #29BF12 0deg,
+            #0D1B0C 45deg,
+            #3DFF6D 90deg,
+            #121619 135deg,
+            #29BF12 180deg,
+            #1A1F1C 225deg,
+            #3DFF6D 270deg,
+            #121619 315deg,
+            #29BF12 360deg);
+}
+
+.cardImage::after {
+    z-index: -2;
+    filter: blur(20px);
+}
+
+.cardImage:hover::before,
+.cardImage:hover::after {
+    animation: glowing-border 4.5s linear infinite;
+    opacity: 1;
+}
+
+.cardImage:hover::after {
+    animation: glowing-border 4.5s linear infinite, blur-effect 4.5s linear infinite;
+}
+
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 53deg;
+    inherits: false;
+}
+
+@keyframes glowing-border {
+    from {
+        --angle: 53deg;
+    }
+
+    to {
+        --angle: 413deg;
+    }
+}
+
+@keyframes blur-effect {
+    from {
+        filter: blur(20px);
+    }
+
+    to {
+        filter: blur(19px);
+    }
 }
 
 .left .info {
@@ -39,7 +137,7 @@
     text-align: right;
 }
 
-.right .cardImage {
+.right .card {
     flex-direction: row-reverse;
 }
 

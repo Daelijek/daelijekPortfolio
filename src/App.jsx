@@ -1,20 +1,32 @@
-import "./reset.css"
-import Header from "./components/headerComponent/Header"
-import Hero from './components/heroComponent/Hero'
+import { useState } from "react";
+import "./reset.css";
+import Header from "./components/headerComponent/Header";
+import Hero from './components/heroComponent/Hero';
 import About from "./components/aboutComponent/About";
-import Experience from './components/experienceComponent/Experience'
+import Experience from './components/experienceComponent/Experience';
 import Projects from "./components/projectsComponent/Projects";
+import Contact from "./components/contactComponent/Contact";
+import Intro from "./components/Intro";
 
 function App() {
+    const [showIntro, setShowIntro] = useState(true);
+
     return (
         <>
-            <Header />
-            <Hero />
-            <About />
-            <Experience />
-            <Projects />
+            {showIntro ? (
+                <Intro onFinish={() => setShowIntro(false)} />
+            ) : (
+                <>
+                    <Header />
+                    <Hero />
+                    <About />
+                    <Experience />
+                    <Projects />
+                    <Contact />
+                </>
+            )}
         </>
     );
 }
 
-export default App
+export default App;

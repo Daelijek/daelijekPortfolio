@@ -10,18 +10,19 @@ function About() {
                     <div className={styles.group}>
                         <div className={styles.info}>
                             <p className={styles.text}>
-                                Hello! My name is Brittany and I enjoy creating things that live on the internet. My interest in web development started back in 2012 when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS! <br /><br />
-                                Fast-forward to today, and I’ve had the privilege of working at <span>an advertising agency</span>, <span>a start-up</span>, <span>a huge corporation</span>, and <span>a student-led design studio</span>. My main focus these days is building accessible, inclusive products and digital experiences at <span>Upstatement</span> for a variety of clients. <br /><br />
-                                I also recently <span>launched a course</span> that covers everything you need to build a web app with the Spotify API using Node & React. <br /><br />
-                                Here are a few technologies I’ve been working with recently:
+                                Hello! My name is <b>Dias</b>, and I’ve been passionate about web development since high school, when I first became curious about how websites are built. In my first year at university, I created a simple website and quickly realized that frontend was what I enjoyed most — I love seeing my <b>code come to life visually</b>.
+                                <br /><br />
+                                Since then, I’ve had the chance to gain experience in different environments. I started as a <b>React Native Developer at Stolovka</b>, a fast-moving startup where I worked on mobile applications. Later, I joined <b>QB Solutions as a frontend intern</b>, learning how to build responsive websites in a team setting. Currently, I’m a <b>Junior Frontend Developer at TrustMe</b>, where I focus on creating user-friendly interfaces and working with APIs.
+                                <br /><br />
+                                Some of the technologies I work with most often include:
                             </p>
                             <ul className={styles.skills}>
-                                <li className={styles.skillsItem}><span>‣</span> JavaScript (ES6+)</li>
-                                <li className={styles.skillsItem}><span>‣</span> React</li>
-                                <li className={styles.skillsItem}><span>‣</span> Node.js</li>
-                                <li className={styles.skillsItem}><span>‣</span> TypeScript</li>
-                                <li className={styles.skillsItem}><span>‣</span> Eleventy</li>
-                                <li className={styles.skillsItem}><span>‣</span> WordPress</li>
+                                <li className={styles.skillsItem}><span>‣ </span> JavaScript (ES6+)</li>
+                                <li className={styles.skillsItem}><span>‣ </span> React</li>
+                                <li className={styles.skillsItem}><span>‣ </span> React Native</li>
+                                <li className={styles.skillsItem}><span>‣ </span> Vue.js</li>
+                                <li className={styles.skillsItem}><span>‣ </span> Node.js</li>
+                                <li className={styles.skillsItem}><span>‣ </span> TypeScript</li>
                             </ul>
                         </div>
                         <div className={styles.image}>
