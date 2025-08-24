@@ -2,61 +2,72 @@ import { useState, useEffect } from 'react';
 import styles from './header.module.css';
 
 function Header() {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
 
-            // Если прокрутка вниз, скрываем хедер
-            if (currentScrollY > lastScrollY && currentScrollY > 200) {
-                setIsVisible(false); // Прокрутка вниз
-            }
-            // Если прокрутка вверх, показываем хедер
-            else if (currentScrollY < lastScrollY) {
-                setIsVisible(true); // Прокрутка вверх
-            }
+      if (currentScrollY > lastScrollY && currentScrollY > 200) {
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
 
-            setLastScrollY(currentScrollY); // Обновляем последний Y
+      setLastScrollY(currentScrollY);
+      setIsScrolled(currentScrollY > 200);
+    };
 
-            if (currentScrollY > 200) {
-                setIsScrolled(true); // Меняем состояние, если прокручено более 200px
-            } else {
-                setIsScrolled(false);
-            }
-        };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollY]);
+  const closeMenu = () => setIsMenuOpen(false);
 
-    return (
-        <div
-            className={`${styles.header} 
-        ${isScrolled ? styles['header--active'] : ''} 
-        ${!isVisible ? styles['header--hidden'] : ''}`}
-        >
-            <div className={styles.header_inner}>
-                <div className={styles.logo}>
-                    <a href="/">
-                        <img src={isScrolled ? '/images/logo.png' : '/images/logo.png'} alt="Logo" />
-                    </a>
-                </div>
-                <nav className={styles.nav}>
-                    <ul className={styles.navList}>
-                        <li className={styles.navItem}><a href="#home">Home</a></li>
-                        <li className={styles.navItem}><a href="#about"><span>01.</span>About</a></li>
-                        <li className={styles.navItem}><a href="#exp"><span>02.</span>Experience</a></li>
-                        <li className={styles.navItem}><a href="#projects"><span>03.</span>Projects</a></li>
-                        <li className={styles.navItem}><a href="#contact"><span>04.</span>Contact</a></li>
-                        <li className={styles.navItem}><a href="/resume.pdf" target="_blank" rel="noopener noreferrer"><button>Resume</button></a></li>
-                    </ul>
-                </nav>
-            </div>
+  return (
+    <header
+      className={`${styles.header} ${isScrolled && !isMenuOpen ? styles['header--active'] : ''} ${!isVisible ? styles['header--hidden'] : ''}`}
+    >
+      <div className={styles.header_inner}>
+        <div className={styles.logo}>
+          <a href="/">
+            <img src="/images/logo.png" alt="Logo" />
+          </a>
         </div>
-    );
+
+        <button
+          className={styles.menuToggle}
+          aria-controls="main-nav"
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen(v => !v)}
+        >
+          ☰
+        </button>
+
+        <nav
+          id="main-nav"
+          className={`${styles.nav} ${isMenuOpen ? styles.isOpen : ''}`}
+          aria-label="Main menu"
+        >
+          <ul className={styles.navList}>
+            <li className={styles.navItem}><a href="#hero" onClick={closeMenu}>Home</a></li>
+            <li className={styles.navItem}><a href="#about" onClick={closeMenu}><span>01.</span> About</a></li>
+            <li className={styles.navItem}><a href="#exp" onClick={closeMenu}><span>02.</span> Experience</a></li>
+            <li className={styles.navItem}><a href="#projects" onClick={closeMenu}><span>03.</span> Projects</a></li>
+            <li className={styles.navItem}><a href="#contact" onClick={closeMenu}><span>04.</span> Contact</a></li>
+            <li className={styles.navItem}>
+              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+                <button>Resume</button>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
 }
 
 export default Header;

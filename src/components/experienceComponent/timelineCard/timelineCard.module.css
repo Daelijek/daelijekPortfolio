@@ -28,3 +28,36 @@
     font-size: 14px;
     color: #8892A3;
 }
+
+@media screen and (max-width: 1000px) {
+    .content {
+        padding: 15px 15px;
+        font-size: 15px;
+    }
+
+    .content h2 {
+        font-size: 15px;
+    }
+
+    .content small,
+    .content p {
+        font-size: 13px;
+    }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 600px) {
+    .content {
+        padding: 10px 10px;
+        font-size: 13px;
+    }
+
+    .content h2 {
+        font-size: 13px;
+    }
+
+    .content small,
+    .content p {
+        font-size: 12px;
+    }
+}
