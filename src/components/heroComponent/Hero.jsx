@@ -32,31 +32,31 @@ function Hero() {
     },
   };
 
-  // useEffect(() => {
-  //   if (!vantaEffect) {
-  //     setVantaEffect(
-  //       NET({
-  //         el: vantaRef.current,
-  //         THREE: THREE,
-  //         mouseControls: true,
-  //         touchControls: true,
-  //         gyroControls: false,
-  //         minHeight: 200.00,
-  //         minWidth: 200.00,
-  //         scale: 0.5,
-  //         scaleMobile: 1.00,
-  //         color: 0x29bf12,
-  //         backgroundColor: 0x121619,
-  //         points: 10.00,
-  //         maxDistance: 12.00,
-  //         spacing: 15.00,
-  //       })
-  //     );
-  //   }
-  //   return () => {
-  //     if (vantaEffect) vantaEffect.destroy();
-  //   };
-  // }, [vantaEffect]);
+  useEffect(() => {
+    if (!vantaEffect) {
+      setVantaEffect(
+        NET({
+          el: vantaRef.current,
+          THREE: THREE,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 0.5,
+          scaleMobile: 1.00,
+          color: 0x29bf12,
+          backgroundColor: 0x121619,
+          points: 10.00,
+          maxDistance: 12.00,
+          spacing: 15.00,
+        })
+      );
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy();
+    };
+  }, [vantaEffect]);
 
   return (
     <div ref={vantaRef} id='hero' className={styles.hero}>
