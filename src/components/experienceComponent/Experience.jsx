@@ -39,10 +39,10 @@ function Experience() {
                         </div>
                         <div className={`${styles.container} ${styles.right}`}>
                             <TimelineCard
-                                title="JUNIOR FRONTEND DEVELOPER"
+                                title="Vue Markup Developer"
                                 subtitle="TrustMe"
                                 date="Nov 2024 - Present"
-                                info="Contributing to the development of web applications by building user-friendly interfaces, working with APIs, and ensuring performance and accessibility across projects."
+                                info="Creating new Vue markups from scratch according to task requirements. Maintaining and improving existing markups, fixing bugs, and implementing enhancements. Handling tasks in Bitrix24 with timely delivery. Collaborating with backend and frontend developers to solve specific issues. Utilizing Vue.js to implement dynamic elements and enhance the user experience."
                                 position="right"
                             />
                         </div>
