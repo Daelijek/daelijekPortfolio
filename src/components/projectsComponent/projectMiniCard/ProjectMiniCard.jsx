@@ -9,10 +9,10 @@ function ProjectMiniCard(props) {
                 <div className={styles.icon}>
                     <FiFolder size={40} className={styles.folderIcon} />
                     <div className={styles.iconGroup}>
-                        <a href="#" target='_blank' rel="noopener noreferrer" className={styles.iconLink}>
+                        <a href={props.github} target='_blank' rel="noopener noreferrer" className={styles.iconLink}>
                             <FaGithub size={22} className={styles.icon} />
                         </a>
-                        <a href="#" target='_blank' rel="noopener noreferrer" className={styles.iconLink}>
+                        <a href={props.openLink} target='_blank' rel="noopener noreferrer" className={styles.iconLink}>
                             <FaShareSquare size={22} className={styles.icon} />
                         </a>
                     </div>

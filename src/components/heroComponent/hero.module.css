@@ -64,19 +64,28 @@
 }
 
 @media (max-width: 1000px) {
+    .hero {
+        padding: 0 20px;
+    }
+
     .intro {
         font-size: 15px;
         margin-bottom: 10px;
+        align-items: center;
+        text-align: center;
     }
 
     .title {
         font-size: 55px;
         margin-bottom: 10px;
+        align-items: center;
+        text-align: center;
     }
 
     .subtitle {
         font-size: 35px;
         margin-bottom: 10px;
+        text-align: center;
     }
 
     .text {
@@ -87,6 +96,7 @@
 
     .btn_group {
         gap: 35px;
+        text-align: center;
     }
 
     .btn {

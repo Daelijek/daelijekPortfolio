@@ -24,7 +24,7 @@
     height: auto;
     position: relative;
     z-index: 0;
-    filter: sepia(1) saturate(3) hue-rotate(80deg) brightness(0.6) grayscale(0.6);
+    filter: sepia(1) saturate(2.5) hue-rotate(95deg) brightness(0.6) contrast(0.7);
     transition: 0.5s ease;
 }
 
@@ -47,10 +47,6 @@
     z-index: -1;
     opacity: 0;
     transition: opacity 0.5s ease;
-}
-
-.cardImage:nth-child(1):before,
-.cardImage:nth-child(1):after {
     background: conic-gradient(from var(--angle),
             #2f73f0,
             #39ff14,
@@ -58,34 +54,6 @@
             #00ffcc,
             #2f73f0);
     border-radius: 17px;
-}
-
-.cardImage:nth-child(2)::before,
-.cardImage:nth-child(2)::after {
-    background: conic-gradient(from var(--angle),
-            #29BF12 0deg,
-            #0D1B0C 45deg,
-            #3DFF6D 90deg,
-            #121619 135deg,
-            #29BF12 180deg,
-            #1A1F1C 225deg,
-            #3DFF6D 270deg,
-            #121619 315deg,
-            #29BF12 360deg);
-}
-
-.cardImage:nth-child(3):before,
-.cardImage:nth-child(3):after {
-    background: conic-gradient(from var(--angle),
-            #29BF12 0deg,
-            #0D1B0C 45deg,
-            #3DFF6D 90deg,
-            #121619 135deg,
-            #29BF12 180deg,
-            #1A1F1C 225deg,
-            #3DFF6D 270deg,
-            #121619 315deg,
-            #29BF12 360deg);
 }
 
 .cardImage::after {
@@ -168,7 +136,7 @@
 
 .title {
     font-family: 'Inter';
-    font-size: 24px;
+    font-size: clamp(20px, 2.5vw, 28px);
     font-weight: 700;
     color: #CCD6F6;
     margin-bottom: 20px;
@@ -176,7 +144,7 @@
 
 .description {
     font-family: 'Inria Sans';
-    font-size: 16px;
+    font-size: clamp(14px, 2vw, 16px);
     font-weight: 500;
     color: #8892A3;
     padding: 35px 20px;
@@ -210,32 +178,136 @@
     color: #29BF12;
 }
 
-@media screen and (max-width: 1000px) {
+@media (max-width: 1000px) {
+    .infoMobile {
+        position: absolute;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 40px 40px;
+        height: 100%;
+    }
+
+    .left .card,
+    .right .card {
+        flex-direction: row;
+    }
+
     .cardImage {
-        position: relative;
-        width: 100%;
-        max-width: 800px;
+        width: 80%;
+        display: flex;
         margin: auto;
+    }
+
+    .cardImage img {
+        width: 100%;
+        max-width: none;
+        height: auto;
+        filter: sepia(1) saturate(3) hue-rotate(80deg) brightness(0.2) grayscale(0.6);
+    }
+
+    .featured {
+        font-size: 14px;
+        margin-bottom: 7px;
+    }
+
+    .title {
+        margin-bottom: 15px;
+    }
+
+    .description {
+        font-size: 17px;
+        padding: 0;
+        background-color: transparent;
+        margin-bottom: 15px;
+    }
+
+    .tags {
+        gap: 10px;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 870px) {
+    .cardImage {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+    }
+
+    .cardImage {
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
     }
 
     .cardImage img {
         width: 100%;
         height: auto;
         display: block;
+        border-radius: 12px;
+        object-fit: cover;
     }
 
-    .cardImage .info {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    /* Slide the info up over the bottom part of the image so it always stays visually 'inside' */
+    .info {
+        width: calc(100% - 24px);
+        margin: -80px 12px 0;
+        /* overlap the image */
+        background: rgba(0, 25, 43, 0.66);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        border-radius: 10px;
+        padding: 12px;
+        box-sizing: border-box;
+        z-index: 2;
+    }
+
+    /* Adjust typography to fit small screens */
+    .title {
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .tags {
+        font-size: 13px;
+    }
+
+    .icons {
+        margin-top: 8px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.5);
+        gap: 8px;
+    }
+
+    /* If the overlap is too large on very narrow devices, reduce it slightly */
+    @media (max-width: 380px) {
+        .info {
+            margin: -60px 10px 0;
+            padding: 10px;
+        }
+
+        .title {
+            font-size: 15px;
+        }
+
+        .description {
+            font-size: 13px;
+        }
     }
 }
