@@ -67,14 +67,12 @@
     position: fixed;
     bottom: 0;
     left: 40px;
-    /* или ваш отступ */
     display: flex;
     justify-content: center;
     align-items: flex-end;
     height: 100vh;
-    /* на всю высоту экрана */
     pointer-events: none;
-    /* чтобы иконки сами управлялись кликами */
+    z-index: 9999;
 }
 
 .iconsWithLine {
@@ -82,11 +80,9 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    /* расстояние между иконками */
     position: relative;
     pointer-events: auto;
     padding-bottom: 120px;
-    /* восстановить кликовые события */
 }
 
 .iconsWithLine::after {
@@ -94,7 +90,6 @@
     position: absolute;
     top: 350px;
     bottom: 0;
-    /* линия будет заканчиваться на 40px выше низа экрана */
     width: 2px;
     background-color: #8892A3;
 }
