@@ -59,7 +59,7 @@ function Header() {
             <li className={styles.navItem}><a href="#projects" onClick={closeMenu}><span>03.</span> Projects</a></li>
             <li className={styles.navItem}><a href="#contact" onClick={closeMenu}><span>04.</span> Contact</a></li>
             <li className={styles.navItem}>
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+              <a href="https://drive.google.com/file/d/1pPithXvOpfVVT05XB05KYA0lZP-gV72t/view?usp=sharing" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
                 <button>Resume</button>
               </a>
             </li>
