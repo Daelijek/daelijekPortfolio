@@ -21,7 +21,7 @@ function Contact() {
                 </div>
             </div>
             <footer>
-                <p className={styles.footerText}><a href="https://github.com/Daelijek" target='_blank' rel="noopener noreferrer">Designed & Build by Dias Yermek</a></p>
+                <p className={styles.footerText}><a href="https://github.com/Daelijek/daelijekPortfolio" target='_blank' rel="noopener noreferrer">Designed & Build by Dias Yermek</a></p>
             </footer>
         </>
     )
