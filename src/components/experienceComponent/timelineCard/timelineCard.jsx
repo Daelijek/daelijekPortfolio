@@ -1,5 +1,9 @@
 import styles from './timelineCard.module.css';
 
+/**
+ * Legacy timeline card (content block only).
+ * Used by Timeline.jsx via timelineCard.module.css for entry content styling.
+ */
 function TimelineCard(props) {
     return (
         <div className={`${props.position === 'left' ? styles.left : styles.right} ${styles.container}`}>

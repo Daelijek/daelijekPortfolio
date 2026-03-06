@@ -1,0 +1,109 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact",
+    "resume": "Resume"
+  },
+  "hero": {
+    "intro": "Hi, my name is",
+    "title": "Dias Yermek",
+    "subtitle": "I build digital experiences.",
+    "description": "I'm a frontend developer specializing in building exceptional digital experiences. Currently focused on creating accessible, human-centered products with modern web technologies.",
+    "primaryCta": "Check out my works",
+    "secondaryCta": "Get in touch"
+  },
+  "about": {
+    "title": "About Me",
+    "text1": "I'm <b>Dias</b>, a frontend developer who has been building for the web since high school. In my first year at university I created my first website and realized I wanted to focus on <b>turning ideas into clear, working interfaces</b>.",
+    "text2": "I've gained experience across startups and product teams. I started as a <b>React Native Developer at Stolovka</b>, then completed a <b>frontend internship at QB Solutions</b> building responsive web applications. I later worked as a <b>Markup Developer at TrustMe</b>, delivering Vue-based interfaces and collaborating with backend and design. I'm currently a <b>Frontend & Mobile Developer at BeyimTech</b> (Astana Hub resident), developing web apps with Next.js and React and cross-platform mobile applications with Flutter for educational products.",
+    "text3": "Technologies I work with regularly include:",
+    "skills": ["JavaScript (ES6+)", "TypeScript", "React", "Next.js", "React Native", "Flutter", "Vue.js", "Node.js"]
+  },
+  "experience": {
+    "sectionTitle": "Experience",
+    "astana-it": {
+      "title": "ASTANA IT UNIVERSITY",
+      "subtitle": "Software Engineering",
+      "date": "2022-2025",
+      "info": "Graduated with a Bachelor's degree in Software Engineering. These years laid the foundation of my career, shaping my passion for frontend development and modern web technologies."
+    },
+    "stolovka": {
+      "title": "REACT NATIVE DEVELOPER",
+      "subtitle": "STOLOVKA (Startup Company)",
+      "date": "Sep 2023 - Nov 2024",
+      "info": "Worked on building and maintaining mobile applications using React Native. Gained hands-on experience in a fast-paced startup environment, delivering functional and user-focused features."
+    },
+    "qb-solutions": {
+      "title": "FRONTEND DEVELOPER (Internship)",
+      "subtitle": "QB Solutions",
+      "date": "Jan 2025 - May 2025",
+      "info": "Focused on creating responsive websites, integrating APIs, and collaborating with a professional team. Improved skills in modern frontend frameworks and best practices."
+    },
+    "trustme": {
+      "title": "MARKUP DEVELOPER (TIER 2 SUPPORT)",
+      "subtitle": "TrustMe",
+      "date": "Nov 2024 - Jan 2026",
+      "info": "Creating new Vue markups from scratch according to task requirements. Maintaining and improving existing markups, fixing bugs, and implementing enhancements. Handling tasks in Bitrix24 with timely delivery. Collaborating with backend and frontend developers to solve specific issues. Utilizing Vue.js to implement dynamic elements and enhance the user experience."
+    },
+    "beyimTech": {
+      "title": "FRONTEND & MOBILE DEVELOPER",
+      "subtitle": "BeyimTech",
+      "date": "Nov 2025 - Present",
+      "info": "Working as a Frontend and Mobile Developer at BeyimTech and Astana Hub resident. I develop web applications using Next.js and React, and build cross-platform mobile applications with Flutter. I collaborate with the team to create modern educational products and improve user experience and performance."
+    }
+  },
+  "projects": {
+    "sectionTitle": "Some of My Work",
+    "otherTitle": "Other Noteworthy Projects",
+    "archive": "view the archive",
+    "showMore": "Show More",
+    "showLess": "Show Less",
+    "featuredLabel": "Featured Project",
+    "featured": {
+      "finance-app": {
+        "title": "Finance Management Application",
+        "description": "A mobile app for smarter finance tracking. Users can monitor expenses, set spending limits, and analyze their budgets with visual charts. The built-in AI assistant provides personalized insights to improve financial decisions."
+      },
+      "opengov": {
+        "title": "OpenGov.kz",
+        "description": "An open government platform designed to provide transparency, easy access to public data, and improved communication between citizens and government services."
+      },
+      "berik-web": {
+        "title": "Berik Zhunusbek",
+        "description": "A personal website created for sculptor, artist, actor, and CG specialist Berik Zhunusbek. The site presents his biography, portfolio of works, and career highlights, designed as a clean and accessible digital presence."
+      }
+    },
+    "mini": {
+      "evently": { "title": "Evently", "description": "A streamlined platform for modern event planning featuring QR invitations, voting on time slots, customizable events, and seamless RSVPs." },
+      "kaz-data": { "title": "Kaz-data Solutions", "description": "A streamlined platform for searching and booking events across Kazakhstan, similar to Ticketon." },
+      "flower-shop": { "title": "IT-Flower Shop", "description": "A web-based flower shop platform for browsing, selecting, and purchasing floral arrangements online." },
+      "aitu-calc": { "title": "AITU Grade Calculator", "description": "A Python app with a CustomTkinter interface for calculating final grades and checking scholarship eligibility." },
+      "queuems": { "title": "QueueMS", "description": "A microservices-based queue management system built with Go, featuring client, notification, and queue services for efficient task handling." },
+      "params-retrieval": { "title": "Parameters Retrieval", "description": "The \"Daelijek Parameters Retrieval\" program is a Python application designed to retrieve various system parameters and information using a graphical user interface (GUI)." },
+      "nwa": { "title": "NWA", "description": "A simple website built with HTML, CSS, and JavaScript about the rap group N.W.A, featuring their history and members." },
+      "book-review": { "title": "Book Review", "description": "A simple program for browsing detailed book information across different categories." },
+      "voice-assistant": { "title": "Voice Assistant", "description": "A Python-based voice assistant that executes simple commands activated by speech." }
+    }
+  },
+  "contact": {
+    "numeration": "04.Contacts",
+    "title": "Get In Touch",
+    "text": "I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology and design. Whether you have a question or just want to say hi, I'll do my best to get back to you!",
+    "sayHello": "Say Hello!"
+  },
+  "footer": {
+    "text": "Designed & Built by Dias Yermek"
+  },
+  "a11y": {
+    "logoAlt": "Dias Yermek logo",
+    "aboutImageAlt": "Dias Yermek portrait",
+    "mainNavAria": "Main navigation",
+    "language": "Language"
+  },
+  "intro": {
+    "text": "LET YOUR WORK DO THE TALKING"
+  }
+}

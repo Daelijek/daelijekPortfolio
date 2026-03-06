@@ -1,0 +1,28 @@
+footer {
+    width: 100%;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerText {
+    margin: 0;
+}
+
+.footerText a {
+    font-family: 'Inconsolata', monospace;
+    color: #8892A3;
+    transition: color 0.3s ease;
+}
+
+.footerText a:hover {
+    color: #29BF12;
+    text-decoration: none;
+}
+
+@media (max-width: 1200px) {
+    footer {
+        padding: 20px 0;
+    }
+}

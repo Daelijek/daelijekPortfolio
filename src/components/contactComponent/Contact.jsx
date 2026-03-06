@@ -1,28 +1,26 @@
-import styles from './contact.module.css';
-import { SocialIcon } from 'react-social-icons';
+import { useTranslation } from 'react-i18next'
+import styles from './contact.module.css'
+import Footer from '../ui/Footer/Footer'
+import SocialLinks from './SocialLinks/SocialLinks'
+import { socialLinks } from './contactData'
 
 function Contact() {
+    const { t } = useTranslation()
+
     return (
         <>
             <div id='contact' className={styles.contactContainer}>
-                <small className={styles.numeration}>04.Contacts</small>
-                <h1 className={styles.title}>Get In Touch</h1>
-                <p className={styles.text}>I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology and design. Whether you have a question or just want to say hi, I'll do my best to get back to you!</p>
-                <button className={styles.button}><a href='https://t.me/daelijek_og'>Say Hello!</a></button>
+                <small className={styles.numeration}>{t('contact.numeration')}</small>
+                <h1 className={styles.title}>{t('contact.title')}</h1>
+                <p className={styles.text}>{t('contact.text')}</p>
+                <button className={styles.button} type="button">
+                    <a href="https://t.me/daelijek_og">{t('contact.sayHello')}</a>
+                </button>
             </div>
             <div className={styles.socialContainer}>
-                <div className={styles.iconsWithLine}>
-                    <SocialIcon className={styles.iconStyle} url="https://t.me/daelijek_og" bgColor="transparent" fgColor="currentColor" />
-                    <SocialIcon className={styles.iconStyle} url="mailto:dias1605ermek@gmail.com" bgColor="transparent" fgColor="currentColor" />
-                    <SocialIcon className={styles.iconStyle} url="https://instagram.com/daelijek_og" bgColor="transparent" fgColor="currentColor" />
-                    <SocialIcon className={styles.iconStyle} url="https://wa.me/+77088350549" bgColor="transparent" fgColor="currentColor" />
-                    <SocialIcon className={styles.iconStyle} url="https://linkedin.com/in/dias-yermek-a4026b32b" bgColor="transparent" fgColor="currentColor" />
-                    <SocialIcon className={styles.iconStyle} url="https://github.com/daelijek" bgColor="transparent" fgColor="currentColor" />
-                </div>
+                <SocialLinks links={socialLinks} />
             </div>
-            <footer>
-                <p className={styles.footerText}><a href="https://github.com/Daelijek" target='_blank' rel="noopener noreferrer">Designed & Build by Dias Yermek</a></p>
-            </footer>
+            <Footer text={t('footer.text')} url="https://github.com/Daelijek" />
         </>
     )
 }

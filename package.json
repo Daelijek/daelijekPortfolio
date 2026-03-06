@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.6.1",
+    "i18next": "^25.8.14",
     "lottie-react": "^2.4.1",
     "motion": "^12.23.12",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-i18next": "^16.5.5",
     "react-icons": "^5.5.0",
     "react-lottie": "^1.2.10",
     "react-social-icons": "^6.24.0",

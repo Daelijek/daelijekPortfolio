@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './header.module.css';
+import { navLinks, resumeUrl } from './navData';
+import LanguageSwitcher from '../ui/LanguageSwitcher/LanguageSwitcher';
 
 function Header() {
+  const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -34,7 +38,7 @@ function Header() {
       <div className={styles.header_inner}>
         <div className={styles.logo}>
           <a href="/">
-            <img src="/images/logo.png" alt="Logo" />
+            <img src="/images/logo.png" alt={t('a11y.logoAlt')} />
           </a>
         </div>
 
@@ -50,18 +54,23 @@ function Header() {
         <nav
           id="main-nav"
           className={`${styles.nav} ${isMenuOpen ? styles.isOpen : ''}`}
-          aria-label="Main menu"
+          aria-label={t('a11y.mainNavAria')}
         >
           <ul className={styles.navList}>
-            <li className={styles.navItem}><a href="#hero" onClick={closeMenu}>Home</a></li>
-            <li className={styles.navItem}><a href="#about" onClick={closeMenu}><span>01.</span> About</a></li>
-            <li className={styles.navItem}><a href="#exp" onClick={closeMenu}><span>02.</span> Experience</a></li>
-            <li className={styles.navItem}><a href="#projects" onClick={closeMenu}><span>03.</span> Projects</a></li>
-            <li className={styles.navItem}><a href="#contact" onClick={closeMenu}><span>04.</span> Contact</a></li>
+            {navLinks.map(({ id, href, number }) => (
+              <li key={id} className={styles.navItem}>
+                <a href={href} onClick={closeMenu}>
+                  {number && <span>{number}</span>} {t(`nav.${id}`)}
+                </a>
+              </li>
+            ))}
             <li className={styles.navItem}>
-              <a href="https://drive.google.com/file/d/1pPithXvOpfVVT05XB05KYA0lZP-gV72t/view?usp=sharing" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
-                <button>Resume</button>
+              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+                <button type="button">{t('nav.resume')}</button>
               </a>
+            </li>
+            <li className={styles.navItem}>
+              <LanguageSwitcher />
             </li>
           </ul>
         </nav>

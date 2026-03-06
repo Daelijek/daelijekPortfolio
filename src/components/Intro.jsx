@@ -1,10 +1,12 @@
 // Intro.jsx
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Lottie from 'react-lottie';
 import animationData from '../assets/lotties/intro.json';
 import styles from './Intro.module.css';
 
 export default function Intro({ onFinish }) {
+    const { t } = useTranslation();
     const [finished, setFinished] = useState(false);
 
     const defaultOptions = {
@@ -33,7 +35,7 @@ export default function Intro({ onFinish }) {
             />
             {finished && (
                 <p className={styles.introText}>
-                    LET YOUR WORK DO THE TALKING
+                    {t('intro.text')}
                 </p>
             )}
         </div>

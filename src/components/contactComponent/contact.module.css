@@ -106,25 +106,6 @@
     color: #29BF12;
 }
 
-footer {
-    width: 100%;
-    padding: 40px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-footer a {
-    font-family: 'Inconsolata';
-    color: #8892A3;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #29BF12;
-    text-decoration: none;
-}
-
 @media (max-width: 1200px) {
     .socialContainer {
         position: relative;
@@ -145,10 +126,6 @@ footer a:hover {
 
     .iconsWithLine::after {
         display: none;
-    }
-
-    footer {
-        padding: 20px 0;
     }
 }
 

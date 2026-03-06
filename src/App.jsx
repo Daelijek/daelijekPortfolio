@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import "./reset.css";
 import Header from "./components/headerComponent/Header";
 import Hero from './components/heroComponent/Hero';
@@ -25,6 +26,7 @@ function App() {
                     <Contact />
                 </>
             )}
+            <Analytics />
         </>
     );
 }
