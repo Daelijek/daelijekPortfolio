@@ -40,7 +40,8 @@
     align-items: center;
 }
 
-.archive a {
+.archive a,
+.archiveLink {
     font-family: 'Inconsolata';
     font-weight: 500;
     font-size: 16px;
@@ -48,9 +49,18 @@
     position: relative;
     text-decoration: none;
     margin-bottom: 60px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
-.archive a::after {
+.archive .archiveLink {
+    margin-bottom: 60px;
+}
+
+.archive a::after,
+.archiveLink::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -62,7 +72,8 @@
     transition: transform 0.2s ease-in-out;
 }
 
-.archive a:hover::after {
+.archive a:hover::after,
+.archiveLink:hover::after {
     transform: scaleX(1);
 }
 

@@ -2,19 +2,26 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styles from '../projects.module.css'
 import ProjectMiniCard from '../projectMiniCard/ProjectMiniCard'
+import GitHubArchiveModal from '../GitHubArchiveModal/GitHubArchiveModal'
 
 const INITIAL_COUNT = 6
 
 function OtherProjects({ projects }) {
     const { t } = useTranslation()
     const [showMore, setShowMore] = useState(false)
+    const [archiveModalOpen, setArchiveModalOpen] = useState(false)
     const visible = showMore ? projects : projects.slice(0, INITIAL_COUNT)
     const hasMore = projects.length > INITIAL_COUNT
 
     return (
         <div className={styles.other}>
             <h2 className={`${styles.title} ${styles.center}`}>{t('projects.otherTitle')}</h2>
-            <small className={styles.archive}><a href="">{t('projects.archive')}</a></small>
+            <small className={styles.archive}>
+                <button type="button" className={styles.archiveLink} onClick={() => setArchiveModalOpen(true)}>
+                    {t('projects.archive')}
+                </button>
+            </small>
+            <GitHubArchiveModal isOpen={archiveModalOpen} onClose={() => setArchiveModalOpen(false)} />
             <div className={styles.otherProjects}>
                 {visible.map((project) => (
                     <ProjectMiniCard
