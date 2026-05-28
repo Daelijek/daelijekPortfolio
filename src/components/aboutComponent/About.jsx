@@ -1,6 +1,6 @@
 import { useTranslation, Trans } from 'react-i18next'
 import styles from './about.module.css'
-import aboutImg from '../../assets/about.png'
+import aboutImg from '../../assets/linkedIn_Dias_square.png'
 import SectionTitle from '../ui/SectionTitle/SectionTitle'
 
 function About() {

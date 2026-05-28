@@ -6,4 +6,4 @@ export const navLinks = [
     { id: 'contact', href: '#contact', number: '04.' },
 ];
 
-export const resumeUrl = 'https://drive.google.com/file/d/1pPithXvOpfVVT05XB05KYA0lZP-gV72t/view?usp=sharing';
+export const resumeUrl = 'https://drive.google.com/file/d/14QrmSuWVIL6jHosoOOji--KQQ9FDsWE5/view?usp=sharing';
