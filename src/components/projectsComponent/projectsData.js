@@ -9,7 +9,7 @@ export const featuredProjects = [
         openLink: 'https://github.com/Daelijek/FinanceManagementApp',
         github: 'https://github.com/Daelijek/FinanceManagementApp',
         src: Finance,
-        tags: ['Mobile Development', 'AI - Assistent', 'React Native'],
+        tags: ['React Native', 'Expo', 'FastAPI', 'OpenAI API', 'PostgreSQL'],
     },
     {
         id: 'opengov',
@@ -17,7 +17,7 @@ export const featuredProjects = [
         openLink: 'https://qbs-solutions.vercel.app/',
         github: 'https://github.com/Daelijek/www-opengov-kz',
         src: openGov,
-        tags: ['React', 'Next.js', 'API', 'SCSS'],
+        tags: ['Next.js', 'React', 'i18n', 'Responsive UI'],
     },
     {
         id: 'berik-web',

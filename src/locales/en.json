@@ -10,49 +10,49 @@
   "hero": {
     "intro": "Hi, my name is",
     "title": "Dias Yermek",
-    "subtitle": "I build digital experiences.",
-    "description": "I'm a frontend developer specializing in building exceptional digital experiences. Currently focused on creating accessible, human-centered products with modern web technologies.",
-    "primaryCta": "Check out my works",
+    "subtitle": "Middle Frontend & Mobile Developer.",
+    "description": "I build production web and mobile products with Next.js, React, TypeScript, and Flutter. Recently at BeyimTech (EdTech, Astana Hub)—AI learning platforms, analytics for 20+ schools, and App Store releases. Open to frontend and mobile roles.",
+    "primaryCta": "View my work",
     "secondaryCta": "Get in touch"
   },
   "about": {
     "title": "About Me",
-    "text1": "I'm <b>Dias</b>, a frontend developer who has been building for the web since high school. In my first year at university I created my first website and realized I wanted to focus on <b>turning ideas into clear, working interfaces</b>.",
-    "text2": "I've gained experience across startups and product teams. I started as a <b>React Native Developer at Stolovka</b>, then completed a <b>frontend internship at QB Solutions</b> building responsive web applications. I later worked as a <b>Markup Developer at TrustMe</b>, delivering Vue-based interfaces and collaborating with backend and design. I'm currently a <b>Frontend & Mobile Developer at BeyimTech</b> (Astana Hub resident), developing web apps with Next.js and React and cross-platform mobile applications with Flutter for educational products.",
-    "text3": "Technologies I work with regularly include:",
-    "skills": ["JavaScript (ES6+)", "TypeScript", "React", "Next.js", "React Native", "Flutter", "Vue.js", "Node.js"]
+    "text1": "I'm <b>Dias</b>, a software engineer from Astana, Kazakhstan. I've been building for the web since high school; in my first year at university I shipped my first site and realized I love <b>turning ideas into clear, reliable interfaces</b>.",
+    "text2": "I've worked across EdTech, FoodTech, GovTech, and Blockchain SaaS. I led mobile recovery and shipping at <b>BeyimTech</b> (Next.js, Flutter, Riverpod), built the <b>OpenGov.kz</b> frontend at <b>QB Solutions</b>, delivered contract UI and document flows at <b>TrustMe</b> (1.5M+ users), and developed a Flutter app at <b>Stolovka</b>. I hold a <b>Bachelor's in Software Engineering from Astana IT University</b> (2025).",
+    "text3": "Technologies I use regularly:",
+    "skills": ["TypeScript", "React 18 / Next.js 14", "Flutter & React Native", "RTK Query / Riverpod", "Vue.js", "FastAPI & PostgreSQL", "Tailwind CSS", "Docker & CI/CD"]
   },
   "experience": {
     "sectionTitle": "Experience",
-    "astana-it": {
-      "title": "ASTANA IT UNIVERSITY",
-      "subtitle": "Software Engineering",
-      "date": "2022-2025",
-      "info": "Graduated with a Bachelor's degree in Software Engineering. These years laid the foundation of my career, shaping my passion for frontend development and modern web technologies."
-    },
-    "stolovka": {
-      "title": "REACT NATIVE DEVELOPER",
-      "subtitle": "STOLOVKA (Startup Company)",
-      "date": "Sep 2023 - Nov 2024",
-      "info": "Worked on building and maintaining mobile applications using React Native. Gained hands-on experience in a fast-paced startup environment, delivering functional and user-focused features."
-    },
-    "qb-solutions": {
-      "title": "FRONTEND DEVELOPER (Internship)",
-      "subtitle": "QB Solutions",
-      "date": "Jan 2025 - May 2025",
-      "info": "Focused on creating responsive websites, integrating APIs, and collaborating with a professional team. Improved skills in modern frontend frameworks and best practices."
+    "beyimTech": {
+      "title": "MIDDLE FRONTEND & MOBILE DEVELOPER",
+      "subtitle": "BeyimTech · EdTech Startup · Astana Hub",
+      "date": "Oct 2025 – Apr 2026",
+      "info": "Built AI-powered educational products with Next.js 14, React 18, and TypeScript—including Lexical editors and next-intl. Led full mobile app recovery: Flutter & Riverpod refactor, AD auth, and AI chatbot for production launch. Shipped analytics dashboards for 20+ schools (RTK Query) and a custom telemetry system for real-time user behavior. Owned iOS/Android deployment (App Store & Google Play) and in-app update flows."
     },
     "trustme": {
-      "title": "MARKUP DEVELOPER (TIER 2 SUPPORT)",
-      "subtitle": "TrustMe",
-      "date": "Nov 2024 - Jan 2026",
-      "info": "Creating new Vue markups from scratch according to task requirements. Maintaining and improving existing markups, fixing bugs, and implementing enhancements. Handling tasks in Bitrix24 with timely delivery. Collaborating with backend and frontend developers to solve specific issues. Utilizing Vue.js to implement dynamic elements and enhance the user experience."
+      "title": "MARKUP DEVELOPER (CONTRACT)",
+      "subtitle": "TrustMe · Blockchain SaaS · Remote",
+      "date": "Nov 2023 – Jan 2026",
+      "info": "Developed and optimized smart-contract templates for a platform serving 1.5M+ users and 3,000+ companies. Integrated REST APIs for legally binding workflows (SMS, digital signatures). Built frontend logic for blockchain authentication and document verification; reusable UI components for the TrustContract ecosystem."
     },
-    "beyimTech": {
-      "title": "FRONTEND & MOBILE DEVELOPER",
-      "subtitle": "BeyimTech",
-      "date": "Nov 2025 - Present",
-      "info": "Working as a Frontend and Mobile Developer at BeyimTech and Astana Hub resident. I develop web applications using Next.js and React, and build cross-platform mobile applications with Flutter. I collaborate with the team to create modern educational products and improve user experience and performance."
+    "qb-solutions": {
+      "title": "FRONTEND DEVELOPER (INTERNSHIP)",
+      "subtitle": "QB Solutions · Remote",
+      "date": "Feb 2025 – Apr 2025",
+      "info": "Engineered the OpenGov.kz web platform frontend from scratch with Next.js and React—production deployment, UI/UX for news and project catalogs, full i18n, and responsive layouts. Worked in Agile with GitHub for version control and milestones."
+    },
+    "stolovka": {
+      "title": "MOBILE DEVELOPER (INTERNSHIP)",
+      "subtitle": "Stolovka · FoodTech Startup · Remote",
+      "date": "Sep 2023 – Nov 2023",
+      "info": "Built a near-production Flutter app: catalog, cart, profile, and auth from Figma designs. Implemented in-app updates via Firebase Remote Config and distribution through Firebase App Distribution for rapid team testing."
+    },
+    "astana-it": {
+      "title": "BACHELOR OF SOFTWARE ENGINEERING",
+      "subtitle": "Astana IT University · Astana, Kazakhstan",
+      "date": "Sep 2022 – Jun 2025",
+      "info": "Graduated with a Bachelor's in Software Engineering. Foundation in algorithms, software design, and modern web technologies that shaped my path into frontend and mobile development."
     }
   },
   "projects": {
@@ -70,11 +70,11 @@
     "featured": {
       "finance-app": {
         "title": "Finance Management Application",
-        "description": "A mobile app for smarter finance tracking. Users can monitor expenses, set spending limits, and analyze their budgets with visual charts. The built-in AI assistant provides personalized insights to improve financial decisions."
+        "description": "Full-stack mobile app for intelligent finance tracking—React Native (Expo) client and FastAPI backend with PostgreSQL. OpenAI-powered assistant analyzes spending and gives personalized advice; interactive charts for budgets and limits; REST API with OpenAPI documentation."
       },
       "opengov": {
         "title": "OpenGov.kz",
-        "description": "An open government platform designed to provide transparency, easy access to public data, and improved communication between citizens and government services."
+        "description": "Built the entire OpenGov.kz frontend during my QB Solutions internship—Next.js, React, i18n, and responsive production deployment for transparent public data and citizen–government communication."
       },
       "berik-web": {
         "title": "Berik Zhunusbek",
@@ -96,7 +96,7 @@
   "contact": {
     "numeration": "04.Contacts",
     "title": "Get In Touch",
-    "text": "I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology and design. Whether you have a question or just want to say hi, I'll do my best to get back to you!",
+    "text": "Open to full-time, contract, and freelance frontend/mobile work. Fastest on Telegram—usually reply within 24 hours. Whether it's hiring, a project, or just saying hi, I'd love to hear from you.",
     "sayHello": "Say Hello!"
   },
   "footer": {

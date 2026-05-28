@@ -1,4 +1,4 @@
-.exp {
+﻿.exp {
     width: 1000px;
     margin: auto;
     padding: 76px 0;
@@ -8,7 +8,7 @@
     color: #CCD6F6;
     font-weight: 700;
     font-size: 32px;
-    font-family: 'Inter';
+    font-family: var(--font-sans);
 
     span {
         color: #29BF12;

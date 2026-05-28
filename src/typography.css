@@ -1,0 +1,13 @@
+/*
+ * Inria Sans & Inconsolata are Latin-first. Inter covers Cyrillic (ru/kk).
+ * Fallback stacks keep RU/KK readable without changing the EN look.
+ */
+:root {
+  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inria Sans', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Inconsolata', 'Inter', 'Consolas', monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+}

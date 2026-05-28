@@ -1,4 +1,4 @@
-.header {
+﻿.header {
     color: #8892A3;
     position: fixed;
     top: 0;
@@ -74,7 +74,7 @@
 }
 
 .navItem {
-    font-family: 'Inconsolata';
+    font-family: var(--font-mono);
     font-weight: 500;
     font-size: 17px;
 

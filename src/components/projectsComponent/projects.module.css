@@ -1,4 +1,4 @@
-.projects {
+﻿.projects {
     max-width: 1000px;
     width: 100%;
     margin: auto;
@@ -6,7 +6,7 @@
 }
 
 .title {
-    font-family: 'Inter';
+    font-family: var(--font-sans);
     font-size: 32px;
     font-weight: 700;
     color: #CCD6F6;
@@ -42,7 +42,7 @@
 
 .archive a,
 .archiveLink {
-    font-family: 'Inconsolata';
+    font-family: var(--font-mono);
     font-weight: 500;
     font-size: 16px;
     color: #29BF12;
@@ -113,7 +113,7 @@
 }
 
 .holographic_card h2 {
-    font-family: 'Inconsolata';
+    font-family: var(--font-mono);
     color: #29BF12;
     font-size: 30px;
     font-weight: 700;

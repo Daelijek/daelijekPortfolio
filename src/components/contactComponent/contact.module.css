@@ -1,4 +1,4 @@
-.contactContainer {
+﻿.contactContainer {
     width: 100%;
     max-width: 1000px;
     height: 70vh;
@@ -10,7 +10,7 @@
 }
 
 .numeration {
-    font-family: 'Inconsolata';
+    font-family: var(--font-mono);
     font-weight: 500;
     font-size: 16px;
     color: #29BF12;
@@ -18,7 +18,7 @@
 }
 
 .title {
-    font-family: 'Inter';
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 70px;
     color: #CCD6F6;
@@ -26,7 +26,7 @@
 }
 
 .text {
-    font-family: 'Inria Sans';
+    font-family: var(--font-body);
     font-weight: 500;
     font-size: 20px;
     color: #8892A3;
@@ -49,7 +49,7 @@
 .button a {
     width: 100%;
     height: 100%;
-    font-family: 'Inconsolata';
+    font-family: var(--font-mono);
     font-weight: 500;
     font-size: 20px;
     color: #29BF12;

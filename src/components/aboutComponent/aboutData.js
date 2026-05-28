@@ -1,8 +1,10 @@
 export const skills = [
-    'JavaScript (ES6+)',
-    'React',
-    'React Native',
-    'Vue.js',
-    'Node.js',
     'TypeScript',
+    'React 18 / Next.js 14',
+    'Flutter & React Native',
+    'RTK Query / Riverpod',
+    'Vue.js',
+    'FastAPI & PostgreSQL',
+    'Tailwind CSS',
+    'Docker & CI/CD',
 ];

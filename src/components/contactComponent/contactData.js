@@ -16,6 +16,6 @@ export const socialLinks = [
 ];
 
 export const footerConfig = {
-    text: 'Designed & Build by Dias Yermek',
+    text: 'Designed & Built by Dias Yermek',
     url: 'https://github.com/Daelijek',
 };

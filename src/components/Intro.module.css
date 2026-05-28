@@ -20,7 +20,7 @@
 }
 
 .introText {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     color: #29BF12;
     font-size: 40px;

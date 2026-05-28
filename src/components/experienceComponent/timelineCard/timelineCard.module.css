@@ -1,4 +1,4 @@
-.content {
+﻿.content {
     padding: 20px 30px;
     background-color: #00192B;
     position: relative;
@@ -11,21 +11,21 @@
 }
 
 .content h2 {
-    font-family: 'Inter';
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 16px;
     color: #CCD6F6;
 }
 
 .content small {
-    font-family: 'Inria Sans';
+    font-family: var(--font-body);
     font-weight: 500;
     font-size: 14px;
     color: #29BF12;
 }
 
 .content p {
-    font-family: 'Inria Sans';
+    font-family: var(--font-body);
     font-weight: 400;
     font-size: 14px;
     color: #8892A3;

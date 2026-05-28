@@ -1,6 +1,6 @@
 .wrapper {
   width: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   padding-left: 4px;
   padding-right: 4px;
 }

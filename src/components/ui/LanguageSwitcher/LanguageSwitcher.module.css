@@ -5,7 +5,7 @@
 }
 
 .langBtn {
-  font-family: 'Inconsolata', monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
   font-weight: 500;
   color: #8892A3;

@@ -11,7 +11,7 @@ footer {
 }
 
 .footerText a {
-    font-family: 'Inconsolata', monospace;
+    font-family: var(--font-mono);
     color: #8892A3;
     transition: color 0.3s ease;
 }
