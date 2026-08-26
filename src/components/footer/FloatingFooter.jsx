@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { Mail, Clock } from 'lucide-react';
 
 export default function FloatingFooter() {
+  const pathname = usePathname();
   const { playHover, playClick } = useThemeAudio();
   const [astanaTime, setAstanaTime] = useState('');
 
@@ -26,25 +28,27 @@ export default function FloatingFooter() {
     return () => clearInterval(interval);
   }, []);
 
+  if (pathname === '/') return null;
+
   return (
-    <footer className="fixed bottom-6 left-6 right-6 sm:left-10 sm:right-10 z-30 pointer-events-none flex items-center justify-between font-mono text-xs select-none">
+    <footer className="fixed bottom-8 left-8 right-8 sm:left-12 sm:right-12 z-30 pointer-events-none flex items-center justify-between font-mono text-xs select-none">
       {/* Left Column: Email */}
-      <div className="pointer-events-auto bg-[#06080A]/70 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10 hover:border-[var(--accent-border)] transition-all">
-        <p className="text-[10px] text-white/40 leading-tight">Wanna Say Hello?</p>
+      <div className="pointer-events-auto">
+        <p className="text-[10px] text-white/40 leading-tight uppercase">Wanna Say Hello?</p>
         <a
           href="mailto:yermek.dias2004@gmail.com"
           onMouseEnter={playHover}
           onClick={playClick}
-          className="text-white hover:text-[var(--accent-color)] font-semibold transition-colors flex items-center gap-1.5"
+          className="text-white hover:text-[var(--accent-color)] font-bold transition-colors block mt-0.5"
         >
-          <span>yermek.dias2004@gmail.com</span>
+          yermek.dias2004@gmail.com
         </a>
       </div>
 
       {/* Right Column: Local Time */}
-      <div className="pointer-events-auto hidden sm:block bg-[#06080A]/70 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10 text-right">
-        <p className="text-[10px] text-white/40 leading-tight">Local Time</p>
-        <p className="text-white font-bold flex items-center gap-1.5 justify-end">
+      <div className="pointer-events-auto hidden sm:block text-right">
+        <p className="text-[10px] text-white/40 leading-tight uppercase">Local Time</p>
+        <p className="text-white font-bold flex items-center gap-1.5 justify-end mt-0.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
           <span>Astana / {astanaTime || '12:00:00'} (UTC+5)</span>
         </p>

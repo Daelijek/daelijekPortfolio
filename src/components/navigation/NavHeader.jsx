@@ -38,157 +38,203 @@ export default function NavHeader() {
 
   return (
     <>
-      {/* Top Left Brand Stamp */}
-      <header className="fixed top-6 left-6 sm:left-10 z-40 font-mono select-none">
-        <Link
-          href="/"
-          onMouseEnter={playHover}
-          onClick={playClick}
-          className="group block"
-          aria-label="Dias Yermek - Home"
-        >
-          <div className="flex items-center gap-3 bg-[#06080A]/70 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10 group-hover:border-[var(--accent-border)] transition-all">
-            <div className="text-right">
-              <span className="block text-xs font-extrabold text-white group-hover:text-[var(--accent-color)] transition-colors leading-tight">
-                Dias
-              </span>
-              <span className="block text-xs font-extrabold text-white group-hover:text-[var(--accent-color)] transition-colors leading-tight">
-                Yermek
-              </span>
-            </div>
-            <div className="w-[1px] h-6 bg-white/20 group-hover:bg-[var(--accent-color)] transition-colors" />
-            <div className="text-left text-[10px] text-white/50 leading-tight">
-              <span className="block">Portfolio</span>
-              <span className="block font-bold text-white/80">2026</span>
-            </div>
-          </div>
-        </Link>
-      </header>
-
-      {/* Top Right Controls: Menu & Settings */}
-      <div className="fixed top-6 right-6 sm:right-10 z-40 flex items-center gap-3 font-mono">
-        {/* Navigation Menu Button & Popup */}
-        <div className="relative">
-          <button
-            onClick={() => {
-              playClick();
-              setIsMenuOpen(!isMenuOpen);
-              if (isSettingsOpen) setIsSettingsOpen(false);
-            }}
+      {/* Top Left Brand Stamp (Rendered on subpages) */}
+      {pathname !== '/' && (
+        <header className="fixed top-8 left-8 sm:left-12 z-40 font-mono select-none">
+          <Link
+            href="/"
             onMouseEnter={playHover}
-            className={`group flex items-center gap-3 px-3.5 py-2 rounded-lg backdrop-blur-md border transition-all text-xs font-bold ${
-              isMenuOpen
-                ? 'bg-[var(--accent-color)] text-[#06080A] border-[var(--accent-color)] shadow-[0_0_20px_var(--accent-glow)]'
-                : 'bg-[#06080A]/70 text-white border-white/10 hover:border-white/30'
-            }`}
-            aria-label="Toggle menu"
+            onClick={playClick}
+            className="group block"
+            aria-label="Dias Yermek - Home"
           >
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] opacity-75">
-                [{navLinks.find((l) => l.href === pathname)?.index || '1'}]
-              </span>
-              <span>{navLinks.find((l) => l.href === pathname)?.label || 'Home'}</span>
+            <div className="flex items-center gap-3.5">
+              <div className="text-right">
+                <span className="block text-sm sm:text-base font-extrabold text-white group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                  Dias
+                </span>
+                <span className="block text-sm sm:text-base font-extrabold text-white group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                  Yermek
+                </span>
+              </div>
+              <div className="w-[1.5px] h-7 bg-white/20 group-hover:bg-[var(--accent-color)] transition-colors" />
+              <div className="text-left text-xs sm:text-sm text-white/50 leading-tight">
+                <span className="block">Portfolio</span>
+                <span className="block font-bold text-white/80">2026</span>
+              </div>
             </div>
-            {/* 4-dot Icon */}
-            <div className="grid grid-cols-2 gap-0.5 w-3.5 h-3.5 items-center justify-center">
-              <span className={`w-1 h-1 rounded-full ${isMenuOpen ? 'bg-[#06080A]' : 'bg-[var(--accent-color)]'}`} />
-              <span className={`w-1 h-1 rounded-full ${isMenuOpen ? 'bg-[#06080A]' : 'bg-white'}`} />
-              <span className={`w-1 h-1 rounded-full ${isMenuOpen ? 'bg-[#06080A]' : 'bg-white'}`} />
-              <span className={`w-1 h-1 rounded-full ${isMenuOpen ? 'bg-[#06080A]' : 'bg-[var(--accent-color)]'}`} />
-            </div>
-          </button>
+          </Link>
+        </header>
+      )}
 
-          {/* Expandable Directory Menu Dropdown */}
+      {/* Bottom Right Controls: Aligned strictly to bottom level of left block */}
+      <div className="fixed bottom-3 sm:bottom-4 lg:bottom-5 right-3 sm:right-4 lg:right-5 z-40 flex items-center gap-3 font-mono select-none">
+        {/* Navigation Menu Capsule Button & Expandable Modal */}
+        <div className="relative">
+          {/* Collapsed Button (Rendered when menu is closed) */}
+          {!isMenuOpen && (
+            <button
+              onClick={() => {
+                playClick();
+                setIsMenuOpen(true);
+                if (isSettingsOpen) setIsSettingsOpen(false);
+              }}
+              onMouseEnter={playHover}
+              className="group flex items-center justify-between min-w-[240px] sm:min-w-[270px] pl-6 pr-2.5 h-14 sm:h-16 rounded-2xl sm:rounded-3xl bg-[#080C10]/90 backdrop-blur-xl border border-white/20 hover:border-[var(--accent-border)] transition-all shadow-2xl"
+              aria-label="Open navigation menu"
+            >
+              {/* Index & Label */}
+              <div className="flex items-center gap-3">
+                <span className="text-xs sm:text-sm text-white/50 font-mono font-bold">
+                  [{navLinks.find((l) => l.href === pathname)?.index || '1'}]
+                </span>
+                <span className="text-base sm:text-lg font-black tracking-widest text-white uppercase font-display">
+                  {navLinks.find((l) => l.href === pathname)?.label || 'Home'}
+                </span>
+              </div>
+
+              {/* White Rounded Square Matrix Icon */}
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0">
+                <div className="grid grid-cols-2 gap-1 w-3.5 h-3.5 items-center justify-center">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                </div>
+              </div>
+            </button>
+          )}
+
+          {/* Expanded Navigation Menu Card (Expands smoothly upwards) */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.96 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="absolute right-0 top-12 w-80 bg-[#080B0E]/95 backdrop-blur-xl border border-white/10 rounded-xl p-5 shadow-2xl font-mono"
+                initial={{ opacity: 0, scale: 0.94, y: 15 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.94, y: 15 }}
+                transition={{ type: 'spring', damping: 26, stiffness: 280 }}
+                className="absolute right-0 bottom-0 w-88 sm:w-96 bg-[#04080A]/95 backdrop-blur-2xl border-2 border-[var(--accent-color)] rounded-3xl p-5 sm:p-6 shadow-[0_0_50px_var(--accent-glow)] font-mono z-50 flex flex-col gap-4 select-none"
               >
-                {/* Menu Header */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                {/* 1. Header */}
+                <div className="flex items-start justify-between border-b border-white/10 pb-3">
                   <div>
-                    <h3 className="text-xs font-bold text-white uppercase tracking-wider">Navigation</h3>
-                    <p className="text-[10px] text-white/40">Directory // System</p>
+                    <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider font-display">
+                      Menu
+                    </h3>
+                    <p className="text-[10px] text-white/50 tracking-widest uppercase font-mono">
+                      NAVIGATION
+                    </p>
                   </div>
-                  <span className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-[var(--accent-color)] font-bold">
+                  <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/15 text-[10px] text-white/70 font-bold font-mono">
                     DIR
                   </span>
                 </div>
 
-                {/* Main Nav Items */}
-                <nav className="space-y-1.5 mb-5">
-                  {navLinks.map((item) => {
-                    const isActive = pathname === item.href;
-                    return (
+                {/* 2. Quick Connect Socials (2x2 Grid) */}
+                <div className="grid grid-cols-2 gap-2.5 text-xs">
+                  <a
+                    href="https://www.linkedin.com/in/dias-yermek/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={playHover}
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white/80 transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)]" />
+                    <span className="text-xs font-mono">LinkedIn</span>
+                  </a>
+                  <a
+                    href="https://github.com/Daelijek"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={playHover}
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white/80 transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                    <span className="text-xs font-mono">GitHub</span>
+                  </a>
+                  <a
+                    href="https://t.me/daelijek"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onMouseEnter={playHover}
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white/80 transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span className="text-xs font-mono">Telegram</span>
+                  </a>
+                  <a
+                    href="mailto:yermek.dias2004@gmail.com"
+                    onMouseEnter={playHover}
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white/80 transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span className="text-xs font-mono">Email</span>
+                  </a>
+                </div>
+
+                {/* 3. Dev Labs Banner */}
+                <a
+                  href="https://github.com/Daelijek/FinanceManagementApp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={playHover}
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white font-bold text-xs tracking-wider uppercase transition-colors"
+                >
+                  <span className="font-display text-xs">DEV LABS</span>
+                  <ExternalLink className="w-4 h-4 text-[var(--accent-color)]" />
+                </a>
+
+                {/* 4. Navigation Routes */}
+                <nav className="space-y-2 pt-1 border-t border-white/10">
+                  {navLinks
+                    .filter((item) => item.href !== pathname)
+                    .map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
-                        onClick={playClick}
+                        onClick={() => {
+                          playClick();
+                          setIsMenuOpen(false);
+                        }}
                         onMouseEnter={playHover}
-                        className={`flex items-center justify-between p-2.5 rounded-lg text-xs font-bold transition-all ${
-                          isActive
-                            ? 'bg-[var(--accent-glow)] text-[var(--accent-color)] border border-[var(--accent-border)]'
-                            : 'text-white/70 hover:text-white hover:bg-white/5 border border-transparent'
-                        }`}
+                        className="flex items-center justify-between p-3.5 rounded-xl border border-white/10 hover:border-[var(--accent-border)] bg-white/5 hover:bg-[var(--accent-glow)] text-white hover:text-[var(--accent-color)] transition-all group"
                       >
-                        <div className="flex items-center gap-2.5">
-                          <span className="text-[10px] text-[var(--accent-color)]">[{item.index}]</span>
-                          <span className="tracking-wider">{item.label}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs text-white/40 font-mono">[{item.index}]</span>
+                          <span className="text-base font-bold uppercase tracking-wider font-display">
+                            {item.label}
+                          </span>
                         </div>
-                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[var(--accent-color)] shadow-[0_0_8px_var(--accent-color)]' : 'bg-white/20'}`} />
+                        <span className="w-2 h-2 rounded-full bg-white/20 group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
                       </Link>
-                    );
-                  })}
+                    ))}
                 </nav>
 
-                {/* Social Quick Links with glowing dots */}
-                <div className="border-t border-white/10 pt-4">
-                  <div className="text-[10px] text-white/40 mb-2.5 tracking-wider uppercase">Quick Connect</div>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <a
-                      href="https://t.me/daelijek"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={playHover}
-                      className="flex items-center gap-2 p-2 rounded bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)]" />
-                      <span className="text-[11px]">Telegram</span>
-                    </a>
-                    <a
-                      href="https://github.com/Daelijek"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={playHover}
-                      className="flex items-center gap-2 p-2 rounded bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-                      <span className="text-[11px]">GitHub</span>
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/in/dias-yermek/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={playHover}
-                      className="flex items-center gap-2 p-2 rounded bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                      <span className="text-[11px]">LinkedIn</span>
-                    </a>
-                    <a
-                      href="https://github.com/Daelijek/FinanceManagementApp"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={playHover}
-                      className="flex items-center gap-2 p-2 rounded bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                      <span className="text-[11px]">Dev Labs ↗</span>
-                    </a>
+                {/* 5. Bottom Current Active Route & Close Matrix Button */}
+                <div
+                  onClick={() => {
+                    playClick();
+                    setIsMenuOpen(false);
+                  }}
+                  className="flex items-center justify-between pt-2 border-t border-white/10 cursor-pointer group"
+                >
+                  <div className="flex items-center gap-3 pl-1">
+                    <span className="text-xs sm:text-sm text-[var(--accent-color)] font-mono font-bold">
+                      [{navLinks.find((l) => l.href === pathname)?.index || '1'}]
+                    </span>
+                    <span className="text-base sm:text-lg font-black tracking-widest text-[var(--accent-color)] uppercase font-display">
+                      {navLinks.find((l) => l.href === pathname)?.label || 'Home'}
+                    </span>
+                  </div>
+
+                  {/* Active Matrix Button that closes menu */}
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-white text-[#04080A] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+                    <div className="grid grid-cols-2 gap-1 w-3.5 h-3.5 items-center justify-center">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -196,7 +242,7 @@ export default function NavHeader() {
           </AnimatePresence>
         </div>
 
-        {/* System Settings Gear Button & Modal */}
+        {/* System Settings Gear Button & Modal (Matching size and bottom alignment) */}
         <div className="relative">
           <button
             onClick={() => {
@@ -205,25 +251,25 @@ export default function NavHeader() {
               if (isMenuOpen) setIsMenuOpen(false);
             }}
             onMouseEnter={playHover}
-            className={`p-2.5 rounded-lg backdrop-blur-md border transition-all text-white ${
+            className={`w-13 h-13 sm:w-14 sm:h-14 rounded-2xl sm:rounded-3xl backdrop-blur-md border transition-all flex items-center justify-center text-white shadow-2xl ${
               isSettingsOpen
                 ? 'bg-[var(--accent-glow)] border-[var(--accent-border)] text-[var(--accent-color)] shadow-[0_0_20px_var(--accent-glow)]'
-                : 'bg-[#06080A]/70 border-white/10 hover:border-white/30'
+                : 'bg-[#080C10]/85 border-white/20 hover:border-[var(--accent-border)]'
             }`}
             aria-label="Global System Settings"
           >
-            <Settings className={`w-4 h-4 transition-transform duration-500 ${isSettingsOpen ? 'rotate-90 text-[var(--accent-color)]' : ''}`} />
+            <Settings className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-500 ${isSettingsOpen ? 'rotate-90 text-[var(--accent-color)]' : 'group-hover:rotate-45'}`} />
           </button>
 
-          {/* Settings Drawer Panel */}
+          {/* Settings Drawer Panel (Opens Upwards) */}
           <AnimatePresence>
             {isSettingsOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                initial={{ opacity: 0, y: -10, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.96 }}
+                exit={{ opacity: 0, y: -10, scale: 0.96 }}
                 transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="absolute right-0 top-12 w-80 bg-[#080B0E]/95 backdrop-blur-xl border border-white/10 rounded-xl p-5 shadow-2xl font-mono"
+                className="absolute right-0 bottom-16 sm:bottom-18 w-80 bg-[#080B0E]/95 backdrop-blur-xl border border-white/15 rounded-2xl sm:rounded-3xl p-5 shadow-2xl font-mono"
               >
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
