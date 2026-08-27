@@ -202,10 +202,6 @@ p, span, a, button, li, div {
   animation: marquee 65s linear infinite;
 }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
 /* Synchronized Laser Scanner & Mask Movement */
 @keyframes laserVerticalSweep {
   0% {

@@ -303,24 +303,26 @@ export default function HomePage() {
 
               {/* BOTTOM BAR: Screen Bottom-Left Perf Tier + Screen Bottom-Right LOADED Button */}
               <div className="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4">
-                {/* Strict Bottom-Left: Performance Tier Selector */}
+                {/* Strict Bottom-Left: Performance Tier Selector (Mirrored Dimensions & Height with Right Block) */}
                 <div
-                  className="flex flex-col gap-1.5 pointer-events-auto"
+                  className="flex flex-col items-start gap-1.5 pointer-events-auto w-[200px] sm:w-[260px] md:w-[280px]"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <span className="text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
-                    PERFORMANCE TIER
-                  </span>
-                  <div className="flex items-center rounded-xl border border-[var(--border-subtle)] p-1 bg-black/70 backdrop-blur-xl">
+                  <div className="w-full flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
+                    <span>PERFORMANCE_TIER</span>
+                    <span className="text-[var(--accent-color)] font-bold">[{perfTier.toUpperCase()}]</span>
+                  </div>
+
+                  <div className="w-full h-12 sm:h-14 flex items-stretch rounded-xl border border-[var(--border-subtle)] bg-black/85 backdrop-blur-2xl shadow-2xl p-1 gap-1">
                     {['high', 'med', 'saver'].map((t) => (
                       <button
                         key={t}
                         onClick={() => setPerfTier(t)}
                         onMouseEnter={playHover}
-                        className={`px-3.5 py-1 text-[11px] font-bold uppercase rounded-lg transition-all ${
+                        className={`flex-1 h-full rounded-lg font-display font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 flex items-center justify-center ${
                           perfTier === t
-                            ? 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_10px_var(--accent-glow)]'
-                            : 'text-[var(--text-muted)] hover:text-[var(--heading-tint)]'
+                            ? 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_15px_var(--accent-glow)] font-black'
+                            : 'text-[var(--text-secondary)] hover:text-[var(--heading-tint)] hover:bg-white/5'
                         }`}
                       >
                         {t}
@@ -440,7 +442,7 @@ export default function HomePage() {
 
       {/* TOP-RIGHT: Edge-to-Edge Rolling Marquee (From 50% split all the way to right edge) */}
       <div
-        className="hidden md:block fixed left-1/2 right-3 sm:right-4 lg:right-6 top-5 z-30 overflow-hidden pointer-events-auto select-none"
+        className="hidden md:block fixed left-1/2 right-3 sm:right-4 lg:right-6 top-5 z-30 overflow-hidden pointer-events-none select-none"
         style={{
           maskImage: 'linear-gradient(to right, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
