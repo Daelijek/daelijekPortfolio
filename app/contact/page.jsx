@@ -50,7 +50,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-28 sm:pt-32 pb-36 px-6 sm:px-12 max-w-5xl mx-auto font-mono">
+    <div className="min-h-screen pt-44 sm:pt-56 lg:pt-60 pb-36 px-6 sm:px-12 max-w-5xl mx-auto font-mono">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
         {/* Left Column: Direct Links & Info */}
         <div className="lg:col-span-5 space-y-6">

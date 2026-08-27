@@ -104,7 +104,7 @@ export default function AboutPage() {
   const exp = content.experience;
 
   return (
-    <div className="min-h-screen pt-28 sm:pt-32 pb-36 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
+    <div className="min-h-screen pt-44 sm:pt-56 lg:pt-60 pb-36 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
       {/* Biography Introduction with Avatar */}
       <section className="mb-24 sm:mb-28 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 lg:items-stretch">
         {/* Left: Avatar Frame (Matched height) */}

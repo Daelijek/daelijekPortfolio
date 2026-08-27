@@ -15,7 +15,7 @@ export default function ProjectsPage() {
   const projects = content.projects;
 
   return (
-    <div className="min-h-screen pt-28 sm:pt-32 pb-36 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
+    <div className="min-h-screen pt-44 sm:pt-56 lg:pt-60 pb-36 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
       {/* Featured Projects Flow Rail */}
       <div className="space-y-16 mb-24">
         {projects.featured.map((proj, idx) => (

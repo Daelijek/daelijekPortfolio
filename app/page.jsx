@@ -147,8 +147,10 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Boot sequence
+  // Real Asset & Engine Preloading Sequence
   useEffect(() => {
+    if (isBooted) return;
+
     try {
       if (sessionStorage.getItem('daelijek_booted') === 'true') {
         setIsBooted(true);
@@ -156,23 +158,100 @@ export default function HomePage() {
       }
     } catch {}
 
-    let current = 0;
-    const interval = setInterval(() => {
-      current += Math.floor(Math.random() * 9) + 4;
-      if (current >= 100) {
-        current = 100;
-        setProgress(100);
-        setStepText('SYSTEM_READY');
-        clearInterval(interval);
-      } else {
-        setProgress(current);
-        if (current > 35 && current <= 75) setStepText('MOUNTING_SHADERS');
-        else if (current > 75) setStepText('CALIBRATING_HUD');
-      }
-    }, 35);
+    let isMounted = true;
+    let targetProgress = 0;
+    let renderedProgress = 0;
 
-    return () => clearInterval(interval);
-  }, []);
+    // Smooth progress interpolation ticker for silky 60fps counter
+    const progressTicker = setInterval(() => {
+      if (!isMounted) return;
+      if (renderedProgress < targetProgress) {
+        renderedProgress += Math.max(1, Math.ceil((targetProgress - renderedProgress) * 0.18));
+        if (renderedProgress > 100) renderedProgress = 100;
+        setProgress(renderedProgress);
+      }
+    }, 20);
+
+    const runPreload = async () => {
+      // Step 1: Initialize Core & DOM
+      setStepText('INITIALIZING_CORE_SYSTEMS');
+      targetProgress = 25;
+      await new Promise((r) => setTimeout(r, 140));
+
+      // Step 2: Font Synchronization (document.fonts.ready)
+      setStepText('SYNCHRONIZING_TYPOGRAPHY');
+      if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch {}
+      }
+      targetProgress = 50;
+      await new Promise((r) => setTimeout(r, 140));
+
+      // Step 3: Critical Asset & Texture Preload in Parallel
+      setStepText('CACHING_TEXTURES_AND_ASSETS');
+      const criticalImages = [
+        '/assets/linkedIn_Dias_square.png',
+        '/assets/Finance.png',
+        '/assets/beyim.png',
+        '/assets/openGov.png',
+        '/assets/berikWeb.png',
+        '/images/logo.png',
+      ];
+
+      let loadedCount = 0;
+      const loadPromises = criticalImages.map((src) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.src = src;
+          img.onload = () => {
+            loadedCount++;
+            if (isMounted) {
+              targetProgress = Math.min(85, 50 + Math.floor((loadedCount / criticalImages.length) * 35));
+            }
+            resolve();
+          };
+          img.onerror = () => {
+            loadedCount++;
+            resolve();
+          };
+        });
+      });
+
+      // Max timeout safeguard 2.0s for slow networks
+      await Promise.race([
+        Promise.all(loadPromises),
+        new Promise((r) => setTimeout(r, 2000)),
+      ]);
+
+      // Step 4: WebGL & HUD Calibration
+      if (isMounted) {
+        setStepText('CALIBRATING_WEBGL_SHADERS');
+        targetProgress = 95;
+        await new Promise((r) => setTimeout(r, 160));
+      }
+
+      // Step 5: Ready
+      if (isMounted) {
+        targetProgress = 100;
+        const checkReady = setInterval(() => {
+          if (renderedProgress >= 100) {
+            clearInterval(checkReady);
+            if (isMounted) {
+              setStepText('SYSTEM_READY // ALL_CHANNELS_ONLINE');
+            }
+          }
+        }, 25);
+      }
+    };
+
+    runPreload();
+
+    return () => {
+      isMounted = false;
+      clearInterval(progressTicker);
+    };
+  }, [isBooted]);
 
   const handleEnter = () => {
     soundFx.playBootChime();
@@ -180,6 +259,14 @@ export default function HomePage() {
     try {
       sessionStorage.setItem('daelijek_booted', 'true');
     } catch {}
+  };
+
+  const triggerBoot = () => {
+    try {
+      sessionStorage.removeItem('daelijek_booted');
+    } catch {}
+    setProgress(0);
+    setIsBooted(false);
   };
 
   return (
@@ -441,8 +528,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* RIGHT BACKGROUND BLOCK: Symmetric rounded frame with floating constellation particle network */}
-      <div className="hidden md:block absolute right-3 sm:right-4 lg:right-5 top-3 sm:top-4 lg:top-5 bottom-3 sm:bottom-4 lg:bottom-5 left-1/2 ml-1.5 sm:ml-2.5 lg:ml-3 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 z-0 pointer-events-auto bg-[#020504]/35 backdrop-blur-sm">
+      {/* RIGHT BACKGROUND: Seamless borderless constellation particle network */}
+      <div className="hidden md:block absolute right-0 top-0 bottom-0 left-1/2 z-0 pointer-events-auto overflow-hidden">
         {/* Constellation Particle Network (Floating interactive nodes & dynamic links) */}
         <RightConstellationBackground />
       </div>

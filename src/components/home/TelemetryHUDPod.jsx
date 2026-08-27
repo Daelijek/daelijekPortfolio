@@ -7,6 +7,7 @@ import { Activity } from 'lucide-react';
 // Dedicated Hardware-Accelerated 60fps Telemetry Oscilloscope Canvas
 function TelemetryWaveCanvas() {
   const canvasRef = useRef(null);
+  const { theme } = useThemeAudio();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -17,6 +18,23 @@ function TelemetryWaveCanvas() {
     let animId;
     let width = (canvas.width = canvas.parentElement.offsetWidth || 300);
     let height = (canvas.height = 36);
+
+    const getColor = () => {
+      switch (theme) {
+        case 'cyan':
+          return { r: 0, g: 243, b: 255 };
+        case 'amber':
+          return { r: 255, g: 184, b: 0 };
+        case 'crimson':
+          return { r: 255, g: 0, b: 85 };
+        case 'obsidian':
+          return { r: 255, g: 255, b: 255 };
+        default:
+          return { r: 0, g: 255, b: 159 }; // Acid Green
+      }
+    };
+
+    const color = getColor();
 
     const handleResize = () => {
       if (!canvas.parentElement) return;
@@ -40,7 +58,7 @@ function TelemetryWaveCanvas() {
       ctx.stroke();
 
       // 2. Faint Ghost Wave (Harmonic secondary echo)
-      ctx.strokeStyle = 'rgba(0, 255, 159, 0.2)';
+      ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.25)`;
       ctx.lineWidth = 1;
       ctx.beginPath();
       for (let x = 0; x <= width; x += 3) {
@@ -52,11 +70,11 @@ function TelemetryWaveCanvas() {
       }
       ctx.stroke();
 
-      // 3. Primary Crisp Neon Telemetry Wave
-      ctx.strokeStyle = 'var(--accent-color, #00ff9f)';
+      // 3. Primary Crisp Neon Telemetry Wave (Full Theme Reactive)
+      ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, 0.95)`;
       ctx.lineWidth = 1.8;
       ctx.shadowBlur = 8;
-      ctx.shadowColor = 'rgba(0, 255, 159, 0.6)';
+      ctx.shadowColor = `rgba(${color.r}, ${color.g}, ${color.b}, 0.7)`;
       ctx.beginPath();
 
       for (let x = 0; x <= width; x += 2) {
@@ -84,7 +102,7 @@ function TelemetryWaveCanvas() {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animId);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas
