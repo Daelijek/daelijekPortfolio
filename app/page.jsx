@@ -8,6 +8,7 @@ import { soundFx } from '../src/audio/soundEffects';
 import Device3DViewport from '../src/components/home/Device3DViewport';
 import TelemetryHUDPod from '../src/components/home/TelemetryHUDPod';
 import QuantumMatrixBackground from '../src/components/home/QuantumMatrixBackground';
+import RightConstellationBackground from '../src/components/home/RightConstellationBackground';
 import TrueLaserScanner from '../src/components/home/TrueLaserScanner';
 import { Volume2, VolumeX, ArrowRight } from 'lucide-react';
 
@@ -438,6 +439,12 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* RIGHT BACKGROUND BLOCK: Symmetric rounded frame with floating constellation particle network */}
+      <div className="hidden md:block absolute right-3 sm:right-4 lg:right-5 top-3 sm:top-4 lg:top-5 bottom-3 sm:bottom-4 lg:bottom-5 left-1/2 ml-1.5 sm:ml-2.5 lg:ml-3 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 z-0 pointer-events-auto bg-[#020504]/35 backdrop-blur-sm">
+        {/* Constellation Particle Network (Floating interactive nodes & dynamic links) */}
+        <RightConstellationBackground />
       </div>
 
       {/* TOP-RIGHT: Edge-to-Edge Rolling Marquee (From 50% split all the way to right edge) */}
