@@ -422,7 +422,7 @@ export default function NavHeader() {
                 </div>
 
                 {/* Localization */}
-                <div>
+                <div className="mb-5">
                   <div className="flex items-center justify-between text-[11px] text-white/50 mb-2">
                     <span>[03] LOCALE</span>
                     <span className="text-[var(--accent-color)] uppercase">{lang}</span>
@@ -451,6 +451,21 @@ export default function NavHeader() {
                       RU
                     </button>
                   </div>
+                </div>
+
+                {/* Replay Boot Sequence */}
+                <div>
+                  <button
+                    onClick={() => {
+                      playClick();
+                      sessionStorage.removeItem('daelijek_booted');
+                      window.location.href = '/';
+                    }}
+                    onMouseEnter={playHover}
+                    className="w-full py-2.5 rounded-lg border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-xs font-bold tracking-wider uppercase transition-all flex items-center justify-center gap-2"
+                  >
+                    <span>⚡ REPLAY BOOT SEQUENCE</span>
+                  </button>
                 </div>
               </motion.div>
             )}
