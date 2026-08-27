@@ -31,24 +31,28 @@ export default function FloatingFooter() {
   if (pathname === '/') return null;
 
   return (
-    <footer className="fixed bottom-8 left-8 right-8 sm:left-12 sm:right-12 z-30 pointer-events-none flex items-center justify-between font-mono text-xs select-none">
-      {/* Left Column: Email */}
+    <footer className="fixed bottom-6 sm:bottom-8 left-6 sm:left-12 z-30 pointer-events-none flex items-end gap-8 sm:gap-12 font-mono text-xs select-none">
+      {/* Email Column */}
       <div className="pointer-events-auto">
-        <p className="text-[10px] text-white/40 leading-tight uppercase">Wanna Say Hello?</p>
+        <p className="text-[10px] text-[var(--text-muted)] leading-tight uppercase tracking-wider mb-0.5">
+          Wanna Say Hello?
+        </p>
         <a
           href="mailto:dias1605ermek@gmail.com"
           onMouseEnter={playHover}
           onClick={playClick}
-          className="text-white hover:text-[var(--accent-color)] font-bold transition-colors block mt-0.5"
+          className="text-xs sm:text-sm font-bold text-[var(--heading-tint)] hover:text-[var(--accent-color)] transition-colors block"
         >
           dias1605ermek@gmail.com
         </a>
       </div>
 
-      {/* Right Column: Local Time */}
-      <div className="pointer-events-auto hidden sm:block text-right">
-        <p className="text-[10px] text-white/40 leading-tight uppercase">Local Time</p>
-        <p className="text-white font-bold flex items-center gap-1.5 justify-end mt-0.5">
+      {/* Local Time Column (Placed side-by-side after Wanna Say Hello) */}
+      <div className="pointer-events-auto hidden sm:block">
+        <p className="text-[10px] text-[var(--text-muted)] leading-tight uppercase tracking-wider mb-0.5">
+          Local Time
+        </p>
+        <p className="text-xs sm:text-sm font-bold text-[var(--heading-tint)] flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
           <span>Astana / {astanaTime || '12:00:00'} (UTC+5)</span>
         </p>

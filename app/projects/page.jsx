@@ -15,24 +15,7 @@ export default function ProjectsPage() {
   const projects = content.projects;
 
   return (
-    <div className="min-h-screen pt-28 pb-24 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
-      {/* Breadcrumb Navigation */}
-      <nav className="flex items-center gap-2 text-xs text-white/50 mb-4" aria-label="Breadcrumb">
-        <Link href="/" onClick={playClick} onMouseEnter={playHover} className="hover:text-white transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        <span className="text-[var(--accent-color)] font-bold">Projects</span>
-      </nav>
-
-      {/* Page Title */}
-      <div className="mb-14">
-        <h1 className="text-4xl sm:text-6xl font-black text-white uppercase font-sans mb-3 tracking-tight">
-          Projects
-        </h1>
-        <p className="text-xs text-white/50">Curated showcase of production applications & engineering architectures</p>
-      </div>
-
+    <div className="min-h-screen pt-28 sm:pt-32 pb-36 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
       {/* Featured Projects Flow Rail */}
       <div className="space-y-16 mb-24">
         {projects.featured.map((proj, idx) => (
@@ -42,22 +25,22 @@ export default function ProjectsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: idx * 0.1 }}
-            className="cyber-panel rounded-2xl overflow-hidden border border-white/10 hover:border-[var(--accent-border)] transition-all group"
+            className="cyber-panel rounded-2xl overflow-hidden border border-[var(--border-subtle)] hover:border-[var(--accent-border)] transition-all group"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
               {/* Left Column: Metadata & Narrative */}
               <div className="lg:col-span-6 p-8 sm:p-12 flex flex-col justify-between space-y-6">
                 <div>
                   <div className="flex items-center gap-3 text-xs mb-3">
-                    <span className="text-2xl font-black text-[var(--accent-color)]">{proj.num}</span>
-                    <span className="text-[11px] text-white/40">// {proj.category}</span>
+                    <span className="text-2xl font-black text-[var(--accent-color)] font-display">{proj.num}</span>
+                    <span className="text-[11px] text-[var(--text-muted)] font-mono">// {proj.category}</span>
                   </div>
 
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-sans group-hover:text-[var(--accent-color)] transition-colors mb-4">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--heading-tint)] font-display group-hover:text-[var(--accent-color)] transition-colors mb-4">
                     {proj.title}
                   </h2>
 
-                  <p className="text-sm text-white/75 leading-relaxed font-sans mb-6">
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed font-sans mb-6">
                     {proj.description}
                   </p>
 
@@ -66,7 +49,7 @@ export default function ProjectsPage() {
                     {proj.tags.map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-xs text-white/70"
+                        className="px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-xs text-[var(--text-secondary)] font-mono"
                       >
                         {tag}
                       </span>
@@ -75,7 +58,7 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                <div className="flex items-center gap-4 pt-6 border-t border-[var(--border-subtle)]">
                   {proj.liveUrl && (
                     <a
                       href={proj.liveUrl}
@@ -97,7 +80,7 @@ export default function ProjectsPage() {
                       rel="noopener noreferrer"
                       onClick={playClick}
                       onMouseEnter={playHover}
-                      className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-white hover:text-[var(--accent-color)] transition-colors"
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-black/40 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] font-bold text-xs tracking-wider uppercase transition-all"
                     >
                       <FaGithub className="w-4 h-4" />
                       <span>SOURCE CODE</span>

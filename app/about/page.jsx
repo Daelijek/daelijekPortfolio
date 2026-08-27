@@ -104,70 +104,84 @@ export default function AboutPage() {
   const exp = content.experience;
 
   return (
-    <div className="min-h-screen pt-28 pb-24 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
-      {/* Breadcrumb Navigation */}
-      <nav className="flex items-center gap-2 text-xs text-white/50 mb-4" aria-label="Breadcrumb">
-        <Link href="/" onClick={playClick} onMouseEnter={playHover} className="hover:text-white transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        <span className="text-[var(--accent-color)] font-bold">About</span>
-      </nav>
-
-      {/* Page Title */}
-      <h1 className="text-4xl sm:text-6xl font-black text-white uppercase font-sans mb-12 tracking-tight">
-        Meet Dias
-      </h1>
-
-      {/* Biography Introduction */}
-      <section className="mb-20 space-y-8 max-w-4xl">
-        <div className="space-y-4">
-          <p className="text-xs text-[var(--accent-color)] font-bold tracking-widest uppercase">
-            // SOFTWARE ENGINEER &bull; ASTANA, KAZAKHSTAN
-          </p>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-sans leading-tight">
-            A creative <span className="text-[var(--accent-color)]">Frontend & Mobile Developer</span> crafting fast, reliable, and immersive digital experiences.
-          </h2>
-          <p className="text-sm sm:text-base text-white/75 leading-relaxed font-sans">
-            With a Bachelor’s in Software Engineering from <b>Astana IT University (2025)</b>, my journey spans building high-performance web applications and production-ready mobile apps. From leading mobile recovery and App Store releases at <b>BeyimTech</b> (EdTech, Astana Hub) to building smart contract interfaces at <b>TrustMe</b> for over 1.5 million users and delivering the <b>OpenGov.kz</b> frontend, I bridge visual excellence with rock-solid engineering.
-          </p>
+    <div className="min-h-screen pt-28 sm:pt-32 pb-36 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
+      {/* Biography Introduction with Avatar */}
+      <section className="mb-24 sm:mb-28 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 lg:items-stretch">
+        {/* Left: Avatar Frame (Matched height) */}
+        <div className="lg:col-span-4 flex flex-col">
+          <div className="relative group w-full h-full min-h-[340px] rounded-2xl overflow-hidden border border-[var(--border-bright)] bg-[var(--card-bg)] shadow-[0_0_35px_var(--card-hover-glow)] transition-all">
+            <img
+              src="/assets/linkedIn_Dias_square.png"
+              alt="Dias Yermek"
+              className="w-full h-full object-cover grayscale brightness-95 contrast-105 group-hover:scale-105 transition-transform duration-700"
+            />
+            {/* Subtle Theme Hue Overlay */}
+            <div className="absolute inset-0 bg-[var(--accent-color)] opacity-[0.06] mix-blend-color pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#020504] via-transparent to-transparent opacity-85 pointer-events-none" />
+            
+            <div className="absolute bottom-5 left-5 right-5 text-xs font-mono">
+              <span className="text-[10px] text-[var(--accent-color)] font-bold block tracking-wider">// DIAS_YERMEK</span>
+              <span className="text-[var(--text-secondary)] text-[11px] mt-0.5 block">Software Engineer &bull; Astana</span>
+            </div>
+          </div>
         </div>
 
-        {/* Highlight Badges */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-2">
-          <div className="cyber-panel p-4 rounded-lg border border-white/10">
-            <GraduationCap className="w-5 h-5 text-[var(--accent-color)] mb-2" />
-            <div className="text-xs font-bold text-white">Astana IT University</div>
-            <div className="text-[11px] text-white/50">B.S. Software Engineering (2025)</div>
+        {/* Right: Narrative & Highlights (Matched height & bottom-aligned badges) */}
+        <div className="lg:col-span-8 flex flex-col justify-between space-y-8">
+          <div className="space-y-4">
+            <p className="text-xs text-[var(--accent-color)] font-bold tracking-widest uppercase">
+              // MIDDLE FRONTEND & MOBILE DEVELOPER &bull; ASTANA, KZ
+            </p>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[var(--heading-tint)] font-display uppercase tracking-wide leading-tight">
+              Creative Frontend & Mobile Developer
+            </h2>
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans pt-1">
+              With a Bachelor’s in Software Engineering from <b className="text-[var(--heading-tint)]">Astana IT University (2025)</b>, my journey spans building high-performance web applications and production-ready mobile apps. From leading mobile recovery and App Store releases at <b className="text-[var(--heading-tint)]">BeyimTech</b> (EdTech, Astana Hub) to building smart contract interfaces at <b className="text-[var(--heading-tint)]">TrustMe</b> for over 1.5 million users and delivering the <b className="text-[var(--heading-tint)]">OpenGov.kz</b> frontend, I bridge visual excellence with rock-solid engineering.
+            </p>
           </div>
 
-          <div className="cyber-panel p-4 rounded-lg border border-white/10">
-            <Building2 className="w-5 h-5 text-[var(--accent-color)] mb-2" />
-            <div className="text-xs font-bold text-white">BeyimTech &bull; Astana Hub</div>
-            <div className="text-[11px] text-white/50">Middle Frontend & Mobile Lead</div>
-          </div>
+          {/* Highlight Badges (Aligned with bottom line of avatar) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 mt-auto">
+            <div className="cyber-panel p-5 rounded-xl flex flex-col justify-between gap-3">
+              <GraduationCap className="w-5 h-5 text-[var(--accent-color)] shrink-0" />
+              <div>
+                <div className="text-xs font-bold text-[var(--heading-tint)]">Astana IT University</div>
+                <div className="text-[11px] text-[var(--text-muted)] mt-0.5">B.S. Software Eng. (2025)</div>
+              </div>
+            </div>
 
-          <div className="cyber-panel p-4 rounded-lg border border-white/10">
-            <Code2 className="w-5 h-5 text-[var(--accent-color)] mb-2" />
-            <div className="text-xs font-bold text-white">TrustMe SaaS</div>
-            <div className="text-[11px] text-white/50">1.5M+ Active Users Ecosystem</div>
+            <div className="cyber-panel p-5 rounded-xl flex flex-col justify-between gap-3">
+              <Building2 className="w-5 h-5 text-[var(--accent-color)] shrink-0" />
+              <div>
+                <div className="text-xs font-bold text-[var(--heading-tint)]">BeyimTech &bull; Astana Hub</div>
+                <div className="text-[11px] text-[var(--text-muted)] mt-0.5">Middle Frontend & Mobile Lead</div>
+              </div>
+            </div>
+
+            <div className="cyber-panel p-5 rounded-xl flex flex-col justify-between gap-3">
+              <Code2 className="w-5 h-5 text-[var(--accent-color)] shrink-0" />
+              <div>
+                <div className="text-xs font-bold text-[var(--heading-tint)]">TrustMe SaaS</div>
+                <div className="text-[11px] text-[var(--text-muted)] mt-0.5">1.5M+ Active Users</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 8-Sector Technical Competency Matrix */}
-      <section className="mb-24">
-        <div className="border-b border-white/10 pb-4 mb-8 flex items-center justify-between">
+      <section className="mb-24 sm:mb-28">
+        <div className="border-b border-[var(--border-subtle)] pb-4 mb-8 flex items-center justify-between">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white font-sans uppercase">
+            <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
               Technical Competency Matrix
             </h2>
-            <p className="text-xs text-white/40">Structured across 8 specialized engineering sectors</p>
+            <p className="text-xs text-[var(--text-muted)] mt-0.5">Structured across 8 specialized engineering sectors</p>
           </div>
-          <span className="text-xs text-[var(--accent-color)] font-bold">[SECTORS: 08]</span>
+          <span className="text-xs text-[var(--accent-color)] font-bold font-mono">[SECTORS: 08]</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {fullTechSectors.map((sector, idx) => (
             <motion.div
               key={sector.code}
@@ -175,23 +189,23 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className="cyber-panel p-5 rounded-xl border border-white/10 hover:border-[var(--accent-border)] transition-all flex flex-col justify-between"
+              className="cyber-panel p-5 rounded-xl flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between text-[11px] border-b border-white/10 pb-2.5 mb-3">
+                <div className="flex items-center justify-between text-[11px] border-b border-[var(--border-subtle)] pb-3 mb-3">
                   <span className="text-[var(--accent-color)] font-bold">{sector.code}</span>
-                  <span className="text-white/40 font-semibold">{sector.title}</span>
+                  <span className="text-[var(--text-secondary)] font-semibold">{sector.title}</span>
                 </div>
 
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {sector.skills.map((skill, sIdx) => (
                     <div
                       key={sIdx}
                       onMouseEnter={playHover}
-                      className="flex items-center justify-between p-1.5 rounded bg-black/40 border border-white/5 text-xs hover:border-[var(--accent-border)] transition-all cursor-default"
+                      className="flex items-center justify-between p-2 rounded bg-black/40 border border-[var(--border-subtle)] text-xs hover:border-[var(--accent-border)] transition-all cursor-default"
                     >
-                      <span className="text-[10px] text-[var(--accent-color)] font-bold opacity-75">{skill.hex}</span>
-                      <span className="text-white/80 font-medium truncate">{skill.name}</span>
+                      <span className="text-[10px] text-[var(--accent-color)] font-bold opacity-80">{skill.hex}</span>
+                      <span className="text-[var(--text-primary)] font-medium truncate ml-2">{skill.name}</span>
                     </div>
                   ))}
                 </div>
@@ -202,42 +216,42 @@ export default function AboutPage() {
       </section>
 
       {/* Experience Timeline */}
-      <section className="mb-24">
-        <div className="border-b border-white/10 pb-4 mb-8 flex items-center justify-between">
+      <section className="mb-24 sm:mb-28">
+        <div className="border-b border-[var(--border-subtle)] pb-4 mb-8 flex items-center justify-between">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white font-sans uppercase">
+            <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
               Career History & Logs
             </h2>
-            <p className="text-xs text-white/40">Verified enterprise & startup accomplishments</p>
+            <p className="text-xs text-[var(--text-muted)] mt-0.5">Verified enterprise & startup accomplishments</p>
           </div>
-          <span className="text-xs text-[var(--accent-color)] font-bold">[LOGS: 05]</span>
+          <span className="text-xs text-[var(--accent-color)] font-bold font-mono">[LOGS: 05]</span>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {exp.logs.map((log, idx) => (
             <div
               key={log.code}
               onMouseEnter={playHover}
-              className="cyber-panel p-6 rounded-xl border border-white/10 hover:border-[var(--accent-border)] transition-all"
+              className="cyber-panel p-6 sm:p-7 rounded-xl"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-3 mb-3 gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[var(--border-subtle)] pb-3 mb-4 gap-2">
                 <div className="flex items-center gap-3">
-                  <span className="px-2 py-0.5 rounded bg-[var(--accent-glow)] border border-[var(--accent-border)] text-xs text-[var(--accent-color)] font-bold">
+                  <span className="px-2.5 py-0.5 rounded bg-[var(--accent-glow)] border border-[var(--accent-border)] text-xs text-[var(--accent-color)] font-bold font-mono">
                     {log.code}
                   </span>
                   <div>
-                    <h3 className="text-base font-bold text-white font-sans">{log.company}</h3>
-                    <div className="text-xs text-white/50">{log.role}</div>
+                    <h3 className="text-base sm:text-lg font-bold text-[var(--heading-tint)] font-display">{log.company}</h3>
+                    <div className="text-xs text-[var(--text-muted)] mt-0.5">{log.role}</div>
                   </div>
                 </div>
-                <div className="text-xs text-[var(--accent-color)] font-bold">
+                <div className="text-xs text-[var(--accent-color)] font-bold font-mono">
                   {log.period}
                 </div>
               </div>
 
-              <ul className="space-y-2">
+              <ul className="space-y-2.5">
                 {log.points.map((pt, pIdx) => (
-                  <li key={pIdx} className="flex items-start gap-2 text-xs sm:text-sm text-white/75 leading-relaxed font-sans">
+                  <li key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
                     <ChevronRight className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-0.5" />
                     <span>{pt}</span>
                   </li>
@@ -248,19 +262,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Call to action */}
-      <section className="cyber-panel rounded-2xl p-8 sm:p-12 border border-white/10 text-center space-y-6">
-        <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-sans">
-          Ready to turn your concepts into reality?
+      {/* Call to Action Bar */}
+      <section className="cyber-panel p-8 sm:p-12 rounded-2xl text-center space-y-6">
+        <h2 className="text-2xl sm:text-4xl font-black text-[var(--heading-tint)] font-display uppercase tracking-wider">
+          Ready to build something legendary?
         </h2>
-        <p className="text-sm text-white/70 max-w-xl mx-auto font-sans leading-relaxed">
-          Whether you need a cutting-edge web application, a full-stack cross-platform mobile app, or AI integration, let’s collaborate.
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-xl mx-auto font-sans leading-relaxed">
+          Open for full-time frontend and mobile roles, high-impact contract engineering, and architectural consultations.
         </p>
         <Link
           href="/contact"
           onClick={playClick}
           onMouseEnter={playHover}
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-lg bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-widest uppercase hover:shadow-[0_0_30px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-widest uppercase hover:shadow-[0_0_30px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
         >
           <span>INITIATE CONTACT</span>
           <ArrowRight className="w-4 h-4" />

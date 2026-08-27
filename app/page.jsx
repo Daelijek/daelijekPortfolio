@@ -189,40 +189,40 @@ export default function HomePage() {
               className="group inline-flex items-center gap-3.5 text-left"
             >
               <div className="text-right">
-                <span className="block text-sm sm:text-base font-extrabold text-white group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                <span className="block text-sm sm:text-base font-extrabold text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors leading-tight">
                   Dias
                 </span>
-                <span className="block text-sm sm:text-base font-extrabold text-white group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                <span className="block text-sm sm:text-base font-extrabold text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors leading-tight">
                   Yermek
                 </span>
               </div>
-              <div className="w-[1.5px] h-7 sm:h-8 bg-white/20 group-hover:bg-[var(--accent-color)] transition-colors" />
-              <div className="text-left text-xs sm:text-sm text-white/50 leading-tight">
+              <div className="w-[1.5px] h-7 sm:h-8 bg-[var(--border-subtle)] group-hover:bg-[var(--accent-color)] transition-colors" />
+              <div className="text-left text-xs sm:text-sm text-[var(--text-secondary)] leading-tight">
                 <span className="block">Portfolio</span>
-                <span className="block font-bold text-white/80">2026</span>
+                <span className="block font-bold text-[var(--heading-tint)]">2026</span>
               </div>
             </Link>
           </div>
 
-          {/* Bottom Row: Wanna Say Hello? (Left) & Local Time (Right) */}
-          <div className="pointer-events-auto flex items-end justify-between font-mono text-xs select-none">
+          {/* Bottom Row: Wanna Say Hello? (Left) & Local Time (Right next to it) */}
+          <div className="pointer-events-auto flex items-end gap-8 sm:gap-12 font-mono text-xs select-none">
             {/* Email */}
             <div>
-              <p className="text-xs text-white/50 uppercase tracking-wider mb-0.5">Wanna Say Hello?</p>
+              <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Wanna Say Hello?</p>
               <a
-                href="mailto:yermek.dias2004@gmail.com"
+                href="mailto:dias1605ermek@gmail.com"
                 onClick={playClick}
                 onMouseEnter={playHover}
-                className="text-sm sm:text-base font-bold text-white hover:text-[var(--accent-color)] transition-colors block"
+                className="text-sm sm:text-base font-bold text-[var(--heading-tint)] hover:text-[var(--accent-color)] transition-colors block"
               >
-                yermek.dias2004@gmail.com
+                dias1605ermek@gmail.com
               </a>
             </div>
 
             {/* Local Time */}
-            <div className="text-right hidden sm:block">
-              <p className="text-xs text-white/50 uppercase tracking-wider mb-0.5">Local Time</p>
-              <p className="text-sm sm:text-base font-bold text-white flex items-center gap-2 justify-end">
+            <div className="hidden sm:block">
+              <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Local Time</p>
+              <p className="text-sm sm:text-base font-bold text-[var(--heading-tint)] flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping" />
                 <span>Astana / {astanaTime || '12:00:00'} (UTC+5)</span>
               </p>

@@ -50,29 +50,12 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen pt-28 pb-24 px-6 sm:px-12 max-w-5xl mx-auto font-mono">
-      {/* Breadcrumb Navigation */}
-      <nav className="flex items-center gap-2 text-xs text-white/50 mb-4" aria-label="Breadcrumb">
-        <Link href="/" onClick={playClick} onMouseEnter={playHover} className="hover:text-white transition-colors">
-          Home
-        </Link>
-        <span>/</span>
-        <span className="text-[var(--accent-color)] font-bold">Contact</span>
-      </nav>
-
-      {/* Page Title */}
-      <div className="mb-12">
-        <h1 className="text-4xl sm:text-6xl font-black text-white uppercase font-sans mb-3 tracking-tight">
-          Get In Touch
-        </h1>
-        <p className="text-xs text-white/50">Direct communication pipeline for ventures, contracts & full-time roles</p>
-      </div>
-
+    <div className="min-h-screen pt-28 sm:pt-32 pb-36 px-6 sm:px-12 max-w-5xl mx-auto font-mono">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
         {/* Left Column: Direct Links & Info */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="cyber-panel p-6 sm:p-8 rounded-xl border border-white/10 space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3 text-xs text-white/50">
+          <div className="cyber-panel p-6 sm:p-8 rounded-xl space-y-6">
+            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3 text-xs text-[var(--text-muted)]">
               <span className="text-[var(--accent-color)] font-bold">// QUICK_CHANNELS</span>
               <span>[ENCRYPTED]</span>
             </div>
@@ -97,7 +80,7 @@ export default function ContactPage() {
             <button
               onClick={handleCopyEmail}
               onMouseEnter={playHover}
-              className="w-full flex items-center justify-between p-4 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[var(--accent-border)] text-white text-xs font-bold tracking-wider uppercase transition-all hover:scale-[1.02] active:scale-95"
+              className="w-full flex items-center justify-between p-4 rounded-lg bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-[var(--heading-tint)] text-xs font-bold tracking-wider uppercase transition-all hover:scale-[1.02] active:scale-95"
             >
               <div className="flex items-center gap-3 truncate">
                 <Mail className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
@@ -106,7 +89,7 @@ export default function ContactPage() {
               {copied ? (
                 <Check className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
               ) : (
-                <Copy className="w-4 h-4 text-white/40 shrink-0" />
+                <Copy className="w-4 h-4 text-[var(--text-muted)] shrink-0" />
               )}
             </button>
 
@@ -121,16 +104,16 @@ export default function ContactPage() {
             )}
 
             {/* Social Grid */}
-            <div className="space-y-2 pt-2 border-t border-white/10 text-xs">
+            <div className="space-y-2 pt-2 border-t border-[var(--border-subtle)] text-xs">
               <a
                 href={contact.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={playHover}
-                className="flex items-center justify-between p-3 rounded bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors"
+                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:bg-[var(--card-hover-glow)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] border border-[var(--border-subtle)] transition-colors"
               >
                 <div className="flex items-center gap-2.5">
-                  <FaGithub className="w-4 h-4 text-white/50" />
+                  <FaGithub className="w-4 h-4 text-[var(--accent-color)]" />
                   <span>GitHub</span>
                 </div>
                 <span className="text-[11px] text-[var(--accent-color)]">@Daelijek</span>
@@ -141,76 +124,84 @@ export default function ContactPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={playHover}
-                className="flex items-center justify-between p-3 rounded bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-colors"
+                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:bg-[var(--card-hover-glow)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] border border-[var(--border-subtle)] transition-colors"
               >
                 <div className="flex items-center gap-2.5">
-                  <FaLinkedin className="w-4 h-4 text-cyan-400" />
+                  <FaLinkedin className="w-4 h-4 text-[var(--accent-color)]" />
                   <span>LinkedIn</span>
                 </div>
-                <span className="text-[11px] text-[var(--accent-color)]">Dias Yermek</span>
+                <span className="text-[11px] text-[var(--accent-color)]">/in/dias-yermek</span>
               </a>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Message Transmission Form */}
+        {/* Right Column: Direct Message Transmission */}
         <div className="lg:col-span-7">
-          <div className="cyber-panel p-6 sm:p-8 rounded-xl border border-white/10">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-6 text-xs text-white/50">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-[var(--accent-color)]" />
-                <span className="text-white font-bold uppercase">TRANSMIT MESSAGE // SECURE FORM</span>
-              </div>
-              <span className="text-[var(--accent-color)]">PORT: 443</span>
+          <div className="cyber-panel p-6 sm:p-8 rounded-xl space-y-6">
+            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3 text-xs text-[var(--text-muted)]">
+              <span className="text-[var(--accent-color)] font-bold">// SECURE_TRANSMISSION</span>
+              <span>[READY]</span>
             </div>
 
             {formSent ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-12 space-y-4"
+                className="p-8 text-center space-y-4"
               >
-                <div className="w-12 h-12 rounded-full bg-[var(--accent-glow)] border border-[var(--accent-border)] flex items-center justify-center mx-auto text-[var(--accent-color)]">
+                <div className="w-12 h-12 rounded-full bg-[var(--accent-glow)] border border-[var(--accent-border)] text-[var(--accent-color)] flex items-center justify-center mx-auto">
                   <Check className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-bold text-white font-sans">TRANSMISSION RECEIVED</h3>
-                <p className="text-xs text-white/60 max-w-sm mx-auto font-sans leading-relaxed">
-                  Thank you for reaching out! I will review your message and reply within 24 hours.
+                <h3 className="text-xl font-bold text-[var(--heading-tint)] font-display uppercase">
+                  PACKET TRANSMITTED
+                </h3>
+                <p className="text-xs text-[var(--text-secondary)] max-w-sm mx-auto font-sans leading-relaxed">
+                  Your message has been dispatched to my direct channel. Expect a prompt response.
                 </p>
+                <button
+                  onClick={() => setFormSent(false)}
+                  className="px-6 py-2 rounded bg-black/40 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-xs text-[var(--text-secondary)] hover:text-[var(--heading-tint)] font-bold tracking-wider uppercase transition-all mt-4"
+                >
+                  SEND ANOTHER
+                </button>
               </motion.div>
             ) : (
               <form onSubmit={handleFormSubmit} className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-white/60 mb-1.5 font-bold uppercase text-[11px]">
-                    [01] YOUR NAME / SENDER ID
+                  <label className="block text-[var(--text-secondary)] text-[11px] font-bold uppercase mb-1.5 flex items-center gap-1.5">
+                    <User className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+                    <span>Your Identifier / Name</span>
                   </label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Enter your name..."
-                    className="w-full bg-[#040608] border border-white/10 focus:border-[var(--accent-border)] rounded-lg p-3 text-white placeholder-white/20 outline-none transition-colors"
+                    placeholder="e.g. John Doe / Tech Lead"
+                    className="w-full bg-black/50 border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-lg p-3 text-[var(--heading-tint)] placeholder-[var(--text-muted)] outline-none transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-white/60 mb-1.5 font-bold uppercase text-[11px]">
-                    [02] YOUR EMAIL / RETURN ADDRESS
+                  <label className="block text-[var(--text-secondary)] text-[11px] font-bold uppercase mb-1.5 flex items-center gap-1.5">
+                    <AtSign className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+                    <span>Return Channel / Email</span>
                   </label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="you@company.com"
-                    className="w-full bg-[#040608] border border-white/10 focus:border-[var(--accent-border)] rounded-lg p-3 text-white placeholder-white/20 outline-none transition-colors"
+                    placeholder="your.email@company.com"
+                    className="w-full bg-black/50 border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-lg p-3 text-[var(--heading-tint)] placeholder-[var(--text-muted)] outline-none transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-white/60 mb-1.5 font-bold uppercase text-[11px]">
-                    [03] MESSAGE PACKET
+                  <label className="block text-[var(--text-secondary)] text-[11px] font-bold uppercase mb-1.5 flex items-center gap-1.5">
+                    <MessageSquare className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+                    <span>Transmission Content</span>
                   </label>
                   <textarea
                     rows={4}
@@ -218,7 +209,7 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Describe your project, role, or inquiry..."
-                    className="w-full bg-[#040608] border border-white/10 focus:border-[var(--accent-border)] rounded-lg p-3 text-white placeholder-white/20 outline-none transition-colors resize-none"
+                    className="w-full bg-black/50 border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-lg p-3 text-[var(--heading-tint)] placeholder-[var(--text-muted)] outline-none transition-colors resize-none"
                   />
                 </div>
 

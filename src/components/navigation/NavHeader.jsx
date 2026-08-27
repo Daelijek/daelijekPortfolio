@@ -62,6 +62,21 @@ export default function NavHeader() {
     { href: '/contact', index: '4', label: 'Contact' },
   ];
 
+  const pageMeta = {
+    '/about': {
+      title: 'MEET DIAS',
+      breadcrumb: lang === 'ru' ? 'ОБО МНЕ' : 'ABOUT',
+    },
+    '/projects': {
+      title: 'PROJECTS',
+      breadcrumb: lang === 'ru' ? 'ПРОЕКТЫ' : 'PROJECTS',
+    },
+    '/contact': {
+      title: 'CONTACT',
+      breadcrumb: lang === 'ru' ? 'КОНТАКТЫ' : 'CONTACT',
+    },
+  };
+
   const currentNav = navLinks.find((l) => l.href === pathname) || navLinks[0];
 
   return (
@@ -78,21 +93,40 @@ export default function NavHeader() {
           >
             <div className="flex items-center gap-3.5">
               <div className="text-right">
-                <span className="block text-sm sm:text-base font-extrabold text-white group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                <span className="block text-sm sm:text-base font-extrabold text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors leading-tight">
                   Dias
                 </span>
-                <span className="block text-sm sm:text-base font-extrabold text-white group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                <span className="block text-sm sm:text-base font-extrabold text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors leading-tight">
                   Yermek
                 </span>
               </div>
               <div className="w-[1.5px] h-7 bg-white/20 group-hover:bg-[var(--accent-color)] transition-colors" />
-              <div className="text-left text-xs sm:text-sm text-white/50 leading-tight">
+              <div className="text-left text-xs sm:text-sm text-[var(--text-secondary)] leading-tight">
                 <span className="block">Portfolio</span>
-                <span className="block font-bold text-white/80">2026</span>
+                <span className="block font-bold text-[var(--heading-tint)]">2026</span>
               </div>
             </div>
           </Link>
         </header>
+      )}
+
+      {/* Top Right Header & Breadcrumb (Rendered on subpages) */}
+      {pathname !== '/' && pageMeta[pathname] && (
+        <div className="fixed top-8 right-8 sm:right-12 z-40 select-none text-right">
+          {/* Breadcrumb */}
+          <nav className="flex items-center justify-end gap-1.5 text-[10px] sm:text-xs font-mono tracking-widest text-[var(--text-secondary)] uppercase mb-0.5" aria-label="Breadcrumb">
+            <Link href="/" onClick={playClick} onMouseEnter={playHover} className="hover:text-[var(--heading-tint)] transition-colors">
+              HOME
+            </Link>
+            <span className="text-white/30">/</span>
+            <span className="text-[var(--heading-tint)] font-bold">{pageMeta[pathname].breadcrumb}</span>
+          </nav>
+
+          {/* Title */}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-wider font-display leading-tight text-[var(--heading-tint)] transition-colors duration-300">
+            {pageMeta[pathname].title}
+          </h1>
+        </div>
       )}
 
       {/* Bottom Right Controls: Aligned strictly to bottom line */}
@@ -100,10 +134,10 @@ export default function NavHeader() {
         {/* Navigation Menu Capsule & Expandable Curtain */}
         <div ref={menuRef} className="relative w-[300px] xs:w-[330px] sm:w-[360px]">
           <div
-            className={`w-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl transition-colors duration-300 font-mono select-none overflow-hidden border-2 ${
+            className={`w-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl transition-colors duration-300 font-mono select-none overflow-hidden border-2 box-border ${
               isMenuOpen
                 ? 'bg-[#04080A]/95 border-[var(--accent-color)] shadow-[0_0_50px_var(--accent-glow)]'
-                : 'bg-[#080C10]/90 border-white/20 hover:border-[var(--accent-border)] shadow-2xl'
+                : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] shadow-2xl'
             }`}
           >
             {/* Expanded Content (Expands upwards like a curtain) */}
@@ -138,16 +172,16 @@ export default function NavHeader() {
                     className="p-4 sm:p-5 pb-3 flex flex-col gap-3.5 sm:gap-4"
                   >
                     {/* 1. Header */}
-                    <div className="flex items-start justify-between border-b border-white/10 pb-2.5">
+                    <div className="flex items-start justify-between border-b border-[var(--border-subtle)] pb-2.5">
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider font-display">
+                        <h3 className="text-xl sm:text-2xl font-black text-[var(--heading-tint)] uppercase tracking-wider font-display">
                           Menu
                         </h3>
-                        <p className="text-[10px] text-white/50 tracking-widest uppercase font-mono">
+                        <p className="text-[10px] text-[var(--text-muted)] tracking-widest uppercase font-mono">
                           NAVIGATION
                         </p>
                       </div>
-                      <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/15 text-[10px] text-white/70 font-bold font-mono">
+                      <span className="px-2.5 py-1 rounded-md bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[10px] text-[var(--accent-color)] font-bold font-mono">
                         DIR
                       </span>
                     </div>
@@ -159,7 +193,7 @@ export default function NavHeader() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white/80 transition-colors"
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] shrink-0" />
                         <span className="text-xs font-mono truncate">LinkedIn</span>
@@ -169,9 +203,9 @@ export default function NavHeader() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white/80 transition-colors"
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/40 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-muted)] shrink-0" />
                         <span className="text-xs font-mono truncate">GitHub</span>
                       </a>
                       <a
@@ -179,7 +213,7 @@ export default function NavHeader() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white/80 transition-colors"
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
                         <span className="text-xs font-mono truncate">Telegram</span>
@@ -187,7 +221,7 @@ export default function NavHeader() {
                       <a
                         href="mailto:dias1605ermek@gmail.com"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white/80 transition-colors"
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
                         <span className="text-xs font-mono truncate">Email</span>
@@ -200,14 +234,14 @@ export default function NavHeader() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onMouseEnter={playHover}
-                      className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/15 hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-white font-bold text-xs tracking-wider uppercase transition-colors"
+                      className="flex items-center justify-between p-3 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--heading-tint)] font-bold text-xs tracking-wider uppercase transition-colors"
                     >
                       <span className="font-display text-xs">DEV LABS</span>
                       <ExternalLink className="w-4 h-4 text-[var(--accent-color)]" />
                     </a>
 
                     {/* 4. Navigation Routes */}
-                    <nav className="space-y-1.5 pt-1 border-t border-white/10">
+                    <nav className="space-y-1.5 pt-1 border-t border-[var(--border-subtle)]">
                       {navLinks
                         .filter((item) => item.href !== pathname)
                         .map((item) => (
@@ -219,20 +253,20 @@ export default function NavHeader() {
                               setIsMenuOpen(false);
                             }}
                             onMouseEnter={playHover}
-                            className="flex items-center justify-between p-3 rounded-xl border border-white/10 hover:border-[var(--accent-border)] bg-white/5 hover:bg-[var(--accent-glow)] text-white hover:text-[var(--accent-color)] transition-all group"
+                            className="flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
                           >
                             <div className="flex items-center gap-3">
-                              <span className="text-xs text-white/40 font-mono">[{item.index}]</span>
+                              <span className="text-xs text-[var(--text-muted)] font-mono">[{item.index}]</span>
                               <span className="text-sm sm:text-base font-bold uppercase tracking-wider font-display">
                                 {item.label}
                               </span>
                             </div>
-                            <span className="w-2 h-2 rounded-full bg-white/20 group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
+                            <span className="w-2 h-2 rounded-full bg-[var(--border-bright)] group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
                           </Link>
                         ))}
                     </nav>
                     {/* Fixed separator before bottom capsule */}
-                    <div className="h-[1px] w-full bg-white/10 mt-0.5" />
+                    <div className="h-[1px] w-full bg-[var(--border-subtle)] mt-0.5" />
                   </motion.div>
                 </motion.div>
               )}
@@ -257,39 +291,39 @@ export default function NavHeader() {
               }}
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="group flex items-center justify-between pl-5 sm:pl-6 pr-2.5 h-14 sm:h-16 cursor-pointer"
+              className="group flex items-center justify-between pl-5 sm:pl-6 pr-2 h-[50px] sm:h-[56px] cursor-pointer"
             >
               {/* Index & Label */}
               <div className="flex items-center gap-3">
                 <span
                   className={`text-xs sm:text-sm font-mono font-bold transition-colors ${
-                    isMenuOpen ? 'text-[var(--accent-color)]' : 'text-white/50'
+                    isMenuOpen ? 'text-[var(--accent-color)]' : 'text-[var(--text-muted)] group-hover:text-[var(--accent-color)]'
                   }`}
                 >
                   [{currentNav.index}]
                 </span>
                 <span
                   className={`text-base sm:text-lg font-black tracking-widest uppercase font-display transition-colors ${
-                    isMenuOpen ? 'text-[var(--accent-color)]' : 'text-white'
+                    isMenuOpen ? 'text-[var(--accent-color)]' : 'text-[var(--heading-tint)]'
                   }`}
                 >
                   {currentNav.label}
                 </span>
               </div>
 
-              {/* White Matrix Icon Button */}
+              {/* Theme-Tinted Matrix Icon Button */}
               <div
-                className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-500 shrink-0 ${
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-500 shrink-0 ${
                   isMenuOpen
-                    ? 'bg-white text-[#04080A] rotate-90 shadow-[0_0_15px_rgba(255,255,255,0.4)]'
-                    : 'bg-white text-[#080C10]'
+                    ? 'bg-[var(--heading-tint)] text-[#020504] rotate-90 shadow-[0_0_20px_var(--accent-glow)]'
+                    : 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_10px_var(--card-hover-glow)]'
                 }`}
               >
-                <div className="grid grid-cols-2 gap-1 w-3.5 h-3.5 items-center justify-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#080C10]" />
+                <div className="grid grid-cols-2 gap-1 w-3 h-3 items-center justify-center">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#020504]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#020504]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#020504]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#020504]" />
                 </div>
               </div>
             </div>
@@ -305,10 +339,10 @@ export default function NavHeader() {
               if (isMenuOpen) setIsMenuOpen(false);
             }}
             onMouseEnter={playHover}
-            className={`w-14 h-14 sm:h-16 sm:w-16 rounded-2xl sm:rounded-3xl backdrop-blur-md border transition-all flex items-center justify-center text-white shadow-2xl ${
+            className={`w-[54px] h-[54px] sm:w-[60px] sm:h-[60px] rounded-2xl sm:rounded-3xl backdrop-blur-2xl border-2 transition-all flex items-center justify-center shadow-2xl box-border ${
               isSettingsOpen
-                ? 'bg-[var(--accent-glow)] border-[var(--accent-border)] text-[var(--accent-color)] shadow-[0_0_20px_var(--accent-glow)]'
-                : 'bg-[#080C10]/85 border-white/20 hover:border-[var(--accent-border)]'
+                ? 'bg-[var(--accent-glow)] border-[var(--accent-color)] text-[var(--accent-color)] shadow-[0_0_30px_var(--accent-glow)]'
+                : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] hover:shadow-[0_0_20px_var(--card-hover-glow)]'
             }`}
             aria-label="Global System Settings"
           >

@@ -2,48 +2,120 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg-primary: #020406;
-  --bg-secondary: #06090D;
-  --bg-surface: #0A0F14;
-  --border-subtle: rgba(255, 255, 255, 0.08);
+:root,
+[data-theme="acid"] {
+  --bg-primary: #020604;
+  --bg-secondary: #050E09;
+  --bg-surface: #07150E;
+  --border-subtle: rgba(0, 255, 159, 0.12);
+  --border-bright: rgba(0, 255, 159, 0.35);
 
   --accent-color: #00FF9F;
   --accent-glow: rgba(0, 255, 159, 0.35);
   --accent-border: rgba(0, 255, 159, 0.45);
   --accent-text: #00FF9F;
 
-  --text-primary: #FFFFFF;
-  --text-secondary: #8E9BAE;
-  --text-muted: #566375;
+  --heading-tint: #D6FFE8;
+  --text-primary: #E8FFF2;
+  --text-secondary: #9ED4B8;
+  --text-muted: #588A72;
+
+  --card-bg: rgba(4, 16, 10, 0.75);
+  --card-border: rgba(0, 255, 159, 0.18);
+  --card-hover-border: rgba(0, 255, 159, 0.5);
+  --card-hover-glow: rgba(0, 255, 159, 0.15);
 }
 
 [data-theme="cyan"] {
+  --bg-primary: #020508;
+  --bg-secondary: #050D16;
+  --bg-surface: #071422;
+  --border-subtle: rgba(0, 243, 255, 0.12);
+  --border-bright: rgba(0, 243, 255, 0.35);
+
   --accent-color: #00F3FF;
   --accent-glow: rgba(0, 243, 255, 0.35);
   --accent-border: rgba(0, 243, 255, 0.45);
   --accent-text: #00F3FF;
+
+  --heading-tint: #D2F8FF;
+  --text-primary: #E8FBFF;
+  --text-secondary: #9AD4E2;
+  --text-muted: #528694;
+
+  --card-bg: rgba(4, 14, 22, 0.75);
+  --card-border: rgba(0, 243, 255, 0.18);
+  --card-hover-border: rgba(0, 243, 255, 0.5);
+  --card-hover-glow: rgba(0, 243, 255, 0.15);
 }
 
 [data-theme="amber"] {
+  --bg-primary: #060401;
+  --bg-secondary: #120C03;
+  --bg-surface: #1B1205;
+  --border-subtle: rgba(255, 184, 0, 0.12);
+  --border-bright: rgba(255, 184, 0, 0.35);
+
   --accent-color: #FFB800;
   --accent-glow: rgba(255, 184, 0, 0.35);
   --accent-border: rgba(255, 184, 0, 0.45);
   --accent-text: #FFB800;
+
+  --heading-tint: #FFEAC2;
+  --text-primary: #FFF9E8;
+  --text-secondary: #D4BE98;
+  --text-muted: #8E7750;
+
+  --card-bg: rgba(20, 14, 4, 0.75);
+  --card-border: rgba(255, 184, 0, 0.18);
+  --card-hover-border: rgba(255, 184, 0, 0.5);
+  --card-hover-glow: rgba(255, 184, 0, 0.15);
 }
 
 [data-theme="crimson"] {
+  --bg-primary: #080204;
+  --bg-secondary: #160509;
+  --bg-surface: #220710;
+  --border-subtle: rgba(255, 0, 85, 0.12);
+  --border-bright: rgba(255, 0, 85, 0.35);
+
   --accent-color: #FF0055;
   --accent-glow: rgba(255, 0, 85, 0.35);
   --accent-border: rgba(255, 0, 85, 0.45);
   --accent-text: #FF0055;
+
+  --heading-tint: #FFD2E2;
+  --text-primary: #FFE8F0;
+  --text-secondary: #D898B4;
+  --text-muted: #945270;
+
+  --card-bg: rgba(22, 5, 12, 0.75);
+  --card-border: rgba(255, 0, 85, 0.18);
+  --card-hover-border: rgba(255, 0, 85, 0.5);
+  --card-hover-glow: rgba(255, 0, 85, 0.15);
 }
 
 [data-theme="obsidian"] {
+  --bg-primary: #040608;
+  --bg-secondary: #080B10;
+  --bg-surface: #0E1218;
+  --border-subtle: rgba(255, 255, 255, 0.10);
+  --border-bright: rgba(255, 255, 255, 0.30);
+
   --accent-color: #FFFFFF;
   --accent-glow: rgba(255, 255, 255, 0.25);
-  --accent-border: rgba(255, 255, 255, 0.4);
+  --accent-border: rgba(255, 255, 255, 0.35);
   --accent-text: #FFFFFF;
+
+  --heading-tint: #FFFFFF;
+  --text-primary: #FFFFFF;
+  --text-secondary: #9EB0C4;
+  --text-muted: #58687E;
+
+  --card-bg: rgba(10, 14, 20, 0.75);
+  --card-border: rgba(255, 255, 255, 0.14);
+  --card-hover-border: rgba(255, 255, 255, 0.45);
+  --card-hover-glow: rgba(255, 255, 255, 0.12);
 }
 
 * {
@@ -56,6 +128,7 @@ html {
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body {
@@ -65,6 +138,28 @@ body {
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  transition: color 0.3s ease;
+}
+
+p, span, a, button, li, div {
+  transition: border-color 0.3s ease;
+}
+
+.cyber-panel {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cyber-panel:hover {
+  border-color: var(--card-hover-border);
+  box-shadow: 0 0 30px var(--card-hover-glow);
 }
 
 /* Custom Cyber Scrollbar */
