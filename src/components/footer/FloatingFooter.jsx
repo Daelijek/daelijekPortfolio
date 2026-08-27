@@ -36,12 +36,12 @@ export default function FloatingFooter() {
       <div className="pointer-events-auto">
         <p className="text-[10px] text-white/40 leading-tight uppercase">Wanna Say Hello?</p>
         <a
-          href="mailto:yermek.dias2004@gmail.com"
+          href="mailto:dias1605ermek@gmail.com"
           onMouseEnter={playHover}
           onClick={playClick}
           className="text-white hover:text-[var(--accent-color)] font-bold transition-colors block mt-0.5"
         >
-          yermek.dias2004@gmail.com
+          dias1605ermek@gmail.com
         </a>
       </div>
 
