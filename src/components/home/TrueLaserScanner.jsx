@@ -108,7 +108,7 @@ export default function TrueLaserScanner() {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 flex flex-col justify-center px-8 sm:px-14 lg:px-16 pointer-events-none select-none font-mono"
+      className="absolute inset-0 flex flex-col pointer-events-none select-none font-mono justify-end items-end pb-20 xs:pb-24 sm:pb-26 md:portrait:pb-24 px-4 xs:px-6 sm:px-10 md:portrait:px-10 md:max-xl:landscape:justify-center md:max-xl:landscape:items-start md:max-xl:landscape:pb-0 md:max-xl:landscape:px-8 lg:max-xl:landscape:px-12 xl:justify-center xl:items-start xl:pb-0 xl:px-14 2xl:px-16"
     >
       {/* 1. Thin 1px Laser Line */}
       <div
@@ -121,12 +121,12 @@ export default function TrueLaserScanner() {
       />
 
       {/* 2. Text Content */}
-      <div className="relative z-10 space-y-6 max-w-lg">
+      <div className="relative z-10 space-y-2.5 xs:space-y-3 sm:space-y-4 xl:space-y-5 max-w-lg text-right md:max-xl:landscape:text-left xl:text-left flex flex-col items-end md:max-xl:landscape:items-start xl:items-start">
         {/* Dual-Layer Text Wrapper */}
         <div ref={textContainerRef} className="relative">
           {/* Base Layer: Adaptable Theme Muted Text */}
           <h1
-            className="text-5xl sm:text-7xl xl:text-8xl font-black uppercase font-display leading-[0.88] tracking-tighter select-none"
+            className="text-3xl xs:text-4xl sm:text-5xl md:portrait:text-5xl md:max-xl:landscape:text-4xl lg:max-xl:landscape:text-5xl xl:text-5xl 2xl:text-7xl font-black uppercase font-display leading-[0.88] tracking-tighter select-none text-right md:max-xl:landscape:text-left xl:text-left"
             style={{ color: 'var(--accent-color)', opacity: 0.14 }}
           >
             <span className="block">CREATIVE</span>
@@ -141,7 +141,7 @@ export default function TrueLaserScanner() {
               willChange: 'mask-image, -webkit-mask-image',
             }}
           >
-            <h1 className="text-5xl sm:text-7xl xl:text-8xl font-black uppercase font-display leading-[0.88] tracking-tighter text-[var(--accent-color)] text-glow-strong">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:portrait:text-5xl md:max-xl:landscape:text-4xl lg:max-xl:landscape:text-5xl xl:text-5xl 2xl:text-7xl font-black uppercase font-display leading-[0.88] tracking-tighter text-[var(--accent-color)] text-glow-strong text-right md:max-xl:landscape:text-left xl:text-left">
               <span className="block">CREATIVE</span>
               <span className="block">DEVELOPER</span>
             </h1>
@@ -149,14 +149,30 @@ export default function TrueLaserScanner() {
         </div>
 
         {/* Underline Info Log Tag */}
-        <div className="space-y-1.5 pt-2 max-w-sm">
-          <div className="flex items-center gap-2 text-[10px] text-[var(--accent-color)] font-bold tracking-widest uppercase">
-            <span className="w-2 h-[1px] bg-[var(--accent-color)]" />
+        <div className="space-y-1 xs:space-y-1.5 pt-1 sm:pt-2 max-w-xs sm:max-w-sm md:max-w-md xl:max-w-sm flex flex-col items-end md:max-xl:landscape:items-start xl:items-start text-right md:max-xl:landscape:text-left xl:text-left">
+          <div className="flex items-center gap-1.5 xs:gap-2 text-[9px] xs:text-[10px] sm:text-xs text-[var(--accent-color)] font-bold tracking-widest uppercase">
+            <span className="hidden md:max-xl:landscape:block xl:block w-2 h-[1px] bg-[var(--accent-color)]" />
             <span>[ INFO_LOG ]</span>
+            <span className="md:max-xl:landscape:hidden xl:hidden w-2 h-[1px] bg-[var(--accent-color)]" />
           </div>
-          <p className="text-[11px] sm:text-xs text-white/60 uppercase tracking-wide leading-relaxed font-mono pl-3 border-l border-[var(--accent-color)]/30">
+          <p className="text-[9.5px] xs:text-[11px] sm:text-xs text-white/70 uppercase tracking-wide leading-relaxed font-mono pr-2.5 md:max-xl:landscape:pr-0 md:max-xl:landscape:pl-3 xl:pr-0 xl:pl-3 border-r-2 md:max-xl:landscape:border-r-0 md:max-xl:landscape:border-l xl:border-r-0 xl:border-l border-[var(--accent-color)]/40 max-w-[230px] xs:max-w-[270px] sm:max-w-[340px] md:max-w-[400px] xl:max-w-none">
             SCULPTING TECHNICAL PERFORMANCE INTO IMMERSIVE DIGITAL ART.
           </p>
+
+          {/* Mobile & Tablet Metrics Row (Hidden on desktop XL where TelemetryHUDPod shows it) */}
+          <div className="flex xl:hidden items-center justify-end md:max-xl:landscape:justify-start gap-2.5 xs:gap-3 sm:gap-4 pt-1 text-[10px] xs:text-[11px] sm:text-xs font-mono select-none">
+            <span className="text-white/80 font-bold">
+              <span className="text-[var(--accent-color)] font-black text-xs xs:text-sm sm:text-base">3+</span> YEARS
+            </span>
+            <span className="text-white/25 font-light">|</span>
+            <span className="text-white/80 font-bold">
+              <span className="text-[var(--accent-color)] font-black text-xs xs:text-sm sm:text-base">15+</span> PROJECTS
+            </span>
+            <span className="hidden sm:inline text-white/25 font-light">|</span>
+            <span className="hidden sm:inline text-white/80 font-bold">
+              <span className="text-[var(--accent-color)] font-black text-xs xs:text-sm sm:text-base">1.5M+</span> USERS
+            </span>
+          </div>
         </div>
       </div>
     </div>
