@@ -10,20 +10,64 @@ import { Settings, X, ExternalLink, Globe, Volume2, VolumeX, Check } from 'lucid
 import { FaLinkedin, FaGithub, FaTelegram } from 'react-icons/fa6';
 
 const themeOptions = [
-  { id: 'acid', name: 'Acid Green', color: '#00FF9F', desc: 'Default Cyber' },
+  { id: 'obsidian', name: 'Obsidian White', color: '#FFFFFF', desc: 'Minimalist Luxe' },
   { id: 'cyan', name: 'Neon Cyan', color: '#00F3FF', desc: 'High Contrast' },
+  { id: 'acid', name: 'Acid Green', color: '#00FF9F', desc: 'Default Cyber' },
   { id: 'amber', name: 'Solar Amber', color: '#FFB800', desc: 'Warm Matrix' },
   { id: 'crimson', name: 'Crimson Red', color: '#FF0055', desc: 'Aggressive HUD' },
-  { id: 'obsidian', name: 'Obsidian White', color: '#FFFFFF', desc: 'Minimalist Luxe' },
 ];
 
 export default function NavHeader() {
   const pathname = usePathname();
-  const { theme, setTheme, soundEnabled, setSoundEnabled, lang, setLang, perfTier, setPerfTier, playHover, playClick } = useThemeAudio();
+  const {
+    theme,
+    setTheme,
+    soundEnabled,
+    setSoundEnabled,
+    audioProfile,
+    setAudioProfile,
+    lang,
+    setLang,
+    perfTier,
+    setPerfTier,
+    playHover,
+    playClick,
+  } = useThemeAudio();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentTime, setCurrentTime] = useState('');
   const menuRef = useRef(null);
   const settingsRef = useRef(null);
+  const settingsModalRef = useRef(null);
+
+  // Resize listener for responsive animation values
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Live local time
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(
+        now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Almaty',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        }).toLowerCase()
+      );
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Close menus on route change
   useEffect(() => {
@@ -37,7 +81,11 @@ export default function NavHeader() {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setIsMenuOpen(false);
       }
-      if (settingsRef.current && !settingsRef.current.contains(e.target)) {
+      if (
+        settingsRef.current &&
+        !settingsRef.current.contains(e.target) &&
+        (!settingsModalRef.current || !settingsModalRef.current.contains(e.target))
+      ) {
         setIsSettingsOpen(false);
       }
     };
@@ -78,6 +126,9 @@ export default function NavHeader() {
   };
 
   const currentNav = navLinks.find((l) => l.href === pathname) || navLinks[0];
+  const otherRoutes = navLinks
+    .filter((item) => item.href !== pathname)
+    .sort((a, b) => Number(b.index) - Number(a.index));
 
   return (
     <>
@@ -130,9 +181,18 @@ export default function NavHeader() {
       )}
 
       {/* Bottom Right Controls: Aligned strictly to bottom line */}
-      <div className="fixed bottom-3 sm:bottom-4 lg:bottom-5 right-3 sm:right-4 lg:right-5 z-40 flex items-end gap-3 font-mono select-none">
-        {/* Navigation Menu Capsule & Expandable Curtain */}
-        <div ref={menuRef} className="relative w-[300px] xs:w-[330px] sm:w-[360px]">
+      <div className="fixed bottom-3 sm:bottom-4 lg:bottom-5 right-3 sm:right-4 lg:right-5 z-50 flex items-end gap-3 font-mono select-none">
+        {/* Navigation Menu Capsule & Expandable Curtain with Two-Phase Width->Height Animation */}
+        <div
+          ref={menuRef}
+          style={{
+            width: isMenuOpen
+              ? (isMobile ? 'calc(100vw - 24px)' : '380px')
+              : (isMobile ? '205px' : '260px'),
+            transition: `width 0.42s cubic-bezier(0.22, 1, 0.36, 1) ${isMenuOpen ? '0s' : '0.35s'}`,
+          }}
+          className="relative"
+        >
           <div
             className={`w-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl transition-colors duration-300 font-mono select-none overflow-hidden border-2 box-border ${
               isMenuOpen
@@ -140,7 +200,7 @@ export default function NavHeader() {
                 : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] shadow-2xl'
             }`}
           >
-            {/* Expanded Content (Expands upwards like a curtain) */}
+            {/* Expanded Content (Expands upwards after width reaches full expansion) */}
             <AnimatePresence initial={false}>
               {isMenuOpen && (
                 <motion.div
@@ -150,16 +210,16 @@ export default function NavHeader() {
                     height: 'auto',
                     opacity: 1,
                     transition: {
-                      height: { duration: 0.52, ease: [0.22, 1, 0.36, 1] },
-                      opacity: { duration: 0.4, ease: 'easeOut', delay: 0.05 },
+                      height: { duration: 0.42, delay: 0.42, ease: [0.22, 1, 0.36, 1] },
+                      opacity: { duration: 0.32, delay: 0.48, ease: 'easeOut' },
                     },
                   }}
                   exit={{
                     height: 0,
                     opacity: 0,
                     transition: {
-                      height: { duration: 0.42, ease: [0.32, 0, 0.2, 1] },
-                      opacity: { duration: 0.25, ease: 'easeIn' },
+                      height: { duration: 0.32, ease: [0.32, 0, 0.2, 1] },
+                      opacity: { duration: 0.2, ease: 'easeIn' },
                     },
                   }}
                   className="overflow-hidden"
@@ -168,7 +228,7 @@ export default function NavHeader() {
                     initial={{ y: 14, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 8, opacity: 0 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.44 }}
                     className="p-4 sm:p-5 pb-3 flex flex-col gap-3.5 sm:gap-4"
                   >
                     {/* 1. Header */}
@@ -186,7 +246,16 @@ export default function NavHeader() {
                       </span>
                     </div>
 
-                    {/* 2. Quick Connect Socials (2x2 Grid) */}
+                    {/* Local Time Bar */}
+                    <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)] px-0.5">
+                      <span className="text-[10px] tracking-widest uppercase">LOCAL TIME</span>
+                      <span className="text-xs text-[var(--text-secondary)] font-medium flex items-center gap-1.5" suppressHydrationWarning>
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-pulse" />
+                        Astana {currentTime || '12:00 pm'}
+                      </span>
+                    </div>
+
+                    {/* 2. Quick Connect Socials (2x2 Grid matching reference) */}
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <a
                         href="https://www.linkedin.com/in/dias-yermek/"
@@ -205,8 +274,18 @@ export default function NavHeader() {
                         onMouseEnter={playHover}
                         className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-muted)] shrink-0" />
-                        <span className="text-xs font-mono truncate">GitHub</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-white/40 shrink-0" />
+                        <span className="text-xs font-mono truncate">Github</span>
+                      </a>
+                      <a
+                        href="https://www.upwork.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onMouseEnter={playHover}
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                        <span className="text-xs font-mono truncate">Upwork</span>
                       </a>
                       <a
                         href="https://t.me/daelijek_og"
@@ -217,14 +296,6 @@ export default function NavHeader() {
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
                         <span className="text-xs font-mono truncate">Telegram</span>
-                      </a>
-                      <a
-                        href="mailto:dias1605ermek@gmail.com"
-                        onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                        <span className="text-xs font-mono truncate">Email</span>
                       </a>
                     </div>
 
@@ -240,30 +311,28 @@ export default function NavHeader() {
                       <ExternalLink className="w-4 h-4 text-[var(--accent-color)]" />
                     </a>
 
-                    {/* 4. Navigation Routes */}
+                    {/* 4. Navigation Routes (Counting upwards towards bottom bar) */}
                     <nav className="space-y-1.5 pt-1 border-t border-[var(--border-subtle)]">
-                      {navLinks
-                        .filter((item) => item.href !== pathname)
-                        .map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={() => {
-                              playClick();
-                              setIsMenuOpen(false);
-                            }}
-                            onMouseEnter={playHover}
-                            className="flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className="text-xs text-[var(--text-muted)] font-mono">[{item.index}]</span>
-                              <span className="text-sm sm:text-base font-bold uppercase tracking-wider font-display">
-                                {item.label}
-                              </span>
-                            </div>
-                            <span className="w-2 h-2 rounded-full bg-[var(--border-bright)] group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
-                          </Link>
-                        ))}
+                      {otherRoutes.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => {
+                            playClick();
+                            setIsMenuOpen(false);
+                          }}
+                          onMouseEnter={playHover}
+                          className="flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs text-[var(--text-muted)] font-mono">[{item.index}]</span>
+                            <span className="text-sm sm:text-base font-bold uppercase tracking-wider font-display">
+                              {item.label}
+                            </span>
+                          </div>
+                          <span className="w-2 h-2 rounded-full bg-[var(--border-bright)] group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
+                        </Link>
+                      ))}
                     </nav>
                     {/* Fixed separator before bottom capsule */}
                     <div className="h-[1px] w-full bg-[var(--border-subtle)] mt-0.5" />
@@ -291,10 +360,10 @@ export default function NavHeader() {
               }}
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="group flex items-center justify-between pl-5 sm:pl-6 pr-2 h-[50px] sm:h-[56px] cursor-pointer"
+              className="group flex items-center justify-between pl-4 xs:pl-5 sm:pl-6 pr-1.5 xs:pr-2 h-[46px] xs:h-[50px] sm:h-[56px] cursor-pointer gap-2 xs:gap-3"
             >
               {/* Index & Label */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 xs:gap-3">
                 <span
                   className={`text-xs sm:text-sm font-mono font-bold transition-colors ${
                     isMenuOpen ? 'text-[var(--accent-color)]' : 'text-[var(--text-muted)] group-hover:text-[var(--accent-color)]'
@@ -303,7 +372,7 @@ export default function NavHeader() {
                   [{currentNav.index}]
                 </span>
                 <span
-                  className={`text-base sm:text-lg font-black tracking-widest uppercase font-display transition-colors ${
+                  className={`text-sm xs:text-base sm:text-lg font-black tracking-widest uppercase font-display transition-colors ${
                     isMenuOpen ? 'text-[var(--accent-color)]' : 'text-[var(--heading-tint)]'
                   }`}
                 >
@@ -313,25 +382,30 @@ export default function NavHeader() {
 
               {/* Theme-Tinted Matrix Icon Button */}
               <div
-                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-500 shrink-0 ${
+                className={`w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-500 shrink-0 ${
                   isMenuOpen
-                    ? 'bg-[var(--heading-tint)] text-[#020504] rotate-90 shadow-[0_0_20px_var(--accent-glow)]'
+                    ? 'bg-white text-black rotate-90 shadow-[0_0_20px_rgba(255,255,255,0.4)]'
                     : 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_10px_var(--card-hover-glow)]'
                 }`}
               >
-                <div className="grid grid-cols-2 gap-1 w-3 h-3 items-center justify-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#020504]" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#020504]" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#020504]" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#020504]" />
+                <div className="grid grid-cols-2 gap-1 w-2.5 h-2.5 xs:w-3 xs:h-3 items-center justify-center">
+                  <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
+                  <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
+                  <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
+                  <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* System Settings Gear Button & Modal */}
-        <div ref={settingsRef} className="relative self-end">
+        {/* System Settings Gear Button */}
+        <div
+          ref={settingsRef}
+          className={`fixed right-2.5 xs:right-3.5 top-1/2 -translate-y-1/2 md:translate-y-0 md:relative md:top-auto md:right-auto md:self-end select-none font-mono transition-opacity duration-300 z-30 ${
+            isMenuOpen ? 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto' : 'opacity-100'
+          }`}
+        >
           <button
             onClick={() => {
               playClick();
@@ -339,139 +413,230 @@ export default function NavHeader() {
               if (isMenuOpen) setIsMenuOpen(false);
             }}
             onMouseEnter={playHover}
-            className={`w-[54px] h-[54px] sm:w-[60px] sm:h-[60px] rounded-2xl sm:rounded-3xl backdrop-blur-2xl border-2 transition-all flex items-center justify-center shadow-2xl box-border ${
+            className={`w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 md:w-[60px] md:h-[60px] rounded-xl sm:rounded-2xl md:rounded-3xl backdrop-blur-2xl border-2 transition-all flex items-center justify-center shadow-2xl box-border ${
               isSettingsOpen
-                ? 'bg-[var(--accent-glow)] border-[var(--accent-color)] text-[var(--accent-color)] shadow-[0_0_30px_var(--accent-glow)]'
+                ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
                 : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] hover:shadow-[0_0_20px_var(--card-hover-glow)]'
             }`}
             aria-label="Global System Settings"
           >
-            <Settings className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-500 ${isSettingsOpen ? 'rotate-90 text-[var(--accent-color)]' : 'group-hover:rotate-45'}`} />
+            <Settings className={`w-4 h-4 xs:w-5 xs:h-5 md:w-6 md:h-6 transition-transform duration-500 ${isSettingsOpen ? 'rotate-90 text-black' : 'group-hover:rotate-45'}`} />
           </button>
+        </div>
+      </div>
 
-          {/* Settings Drawer Panel (Opens Upwards) */}
-          <AnimatePresence>
-            {isSettingsOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: 15, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 15, scale: 0.96 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute right-0 bottom-16 sm:bottom-20 w-80 bg-[#080B0E]/95 backdrop-blur-xl border border-white/15 rounded-2xl sm:rounded-3xl p-5 shadow-2xl font-mono z-50"
-              >
-                {/* Header */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
-                  <div>
-                    <h3 className="text-xs font-bold text-white uppercase tracking-wider">System Config</h3>
-                    <p className="text-[10px] text-white/40">Global Customization</p>
-                  </div>
-                  <span className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[9px] text-[var(--accent-color)] font-bold">
+      {/* Global Settings Drawer Panel: Centered and fully visible on mobile, above button on desktop */}
+      <AnimatePresence>
+        {isSettingsOpen && (
+          <>
+            {/* Mobile Backdrop (dimmed without blur so background remains clear) */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSettingsOpen(false)}
+              className="fixed inset-0 bg-black/40 z-40 md:hidden"
+            />
+
+            <motion.div
+              ref={settingsModalRef}
+              initial={{ opacity: 0, scale: 0.94, x: isMobile ? '-50%' : 0, y: isMobile ? '-50%' : 0 }}
+              animate={{ opacity: 1, scale: 1, x: isMobile ? '-50%' : 0, y: isMobile ? '-50%' : 0 }}
+              exit={{ opacity: 0, scale: 0.94, x: isMobile ? '-50%' : 0, y: isMobile ? '-50%' : 0 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed left-1/2 top-1/2 w-[calc(100vw-36px)] max-w-[325px] md:left-auto md:top-auto md:bottom-24 lg:bottom-[98px] md:right-4 lg:right-5 md:w-80 md:max-w-xs bg-[#070b10]/80 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl p-3.5 xs:p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(255,255,255,0.3),inset_0_0_30px_rgba(255,255,255,0.02)] font-mono z-50 max-h-[85vh] overflow-y-auto"
+            >
+              {/* Header matching reference with close button */}
+              <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2.5">
+                <div>
+                  <h3 className="text-sm font-black text-white uppercase tracking-wider font-display">System</h3>
+                  <p className="text-[9px] text-white/40 tracking-widest font-mono uppercase">GLOBAL CONFIG</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded bg-white/10 border border-white/15 text-[9px] text-white font-mono font-bold">
                     SET
                   </span>
+                  <button
+                    onClick={() => setIsSettingsOpen(false)}
+                    className="p-1 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
+                    aria-label="Close settings"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
+              </div>
 
-                {/* Theme Selector */}
-                <div className="mb-5">
-                  <div className="flex items-center justify-between text-[11px] text-white/50 mb-2.5">
-                    <span>[01] CORE ACCENT</span>
-                    <span className="text-[var(--accent-color)] uppercase font-bold">{theme}</span>
-                  </div>
-                  <div className="flex items-center justify-between bg-white/5 p-2 rounded-lg border border-white/5">
-                    {themeOptions.map((t) => (
+              {/* [01] Core Theme Selector with dot indicators matching reference */}
+              <div className="mb-2.5">
+                <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
+                  <span>[01] CORE THEME</span>
+                  <span className="text-[10px] text-white/40 font-mono">V_1.0</span>
+                </div>
+                <div className="flex items-center justify-between bg-white/5 p-1.5 rounded-xl border border-white/10">
+                  {themeOptions.map((t) => {
+                    const isSelected = theme === t.id;
+                    return (
                       <button
                         key={t.id}
                         onClick={() => setTheme(t.id)}
                         onMouseEnter={playHover}
-                        className={`w-8 h-8 rounded-md flex items-center justify-center transition-all ${
-                          theme === t.id
-                            ? 'scale-110 shadow-[0_0_12px_var(--accent-glow)] ring-2 ring-white'
-                            : 'opacity-60 hover:opacity-100'
+                        className={`relative flex items-center justify-center transition-all ${
+                          isSelected
+                            ? 'w-7 h-7 rounded-lg border-2 border-white/80 bg-white/10'
+                            : 'w-6 h-6 hover:scale-110 opacity-70 hover:opacity-100'
                         }`}
-                        style={{ backgroundColor: t.color }}
                         title={t.name}
                       >
-                        {theme === t.id && <Check className="w-3.5 h-3.5 text-black font-bold" />}
+                        <span
+                          className="w-3 h-3 rounded-full transition-transform"
+                          style={{ backgroundColor: t.color }}
+                        />
                       </button>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
+              </div>
 
-                {/* Audio Engine */}
-                <div className="mb-5">
-                  <div className="flex items-center justify-between text-[11px] text-white/50 mb-2">
-                    <span>[02] AUDIO ENGINE</span>
-                    <span className="text-[var(--accent-color)]">{soundEnabled ? 'ON' : 'OFF'}</span>
-                  </div>
-                  <button
-                    onClick={() => setSoundEnabled(!soundEnabled)}
-                    onMouseEnter={playHover}
-                    className={`w-full flex items-center justify-between p-2.5 rounded-lg border text-xs transition-all ${
-                      soundEnabled
-                        ? 'bg-[var(--accent-glow)] border-[var(--accent-border)] text-white'
-                        : 'bg-white/5 border-white/10 text-white/50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      {soundEnabled ? <Volume2 className="w-4 h-4 text-[var(--accent-color)]" /> : <VolumeX className="w-4 h-4" />}
-                      <span>Synthesizer SFX</span>
-                    </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-black/40 text-[var(--accent-color)]">
-                      {soundEnabled ? 'ACTIVE' : 'MUTED'}
-                    </span>
-                  </button>
+              {/* [02] Audio Engine cards matching reference */}
+              <div className="mb-2.5">
+                <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
+                  <span>[02] AUDIO ENGINE</span>
+                  <span className="text-[10px] text-[var(--accent-color)] font-bold">{soundEnabled ? 'ON' : 'OFF'}</span>
                 </div>
-
-                {/* Localization */}
-                <div className="mb-5">
-                  <div className="flex items-center justify-between text-[11px] text-white/50 mb-2">
-                    <span>[03] LOCALE</span>
-                    <span className="text-[var(--accent-color)] uppercase">{lang}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => setLang('en')}
-                      onMouseEnter={playHover}
-                      className={`py-1.5 rounded border text-xs font-bold transition-all ${
-                        lang === 'en'
-                          ? 'bg-[var(--accent-color)] text-[#06080A] border-transparent shadow-[0_0_10px_var(--accent-glow)]'
-                          : 'bg-white/5 border-white/10 text-white/60 hover:text-white'
-                      }`}
-                    >
-                      EN
-                    </button>
-                    <button
-                      onClick={() => setLang('ru')}
-                      onMouseEnter={playHover}
-                      className={`py-1.5 rounded border text-xs font-bold transition-all ${
-                        lang === 'ru'
-                          ? 'bg-[var(--accent-color)] text-[#06080A] border-transparent shadow-[0_0_10px_var(--accent-glow)]'
-                          : 'bg-white/5 border-white/10 text-white/60 hover:text-white'
-                      }`}
-                    >
-                      RU
-                    </button>
-                  </div>
-                </div>
-
-                {/* Replay Boot Sequence */}
-                <div>
+                <div className="space-y-1.5">
+                  {/* Default card */}
                   <button
                     onClick={() => {
-                      playClick();
-                      sessionStorage.removeItem('daelijek_booted');
-                      window.location.href = '/';
+                      if (!soundEnabled) setSoundEnabled(true);
+                      setAudioProfile('default');
                     }}
                     onMouseEnter={playHover}
-                    className="w-full py-2.5 rounded-lg border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-xs font-bold tracking-wider uppercase transition-all flex items-center justify-center gap-2"
+                    className={`w-full flex items-center justify-between p-2 rounded-xl border text-left transition-all ${
+                      soundEnabled && audioProfile === 'default'
+                        ? 'bg-white/10 border-white/30 text-white shadow-md'
+                        : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
+                    }`}
                   >
-                    <span>⚡ REPLAY BOOT SEQUENCE</span>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-wider text-white">Default</p>
+                      <p className="text-[9px] text-white/40 tracking-wider font-mono">AMBIENT / LO-FI</p>
+                    </div>
+                    {soundEnabled && audioProfile === 'default' && (
+                      <div className="flex items-center gap-0.5">
+                        <span className="w-0.5 h-2.5 bg-[var(--accent-color)] animate-pulse" />
+                        <span className="w-0.5 h-3.5 bg-[var(--accent-color)] animate-pulse delay-75" />
+                        <span className="w-0.5 h-2 bg-[var(--accent-color)] animate-pulse delay-150" />
+                      </div>
+                    )}
+                  </button>
+
+                  {/* Digital Minimalism card */}
+                  <button
+                    onClick={() => {
+                      if (!soundEnabled) setSoundEnabled(true);
+                      setAudioProfile('minimal');
+                    }}
+                    onMouseEnter={playHover}
+                    className={`w-full flex items-center justify-between p-2 rounded-xl border text-left transition-all ${
+                      soundEnabled && audioProfile === 'minimal'
+                        ? 'bg-white/10 border-white/30 text-white shadow-md'
+                        : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-wider text-white">Digital Minimalism</p>
+                      <p className="text-[9px] text-white/40 tracking-wider font-mono">SYNTHWAVE / RETRO</p>
+                    </div>
+                    {soundEnabled && audioProfile === 'minimal' && (
+                      <div className="flex items-center gap-0.5">
+                        <span className="w-0.5 h-2.5 bg-cyan-400 animate-pulse" />
+                        <span className="w-0.5 h-3.5 bg-cyan-400 animate-pulse delay-75" />
+                        <span className="w-0.5 h-2 bg-cyan-400 animate-pulse delay-150" />
+                      </div>
+                    )}
                   </button>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
+              </div>
+
+              {/* [03] Performance Tier buttons matching reference */}
+              <div className="mb-2.5">
+                <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
+                  <span>[03] PERFORMANCE TIER</span>
+                  <span className="text-[10px] text-white/40 font-mono">SYS</span>
+                </div>
+                <div className="grid grid-cols-3 gap-1 p-1 bg-white/5 rounded-xl border border-white/5 font-mono">
+                  {['high', 'medium', 'saver'].map((tier) => {
+                    const isActive = (perfTier || 'high').toLowerCase() === tier;
+                    const labels = { high: 'High', medium: 'Medium', saver: 'Saver' };
+                    return (
+                      <button
+                        key={tier}
+                        onClick={() => setPerfTier(tier)}
+                        onMouseEnter={playHover}
+                        className={`py-1 rounded-lg text-[10px] font-bold transition-all uppercase tracking-wider ${
+                          isActive
+                            ? 'bg-white/20 text-white border border-white/30 shadow'
+                            : 'text-white/40 hover:text-white hover:bg-white/5'
+                        }`}
+                      >
+                        {labels[tier]}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* System Active Status Indicator matching reference */}
+              <div className="flex items-center justify-center gap-2 py-1 text-[9px] text-white/40 tracking-widest font-mono border-t border-white/10">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
+                <span>SYSTEM ACTIVE</span>
+              </div>
+
+              {/* Localization & Replay Boot Sequence (Compact bottom bar) */}
+              <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2 font-mono">
+                <div className="flex items-center gap-1 bg-white/5 p-0.5 rounded-lg border border-white/10">
+                  <button
+                    onClick={() => setLang('en')}
+                    onMouseEnter={playHover}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                      lang === 'en'
+                        ? 'bg-[var(--accent-color)] text-[#06080A]'
+                        : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    EN
+                  </button>
+                  <button
+                    onClick={() => setLang('ru')}
+                    onMouseEnter={playHover}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                      lang === 'ru'
+                        ? 'bg-[var(--accent-color)] text-[#06080A]'
+                        : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    RU
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => {
+                    playClick();
+                    sessionStorage.removeItem('daelijek_booted');
+                    window.location.href = '/';
+                  }}
+                  onMouseEnter={playHover}
+                  className="px-2.5 py-1 rounded-lg border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-[9px] font-bold tracking-wider uppercase transition-all flex items-center gap-1"
+                >
+                  <span>REPLAY BOOT</span>
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
     </>
   );
 }
+

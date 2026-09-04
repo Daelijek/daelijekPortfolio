@@ -9,6 +9,10 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        xs: '420px',
+        xl: '1200px',
+      },
       colors: {
         background: 'var(--bg-primary)',
         'background-alt': 'var(--bg-secondary)',

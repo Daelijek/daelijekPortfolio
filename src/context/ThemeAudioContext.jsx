@@ -8,6 +8,8 @@ const ThemeAudioContext = createContext({
   setTheme: () => {},
   soundEnabled: true,
   setSoundEnabled: () => {},
+  audioProfile: 'default',
+  setAudioProfile: () => {},
   lang: 'en',
   setLang: () => {},
   perfTier: 'high',
@@ -20,6 +22,7 @@ const ThemeAudioContext = createContext({
 export function ThemeAudioProvider({ children }) {
   const [theme, setThemeState] = useState('acid');
   const [soundEnabled, setSoundEnabledState] = useState(true);
+  const [audioProfile, setAudioProfileState] = useState('default');
   const [lang, setLangState] = useState('en');
   const [perfTier, setPerfTierState] = useState('high');
 
@@ -28,6 +31,7 @@ export function ThemeAudioProvider({ children }) {
     try {
       const savedTheme = localStorage.getItem('daelijek_theme');
       const savedSound = localStorage.getItem('daelijek_sound');
+      const savedProfile = localStorage.getItem('daelijek_audio_profile');
       const savedLang = localStorage.getItem('daelijek_lang');
       const savedPerf = localStorage.getItem('daelijek_perf');
 
@@ -42,6 +46,11 @@ export function ThemeAudioProvider({ children }) {
         const isSound = savedSound === 'true';
         setSoundEnabledState(isSound);
         soundFx.setEnabled(isSound);
+      }
+
+      if (savedProfile) {
+        setAudioProfileState(savedProfile);
+        soundFx.setProfile(savedProfile);
       }
 
       if (savedLang) {
@@ -72,6 +81,15 @@ export function ThemeAudioProvider({ children }) {
     if (val) soundFx.playClick();
   };
 
+  const setAudioProfile = (profile) => {
+    setAudioProfileState(profile);
+    soundFx.setProfile(profile);
+    try {
+      localStorage.setItem('daelijek_audio_profile', profile);
+    } catch {}
+    soundFx.playProfileDemo(profile);
+  };
+
   const setLang = (newLang) => {
     setLangState(newLang);
     try {
@@ -95,6 +113,8 @@ export function ThemeAudioProvider({ children }) {
         setTheme,
         soundEnabled,
         setSoundEnabled,
+        audioProfile,
+        setAudioProfile,
         lang,
         setLang,
         perfTier,

@@ -116,7 +116,7 @@ export default function TelemetryHUDPod() {
   const { playHover, playClick } = useThemeAudio();
 
   return (
-    <div className="w-full max-w-sm space-y-6 font-mono select-none pointer-events-auto">
+    <div className="w-full max-w-[340px] xl:max-w-[360px] 2xl:max-w-sm space-y-5 2xl:space-y-6 font-mono select-none pointer-events-auto">
       {/* 1. Header Telemetry Status */}
       <div className="flex items-center justify-between border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">

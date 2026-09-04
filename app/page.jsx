@@ -324,32 +324,32 @@ export default function HomePage() {
             </div>
 
             {/* ================= FOREGROUND HUD CONTROLS: SCREEN-ANCHORED ================= */}
-            <div className="absolute inset-0 p-6 sm:p-10 lg:p-12 flex flex-col justify-between pointer-events-none z-10">
+            <div className="absolute inset-0 p-4 xs:p-6 sm:p-10 lg:p-12 flex flex-col justify-between pointer-events-none z-10">
               {/* TOP BAR: Screen Top-Left Brand + Screen Top-Right Giant Counter */}
               <div className="flex items-start justify-between">
                 {/* Strict Top-Left Brand Stamp */}
-                <div className="flex items-center gap-3.5">
+                <div className="flex items-center gap-2.5 sm:gap-3.5">
                   <div className="text-right">
-                    <span className="block text-sm sm:text-base font-extrabold text-[var(--heading-tint)] leading-tight">
+                    <span className="block text-xs xs:text-sm sm:text-base font-extrabold text-[var(--heading-tint)] leading-tight">
                       Dias
                     </span>
-                    <span className="block text-sm sm:text-base font-extrabold text-[var(--heading-tint)] leading-tight">
+                    <span className="block text-xs xs:text-sm sm:text-base font-extrabold text-[var(--heading-tint)] leading-tight">
                       Yermek
                     </span>
                   </div>
-                  <div className="w-[1.5px] h-7 sm:h-8 bg-[var(--border-subtle)]" />
-                  <div className="text-left text-xs sm:text-sm text-[var(--text-secondary)] leading-tight">
+                  <div className="w-[1.5px] h-6 sm:h-8 bg-[var(--border-subtle)]" />
+                  <div className="text-left text-[11px] xs:text-xs sm:text-sm text-[var(--text-secondary)] leading-tight">
                     <span className="block">Portfolio</span>
                     <span className="block font-bold text-[var(--heading-tint)]">2026</span>
                   </div>
                 </div>
 
                 {/* Strict Top-Right Giant 100% Progress Display */}
-                <div className="text-right w-[200px] sm:w-[260px] md:w-[280px]">
-                  <div className="text-7xl sm:text-8xl md:text-9xl font-condensed font-black tracking-tight text-[var(--heading-tint)] leading-none select-none drop-shadow-[0_0_40px_var(--accent-glow)]">
+                <div className="text-right w-[140px] xs:w-[170px] sm:w-[260px] md:w-[280px]">
+                  <div suppressHydrationWarning className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl font-condensed font-black tracking-tight text-[var(--heading-tint)] leading-none select-none drop-shadow-[0_0_40px_var(--accent-glow)]">
                     {progress}%
                   </div>
-                  <div className="text-[10px] sm:text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase mt-1">
+                  <div suppressHydrationWarning className="text-[9px] xs:text-[10px] sm:text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase mt-1 truncate">
                     &gt; {stepText}
                   </div>
                 </div>
@@ -357,10 +357,10 @@ export default function HomePage() {
 
               {/* CENTER: Strict Dead-Center Flush Symmetrical Audio Switch (Wall-to-Wall Fill, Flat Middle) */}
               <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto w-full max-w-[260px] xs:max-w-[300px] sm:max-w-[360px] px-2"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="w-[280px] xs:w-[320px] sm:w-[360px] h-12 sm:h-14 flex items-stretch rounded-2xl border-2 border-[var(--border-subtle)] bg-black/85 backdrop-blur-2xl shadow-2xl overflow-hidden p-0">
+                <div className="w-full h-11 xs:h-12 sm:h-14 flex items-stretch rounded-2xl border-2 border-[var(--border-subtle)] bg-black/85 backdrop-blur-2xl shadow-2xl overflow-hidden p-0">
                   {/* Button 1: AUDIO: ON (Left half, rounded on outer left only) */}
                   <button
                     onClick={() => setSoundEnabled(true)}
@@ -390,18 +390,18 @@ export default function HomePage() {
               </div>
 
               {/* BOTTOM BAR: Screen Bottom-Left Perf Tier + Screen Bottom-Right LOADED Button */}
-              <div className="flex flex-col sm:flex-row items-end sm:items-center justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
                 {/* Strict Bottom-Left: Performance Tier Selector (Mirrored Dimensions & Height with Right Block) */}
                 <div
-                  className="flex flex-col items-start gap-1.5 pointer-events-auto w-[200px] sm:w-[260px] md:w-[280px]"
+                  className="flex flex-col items-start gap-1 xs:gap-1.5 pointer-events-auto w-full sm:w-[240px] md:w-[280px]"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="w-full flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
+                  <div className="w-full flex items-center justify-between text-[9px] xs:text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
                     <span>PERFORMANCE_TIER</span>
                     <span className="text-[var(--accent-color)] font-bold">[{perfTier.toUpperCase()}]</span>
                   </div>
 
-                  <div className="w-full h-12 sm:h-14 flex items-stretch rounded-xl border border-[var(--border-subtle)] bg-black/85 backdrop-blur-2xl shadow-2xl p-1 gap-1">
+                  <div className="w-full h-11 xs:h-12 sm:h-14 flex items-stretch rounded-xl border border-[var(--border-subtle)] bg-black/85 backdrop-blur-2xl shadow-2xl p-1 gap-1">
                     {['high', 'med', 'saver'].map((t) => (
                       <button
                         key={t}
@@ -421,17 +421,18 @@ export default function HomePage() {
 
                 {/* Strict Bottom-Right: Filling LOADED Button */}
                 <div
-                  className="flex flex-col items-end gap-1.5 pointer-events-auto w-[200px] sm:w-[260px] md:w-[280px]"
+                  className="flex flex-col items-stretch sm:items-end gap-1 xs:gap-1.5 pointer-events-auto w-full sm:w-[240px] md:w-[280px]"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="w-full flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
+                  <div className="w-full flex items-center justify-between text-[9px] xs:text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
                     <span>SYSTEM_CORE</span>
-                    <span>{progress === 100 ? '[READY // ENTER]' : `${progress}%`}</span>
+                    <span suppressHydrationWarning>{progress === 100 ? '[READY // ENTER]' : `${progress}%`}</span>
                   </div>
 
                   <button
                     onClick={handleEnter}
                     disabled={progress < 100}
+                    suppressHydrationWarning
                     onMouseEnter={playHover}
                     className={`relative w-full h-12 sm:h-14 rounded-xl font-display font-black text-sm sm:text-base tracking-widest uppercase transition-all duration-300 overflow-hidden border ${
                       progress === 100
@@ -450,7 +451,7 @@ export default function HomePage() {
                     />
 
                     {/* Button Label */}
-                    <div className="relative z-10 w-full h-full flex items-center justify-center gap-2">
+                    <div className="relative z-10 w-full h-full flex items-center justify-center gap-2" suppressHydrationWarning>
                       {progress === 100 ? (
                         <span className="text-[#020504] font-black tracking-widest">LOADED</span>
                       ) : (
@@ -468,7 +469,10 @@ export default function HomePage() {
       </AnimatePresence>
 
       {/* LEFT SCANNER OVERLAY BLOCK (Uniformly rounded on all 4 corners) */}
-      <div className="absolute left-3 sm:left-4 lg:left-5 top-3 sm:top-4 lg:top-5 bottom-3 sm:bottom-4 lg:bottom-5 right-1/2 mr-1.5 sm:mr-2.5 lg:mr-3 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 z-0 pointer-events-auto">
+      <div className="absolute left-2 xs:left-3 sm:left-4 lg:left-5 top-2 xs:top-3 sm:top-4 lg:top-5 bottom-2 xs:bottom-3 sm:bottom-4 lg:bottom-5 right-2 xs:right-3 sm:right-4 lg:right-5 md:max-xl:landscape:right-[48%] md:max-xl:landscape:mr-2 xl:right-1/2 xl:mr-3 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 z-0 pointer-events-auto">
+        {/* Subtle Vertical Split Divider Line (Desktop XL only) */}
+        <div className="hidden xl:block absolute inset-y-0 left-1/2 w-[1px] bg-white/[0.06] pointer-events-none z-10" />
+
         {/* Quantum 3D Matrix Lattice with Gravitational Warp */}
         <QuantumMatrixBackground />
 
@@ -476,41 +480,54 @@ export default function HomePage() {
         <TrueLaserScanner />
 
         {/* Content Layout Overlay: Top Brand & Bottom Telemetry */}
-        <div className="absolute inset-0 z-20 flex flex-col justify-between p-7 sm:p-9 lg:p-11 pointer-events-none">
-          {/* Top-Left Brand Stamp */}
-          <div className="pointer-events-auto font-mono select-none">
-            <Link
-              href="/"
-              onClick={playClick}
-              onMouseEnter={playHover}
-              className="group inline-flex items-center gap-3.5 text-left"
-            >
-              <div className="text-right">
-                <span className="block text-sm sm:text-base font-extrabold text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors leading-tight">
-                  Dias
-                </span>
-                <span className="block text-sm sm:text-base font-extrabold text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors leading-tight">
-                  Yermek
-                </span>
-              </div>
-              <div className="w-[1.5px] h-7 sm:h-8 bg-[var(--border-subtle)] group-hover:bg-[var(--accent-color)] transition-colors" />
-              <div className="text-left text-xs sm:text-sm text-[var(--text-secondary)] leading-tight">
-                <span className="block">Portfolio</span>
-                <span className="block font-bold text-[var(--heading-tint)]">2026</span>
-              </div>
-            </Link>
+        <div className="absolute inset-0 z-20 flex flex-col justify-between p-4 xs:p-6 sm:p-8 lg:p-11 pointer-events-none">
+          {/* Top Header Row: Screen Top-Left Brand + Mobile/Tablet Top-Right Status Badge */}
+          <div className="w-full flex items-start justify-between">
+            {/* Top-Left Brand Stamp */}
+            <div className="pointer-events-auto font-mono select-none">
+              <Link
+                href="/"
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="group inline-flex items-center gap-2.5 xs:gap-3.5 text-left"
+              >
+                <div className="text-right">
+                  <span className="block text-xs xs:text-sm sm:text-base font-extrabold text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                    Dias
+                  </span>
+                  <span className="block text-xs xs:text-sm sm:text-base font-extrabold text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                    Yermek
+                  </span>
+                </div>
+                <div className="w-[1.5px] h-6 xs:h-7 sm:h-8 bg-[var(--border-subtle)] group-hover:bg-[var(--accent-color)] transition-colors" />
+                <div className="text-left text-[11px] xs:text-xs sm:text-sm text-[var(--text-secondary)] leading-tight">
+                  <span className="block">Portfolio</span>
+                  <span className="block font-bold text-[var(--heading-tint)]">2026</span>
+                </div>
+              </Link>
+            </div>
+
+            {/* Top-Right Availability Status Pill on Mobile & Tablet Portrait */}
+            <div className="md:max-xl:landscape:hidden xl:hidden pointer-events-auto flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/60 border border-white/15 backdrop-blur-md text-[10px] sm:text-xs font-mono shadow-lg">
+              <span className="text-white/40 tracking-wider text-[9px] sm:text-[10px] uppercase">AVAILABILITY</span>
+              <span className="w-[1px] h-3 bg-white/20" />
+              <span className="text-[var(--accent-color)] font-bold tracking-wider flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
+                OPEN
+              </span>
+            </div>
           </div>
 
           {/* Bottom Row: Wanna Say Hello? (Left) & Local Time (Right next to it) */}
-          <div className="pointer-events-auto flex items-end gap-8 sm:gap-12 font-mono text-xs select-none">
+          <div className="pointer-events-auto hidden md:max-xl:landscape:flex xl:flex items-end gap-6 sm:gap-8 lg:gap-12 font-mono text-xs select-none">
             {/* Email */}
             <div>
-              <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Wanna Say Hello?</p>
+              <p className="text-[10px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Wanna Say Hello?</p>
               <a
                 href="mailto:dias1605ermek@gmail.com"
                 onClick={playClick}
                 onMouseEnter={playHover}
-                className="text-sm sm:text-base font-bold text-[var(--heading-tint)] hover:text-[var(--accent-color)] transition-colors block"
+                className="text-xs sm:text-sm lg:text-base font-bold text-[var(--heading-tint)] hover:text-[var(--accent-color)] transition-colors block truncate max-w-[190px] sm:max-w-none"
               >
                 dias1605ermek@gmail.com
               </a>
@@ -518,25 +535,35 @@ export default function HomePage() {
 
             {/* Local Time */}
             <div className="hidden sm:block">
-              <p className="text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Local Time</p>
-              <p className="text-sm sm:text-base font-bold text-[var(--heading-tint)] flex items-center gap-2">
+              <p className="text-[10px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Local Time</p>
+              <p className="text-xs sm:text-sm lg:text-base font-bold text-[var(--heading-tint)] flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping" />
-                <span>Astana / {astanaTime || '12:00:00'} (UTC+5)</span>
+                <span suppressHydrationWarning>Astana / {astanaTime || '12:00:00'} (UTC+5)</span>
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* RIGHT BACKGROUND: Seamless borderless constellation particle network */}
-      <div className="hidden md:block absolute right-0 top-0 bottom-0 left-1/2 z-0 pointer-events-auto overflow-hidden">
+      {/* TOP-RIGHT Availability Status Pill for Tablet Landscape */}
+      <div className="hidden md:max-xl:landscape:flex xl:hidden fixed top-4 sm:top-5 right-4 sm:right-6 z-30 pointer-events-auto items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/15 backdrop-blur-md text-xs font-mono shadow-lg">
+        <span className="text-white/40 tracking-wider text-[10px] uppercase">AVAILABILITY</span>
+        <span className="w-[1px] h-3 bg-white/20" />
+        <span className="text-[var(--accent-color)] font-bold tracking-wider flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
+          OPEN
+        </span>
+      </div>
+
+      {/* RIGHT BACKGROUND: Seamless borderless constellation particle network (Tablet landscape & Desktop) */}
+      <div className="hidden md:max-xl:landscape:block xl:block absolute right-0 top-0 bottom-0 left-[52%] xl:left-1/2 z-0 pointer-events-auto overflow-hidden">
         {/* Constellation Particle Network (Floating interactive nodes & dynamic links) */}
         <RightConstellationBackground />
       </div>
 
-      {/* TOP-RIGHT: Edge-to-Edge Rolling Marquee (From 50% split all the way to right edge) */}
+      {/* TOP-RIGHT: Edge-to-Edge Rolling Marquee (Desktop XL only) */}
       <div
-        className="hidden md:block fixed left-1/2 right-3 sm:right-4 lg:right-6 top-5 z-30 overflow-hidden pointer-events-none select-none"
+        className="hidden xl:block fixed left-1/2 right-3 sm:right-4 lg:right-6 top-5 z-30 overflow-hidden pointer-events-none select-none"
         style={{
           maskImage: 'linear-gradient(to right, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)',
@@ -557,18 +584,23 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* CENTER 3D INTERACTIVE DEVICE (Dead center of the entire screen, crossing the 50% split) */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto flex items-center justify-center">
+      {/* 3D INTERACTIVE DEVICE (Responsive positioning across mobile, tablet portrait, tablet landscape, and desktop) */}
+      <div className="absolute pointer-events-auto flex items-center justify-center origin-center transition-all duration-300 z-10
+        left-1/2 top-[38%] xs:top-[40%] -translate-x-1/2 -translate-y-1/2 scale-[0.80] xs:scale-[0.85] sm:scale-[0.90]
+        md:portrait:left-1/2 md:portrait:top-[31%] md:portrait:-translate-x-1/2 md:portrait:-translate-y-1/2 md:portrait:scale-[0.78]
+        md:max-xl:landscape:left-[75%] md:max-xl:landscape:top-1/2 md:max-xl:landscape:-translate-x-1/2 md:max-xl:landscape:-translate-y-1/2 md:max-xl:landscape:scale-[0.82] lg:max-xl:landscape:scale-[0.88]
+        xl:left-1/2 xl:top-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2 xl:scale-[0.88] 2xl:scale-100"
+      >
         <Device3DViewport />
       </div>
 
-      {/* MAIN VIEWPORT: Right Half Content (Pure Clean Telemetry Typography - No Clunky Boxes) */}
-      <div className="relative z-10 w-full px-8 sm:px-14 lg:px-20 grid grid-cols-1 md:grid-cols-2 items-center my-auto pointer-events-none">
+      {/* MAIN VIEWPORT: Right Half Content (Desktop XL only) */}
+      <div className="relative z-10 w-full px-6 sm:px-10 lg:px-16 xl:px-20 grid grid-cols-1 xl:grid-cols-2 items-center my-auto pointer-events-none">
         {/* Empty Left Placeholder */}
-        <div className="hidden md:block" />
+        <div className="hidden xl:block" />
 
-        {/* RIGHT HALF CONTENT: Minimalist Cyber Telemetry HUD Pod (No background box) */}
-        <div className="pointer-events-auto hidden md:flex flex-col justify-center items-end text-left pr-4 sm:pr-8">
+        {/* RIGHT HALF CONTENT: Minimalist Cyber Telemetry HUD Pod (Desktop XL only) */}
+        <div className="pointer-events-auto hidden xl:flex flex-col justify-center items-end text-left pr-4 sm:pr-8 xl:pr-12 2xl:pr-16">
           <TelemetryHUDPod />
         </div>
       </div>
