@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
 import { ExternalLink, ArrowRight, FolderGit2 } from 'lucide-react';
@@ -19,7 +19,7 @@ export default function ProjectsPage() {
       {/* Featured Projects Flow Rail */}
       <div className="space-y-16 mb-24">
         {projects.featured.map((proj, idx) => (
-          <motion.div
+          <Motion.div
             key={proj.id}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -36,9 +36,21 @@ export default function ProjectsPage() {
                     <span className="text-[11px] text-[var(--text-muted)] font-mono">// {proj.category}</span>
                   </div>
 
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--heading-tint)] font-display group-hover:text-[var(--accent-color)] transition-colors mb-4">
-                    {proj.title}
-                  </h2>
+                  <Link
+                    href={`/projects/${proj.slug || proj.id.toLowerCase()}`}
+                    onClick={playClick}
+                    onMouseEnter={playHover}
+                    className="block group/link"
+                  >
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-[var(--heading-tint)] font-display group-hover/link:text-[var(--accent-color)] transition-colors mb-2">
+                      {proj.title}
+                    </h2>
+                    {proj.tagline && (
+                      <p className="text-xs text-[var(--accent-color)] font-mono mb-4 tracking-wider">
+                        &gt; {proj.tagline}
+                      </p>
+                    )}
+                  </Link>
 
                   <p className="text-sm text-[var(--text-secondary)] leading-relaxed font-sans mb-6">
                     {proj.description}
@@ -58,7 +70,19 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-4 pt-6 border-t border-[var(--border-subtle)]">
+                <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-[var(--border-subtle)]">
+                  {/* Primary: Deep Case Study */}
+                  <Link
+                    href={`/projects/${proj.slug || proj.id.toLowerCase()}`}
+                    onClick={playClick}
+                    onMouseEnter={playHover}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
+                  >
+                    <span>{lang === 'ru' ? 'ПОДРОБНЫЙ КЕЙС' : 'VIEW CASE STUDY'}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+
+                  {/* Live Demo */}
                   {proj.liveUrl && (
                     <a
                       href={proj.liveUrl}
@@ -66,14 +90,20 @@ export default function ProjectsPage() {
                       rel="noopener noreferrer"
                       onClick={playClick}
                       onMouseEnter={playHover}
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/5 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-white hover:text-[var(--accent-color)] font-bold text-xs tracking-wider uppercase transition-all"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
-                      <span>LIVE DEMO</span>
+                      <span>{lang === 'ru' ? 'ДЕМО' : 'LIVE DEMO'}</span>
                     </a>
                   )}
 
-                  {proj.githubUrl && (
+                  {/* Source Code or Private Badge */}
+                  {proj.isPrivate ? (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-[10px] text-white/50 font-mono tracking-wider">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400/70 animate-pulse" />
+                      <span>{lang === 'ru' ? 'ПРИВАТНЫЙ РЕПО' : 'PRIVATE REPO'}</span>
+                    </span>
+                  ) : proj.githubUrl ? (
                     <a
                       href={proj.githubUrl}
                       target="_blank"
@@ -83,14 +113,19 @@ export default function ProjectsPage() {
                       className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-black/40 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] font-bold text-xs tracking-wider uppercase transition-all"
                     >
                       <FaGithub className="w-4 h-4" />
-                      <span>SOURCE CODE</span>
+                      <span>{lang === 'ru' ? 'ИСХОДНЫЙ КОД' : 'SOURCE CODE'}</span>
                     </a>
-                  )}
+                  ) : null}
                 </div>
               </div>
 
               {/* Right Column: Media Viewport Frame with HUD */}
-              <div className="lg:col-span-6 relative min-h-[320px] lg:min-h-[420px] bg-[#040608] overflow-hidden border-t lg:border-t-0 lg:border-l border-white/10">
+              <Link
+                href={`/projects/${proj.slug || proj.id.toLowerCase()}`}
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="lg:col-span-6 relative min-h-[320px] lg:min-h-[420px] bg-[#040608] overflow-hidden border-t lg:border-t-0 lg:border-l border-white/10 block cursor-pointer group/viewport"
+              >
                 {/* Top HUD bar */}
                 <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 bg-gradient-to-b from-black/80 to-transparent text-[10px] text-white/60">
                   <span>PROJECT_ID: // {proj.id}</span>
@@ -100,27 +135,30 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Scanline overlay */}
-                <div className="absolute inset-0 z-10 scanlines-overlay opacity-30 group-hover:opacity-10 transition-opacity" />
+                <div className="absolute inset-0 z-10 scanlines-overlay opacity-30 group-hover/viewport:opacity-10 transition-opacity" />
 
                 {/* Project Image */}
-                <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                <div className="relative w-full h-full transform group-hover/viewport:scale-105 transition-transform duration-700 ease-out">
                   <Image
                     src={proj.image}
                     alt={proj.title}
                     fill
-                    className="object-cover object-top opacity-85 group-hover:opacity-100 transition-opacity"
+                    className="object-cover object-top opacity-85 group-hover/viewport:opacity-100 transition-opacity"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
 
                 {/* Bottom HUD bar */}
                 <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-between p-4 bg-gradient-to-t from-black/80 to-transparent text-[10px] text-white/60">
-                  <span>SYSTEM_READY</span>
-                  <span className="text-[var(--accent-color)]">[DATA_STREAM]</span>
+                  <span className="flex items-center gap-1.5 text-[var(--accent-color)] font-bold">
+                    <span>{lang === 'ru' ? 'ОТКРЫТЬ КЕЙС' : 'CLICK TO EXPAND'}</span>
+                    <ArrowRight className="w-3 h-3 group-hover/viewport:translate-x-1 transition-transform" />
+                  </span>
+                  <span className="text-white/40 font-mono">[DOSSIER_READY]</span>
                 </div>
-              </div>
+              </Link>
             </div>
-          </motion.div>
+          </Motion.div>
         ))}
       </div>
 
@@ -138,7 +176,7 @@ export default function ProjectsPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.otherProjects.map((mini, idx) => (
-            <motion.a
+            <Motion.a
               key={mini.id}
               href={mini.url}
               target="_blank"
@@ -176,7 +214,7 @@ export default function ProjectsPage() {
                   </span>
                 ))}
               </div>
-            </motion.a>
+            </Motion.a>
           ))}
         </div>
       </section>

@@ -38,13 +38,6 @@ function CyberMatrixRain() {
     let width = (canvas.width = canvas.parentElement.offsetWidth);
     let height = (canvas.height = canvas.parentElement.offsetHeight);
 
-    const handleResize = () => {
-      if (!canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.offsetWidth;
-      height = canvas.height = canvas.parentElement.offsetHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
 
     const tokens = [
       '0', '1', '0x7F', '0xA4', '0xFF', '0x00', '0x9C', '0x1A', '0x3E', '0x88',
@@ -64,7 +57,33 @@ function CyberMatrixRain() {
       speeds[i] = 1 + Math.random() * 2.2;
     }
 
-    const draw = () => {
+    const handleResize = () => {
+      if (!canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.offsetWidth;
+      height = canvas.height = canvas.parentElement.offsetHeight;
+      const targetColumns = Math.floor(width / columnWidth);
+      while (drops.length < targetColumns) {
+        drops.push(Math.random() * -60);
+        speeds.push(1 + Math.random() * 2.2);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    let lastTime = null;
+
+    const draw = (currentTime = performance.now()) => {
+      if (lastTime === null) {
+        lastTime = currentTime;
+      }
+      const deltaMs = currentTime - lastTime;
+      lastTime = currentTime;
+
+      // Delta time normalized to standard 60 FPS (16.667ms)
+      // Clamped to 100ms to prevent giant leaps on tab switches / backgrounding
+      const clampedDelta = Math.min(Math.max(deltaMs, 0), 100);
+      const dtModifier = clampedDelta / (1000 / 60);
+
       // Clear canvas completely to keep 100% transparency
       ctx.clearRect(0, 0, width, height);
 
@@ -96,18 +115,20 @@ function CyberMatrixRain() {
           }
         }
 
-        if (headY > height + 80 && Math.random() > 0.96) {
-          drops[i] = 0;
+        // Frame-rate independent respawn probability matching 60fps base rate (0.04)
+        const resetProbability = 1 - Math.pow(0.96, dtModifier);
+        if ((headY > height + 80 && Math.random() < resetProbability) || headY > height + 350) {
+          drops[i] = -Math.random() * 10;
           speeds[i] = 1 + Math.random() * 2;
         }
 
-        drops[i] += speeds[i] * 0.35;
+        drops[i] += speeds[i] * 0.35 * dtModifier;
       }
 
       animationFrameId = requestAnimationFrame(draw);
     };
 
-    draw();
+    animationFrameId = requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener('resize', handleResize);
