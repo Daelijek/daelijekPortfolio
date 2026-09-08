@@ -334,14 +334,76 @@ export const portfolioContent = {
         {
           num: "02",
           id: "BEYIMTECH_AI_ECOSYSTEM",
+          slug: "beyimtech-ai-platform",
           title: "BeyimTech AI Platform",
+          tagline: "Adaptive AI learning ecosystem deployed across 20+ schools in Kazakhstan",
           category: "Flutter // Riverpod // EdTech // AI",
+          isPrivate: false,
           description: "Adaptive AI learning system deployed across 20+ schools in Kazakhstan with live telemetry, analytics, and custom educational content pipelines.",
           tags: ["Flutter", "Riverpod", "Next.js", "AI Integration", "App Store"],
           image: "/assets/beyim.png",
           liveUrl: "https://beyim.ai",
           githubUrl: "https://beyim.ai",
-          status: "ASTANA_HUB_RELEASE"
+          status: "ASTANA_HUB_RELEASE",
+          dossier: {
+            projectType: "Adaptive AI EdTech Mobile & Web Ecosystem",
+            entryYear: "2023 - 2024",
+            targetPlatform: "iOS, Android (Flutter) & Web Admin Dashboard",
+            primaryRole: "Lead Mobile Developer & AI Integrator",
+            technologies: {
+              core: ["Flutter", "Dart", "Riverpod State Mgmt", "Next.js"],
+              backend: ["REST APIs", "WebSocket Stream", "PostgreSQL"],
+              aiCloud: ["Adaptive Recommendation Engine", "Content Pipelines"],
+              tools: ["App Store Connect", "Google Play Console", "CI/CD"]
+            },
+            colorPalette: [
+              { name: "EdTech Violet", hex: "#7952FC" },
+              { name: "Cyan Spark", hex: "#00E5FF" },
+              { name: "Deep Navy", hex: "#0A0E1A" },
+              { name: "Cloud White", hex: "#FFFFFF" }
+            ],
+            status: "ASTANA_HUB_RELEASE"
+          },
+          overview: {
+            lead: "An intelligent adaptive learning platform built to personalize secondary education through AI diagnostics, dynamic task assignment, and real-time student progress telemetrics.",
+            targetAudience: "School students, educators, and school administrators across Kazakhstan requiring real-time diagnostic insights into academic performance.",
+            challenge: "Traditional educational apps lack adaptive difficulty scaling and suffer from fragmented student engagement across diverse devices and low-bandwidth school networks.",
+            solution: "Architected a high-performance cross-platform Flutter application using Riverpod for robust state management, integrated adaptive recommendation algorithms, and deployed seamless offline caching with local SQLite databases.",
+            myRole: "Led mobile client engineering from scratch in Flutter, built complex custom animations, integrated AI content evaluation endpoints, and orchestrated multi-store deployments."
+          },
+          walkthrough: {
+            concept: {
+              title: "Adaptive Learning for Every Student",
+              desc: "Personalized educational paths powered by real-time mastery tracking and engaging, gamified interface feedback.",
+              highlights: [
+                "Deployed and validated across 20+ pilot schools in Kazakhstan",
+                "Real-time diagnostic mastery graphs with sub-second feedback",
+                "Robust offline mode for low-connectivity classrooms"
+              ]
+            },
+            architecture: {
+              title: "Clean Flutter Architecture with Riverpod",
+              desc: "Separation of presentation, domain, and data layers with reactive state propagation and deterministic caching.",
+              highlights: [
+                "Riverpod providers for granular widget rebuild optimization",
+                "Secure token handling and role-based access for students and teachers",
+                "Optimized vector asset rendering for 60fps mobile transitions"
+              ]
+            },
+            features: [
+              { num: "01", title: "Adaptive Diagnostic Engine", desc: "Dynamic question complexity scaling based on student response accuracy and latency.", metric: "20+ Schools" },
+              { num: "02", title: "Teacher Telemetry Hub", desc: "Aggregated classroom analytics revealing learning gaps in real time.", metric: "Real-Time Sync" },
+              { num: "03", title: "Cross-Platform Consistency", desc: "Single Dart codebase delivering pixel-perfect parity on iOS and Android.", metric: "60 FPS Native" }
+            ],
+            impact: {
+              metrics: [
+                { label: "SCHOOLS", value: "20+" },
+                { label: "ENGAGEMENT", value: "+65%" },
+                { label: "CRASH_FREE", value: "99.8%" },
+                { label: "STORES", value: "iOS / Android" }
+              ]
+            }
+          }
         },
         {
           num: "03",
@@ -914,14 +976,76 @@ export const portfolioContent = {
         {
           num: "02",
           id: "BEYIMTECH_AI_ECOSYSTEM",
+          slug: "beyimtech-ai-platform",
           title: "BeyimTech AI Platform",
+          tagline: "Адаптивная образовательная AI-экосистема, внедренная в 20+ школах Казахстана",
           category: "Flutter // Riverpod // EdTech // AI",
+          isPrivate: false,
           description: "Адаптивная образовательная AI-система, внедренная в 20+ школах Казахстана с телеметрией в реальном времени, аналитикой и генерацией контента.",
           tags: ["Flutter", "Riverpod", "Next.js", "AI Integration", "App Store"],
           image: "/assets/beyim.png",
           liveUrl: "https://beyim.ai",
           githubUrl: "https://beyim.ai",
-          status: "ASTANA_HUB_RELEASE"
+          status: "ASTANA_HUB_RELEASE",
+          dossier: {
+            projectType: "Адаптивная AI EdTech мобильная и веб-платформа",
+            entryYear: "2023 - 2024",
+            targetPlatform: "iOS, Android (Flutter) & Панель администратора на Web",
+            primaryRole: "Lead Mobile Разработчик & AI Интегратор",
+            technologies: {
+              core: ["Flutter", "Dart", "Riverpod State Mgmt", "Next.js"],
+              backend: ["REST APIs", "WebSocket Stream", "PostgreSQL"],
+              aiCloud: ["Адаптивный рекомендательный движок", "Конвейеры контента"],
+              tools: ["App Store Connect", "Google Play Console", "CI/CD"]
+            },
+            colorPalette: [
+              { name: "EdTech Фиолетовый", hex: "#7952FC" },
+              { name: "Неоновый Циан", hex: "#00E5FF" },
+              { name: "Глубокий Нэви", hex: "#0A0E1A" },
+              { name: "Облачный Белый", hex: "#FFFFFF" }
+            ],
+            status: "ASTANA_HUB_RELEASE"
+          },
+          overview: {
+            lead: "Интеллектуальная адаптивная образовательная платформа, созданная для персонализации школьного обучения с помощью AI-диагностики, динамического назначения заданий и отслеживания прогресса учеников в реальном времени.",
+            targetAudience: "Школьники, преподаватели и администраторы учебных заведений по всему Казахстану, которым необходима объективная диагностика успеваемости.",
+            challenge: "Традиционные образовательные платформы лишены гибкой адаптации сложности и страдают от неравномерной вовлеченности школьников на разных устройствах и при нестабильном интернете.",
+            solution: "Спроектировал высокопроизводительное кроссплатформенное приложение на Flutter с использованием Riverpod для реактивного управления состоянием, алгоритмами адаптивной сложности и надежным офлайн-кэшированием на базе SQLite.",
+            myRole: "С нуля разработал клиентское мобильное приложение на Flutter, внедрил сложные кастомные анимации, подключил AI-сервисы оценки знаний и организовал релизы в App Store и Google Play."
+          },
+          walkthrough: {
+            concept: {
+              title: "Адаптивное обучение для каждого ученика",
+              desc: "Персонализированные образовательные траектории, основанные на непрерывной оценке уровня понимания материала.",
+              highlights: [
+                "Успешное пилотное внедрение в 20+ школах Казахстана",
+                "Диагностические графики усвоения тем с обратной связью менее 1 сек",
+                "Отказоустойчивый офлайн-режим для сельских классов"
+              ]
+            },
+            architecture: {
+              title: "Чистая архитектура Flutter на Riverpod",
+              desc: "Четкое разделение UI, бизнес-логики и слоев данных с реактивным обновлением состояния.",
+              highlights: [
+                "Провайдеры Riverpod для точечной оптимизации рендеринга виджетов",
+                "Безопасная работа с токенами и ролевой доступ (ученик / учитель)",
+                "Оптимизация векторных ассетов для 60 FPS анимаций на слабых телефонах"
+              ]
+            },
+            features: [
+              { num: "01", title: "Адаптивный диагностический движок", desc: "Динамическая подстройка сложности задач под точность и время ответов ученика.", metric: "20+ Школ" },
+              { num: "02", title: "Телеметрический хаб преподавателя", desc: "Сводная аналитика по классу, мгновенно подсвечивающая пробелы в знаниях.", metric: "Real-Time Sync" },
+              { num: "03", title: "Кроссплатформенная стабильность", desc: "Единая кодовая база на Dart с идеальным совпадением логики на iOS и Android.", metric: "60 FPS Native" }
+            ],
+            impact: {
+              metrics: [
+                { label: "ШКОЛ", value: "20+" },
+                { label: "ВОВЛЕЧЕННОСТЬ", value: "+65%" },
+                { label: "CRASH_FREE", value: "99.8%" },
+                { label: "РЕЛИЗЫ", value: "iOS / Android" }
+              ]
+            }
+          }
         },
         {
           num: "03",
@@ -1420,8 +1544,11 @@ export const portfolioContent = {
         {
           num: "01",
           id: "FINANCE_MANAGEMENT_AI",
+          slug: "finance-management-app",
           title: "Finance Management Application",
+          tagline: "Шығындарды нақты уақытта талдайтын AI-көмекшісі бар дербес қаржы экожүйесі",
           category: "Full-Stack Мобильді қосымша & AI",
+          isPrivate: false,
           description: "React Native (Expo) және FastAPI/PostgreSQL негізінде жасалған дербес қаржыны басқару экожүйесі. Шығындарды нақты уақытта талдайтын кірістірілген OpenAI көмекшісі, интерактивті бюджет пен автоматты ескертулер бар.",
           tags: ["React Native", "Expo", "FastAPI", "OpenAI API", "PostgreSQL"],
           image: "/assets/Finance.png",
@@ -1432,8 +1559,11 @@ export const portfolioContent = {
         {
           num: "02",
           id: "BEYIMTECH_AI_ECOSYSTEM",
+          slug: "beyimtech-ai-platform",
           title: "BeyimTech AI Platform",
+          tagline: "Қазақстандағы 20+ мектепке енгізілген бейімделгіш AI оқыту экожүйесі",
           category: "Flutter // Riverpod // EdTech // AI",
+          isPrivate: false,
           description: "Қазақстандағы 20+ мектепке енгізілген, нақты уақыттағы телеметриясы, аналитикасы мен білім беру контенті бар бейімделгіш AI оқыту жүйесі.",
           tags: ["Flutter", "Riverpod", "Next.js", "AI Integration", "App Store"],
           image: "/assets/beyim.png",
@@ -1444,8 +1574,11 @@ export const portfolioContent = {
         {
           num: "03",
           id: "OPENGOV_KZ_PORTAL",
+          slug: "opengov-kz",
           title: "OpenGov.kz Платформасы",
+          tagline: "Ашықтық пен азаматтық белсенділікке арналған ұлттық мемлекеттік портал",
           category: "GovTech Web-платформасы",
+          isPrivate: false,
           description: "OpenGov.kz ресми платформасының фронтендін Next.js және React-те нөлден әзірлеу. Ашықтық үшін толық көптілділік (i18n), жаңалықтар мен азаматтық бастамалар каталогтары жасалды.",
           tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
           image: "/assets/openGov.png",
@@ -1456,8 +1589,11 @@ export const portfolioContent = {
         {
           num: "04",
           id: "BERIK_ZHUNUSBEK_WEB",
+          slug: "berik-zhunusbek",
           title: "Берік Жүнісбек галереясы",
+          tagline: "Танымал мүсінші және CG суретшісіне арналған атмосфералық кинетикалық портфолио",
           category: "Creative Showcase",
+          isPrivate: false,
           description: "Мүсінші, актер және CG суретшісі Берік Жүнісбекке арналған сандық портфолио мен мультимедиа галереясы. Жоғары сапалы визуалды эстетика, 3D интерактивтілік және үш тілде қолдау.",
           tags: ["HTML5", "CSS3", "JavaScript", "Portfolio", "Multilanguage"],
           image: "/assets/berikWeb.png",
@@ -1469,46 +1605,12 @@ export const portfolioContent = {
       otherTitle: "ЖҮЙЕ АРХИВІ ЖӘНЕ ТӘЖІРИБЕЛЕР",
       otherSubtitle: "Ашық кодты құралдар, алгоритмдер мен прототиптер",
       otherProjects: [
-        { id: "EVENTLY", title: "Evently", desc: "QR-кодты шақырулар жасауға, уақытқа дауыс беруге және автоматты RSVP-ге арналған іс-шараларды жоспарлау сервисі.", tags: ["QR System", "MongoDB", "Node.js"], url: "https://github.com/Daelijek/Evently" },
-        { id: "KAZ_DATA", title: "Kaz-Data Solutions", desc: "Қазақстан бойынша іс-шараларды біріктіретін және билеттерді брондайтын қозғалтқыш.", tags: ["Event Engine", "HTML/JS", "MongoDB"], url: "https://github.com/Daelijek/Kaz-Data_Solutions" },
-        { id: "QUEUEMS", title: "QueueMS Microservices", desc: "Таратылған хабарламалар мен тапсырмалар кезектері үшін Go-да жасалған жоғары өткізу қабілеті бар микросервистік жүйе.", tags: ["Golang", "Microservices", "Backend"], url: "https://github.com/Daelijek/QueueMS" },
-        { id: "AITU_CALC", title: "AITU Grade Calculator", desc: "Университеттегі GPA-ді есептеуге және шәкіртақыны қадағалауға арналған CustomTkinter-дегі десктоптық қосымша.", tags: ["Python", "CustomTkinter", "Education"], url: "https://github.com/Daelijek/AITU_grade_calculator" },
-        { id: "VOICE_ASSISTANT", title: "Voice Assistant AI", desc: "Дауыспен іске қосылатын және жүйені басқаратын Python автоматтандыру көмекшісі.", tags: ["Python", "Speech Recognition", "Automation"], url: "https://github.com/Daelijek/Voice_Assistant" },
-        { id: "SYS_RETRIEVAL", title: "Parameters Retrieval", desc: "ОЖ ресурстары мен параметрлерін бақылауға арналған аппараттық диагностика мен телеметрия GUI.", tags: ["Python", "GUI", "Diagnostics"], url: "https://github.com/Daelijek/ParametersRetrieval" }
-      ],
-      deviceShowcase: [
-        {
-          id: "finance",
-          title: "Finance AI Manager",
-          category: "React Native // Expo // FastAPI",
-          tag: "MOBILE & AI",
-          status: "PRODUCTION",
-          desc: "Түбіртектерді AI арқылы өңдейтін және шығындарды талдайтын қаржы қосымшасы."
-        },
-        {
-          id: "beyimtech",
-          title: "BeyimTech AI Platform",
-          category: "Flutter // Riverpod // EdTech // AI",
-          tag: "BEYIM.AI ECOSYSTEM",
-          status: "ASTANA HUB RELEASE",
-          desc: "20+ мектепке енгізілген, телеметриясы бар бейімделгіш AI оқыту жүйесі."
-        },
-        {
-          id: "opengov",
-          title: "OpenGov.kz Platform",
-          category: "Next.js // React // GovTech",
-          tag: "WEB & MOBILE UI",
-          status: "ENTERPRISE",
-          desc: "Ашық деректер ағыны бар мемлекеттік басқарудың заманауи веб-порталы."
-        },
-        {
-          id: "berikweb",
-          title: "BerikWeb Portfolio",
-          category: "HTML5 // CSS3 // JS // i18n",
-          tag: "CREATIVE SAAS",
-          status: "SHIPPED",
-          desc: "3D интерактивтілігі бар жылдам үш тілді жеке бренд-портал."
-        }
+        { id: "EVENTLY", slug: "evently", title: "Evently", desc: "QR-кодты шақырулар жасауға, уақытқа дауыс беруге және автоматты RSVP-ге арналған іс-шараларды жоспарлау сервисі.", tags: ["QR System", "MongoDB", "Node.js"], url: "https://github.com/Daelijek/Evently" },
+        { id: "KAZ_DATA", slug: "kaz-data", title: "Kaz-Data Solutions", desc: "Қазақстан бойынша іс-шараларды біріктіретін және билеттерді брондайтын қозғалтқыш.", tags: ["Event Engine", "HTML/JS", "MongoDB"], url: "https://github.com/Daelijek/Kaz-Data_Solutions" },
+        { id: "QUEUEMS", slug: "queuems", title: "QueueMS Microservices", desc: "Таратылған хабарламалар мен тапсырмалар кезектері үшін Go-да жасалған жоғары өткізу қабілеті бар микросервистік жүйе.", tags: ["Golang", "Microservices", "Backend"], url: "https://github.com/Daelijek/QueueMS" },
+        { id: "AITU_CALC", slug: "aitu-calc", title: "AITU Grade Calculator", desc: "Университеттегі GPA-ді есептеуге және шәкіртақыны қадағалауға арналған CustomTkinter-дегі десктоптық қосымша.", tags: ["Python", "CustomTkinter", "Education"], url: "https://github.com/Daelijek/AITU_grade_calculator" },
+        { id: "VOICE_ASSISTANT", slug: "voice-assistant", title: "Voice Assistant AI", desc: "Дауыспен іске қосылатын және жүйені басқаратын Python автоматтандыру көмекшісі.", tags: ["Python", "Speech Recognition", "Automation"], url: "https://github.com/Daelijek/Voice_Assistant" },
+        { id: "SYS_RETRIEVAL", slug: "sys-retrieval", title: "Parameters Retrieval", desc: "ОЖ ресурстары мен параметрлерін бақылауға арналған аппараттық диагностика мен телеметрия GUI.", tags: ["Python", "GUI", "Diagnostics"], url: "https://github.com/Daelijek/ParametersRetrieval" }
       ]
     },
     contact: {
