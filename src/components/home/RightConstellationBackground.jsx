@@ -59,6 +59,13 @@ export default function RightConstellationBackground() {
     }
     window.addEventListener('resize', resize);
 
+    const isMobileOrTouch =
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(pointer: coarse)').matches ||
+       'ontouchstart' in window ||
+       (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
+       window.innerWidth < 1024);
+
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.targetX = e.clientX - rect.left;
@@ -70,9 +77,11 @@ export default function RightConstellationBackground() {
       mouseRef.current.targetY = -1000;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    if (canvas.parentElement) {
-      canvas.parentElement.addEventListener('mouseleave', handleMouseLeave);
+    if (!isMobileOrTouch) {
+      window.addEventListener('mousemove', handleMouseMove);
+      if (canvas.parentElement) {
+        canvas.parentElement.addEventListener('mouseleave', handleMouseLeave);
+      }
     }
 
     // Initialize particles
@@ -83,9 +92,9 @@ export default function RightConstellationBackground() {
       particles.push({
         x: Math.random() * (width || 600),
         y: Math.random() * (height || 800),
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
-        radius: Math.random() * 1.6 + 0.8,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 2 + 1,
         pulseSpeed: 0.02 + Math.random() * 0.03,
         pulsePhase: Math.random() * Math.PI * 2,
         isHub: Math.random() > 0.8,
@@ -98,9 +107,14 @@ export default function RightConstellationBackground() {
       time += 0.02;
       ctx.clearRect(0, 0, width, height);
 
-      // Smooth mouse follow
-      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
-      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
+      // Autonomous gentle motion on mobile, smooth mouse follow on desktop
+      if (isMobileOrTouch) {
+        mouseRef.current.x = (width * 0.5) + Math.cos(time * 0.7) * (width * 0.3);
+        mouseRef.current.y = (height * 0.45) + Math.sin(time * 0.9) * (height * 0.25);
+      } else {
+        mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
+        mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
+      }
 
       const color = getColor();
       const mouse = mouseRef.current;
@@ -197,9 +211,11 @@ export default function RightConstellationBackground() {
 
     return () => {
       window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (canvas.parentElement) {
-        canvas.parentElement.removeEventListener('mouseleave', handleMouseLeave);
+      if (!isMobileOrTouch) {
+        window.removeEventListener('mousemove', handleMouseMove);
+        if (canvas.parentElement) {
+          canvas.parentElement.removeEventListener('mouseleave', handleMouseLeave);
+        }
       }
       resizeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);

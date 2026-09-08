@@ -73,9 +73,72 @@ export const viewport = {
   themeColor: '#040608',
 };
 
+const schemaOrgData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://daelijek.dev/#person',
+      name: 'Dias Yermek',
+      alternateName: 'Диас Ермек',
+      jobTitle: 'Middle Frontend & Mobile Developer',
+      description: 'Software engineer from Astana, Kazakhstan specializing in Next.js, React, Flutter, React Native, and AI integrations.',
+      url: 'https://daelijek.dev',
+      image: 'https://daelijek.dev/assets/linkedIn_Dias_square.png',
+      sameAs: [
+        'https://github.com/Daelijek',
+        'https://www.linkedin.com/in/dias-yermek/',
+        'https://t.me/daelijek_og',
+      ],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Astana',
+        addressCountry: 'Kazakhstan',
+      },
+      alumniOf: {
+        '@type': 'EducationalOrganization',
+        name: 'Astana IT University',
+      },
+      knowsAbout: [
+        'TypeScript',
+        'React',
+        'Next.js',
+        'Flutter',
+        'React Native',
+        'Expo',
+        'FastAPI',
+        'PostgreSQL',
+        'Tailwind CSS',
+        'AI Integrations',
+      ],
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': 'https://daelijek.dev/#profilepage',
+      url: 'https://daelijek.dev',
+      name: 'Dias Yermek | Creative Frontend & Mobile Developer',
+      isPartOf: {
+        '@type': 'WebSite',
+        '@id': 'https://daelijek.dev/#website',
+        url: 'https://daelijek.dev',
+        name: 'Dias Yermek Portfolio',
+      },
+      mainEntity: {
+        '@id': 'https://daelijek.dev/#person',
+      },
+    },
+  ],
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${bebasNeue.variable} ${chakraPetch.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} dark`} data-theme="acid">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrgData) }}
+        />
+      </head>
       <body className="bg-[#040608] text-white selection:bg-[#00FF9F] selection:text-[#040608] min-h-screen overflow-x-hidden">
         <ThemeAudioProvider>
           <ParticlesCanvas />

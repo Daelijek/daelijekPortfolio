@@ -53,6 +53,13 @@ export default function QuantumMatrixBackground() {
     }
     window.addEventListener('resize', resize);
 
+    const isMobileOrTouch =
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(pointer: coarse)').matches ||
+       'ontouchstart' in window ||
+       (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
+       window.innerWidth < 1024);
+
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.targetX = e.clientX - rect.left;
@@ -64,8 +71,10 @@ export default function QuantumMatrixBackground() {
       mouseRef.current.targetY = -1000;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
+    if (!isMobileOrTouch) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    }
 
     // 3D Grid Parameters
     const cols = perfTier === 'saver' ? 18 : perfTier === 'med' ? 24 : 30;
@@ -84,11 +93,25 @@ export default function QuantumMatrixBackground() {
     const render = () => {
       time += perfTier === 'saver' ? 0.012 : 0.018;
 
-      // Mouse smoothing
-      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
-      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
-      const mx = mouseRef.current.x;
-      const my = mouseRef.current.y;
+      let mx, my;
+      if (isMobileOrTouch) {
+        // Continuous, organic autonomous motion on mobile/touch screens
+        mx = width * 0.5 + Math.sin(time * 0.85) * (width * 0.28);
+        my = height * 0.5 + Math.cos(time * 0.65) * (height * 0.24);
+      } else {
+        // Desktop: follow cursor smoothly if hovered, otherwise float smoothly
+        if (mouseRef.current.targetX > -500) {
+          mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
+          mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
+        } else {
+          const idleX = width * 0.5 + Math.sin(time * 0.85) * (width * 0.28);
+          const idleY = height * 0.5 + Math.cos(time * 0.65) * (height * 0.24);
+          mouseRef.current.x += (idleX - mouseRef.current.x) * 0.04;
+          mouseRef.current.y += (idleY - mouseRef.current.y) * 0.04;
+        }
+        mx = mouseRef.current.x;
+        my = mouseRef.current.y;
+      }
 
       ctx.clearRect(0, 0, width, height);
 
@@ -133,25 +156,22 @@ export default function QuantumMatrixBackground() {
           const screenX = width * 0.5 + baseX;
           const screenY = height * 0.5 + baseY;
 
-          // Gravitational warp / distortion under cursor
+          // Gravitational warp / distortion under cursor or autonomous epicenter
           let warpX = 0;
           let warpY = 0;
           let isNearCursor = false;
 
-          if (mx > -500 && my > -500) {
-            const dx = screenX - mx;
-            const dy = screenY - my;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            const maxDist = 200;
+          const dx = screenX - mx;
+          const dy = screenY - my;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const maxDist = isMobileOrTouch ? 180 : 200;
 
-            if (dist < maxDist) {
-              isNearCursor = true;
-              const force = (1 - dist / maxDist);
-              // Gravitational funnel pulling towards cursor and deepening Z
-              warpX = -dx * force * 0.35;
-              warpY = -dy * force * 0.35;
-              z -= force * 70; // deepens the lattice
-            }
+          if (dist < maxDist) {
+            isNearCursor = true;
+            const force = (1 - dist / maxDist);
+            warpX = -dx * force * (isMobileOrTouch ? 0.26 : 0.35);
+            warpY = -dy * force * (isMobileOrTouch ? 0.26 : 0.35);
+            z -= force * (isMobileOrTouch ? 50 : 70);
           }
 
           const proj = project3D(baseX + warpX, baseY + warpY, z + 120);

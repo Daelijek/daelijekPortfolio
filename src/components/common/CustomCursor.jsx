@@ -10,12 +10,29 @@ export default function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
-    // Only on non-touch pointer devices
-    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-      return;
-    }
+    // Strictly disable on touch screens, mobile/tablet devices, or coarse pointer inputs
+    const checkCapability = () => {
+      if (typeof window === 'undefined') return;
+      const isTouch =
+        window.matchMedia('(pointer: coarse)').matches ||
+        'ontouchstart' in window ||
+        (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
+        window.innerWidth < 1024;
+      const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+      setIsEnabled(!isTouch && hasFinePointer);
+    };
+
+    checkCapability();
+    window.addEventListener('resize', checkCapability);
+    return () => window.removeEventListener('resize', checkCapability);
+  }, []);
+
+  useEffect(() => {
+    if (!isEnabled) return;
 
     let animId;
     let hasMoved = false;
@@ -40,7 +57,6 @@ export default function CustomCursor() {
     // 60-120 FPS hardware-accelerated LERP loop for smooth trailing ring
     const renderLoop = () => {
       if (hasMoved && ringRef.current) {
-        // Smooth linear interpolation (0.16 multiplier gives responsive organic inertia)
         const lerpFactor = 0.16;
         ringPos.current.x += (mousePos.current.x - ringPos.current.x) * lerpFactor;
         ringPos.current.y += (mousePos.current.y - ringPos.current.y) * lerpFactor;
@@ -82,11 +98,13 @@ export default function CustomCursor() {
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mouseover', handleMouseOver);
     };
-  }, []);
+  }, [isEnabled]);
+
+  if (!isEnabled) return null;
 
   return (
     <div
-      className={`fixed inset-0 pointer-events-none z-50 transition-opacity duration-300 ${
+      className={`hidden lg:block fixed inset-0 pointer-events-none z-50 transition-opacity duration-300 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >

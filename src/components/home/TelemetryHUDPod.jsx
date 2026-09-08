@@ -112,8 +112,11 @@ function TelemetryWaveCanvas() {
   );
 }
 
+import { portfolioContent } from '../../data/portfolioData';
+
 export default function TelemetryHUDPod() {
-  const { playHover, playClick } = useThemeAudio();
+  const { lang, playHover, playClick } = useThemeAudio();
+  const content = portfolioContent[lang] || portfolioContent.en;
 
   return (
     <div className="w-full max-w-[340px] xl:max-w-[360px] 2xl:max-w-sm space-y-5 2xl:space-y-6 font-mono select-none pointer-events-auto">
@@ -127,7 +130,7 @@ export default function TelemetryHUDPod() {
         </div>
         <div className="flex items-center gap-1.5 px-2 py-0.5 rounded border border-[var(--accent-border)] bg-[var(--accent-glow)] text-[10px] font-bold text-[var(--accent-color)]">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
-          <span>OPEN_FOR_WORK</span>
+          <span>{content.system.availabilityShort}</span>
         </div>
       </div>
 
@@ -139,7 +142,7 @@ export default function TelemetryHUDPod() {
             15<span className="text-[var(--accent-color)]">+</span>
           </div>
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
-            PROJECTS
+            {lang === 'kk' ? 'ЖОБАЛАР' : (lang === 'ru' ? 'ПРОЕКТОВ' : 'PROJECTS')}
           </p>
           <p className="text-[8.5px] text-white/40 leading-tight">
             Mobile & Web
@@ -152,7 +155,7 @@ export default function TelemetryHUDPod() {
             3<span className="text-[var(--accent-color)]">+</span>
           </div>
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
-            YEARS EXP
+            {lang === 'kk' ? 'ЖЫЛ ТӘЖІРИБЕ' : (lang === 'ru' ? 'ГОДА ОПЫТА' : 'YEARS EXP')}
           </p>
           <p className="text-[8.5px] text-white/40 leading-tight">
             Production Dev
@@ -165,7 +168,7 @@ export default function TelemetryHUDPod() {
             1.5M<span className="text-[var(--accent-color)]">+</span>
           </div>
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
-            USERS
+            {lang === 'kk' ? 'ҚОЛДАНУШЫ' : (lang === 'ru' ? 'ПОЛЬЗОВАТЕЛЕЙ' : 'USERS')}
           </p>
           <p className="text-[8.5px] text-white/40 leading-tight">
             TrustMe Scale
@@ -200,9 +203,11 @@ export default function TelemetryHUDPod() {
 
       {/* 5. Live System Stream Diagnostics */}
       <div className="pt-2 border-t border-white/10 text-[9.5px] text-white/50 space-y-1 font-mono">
-        <div className="hover:text-[var(--accent-color)] transition-colors">&gt; ARCHITECTURE: REACT19_NEXT15_RIVERPOD</div>
-        <div className="hover:text-[var(--accent-color)] transition-colors">&gt; STATUS_CODE: 200_OK // STANDBY</div>
-        <div className="hover:text-[var(--accent-color)] transition-colors">&gt; TELEMETRY_HOST: ASTANA_HUB_KZ</div>
+        {content.system.stats.terminalLog.map((log, idx) => (
+          <div key={idx} className="hover:text-[var(--accent-color)] transition-colors truncate">
+            {log}
+          </div>
+        ))}
       </div>
     </div>
   );

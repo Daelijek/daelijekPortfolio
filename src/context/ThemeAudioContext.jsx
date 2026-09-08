@@ -54,7 +54,8 @@ export function ThemeAudioProvider({ children }) {
       }
 
       if (savedLang) {
-        setLangState(savedLang);
+        const normalized = savedLang === 'kz' ? 'kk' : (['en', 'ru', 'kk'].includes(savedLang) ? savedLang : 'en');
+        setLangState(normalized);
       }
 
       if (savedPerf) {

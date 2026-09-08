@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
+import { portfolioContent } from '../../data/portfolioData';
 import { Mail, Clock } from 'lucide-react';
 
 export default function FloatingFooter() {
   const pathname = usePathname();
-  const { playHover, playClick } = useThemeAudio();
+  const { lang, playHover, playClick } = useThemeAudio();
+  const content = portfolioContent[lang] || portfolioContent.en;
   const [astanaTime, setAstanaTime] = useState('');
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export default function FloatingFooter() {
       {/* Email Column */}
       <div className="pointer-events-auto">
         <p className="text-[10px] text-[var(--text-muted)] leading-tight uppercase tracking-wider mb-0.5">
-          Wanna Say Hello?
+          {content.system.wannaSayHello}
         </p>
         <a
           href="mailto:dias1605ermek@gmail.com"
@@ -50,11 +52,11 @@ export default function FloatingFooter() {
       {/* Local Time Column (Placed side-by-side after Wanna Say Hello) */}
       <div className="pointer-events-auto hidden sm:block">
         <p className="text-[10px] text-[var(--text-muted)] leading-tight uppercase tracking-wider mb-0.5">
-          Local Time
+          {content.system.localTime}
         </p>
         <p className="text-xs sm:text-sm font-bold text-[var(--heading-tint)] flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
-          <span>Astana / {astanaTime || '12:00:00'} (UTC+5)</span>
+          <span suppressHydrationWarning>{content.system.astanaCity} / {astanaTime || '12:00:00'} (UTC+5)</span>
         </p>
       </div>
     </footer>

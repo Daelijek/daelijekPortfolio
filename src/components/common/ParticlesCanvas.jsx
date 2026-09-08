@@ -48,16 +48,35 @@ export default function ParticlesCanvas() {
       });
     }
 
+    const isMobileOrTouch =
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(pointer: coarse)').matches ||
+       'ontouchstart' in window ||
+       (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
+       window.innerWidth < 1024);
+
     let mouse = { x: -1000, y: -1000 };
     const handleMouseMove = (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    if (!isMobileOrTouch) {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
+
+    let time = 0;
 
     const render = () => {
+      time += 0.015;
       ctx.clearRect(0, 0, width, height);
       const color = getThemeColor();
+
+      const activeMouse = isMobileOrTouch
+        ? {
+            x: width * 0.5 + Math.sin(time * 0.7) * (width * 0.35),
+            y: height * 0.5 + Math.cos(time * 0.5) * (height * 0.3),
+          }
+        : mouse;
 
       // Update and draw particles
       for (let i = 0; i < particles.length; i++) {
@@ -71,8 +90,8 @@ export default function ParticlesCanvas() {
         if (p.y > height) p.y = 0;
 
         // Mouse gravity / repulsion
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
+        const dx = activeMouse.x - p.x;
+        const dy = activeMouse.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 120) {
           p.x -= (dx / dist) * 1.2;
@@ -109,7 +128,9 @@ export default function ParticlesCanvas() {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
+      if (!isMobileOrTouch) {
+        window.removeEventListener('mousemove', handleMouseMove);
+      }
       cancelAnimationFrame(animationFrameId);
     };
   }, [theme, perfTier]);
