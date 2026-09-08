@@ -16,7 +16,7 @@ export const metadata = {
   openGraph: {
     title: 'Projects by Dias Yermek | Production Mobile & Web Builds',
     description: 'Featured engineering projects built with React Native, Flutter, Next.js, and AI integrations.',
-    url: 'https://daelijek.dev/projects',
+    url: 'https://daelijek-portfolio.vercel.app/projects',
     images: [
       {
         url: '/assets/Finance.png',

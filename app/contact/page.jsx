@@ -14,7 +14,7 @@ export const metadata = {
   openGraph: {
     title: 'Contact Dias Yermek | Direct Communication Port',
     description: 'Connect with Dias Yermek via Telegram, Email, or secure transmission form. Available for full-time and contract roles.',
-    url: 'https://daelijek.dev/contact',
+    url: 'https://daelijek-portfolio.vercel.app/contact',
     images: [
       {
         url: '/assets/linkedIn_Dias_square.png',

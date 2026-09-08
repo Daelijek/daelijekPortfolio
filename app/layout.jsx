@@ -37,7 +37,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://daelijek.dev'),
+  metadataBase: new URL('https://daelijek-portfolio.vercel.app'),
   title: 'Dias Yermek | Creative Frontend & Mobile Developer // HUD Portfolio',
   description: 'Portfolio of Dias Yermek, a software engineer from Astana specializing in Next.js, Flutter, React Native, and AI integrations.',
   keywords: ['Dias Yermek', 'Frontend Developer', 'Mobile Developer', 'Flutter', 'Next.js', 'React Native', 'Astana IT University', 'Astana Hub'],
@@ -45,7 +45,7 @@ export const metadata = {
   openGraph: {
     title: 'Dias Yermek | Creative Frontend & Mobile Developer',
     description: 'High-performance web and mobile products with Next.js, Flutter, React Native, and AI.',
-    url: 'https://daelijek.dev',
+    url: 'https://daelijek-portfolio.vercel.app',
     siteName: 'Dias Yermek Portfolio',
     images: [
       {
@@ -78,13 +78,13 @@ const schemaOrgData = {
   '@graph': [
     {
       '@type': 'Person',
-      '@id': 'https://daelijek.dev/#person',
+      '@id': 'https://daelijek-portfolio.vercel.app/#person',
       name: 'Dias Yermek',
       alternateName: 'Диас Ермек',
       jobTitle: 'Middle Frontend & Mobile Developer',
       description: 'Software engineer from Astana, Kazakhstan specializing in Next.js, React, Flutter, React Native, and AI integrations.',
-      url: 'https://daelijek.dev',
-      image: 'https://daelijek.dev/assets/linkedIn_Dias_square.png',
+      url: 'https://daelijek-portfolio.vercel.app',
+      image: 'https://daelijek-portfolio.vercel.app/assets/linkedIn_Dias_square.png',
       sameAs: [
         'https://github.com/Daelijek',
         'https://www.linkedin.com/in/dias-yermek/',
@@ -114,17 +114,17 @@ const schemaOrgData = {
     },
     {
       '@type': 'ProfilePage',
-      '@id': 'https://daelijek.dev/#profilepage',
-      url: 'https://daelijek.dev',
+      '@id': 'https://daelijek-portfolio.vercel.app/#profilepage',
+      url: 'https://daelijek-portfolio.vercel.app',
       name: 'Dias Yermek | Creative Frontend & Mobile Developer',
       isPartOf: {
         '@type': 'WebSite',
-        '@id': 'https://daelijek.dev/#website',
-        url: 'https://daelijek.dev',
+        '@id': 'https://daelijek-portfolio.vercel.app/#website',
+        url: 'https://daelijek-portfolio.vercel.app',
         name: 'Dias Yermek Portfolio',
       },
       mainEntity: {
-        '@id': 'https://daelijek.dev/#person',
+        '@id': 'https://daelijek-portfolio.vercel.app/#person',
       },
     },
   ],

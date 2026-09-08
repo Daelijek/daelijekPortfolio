@@ -727,7 +727,7 @@ export default function ProjectDetailPage() {
                   <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                 </div>
                 <div className="px-6 py-1 rounded-md bg-black/50 border border-white/10 text-[11px] text-white/50 font-mono truncate max-w-xs sm:max-w-md">
-                  https://daelijek.dev/projects/{project.slug}
+                  https://daelijek-portfolio.vercel.app/projects/{project.slug}
                 </div>
                 <div className="text-[10px] text-white/30 font-mono">1920 x 1080</div>
               </div>

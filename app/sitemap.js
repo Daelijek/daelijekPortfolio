@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = 'https://daelijek.dev';
+  const baseUrl = 'https://daelijek-portfolio.vercel.app';
   const lastModified = new Date();
 
   return [
@@ -14,6 +14,30 @@ export default function sitemap() {
       lastModified,
       changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/projects/finance-ai-manager`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/projects/beyimtech-ai-platform`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/projects/opengov-kz`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/projects/berik-zhunusbek`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/about`,

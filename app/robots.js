@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://daelijek.dev/sitemap.xml',
+    sitemap: 'https://daelijek-portfolio.vercel.app/sitemap.xml',
   };
 }

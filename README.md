@@ -283,7 +283,7 @@ npm run lint
 - 💼 **LinkedIn:** [dias-yermek](https://www.linkedin.com/in/dias-yermek/)
 - 🐙 **GitHub:** [@Daelijek](https://github.com/Daelijek)
 - 📧 **Email:** [dias1605ermek@gmail.com](mailto:dias1605ermek@gmail.com)
-- 🌐 **Live Website:** [daelijek.dev](https://daelijek.dev)
+- 🌐 **Live Website:** [daelijek-portfolio.vercel.app](https://daelijek-portfolio.vercel.app)
 
 ---
 

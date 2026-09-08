@@ -18,7 +18,7 @@ export const metadata = {
   openGraph: {
     title: 'About Dias Yermek | Creative Frontend & Mobile Developer',
     description: 'Software Engineering background, 8-sector technical competency matrix, and production track record across EdTech, GovTech, FinTech & Blockchain.',
-    url: 'https://daelijek.dev/about',
+    url: 'https://daelijek-portfolio.vercel.app/about',
     images: [
       {
         url: '/assets/linkedIn_Dias_square.png',
