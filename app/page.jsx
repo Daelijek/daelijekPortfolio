@@ -4,25 +4,13 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useThemeAudio } from '../src/context/ThemeAudioContext';
+import { portfolioContent } from '../src/data/portfolioData';
 import { soundFx } from '../src/audio/soundEffects';
-import Device3DViewport from '../src/components/home/Device3DViewport';
 import TelemetryHUDPod from '../src/components/home/TelemetryHUDPod';
 import QuantumMatrixBackground from '../src/components/home/QuantumMatrixBackground';
 import RightConstellationBackground from '../src/components/home/RightConstellationBackground';
 import TrueLaserScanner from '../src/components/home/TrueLaserScanner';
 import { Volume2, VolumeX, ArrowRight } from 'lucide-react';
-
-const marqueeItems = [
-  { label: 'RENDERING', value: 'NEXT.JS 15 / REACT 19' },
-  { label: 'MOBILE_CORE', value: 'FLUTTER & RIVERPOD' },
-  { label: 'CROSS_PLATFORM', value: 'REACT NATIVE (EXPO)' },
-  { label: 'CORE_ID', value: 'FRONTEND & MOBILE' },
-  { label: 'BACKEND', value: 'FASTAPI & POSTGRESQL' },
-  { label: 'AVAILABILITY', value: 'OPEN' },
-  { label: 'SCALE', value: 'TRUSTME (1.5M+ USERS)' },
-  { label: 'EDTECH', value: 'BEYIMTECH (20+ SCHOOLS)' },
-  { label: 'BASE', value: 'ASTANA (UTC+5)' },
-];
 
 // Full-height Cyber Terminal Matrix Rain Canvas
 function CyberMatrixRain() {
@@ -38,13 +26,6 @@ function CyberMatrixRain() {
     let width = (canvas.width = canvas.parentElement.offsetWidth);
     let height = (canvas.height = canvas.parentElement.offsetHeight);
 
-    const handleResize = () => {
-      if (!canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.offsetWidth;
-      height = canvas.height = canvas.parentElement.offsetHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
 
     const tokens = [
       '0', '1', '0x7F', '0xA4', '0xFF', '0x00', '0x9C', '0x1A', '0x3E', '0x88',
@@ -64,7 +45,33 @@ function CyberMatrixRain() {
       speeds[i] = 1 + Math.random() * 2.2;
     }
 
-    const draw = () => {
+    const handleResize = () => {
+      if (!canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.offsetWidth;
+      height = canvas.height = canvas.parentElement.offsetHeight;
+      const targetColumns = Math.floor(width / columnWidth);
+      while (drops.length < targetColumns) {
+        drops.push(Math.random() * -60);
+        speeds.push(1 + Math.random() * 2.2);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    let lastTime = null;
+
+    const draw = (currentTime = performance.now()) => {
+      if (lastTime === null) {
+        lastTime = currentTime;
+      }
+      const deltaMs = currentTime - lastTime;
+      lastTime = currentTime;
+
+      // Delta time normalized to standard 60 FPS (16.667ms)
+      // Clamped to 100ms to prevent giant leaps on tab switches / backgrounding
+      const clampedDelta = Math.min(Math.max(deltaMs, 0), 100);
+      const dtModifier = clampedDelta / (1000 / 60);
+
       // Clear canvas completely to keep 100% transparency
       ctx.clearRect(0, 0, width, height);
 
@@ -96,18 +103,20 @@ function CyberMatrixRain() {
           }
         }
 
-        if (headY > height + 80 && Math.random() > 0.96) {
-          drops[i] = 0;
+        // Frame-rate independent respawn probability matching 60fps base rate (0.04)
+        const resetProbability = 1 - Math.pow(0.96, dtModifier);
+        if ((headY > height + 80 && Math.random() < resetProbability) || headY > height + 350) {
+          drops[i] = -Math.random() * 10;
           speeds[i] = 1 + Math.random() * 2;
         }
 
-        drops[i] += speeds[i] * 0.35;
+        drops[i] += speeds[i] * 0.35 * dtModifier;
       }
 
       animationFrameId = requestAnimationFrame(draw);
     };
 
-    draw();
+    animationFrameId = requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -124,10 +133,12 @@ function CyberMatrixRain() {
 }
 
 export default function HomePage() {
-  const { soundEnabled, setSoundEnabled, perfTier, setPerfTier, playHover, playClick } = useThemeAudio();
+  const { soundEnabled, setSoundEnabled, perfTier, setPerfTier, lang, playHover, playClick } = useThemeAudio();
+  const content = portfolioContent[lang] || portfolioContent.en;
+  const marqueeItems = content.system.marquee;
   const [isBooted, setIsBooted] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [stepText, setStepText] = useState('INITIALIZING_ENGINE');
+  const [stepText, setStepText] = useState(content.system.preloader.initCore);
   const [astanaTime, setAstanaTime] = useState('');
 
   // Live Astana clock
@@ -156,7 +167,7 @@ export default function HomePage() {
         setIsBooted(true);
         return;
       }
-    } catch {}
+    } catch { }
 
     let isMounted = true;
     let targetProgress = 0;
@@ -174,22 +185,22 @@ export default function HomePage() {
 
     const runPreload = async () => {
       // Step 1: Initialize Core & DOM
-      setStepText('INITIALIZING_CORE_SYSTEMS');
+      setStepText(content.system.preloader.initCore);
       targetProgress = 25;
       await new Promise((r) => setTimeout(r, 140));
 
       // Step 2: Font Synchronization (document.fonts.ready)
-      setStepText('SYNCHRONIZING_TYPOGRAPHY');
+      setStepText(content.system.preloader.syncTypography);
       if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
         try {
           await document.fonts.ready;
-        } catch {}
+        } catch { }
       }
       targetProgress = 50;
       await new Promise((r) => setTimeout(r, 140));
 
       // Step 3: Critical Asset & Texture Preload in Parallel
-      setStepText('CACHING_TEXTURES_AND_ASSETS');
+      setStepText(content.system.preloader.cachingAssets);
       const criticalImages = [
         '/assets/linkedIn_Dias_square.png',
         '/assets/Finance.png',
@@ -226,7 +237,7 @@ export default function HomePage() {
 
       // Step 4: WebGL & HUD Calibration
       if (isMounted) {
-        setStepText('CALIBRATING_WEBGL_SHADERS');
+        setStepText(content.system.preloader.calibratingShaders);
         targetProgress = 95;
         await new Promise((r) => setTimeout(r, 160));
       }
@@ -238,7 +249,7 @@ export default function HomePage() {
           if (renderedProgress >= 100) {
             clearInterval(checkReady);
             if (isMounted) {
-              setStepText('SYSTEM_READY // ALL_CHANNELS_ONLINE');
+              setStepText(content.system.preloader.ready);
             }
           }
         }, 25);
@@ -258,13 +269,13 @@ export default function HomePage() {
     setIsBooted(true);
     try {
       sessionStorage.setItem('daelijek_booted', 'true');
-    } catch {}
+    } catch { }
   };
 
   const triggerBoot = () => {
     try {
       sessionStorage.removeItem('daelijek_booted');
-    } catch {}
+    } catch { }
     setProgress(0);
     setIsBooted(false);
   };
@@ -281,9 +292,8 @@ export default function HomePage() {
             onClick={() => {
               if (progress === 100) handleEnter();
             }}
-            className={`fixed inset-0 z-50 bg-[#020504]/55 backdrop-blur-md font-mono select-none overflow-hidden ${
-              progress === 100 ? 'cursor-pointer' : ''
-            }`}
+            className={`fixed inset-0 z-50 bg-[#020504]/55 backdrop-blur-md font-mono select-none overflow-hidden ${progress === 100 ? 'cursor-pointer' : ''
+              }`}
           >
             {/* ================= BACKGROUND LAYER: SPLIT GLASS BACKDROP ================= */}
             <div className="absolute inset-0 flex pointer-events-none">
@@ -365,11 +375,10 @@ export default function HomePage() {
                   <button
                     onClick={() => setSoundEnabled(true)}
                     onMouseEnter={playHover}
-                    className={`w-1/2 h-full flex items-center justify-center font-display font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 rounded-l-[14px] rounded-r-none ${
-                      soundEnabled
+                    className={`w-1/2 h-full flex items-center justify-center font-display font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 rounded-l-[14px] rounded-r-none ${soundEnabled
                         ? 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_25px_var(--accent-glow)]'
                         : 'bg-transparent text-[var(--text-secondary)] hover:text-[var(--heading-tint)] hover:bg-white/5'
-                    }`}
+                      }`}
                   >
                     AUDIO: ON
                   </button>
@@ -378,11 +387,10 @@ export default function HomePage() {
                   <button
                     onClick={() => setSoundEnabled(false)}
                     onMouseEnter={playHover}
-                    className={`w-1/2 h-full flex items-center justify-center font-display font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 rounded-r-[14px] rounded-l-none ${
-                      !soundEnabled
+                    className={`w-1/2 h-full flex items-center justify-center font-display font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 rounded-r-[14px] rounded-l-none ${!soundEnabled
                         ? 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_25px_var(--accent-glow)]'
                         : 'bg-transparent text-[var(--text-secondary)] hover:text-[var(--heading-tint)] hover:bg-white/5'
-                    }`}
+                      }`}
                   >
                     SILENT MODE
                   </button>
@@ -407,11 +415,10 @@ export default function HomePage() {
                         key={t}
                         onClick={() => setPerfTier(t)}
                         onMouseEnter={playHover}
-                        className={`flex-1 h-full rounded-lg font-display font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 flex items-center justify-center ${
-                          perfTier === t
+                        className={`flex-1 h-full rounded-lg font-display font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 flex items-center justify-center ${perfTier === t
                             ? 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_15px_var(--accent-glow)] font-black'
                             : 'text-[var(--text-secondary)] hover:text-[var(--heading-tint)] hover:bg-white/5'
-                        }`}
+                          }`}
                       >
                         {t}
                       </button>
@@ -434,29 +441,27 @@ export default function HomePage() {
                     disabled={progress < 100}
                     suppressHydrationWarning
                     onMouseEnter={playHover}
-                    className={`relative w-full h-12 sm:h-14 rounded-xl font-display font-black text-sm sm:text-base tracking-widest uppercase transition-all duration-300 overflow-hidden border ${
-                      progress === 100
+                    className={`relative w-full h-12 sm:h-14 rounded-xl font-display font-black text-sm sm:text-base tracking-widest uppercase transition-all duration-300 overflow-hidden border ${progress === 100
                         ? 'border-[var(--accent-color)] shadow-[0_0_35px_var(--card-hover-glow)] hover:shadow-[0_0_50px_var(--accent-glow)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer'
                         : 'border-white/10 bg-black/70 cursor-not-allowed'
-                    }`}
+                      }`}
                   >
                     {/* Filling progress bar */}
                     <div
-                      className={`absolute inset-y-0 left-0 transition-all duration-150 ease-out ${
-                        progress === 100
+                      className={`absolute inset-y-0 left-0 transition-all duration-150 ease-out ${progress === 100
                           ? 'bg-[var(--heading-tint)]'
                           : 'bg-[var(--heading-tint)]/35 border-r-2 border-[var(--accent-color)] shadow-[0_0_20px_var(--accent-glow)]'
-                      }`}
+                        }`}
                       style={{ width: `${progress}%` }}
                     />
 
                     {/* Button Label */}
                     <div className="relative z-10 w-full h-full flex items-center justify-center gap-2" suppressHydrationWarning>
                       {progress === 100 ? (
-                        <span className="text-[#020504] font-black tracking-widest">LOADED</span>
+                        <span className="text-[#020504] font-black tracking-widest">{content.system.preloader.loaded}</span>
                       ) : (
                         <span className="text-[var(--heading-tint)] font-bold tracking-widest text-xs sm:text-sm">
-                          LOADING {progress}%
+                          {content.system.preloader.loading} {progress}%
                         </span>
                       )}
                     </div>
@@ -509,11 +514,11 @@ export default function HomePage() {
 
             {/* Top-Right Availability Status Pill on Mobile & Tablet Portrait */}
             <div className="md:max-xl:landscape:hidden xl:hidden pointer-events-auto flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/60 border border-white/15 backdrop-blur-md text-[10px] sm:text-xs font-mono shadow-lg">
-              <span className="text-white/40 tracking-wider text-[9px] sm:text-[10px] uppercase">AVAILABILITY</span>
+              <span className="text-white/40 tracking-wider text-[9px] sm:text-[10px] uppercase">{content.system.availabilityBadge}</span>
               <span className="w-[1px] h-3 bg-white/20" />
               <span className="text-[var(--accent-color)] font-bold tracking-wider flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
-                OPEN
+                {content.system.availabilityShort}
               </span>
             </div>
           </div>
@@ -522,7 +527,7 @@ export default function HomePage() {
           <div className="pointer-events-auto hidden md:max-xl:landscape:flex xl:flex items-end gap-6 sm:gap-8 lg:gap-12 font-mono text-xs select-none">
             {/* Email */}
             <div>
-              <p className="text-[10px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Wanna Say Hello?</p>
+              <p className="text-[10px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">{content.system.wannaSayHello}</p>
               <a
                 href="mailto:dias1605ermek@gmail.com"
                 onClick={playClick}
@@ -535,10 +540,10 @@ export default function HomePage() {
 
             {/* Local Time */}
             <div className="hidden sm:block">
-              <p className="text-[10px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Local Time</p>
+              <p className="text-[10px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">{content.system.localTime}</p>
               <p className="text-xs sm:text-sm lg:text-base font-bold text-[var(--heading-tint)] flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping" />
-                <span suppressHydrationWarning>Astana / {astanaTime || '12:00:00'} (UTC+5)</span>
+                <span suppressHydrationWarning>{content.system.astanaCity} / {astanaTime || '12:00:00'} (UTC+5)</span>
               </p>
             </div>
           </div>
@@ -547,11 +552,11 @@ export default function HomePage() {
 
       {/* TOP-RIGHT Availability Status Pill for Tablet Landscape */}
       <div className="hidden md:max-xl:landscape:flex xl:hidden fixed top-4 sm:top-5 right-4 sm:right-6 z-30 pointer-events-auto items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/15 backdrop-blur-md text-xs font-mono shadow-lg">
-        <span className="text-white/40 tracking-wider text-[10px] uppercase">AVAILABILITY</span>
+        <span className="text-white/40 tracking-wider text-[10px] uppercase">{content.system.availabilityBadge}</span>
         <span className="w-[1px] h-3 bg-white/20" />
         <span className="text-[var(--accent-color)] font-bold tracking-wider flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
-          OPEN
+          {content.system.availabilityShort}
         </span>
       </div>
 
@@ -584,15 +589,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 3D INTERACTIVE DEVICE (Responsive positioning across mobile, tablet portrait, tablet landscape, and desktop) */}
-      <div className="absolute pointer-events-auto flex items-center justify-center origin-center transition-all duration-300 z-10
-        left-1/2 top-[38%] xs:top-[40%] -translate-x-1/2 -translate-y-1/2 scale-[0.80] xs:scale-[0.85] sm:scale-[0.90]
-        md:portrait:left-1/2 md:portrait:top-[31%] md:portrait:-translate-x-1/2 md:portrait:-translate-y-1/2 md:portrait:scale-[0.78]
-        md:max-xl:landscape:left-[75%] md:max-xl:landscape:top-1/2 md:max-xl:landscape:-translate-x-1/2 md:max-xl:landscape:-translate-y-1/2 md:max-xl:landscape:scale-[0.82] lg:max-xl:landscape:scale-[0.88]
-        xl:left-1/2 xl:top-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2 xl:scale-[0.88] 2xl:scale-100"
-      >
-        <Device3DViewport />
-      </div>
 
       {/* MAIN VIEWPORT: Right Half Content (Desktop XL only) */}
       <div className="relative z-10 w-full px-6 sm:px-10 lg:px-16 xl:px-20 grid grid-cols-1 xl:grid-cols-2 items-center my-auto pointer-events-none">

@@ -103,25 +103,27 @@ export default function NavHeader() {
     };
   }, []);
 
+  const content = portfolioContent[lang] || portfolioContent.en;
+
   const navLinks = [
-    { href: '/', index: '1', label: 'Home' },
-    { href: '/about', index: '2', label: 'About' },
-    { href: '/projects', index: '3', label: 'Projects' },
-    { href: '/contact', index: '4', label: 'Contact' },
+    { href: '/', index: '1', label: content.nav.home },
+    { href: '/about', index: '2', label: content.nav.about },
+    { href: '/projects', index: '3', label: content.nav.projects },
+    { href: '/contact', index: '4', label: content.nav.contact },
   ];
 
   const pageMeta = {
     '/about': {
-      title: 'MEET DIAS',
-      breadcrumb: lang === 'ru' ? 'ОБО МНЕ' : 'ABOUT',
+      title: content.nav.pageTitles.about,
+      breadcrumb: content.nav.breadcrumbs.about,
     },
     '/projects': {
-      title: 'PROJECTS',
-      breadcrumb: lang === 'ru' ? 'ПРОЕКТЫ' : 'PROJECTS',
+      title: content.nav.pageTitles.projects,
+      breadcrumb: content.nav.breadcrumbs.projects,
     },
     '/contact': {
-      title: 'CONTACT',
-      breadcrumb: lang === 'ru' ? 'КОНТАКТЫ' : 'CONTACT',
+      title: content.nav.pageTitles.contact,
+      breadcrumb: content.nav.breadcrumbs.contact,
     },
   };
 
@@ -235,10 +237,10 @@ export default function NavHeader() {
                     <div className="flex items-start justify-between border-b border-[var(--border-subtle)] pb-2.5">
                       <div>
                         <h3 className="text-xl sm:text-2xl font-black text-[var(--heading-tint)] uppercase tracking-wider font-display">
-                          Menu
+                          {content.nav.menuTitle}
                         </h3>
                         <p className="text-[10px] text-[var(--text-muted)] tracking-widest uppercase font-mono">
-                          NAVIGATION
+                          {content.nav.menuSub}
                         </p>
                       </div>
                       <span className="px-2.5 py-1 rounded-md bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[10px] text-[var(--accent-color)] font-bold font-mono">
@@ -248,10 +250,10 @@ export default function NavHeader() {
 
                     {/* Local Time Bar */}
                     <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)] px-0.5">
-                      <span className="text-[10px] tracking-widest uppercase">LOCAL TIME</span>
+                      <span className="text-[10px] tracking-widest uppercase">{content.system.localTime}</span>
                       <span className="text-xs text-[var(--text-secondary)] font-medium flex items-center gap-1.5" suppressHydrationWarning>
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-pulse" />
-                        Astana {currentTime || '12:00 pm'}
+                        {content.system.astanaCity} {currentTime || '12:00 pm'}
                       </span>
                     </div>
 
@@ -449,8 +451,8 @@ export default function NavHeader() {
               {/* Header matching reference with close button */}
               <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2.5">
                 <div>
-                  <h3 className="text-sm font-black text-white uppercase tracking-wider font-display">System</h3>
-                  <p className="text-[9px] text-white/40 tracking-widest font-mono uppercase">GLOBAL CONFIG</p>
+                  <h3 className="text-sm font-black text-white uppercase tracking-wider font-display">{content.nav.systemTitle}</h3>
+                  <p className="text-[9px] text-white/40 tracking-widest font-mono uppercase">{content.nav.systemSub}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 rounded bg-white/10 border border-white/15 text-[9px] text-white font-mono font-bold">
@@ -469,7 +471,7 @@ export default function NavHeader() {
               {/* [01] Core Theme Selector with dot indicators matching reference */}
               <div className="mb-2.5">
                 <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
-                  <span>[01] CORE THEME</span>
+                  <span>{content.nav.coreTheme}</span>
                   <span className="text-[10px] text-white/40 font-mono">V_1.0</span>
                 </div>
                 <div className="flex items-center justify-between bg-white/5 p-1.5 rounded-xl border border-white/10">
@@ -500,7 +502,7 @@ export default function NavHeader() {
               {/* [02] Audio Engine cards matching reference */}
               <div className="mb-2.5">
                 <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
-                  <span>[02] AUDIO ENGINE</span>
+                  <span>{content.nav.audioEngine}</span>
                   <span className="text-[10px] text-[var(--accent-color)] font-bold">{soundEnabled ? 'ON' : 'OFF'}</span>
                 </div>
                 <div className="space-y-1.5">
@@ -518,8 +520,8 @@ export default function NavHeader() {
                     }`}
                   >
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-white">Default</p>
-                      <p className="text-[9px] text-white/40 tracking-wider font-mono">AMBIENT / LO-FI</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-white">{content.nav.audioDefault}</p>
+                      <p className="text-[9px] text-white/40 tracking-wider font-mono">{content.nav.audioDefaultSub}</p>
                     </div>
                     {soundEnabled && audioProfile === 'default' && (
                       <div className="flex items-center gap-0.5">
@@ -544,8 +546,8 @@ export default function NavHeader() {
                     }`}
                   >
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-white">Digital Minimalism</p>
-                      <p className="text-[9px] text-white/40 tracking-wider font-mono">SYNTHWAVE / RETRO</p>
+                      <p className="text-xs font-bold uppercase tracking-wider text-white">{content.nav.audioMinimal}</p>
+                      <p className="text-[9px] text-white/40 tracking-wider font-mono">{content.nav.audioMinimalSub}</p>
                     </div>
                     {soundEnabled && audioProfile === 'minimal' && (
                       <div className="flex items-center gap-0.5">
@@ -561,13 +563,16 @@ export default function NavHeader() {
               {/* [03] Performance Tier buttons matching reference */}
               <div className="mb-2.5">
                 <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
-                  <span>[03] PERFORMANCE TIER</span>
+                  <span>{content.nav.perfTier}</span>
                   <span className="text-[10px] text-white/40 font-mono">SYS</span>
                 </div>
                 <div className="grid grid-cols-3 gap-1 p-1 bg-white/5 rounded-xl border border-white/5 font-mono">
-                  {['high', 'medium', 'saver'].map((tier) => {
+                  {[
+                    { tier: 'high', label: content.nav.perfHigh },
+                    { tier: 'medium', label: content.nav.perfMed },
+                    { tier: 'saver', label: content.nav.perfSaver },
+                  ].map(({ tier, label }) => {
                     const isActive = (perfTier || 'high').toLowerCase() === tier;
-                    const labels = { high: 'High', medium: 'Medium', saver: 'Saver' };
                     return (
                       <button
                         key={tier}
@@ -579,7 +584,7 @@ export default function NavHeader() {
                             : 'text-white/40 hover:text-white hover:bg-white/5'
                         }`}
                       >
-                        {labels[tier]}
+                        {label}
                       </button>
                     );
                   })}
@@ -589,7 +594,7 @@ export default function NavHeader() {
               {/* System Active Status Indicator matching reference */}
               <div className="flex items-center justify-center gap-2 py-1 text-[9px] text-white/40 tracking-widest font-mono border-t border-white/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
-                <span>SYSTEM ACTIVE</span>
+                <span>{content.nav.systemActive}</span>
               </div>
 
               {/* Localization & Replay Boot Sequence (Compact bottom bar) */}
@@ -617,6 +622,17 @@ export default function NavHeader() {
                   >
                     RU
                   </button>
+                  <button
+                    onClick={() => setLang('kk')}
+                    onMouseEnter={playHover}
+                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                      lang === 'kk'
+                        ? 'bg-[var(--accent-color)] text-[#06080A]'
+                        : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    KZ
+                  </button>
                 </div>
 
                 <button
@@ -628,7 +644,7 @@ export default function NavHeader() {
                   onMouseEnter={playHover}
                   className="px-2.5 py-1 rounded-lg border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-[9px] font-bold tracking-wider uppercase transition-all flex items-center gap-1"
                 >
-                  <span>REPLAY BOOT</span>
+                  <span>{content.nav.replayBoot}</span>
                 </button>
               </div>
             </motion.div>
