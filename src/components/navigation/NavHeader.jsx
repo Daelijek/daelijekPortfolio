@@ -482,21 +482,21 @@ export default function NavHeader() {
               animate={{ opacity: 1, scale: 1, x: isMobile ? '-50%' : 0, y: isMobile ? '-50%' : 0 }}
               exit={{ opacity: 0, scale: 0.94, x: isMobile ? '-50%' : 0, y: isMobile ? '-50%' : 0 }}
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed left-1/2 top-1/2 w-[calc(100vw-36px)] max-w-[325px] md:left-auto md:top-auto md:bottom-24 lg:bottom-[98px] md:right-4 lg:right-5 md:w-80 md:max-w-xs bg-[#070b10]/80 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl p-3.5 xs:p-4 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(255,255,255,0.3),inset_0_0_30px_rgba(255,255,255,0.02)] font-mono z-50 max-h-[85vh] overflow-y-auto"
+              className="fixed left-1/2 top-1/2 w-[calc(100vw-32px)] max-w-[360px] md:left-auto md:top-auto md:bottom-24 lg:bottom-[98px] md:right-4 lg:right-5 md:w-[350px] md:max-w-[360px] bg-[#070b10]/90 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(255,255,255,0.3),inset_0_0_30px_rgba(255,255,255,0.02)] font-mono z-50 max-h-[88vh] overflow-y-auto"
             >
               {/* Header matching reference with close button */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2.5">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3.5">
                 <div>
-                  <h3 className="text-sm font-black text-white uppercase tracking-wider font-display">{content.nav.systemTitle}</h3>
-                  <p className="text-[9px] text-white/40 tracking-widest font-mono uppercase">{content.nav.systemSub}</p>
+                  <h3 className="text-base font-black text-white uppercase tracking-wider font-display">{content.nav.systemTitle}</h3>
+                  <p className="text-[10px] text-white/40 tracking-widest font-mono uppercase">{content.nav.systemSub}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-white/10 border border-white/15 text-[9px] text-white font-mono font-bold">
+                  <span className="px-2.5 py-1 rounded-md bg-white/10 border border-white/15 text-[10px] text-white font-mono font-bold">
                     SET
                   </span>
                   <button
                     onClick={() => setIsSettingsOpen(false)}
-                    className="p-1 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
                     aria-label="Close settings"
                   >
                     <X className="w-4 h-4" />
@@ -505,12 +505,12 @@ export default function NavHeader() {
               </div>
 
               {/* [01] Core Theme Selector with dot indicators matching reference */}
-              <div className="mb-2.5">
-                <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
+              <div className="mb-3.5">
+                <div className="flex items-center justify-between text-xs text-white/60 mb-2 font-mono font-bold">
                   <span>{content.nav.coreTheme}</span>
                   <span className="text-[10px] text-white/40 font-mono">V_1.0</span>
                 </div>
-                <div className="flex items-center justify-between bg-white/5 p-1.5 rounded-xl border border-white/10">
+                <div className="flex items-center justify-between bg-white/5 p-2 rounded-2xl border border-white/10">
                   {themeOptions.map((t) => {
                     const isSelected = theme === t.id;
                     return (
@@ -520,13 +520,13 @@ export default function NavHeader() {
                         onMouseEnter={playHover}
                         className={`relative flex items-center justify-center transition-all ${
                           isSelected
-                            ? 'w-7 h-7 rounded-lg border-2 border-white/80 bg-white/10'
-                            : 'w-6 h-6 hover:scale-110 opacity-70 hover:opacity-100'
+                            ? 'w-9 h-9 rounded-xl border-2 border-white/90 bg-white/15 shadow-[0_0_12px_rgba(255,255,255,0.2)]'
+                            : 'w-8 h-8 rounded-xl hover:bg-white/5 opacity-70 hover:opacity-100 hover:scale-105'
                         }`}
                         title={t.name}
                       >
                         <span
-                          className="w-3 h-3 rounded-full transition-transform"
+                          className={`rounded-full transition-transform ${isSelected ? 'w-4 h-4 scale-110 shadow-sm' : 'w-3.5 h-3.5'}`}
                           style={{ backgroundColor: t.color }}
                         />
                       </button>
@@ -536,12 +536,12 @@ export default function NavHeader() {
               </div>
 
               {/* [02] Audio Engine cards matching reference */}
-              <div className="mb-2.5">
-                <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
+              <div className="mb-3.5">
+                <div className="flex items-center justify-between text-xs text-white/60 mb-2 font-mono font-bold">
                   <span>{content.nav.audioEngine}</span>
-                  <span className="text-[10px] text-[var(--accent-color)] font-bold">{soundEnabled ? 'ON' : 'OFF'}</span>
+                  <span className="text-[11px] text-[var(--accent-color)] font-bold">{soundEnabled ? 'ON' : 'OFF'}</span>
                 </div>
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {/* Default card */}
                   <button
                     onClick={() => {
@@ -549,21 +549,21 @@ export default function NavHeader() {
                       setAudioProfile('default');
                     }}
                     onMouseEnter={playHover}
-                    className={`w-full flex items-center justify-between p-2 rounded-xl border text-left transition-all ${
+                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
                       soundEnabled && audioProfile === 'default'
                         ? 'bg-white/10 border-white/30 text-white shadow-md'
                         : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-white">{content.nav.audioDefault}</p>
-                      <p className="text-[9px] text-white/40 tracking-wider font-mono">{content.nav.audioDefaultSub}</p>
+                      <p className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">{content.nav.audioDefault}</p>
+                      <p className="text-[10px] text-white/40 tracking-wider font-mono mt-0.5">{content.nav.audioDefaultSub}</p>
                     </div>
                     {soundEnabled && audioProfile === 'default' && (
-                      <div className="flex items-center gap-0.5">
-                        <span className="w-0.5 h-2.5 bg-[var(--accent-color)] animate-pulse" />
-                        <span className="w-0.5 h-3.5 bg-[var(--accent-color)] animate-pulse delay-75" />
-                        <span className="w-0.5 h-2 bg-[var(--accent-color)] animate-pulse delay-150" />
+                      <div className="flex items-center gap-1">
+                        <span className="w-1 h-3 bg-[var(--accent-color)] animate-pulse rounded-full" />
+                        <span className="w-1 h-4.5 bg-[var(--accent-color)] animate-pulse delay-75 rounded-full" />
+                        <span className="w-1 h-2.5 bg-[var(--accent-color)] animate-pulse delay-150 rounded-full" />
                       </div>
                     )}
                   </button>
@@ -575,21 +575,21 @@ export default function NavHeader() {
                       setAudioProfile('minimal');
                     }}
                     onMouseEnter={playHover}
-                    className={`w-full flex items-center justify-between p-2 rounded-xl border text-left transition-all ${
+                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
                       soundEnabled && audioProfile === 'minimal'
                         ? 'bg-white/10 border-white/30 text-white shadow-md'
                         : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-white">{content.nav.audioMinimal}</p>
-                      <p className="text-[9px] text-white/40 tracking-wider font-mono">{content.nav.audioMinimalSub}</p>
+                      <p className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">{content.nav.audioMinimal}</p>
+                      <p className="text-[10px] text-white/40 tracking-wider font-mono mt-0.5">{content.nav.audioMinimalSub}</p>
                     </div>
                     {soundEnabled && audioProfile === 'minimal' && (
-                      <div className="flex items-center gap-0.5">
-                        <span className="w-0.5 h-2.5 bg-cyan-400 animate-pulse" />
-                        <span className="w-0.5 h-3.5 bg-cyan-400 animate-pulse delay-75" />
-                        <span className="w-0.5 h-2 bg-cyan-400 animate-pulse delay-150" />
+                      <div className="flex items-center gap-1">
+                        <span className="w-1 h-3 bg-cyan-400 animate-pulse rounded-full" />
+                        <span className="w-1 h-4.5 bg-cyan-400 animate-pulse delay-75 rounded-full" />
+                        <span className="w-1 h-2.5 bg-cyan-400 animate-pulse delay-150 rounded-full" />
                       </div>
                     )}
                   </button>
@@ -597,12 +597,12 @@ export default function NavHeader() {
               </div>
 
               {/* [03] Performance Tier buttons matching reference */}
-              <div className="mb-2.5">
-                <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 font-mono">
+              <div className="mb-3.5">
+                <div className="flex items-center justify-between text-xs text-white/60 mb-2 font-mono font-bold">
                   <span>{content.nav.perfTier}</span>
                   <span className="text-[10px] text-white/40 font-mono">SYS</span>
                 </div>
-                <div className="grid grid-cols-3 gap-1 p-1 bg-white/5 rounded-xl border border-white/5 font-mono">
+                <div className="grid grid-cols-3 gap-1.5 p-1.5 bg-white/5 rounded-xl border border-white/10 font-mono">
                   {[
                     { tier: 'high', label: content.nav.perfHigh },
                     { tier: 'medium', label: content.nav.perfMed },
@@ -614,10 +614,10 @@ export default function NavHeader() {
                         key={tier}
                         onClick={() => setPerfTier(tier)}
                         onMouseEnter={playHover}
-                        className={`py-1 rounded-lg text-[10px] font-bold transition-all uppercase tracking-wider ${
+                        className={`py-2 rounded-lg text-xs font-bold transition-all uppercase tracking-wider ${
                           isActive
-                            ? 'bg-white/20 text-white border border-white/30 shadow'
-                            : 'text-white/40 hover:text-white hover:bg-white/5'
+                            ? 'bg-white/20 text-white border border-white/30 shadow-md font-black'
+                            : 'text-white/50 hover:text-white hover:bg-white/5'
                         }`}
                       >
                         {label}
@@ -628,20 +628,20 @@ export default function NavHeader() {
               </div>
 
               {/* System Active Status Indicator matching reference */}
-              <div className="flex items-center justify-center gap-2 py-1 text-[9px] text-white/40 tracking-widest font-mono border-t border-white/10">
+              <div className="flex items-center justify-center gap-2 py-1.5 text-[10px] text-white/40 tracking-widest font-mono border-t border-white/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
                 <span>{content.nav.systemActive}</span>
               </div>
 
-              {/* Localization & Replay Boot Sequence (Compact bottom bar) */}
-              <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2 font-mono">
-                <div className="flex items-center gap-1 bg-white/5 p-0.5 rounded-lg border border-white/10">
+              {/* Localization & Replay Boot Sequence (Enlarged bottom bar) */}
+              <div className="pt-2.5 border-t border-white/10 flex items-center justify-between gap-2.5 font-mono">
+                <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10">
                   <button
                     onClick={() => setLang('en')}
                     onMouseEnter={playHover}
-                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       lang === 'en'
-                        ? 'bg-[var(--accent-color)] text-[#06080A]'
+                        ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'
                         : 'text-white/60 hover:text-white'
                     }`}
                   >
@@ -650,9 +650,9 @@ export default function NavHeader() {
                   <button
                     onClick={() => setLang('ru')}
                     onMouseEnter={playHover}
-                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       lang === 'ru'
-                        ? 'bg-[var(--accent-color)] text-[#06080A]'
+                        ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'
                         : 'text-white/60 hover:text-white'
                     }`}
                   >
@@ -661,9 +661,9 @@ export default function NavHeader() {
                   <button
                     onClick={() => setLang('kk')}
                     onMouseEnter={playHover}
-                    className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       lang === 'kk'
-                        ? 'bg-[var(--accent-color)] text-[#06080A]'
+                        ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'
                         : 'text-white/60 hover:text-white'
                     }`}
                   >
@@ -678,7 +678,7 @@ export default function NavHeader() {
                     window.location.href = '/';
                   }}
                   onMouseEnter={playHover}
-                  className="px-2.5 py-1 rounded-lg border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-[9px] font-bold tracking-wider uppercase transition-all flex items-center gap-1"
+                  className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-1.5 shadow-sm"
                 >
                   <span>{content.nav.replayBoot}</span>
                 </button>
