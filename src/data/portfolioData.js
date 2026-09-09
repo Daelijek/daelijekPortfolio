@@ -83,11 +83,16 @@ export const portfolioContent = {
       perfMed: "Medium",
       perfSaver: "Saver",
       systemActive: "SYSTEM ACTIVE",
-      replayBoot: "REPLAY BOOT"
+      replayBoot: "REPLAY BOOT",
+      downloadCv: "CV // DOSSIER.PDF",
+      cvSubtitle: "ENGINEERING DOSSIER (PDF)",
+      cvDownloaded: "DOSSIER_DOWNLOADED"
     },
     about: {
       tag: "SECTOR_00 // BIOGRAPHY",
       title: "ENGINEERING PHILOSOPHY",
+      downloadDossier: "DOWNLOAD FULL CV // DOSSIER.PDF",
+      dossierSize: "VERIFIED · 2026 EDITION · 1 PAGE PDF",
       lead: "I'm Dias Yermek, a software engineer based in Astana, Kazakhstan. I transform ambitious concepts into rock-solid, visually striking, and performant web & mobile experiences.",
       story: "With a Bachelor's in Software Engineering from Astana IT University, I've engineered products across EdTech, GovTech, FinTech, and Blockchain SaaS. From leading full mobile app recovery and App Store releases at BeyimTech (EdTech startup in Astana Hub) to building smart contract workflows at TrustMe for 1.5M+ users, I obsess over UI fluidity, clean architecture, and technical resilience.",
       sectorsTitle: "COMPETENCY MATRIX",
@@ -725,11 +730,16 @@ export const portfolioContent = {
       perfMed: "Средне",
       perfSaver: "Эконом",
       systemActive: "СИСТЕМА АКТИВНА",
-      replayBoot: "ПЕРЕЗАПУСК"
+      replayBoot: "ПЕРЕЗАПУСК",
+      downloadCv: "РЕЗЮМЕ // CV.PDF",
+      cvSubtitle: "ИНЖЕНЕРНОЕ ДОСЬЕ (PDF)",
+      cvDownloaded: "ДОСЬЕ_СКАЧАНО"
     },
     about: {
       tag: "СЕКТОР_00 // БИОГРАФИЯ",
       title: "ИНЖЕНЕРНАЯ ФИЛОСОФИЯ",
+      downloadDossier: "СКАЧАТЬ ПОЛНОЕ РЕЗЮМЕ // CV.PDF",
+      dossierSize: "АКТУАЛЬНО · 2026 ГОД · 1 СТРАНИЦА PDF",
       lead: "Я Диас Ермек — программный инженер из Астаны. Превращаю смелые идеи в надежные, быстрые и визуально безупречные web и mobile решения.",
       story: "Окончил Astana IT University по специальности Software Engineering. Разрабатывал продукты в сферах EdTech, GovTech, FinTech и Blockchain SaaS. От полного восстановления и релиза мобильного приложения в BeyimTech (EdTech в Astana Hub) до смарт-контрактных систем в TrustMe с 1.5M+ пользователей — для меня важна плавность UI, чистота архитектуры и надежность кода.",
       sectorsTitle: "МАТРИЦА КОМПЕТЕНЦИЙ",
@@ -1367,11 +1377,16 @@ export const portfolioContent = {
       perfMed: "Орташа",
       perfSaver: "Үнемдеу",
       systemActive: "ЖҮЙЕ БЕЛСЕНДІ",
-      replayBoot: "ҚАЙТА ҚОСУ"
+      replayBoot: "ҚАЙТА ҚОСУ",
+      downloadCv: "ТҮЙІНДЕМЕ // CV.PDF",
+      cvSubtitle: "ИНЖЕНЕРЛІК ДОСЬЕ (PDF)",
+      cvDownloaded: "ДОСЬЕ_ЖҮКТЕЛДІ"
     },
     about: {
       tag: "СЕКТОР_00 // ӨМІРБАЯН",
       title: "ИНЖЕНЕРЛІК ФИЛОСОФИЯ",
+      downloadDossier: "ТОЛЫҚ ТҮЙІНДЕМЕНІ ЖҮКТЕУ // CV.PDF",
+      dossierSize: "РАСТАЛҒАН · 2026 ЖЫЛ · 1 БЕТ PDF",
       lead: "Мен Диас Ермек — Астана қаласынан бағдарламалық инженермін. Өршіл идеяларды сенімді, жылдам әрі көз тартарлық веб және мобильді интерфейстерге айналдырамын.",
       story: "Astana IT University-ін Software Engineering мамандығы бойынша тәмамдадым. EdTech, GovTech, FinTech және Blockchain SaaS салаларында өнімдер әзірледім. BeyimTech (Astana Hub стартапы) мобильді қосымшасын толық жаңғыртып шығарудан бастап, TrustMe платформасында 1.5M+ қолданушыға арналған смарт-келісімшарт жүйелеріне дейін — мен үшін UI жеңілдігі, архитектура тазалығы және жүйе сенімділігі маңызды.",
       sectorsTitle: "ҚҰЗЫРЕТТІЛІК МАТРИЦАСЫ",

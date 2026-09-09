@@ -310,6 +310,36 @@ class SoundEngine {
       }
     } catch {}
   }
+
+  // Futuristic telemetry download chime
+  playDownload() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+      const notes = [440, 659.25, 880, 1318.5]; // A4, E5, A5, E6
+      notes.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const t = now + idx * 0.04;
+
+        osc.type = this.profile === 'minimal' ? 'sawtooth' : 'sine';
+        osc.frequency.setValueAtTime(freq, t);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.04, t + 0.12);
+
+        gain.gain.setValueAtTime(0.045, t);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(t);
+        osc.stop(t + 0.15);
+      });
+    } catch {}
+  }
 }
 
 export const soundFx = new SoundEngine();

@@ -123,6 +123,7 @@ export function ThemeAudioProvider({ children }) {
         playHover: () => soundFx.playHover(),
         playClick: () => soundFx.playClick(),
         playSwitch: () => soundFx.playSwitch(),
+        playDownload: () => soundFx.playDownload(),
       }}
     >
       {children}

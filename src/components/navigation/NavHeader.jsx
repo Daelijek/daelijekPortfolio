@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { portfolioContent } from '../../data/portfolioData';
-import { Settings, X, ExternalLink, Globe, Volume2, VolumeX, Check } from 'lucide-react';
+import { Settings, X, ExternalLink, Globe, Volume2, VolumeX, Check, FileDown } from 'lucide-react';
 import { FaLinkedin, FaGithub, FaTelegram } from 'react-icons/fa6';
 
 const themeOptions = [
@@ -32,14 +32,22 @@ export default function NavHeader() {
     setPerfTier,
     playHover,
     playClick,
+    playDownload,
   } = useThemeAudio();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
+  const [cvDownloaded, setCvDownloaded] = useState(false);
   const menuRef = useRef(null);
   const settingsRef = useRef(null);
   const settingsModalRef = useRef(null);
+
+  const handleDownloadCv = () => {
+    if (playDownload) playDownload();
+    setCvDownloaded(true);
+    setTimeout(() => setCvDownloaded(false), 2600);
+  };
 
   // Resize listener for responsive animation values
   useEffect(() => {
@@ -134,9 +142,9 @@ export default function NavHeader() {
 
   return (
     <>
-      {/* Top Left Brand Stamp (Rendered on subpages) */}
+      {/* Top Left Brand Stamp & CV Dossier Badge (Rendered on subpages) */}
       {pathname !== '/' && (
-        <header className="fixed top-8 left-8 sm:left-12 z-40 font-mono select-none">
+        <header className="fixed top-8 left-8 sm:left-12 z-40 font-mono select-none flex items-center gap-4 sm:gap-5">
           <Link
             href="/"
             onMouseEnter={playHover}
@@ -160,7 +168,42 @@ export default function NavHeader() {
               </div>
             </div>
           </Link>
+
+          {/* Top CV Dossier Badge for Recruiters */}
+          <a
+            href="/dias_yermek_cv.pdf"
+            download="Dias_Yermek_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleDownloadCv}
+            onMouseEnter={playHover}
+            className="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--card-bg)] hover:bg-[var(--accent-glow)] border border-[var(--accent-border)] hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-xs font-mono font-bold tracking-wider uppercase transition-all shadow-md hover:shadow-[0_0_20px_var(--accent-glow)] group backdrop-blur-md"
+            title="Download Dias Yermek Resume (PDF)"
+          >
+            <FileDown className="w-3.5 h-3.5 text-[var(--accent-color)] group-hover:translate-y-0.5 transition-transform" />
+            <span>{cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}</span>
+          </a>
         </header>
+      )}
+
+      {/* Top Desktop CV Dossier Badge on Home Page */}
+      {pathname === '/' && (
+        <div className="fixed top-6 sm:top-8 right-6 sm:right-12 z-40 font-mono select-none hidden md:flex items-center gap-3">
+          <a
+            href="/dias_yermek_cv.pdf"
+            download="Dias_Yermek_CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleDownloadCv}
+            onMouseEnter={playHover}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[var(--card-bg)] hover:bg-[var(--accent-glow)] border border-[var(--accent-border)] hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-xs font-mono font-bold tracking-wider uppercase transition-all shadow-md hover:shadow-[0_0_20px_var(--accent-glow)] group backdrop-blur-md"
+            title="Download Dias Yermek Resume (PDF)"
+          >
+            <FileDown className="w-3.5 h-3.5 text-[var(--accent-color)] group-hover:translate-y-0.5 transition-transform" />
+            <span>{cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}</span>
+            <span className="text-[9px] text-[var(--accent-color)] px-1.5 py-0.5 rounded bg-black/40 border border-[var(--accent-border)]">PDF</span>
+          </a>
+        </div>
       )}
 
       {/* Top Right Header & Breadcrumb (Rendered on subpages) */}
@@ -311,6 +354,34 @@ export default function NavHeader() {
                     >
                       <span className="font-display text-xs">DEV LABS</span>
                       <ExternalLink className="w-4 h-4 text-[var(--accent-color)]" />
+                    </a>
+
+                    {/* 3.1 CV // DOSSIER.PDF Accent Block (Dedicated for HR & Recruiters) */}
+                    <a
+                      href="/dias_yermek_cv.pdf"
+                      download="Dias_Yermek_CV.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleDownloadCv}
+                      onMouseEnter={playHover}
+                      className="flex items-center justify-between p-3 rounded-xl bg-[var(--accent-bg-subtle)] border-2 border-[var(--accent-color)] hover:bg-[var(--accent-glow)] text-[var(--heading-tint)] font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_20px_var(--accent-glow)] group hover:scale-[1.01]"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-lg bg-[var(--accent-color)] text-[#020504] flex items-center justify-center shrink-0 shadow-md">
+                          <FileDown className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <span className="block font-mono text-xs text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors">
+                            {cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}
+                          </span>
+                          <span className="block text-[9px] text-[var(--text-muted)] font-mono tracking-widest">
+                            {content.nav.cvSubtitle}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono text-[var(--accent-color)] tracking-widest px-2 py-0.5 rounded bg-black/60 border border-[var(--accent-border)] shrink-0">
+                        PDF · 1P
+                      </span>
                     </a>
 
                     {/* 4. Navigation Routes (Counting upwards towards bottom bar) */}
@@ -595,6 +666,29 @@ export default function NavHeader() {
               <div className="flex items-center justify-center gap-2 py-1 text-[9px] text-white/40 tracking-widest font-mono border-t border-white/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
                 <span>{content.nav.systemActive}</span>
+              </div>
+
+              {/* CV // Dossier Quick Download Button (Placed next to Languages & Config) */}
+              <div className="pt-2 border-t border-white/10 flex flex-col gap-1.5 font-mono">
+                <div className="flex items-center justify-between text-[10px] text-white/40 tracking-widest uppercase">
+                  <span>CV // DOSSIER</span>
+                  <span className="text-[var(--accent-color)] font-bold">[PDF · 1P]</span>
+                </div>
+                <a
+                  href="/dias_yermek_cv.pdf"
+                  download="Dias_Yermek_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleDownloadCv}
+                  onMouseEnter={playHover}
+                  className="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] hover:border-[var(--accent-color)] hover:bg-[var(--accent-glow)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] text-xs font-mono font-bold tracking-wider uppercase transition-all shadow-[0_0_15px_var(--card-hover-glow)] group"
+                >
+                  <div className="flex items-center gap-2">
+                    <FileDown className="w-3.5 h-3.5 text-[var(--accent-color)] group-hover:translate-y-0.5 transition-transform" />
+                    <span>{cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}</span>
+                  </div>
+                  <span className="text-[9px] text-[var(--accent-color)] font-mono opacity-80 group-hover:opacity-100">[DOWNLOAD]</span>
+                </a>
               </div>
 
               {/* Localization & Replay Boot Sequence (Compact bottom bar) */}
