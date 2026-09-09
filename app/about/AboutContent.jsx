@@ -1,25 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
-import { ChevronRight, ArrowRight, GraduationCap, Building2, Code2, FileDown, FileText, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, ArrowRight, GraduationCap, Building2, Code2 } from 'lucide-react';
 
 export default function AboutContent() {
-  const { lang, playHover, playClick, playDownload } = useThemeAudio();
-  const [downloaded, setDownloaded] = useState(false);
+  const { lang, playHover, playClick } = useThemeAudio();
   const content = portfolioContent[lang] || portfolioContent.en;
   const about = content.about;
   const exp = about.experience;
   const sectors = about.sectors;
-
-  const handleDownloadCv = () => {
-    if (playDownload) playDownload();
-    setDownloaded(true);
-    setTimeout(() => setDownloaded(false), 2600);
-  };
 
   return (
     <div className="min-h-screen pt-44 sm:pt-56 lg:pt-60 pb-36 px-6 sm:px-12 max-w-7xl mx-auto font-mono">
@@ -87,73 +80,6 @@ export default function AboutContent() {
                 <div className="text-xs font-bold text-[var(--heading-tint)]">TrustMe SaaS</div>
                 <div className="text-[11px] text-[var(--text-muted)] mt-0.5">1.5M+ Active Users</div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Cyber Dossier & Resume Download Card (Optimized for HR & Technical Leads) */}
-      <section className="mb-24 sm:mb-28">
-        <div className="cyber-panel p-6 sm:p-8 rounded-2xl border-2 border-[var(--accent-color)]/40 bg-[var(--accent-bg-subtle)] relative overflow-hidden group shadow-[0_0_35px_var(--card-hover-glow)]">
-          {/* Subtle Ambient Radial Glow */}
-          <div className="absolute -right-16 -top-16 w-64 h-64 bg-[var(--accent-color)] opacity-[0.07] blur-3xl pointer-events-none rounded-full group-hover:opacity-[0.14] transition-opacity duration-700" />
-
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
-            {/* Left: Icon & Meta Details */}
-            <div className="flex items-start sm:items-center gap-4 sm:gap-5">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[var(--accent-color)] text-[#020504] flex items-center justify-center shrink-0 shadow-lg shadow-[0_0_25px_var(--accent-glow)] group-hover:scale-105 transition-transform duration-300">
-                <FileText className="w-6 h-6 sm:w-7 sm:h-7" />
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex items-center gap-2.5 flex-wrap">
-                  <h3 className="text-base sm:text-xl font-black font-display text-[var(--heading-tint)] uppercase tracking-wider">
-                    {about.downloadDossier}
-                  </h3>
-                  <span className="text-[10px] font-mono text-[var(--accent-color)] font-bold px-2 py-0.5 rounded bg-black/50 border border-[var(--accent-border)]">
-                    VERIFIED · 2026
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans">
-                  {about.dossierSize}
-                </p>
-                <div className="flex items-center gap-3 text-[10px] text-[var(--text-muted)] font-mono pt-0.5">
-                  <span className="flex items-center gap-1 text-emerald-400">
-                    <CheckCircle2 className="w-3 h-3" /> ATS-FRIENDLY
-                  </span>
-                  <span>&bull;</span>
-                  <span>1-PAGE EXECUTIVE SUMMARY</span>
-                  <span>&bull;</span>
-                  <span>DIRECT CONTACT CHANNELS</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Actions */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto shrink-0">
-              <a
-                href="/dias_yermek_cv.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="px-4 py-3 rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-black/40 hover:bg-white/5 text-[var(--text-secondary)] hover:text-[var(--heading-tint)] text-xs font-mono font-bold tracking-wider uppercase transition-all text-center"
-              >
-                OPEN PREVIEW
-              </a>
-
-              <a
-                href="/dias_yermek_cv.pdf"
-                download="Dias_Yermek_CV.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleDownloadCv}
-                onMouseEnter={playHover}
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-[var(--accent-color)] hover:bg-white text-[#020504] font-black text-xs font-mono tracking-widest uppercase hover:shadow-[0_0_30px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95 text-center shadow-lg"
-              >
-                <FileDown className="w-4 h-4 animate-bounce" />
-                <span>{downloaded ? content.nav.cvDownloaded : 'DOWNLOAD DOSSIER'}</span>
-              </a>
             </div>
           </div>
         </div>
