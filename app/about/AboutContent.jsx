@@ -20,6 +20,7 @@ import {
   ShieldCheck,
   ChevronRight,
   Terminal,
+  Check,
 } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaTelegram } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
@@ -29,7 +30,7 @@ export default function AboutContent() {
   const content = portfolioContent[lang] || portfolioContent.en;
   const about = content.about;
   const exp = about.experience;
-  const [activeSkillCategory, setActiveSkillCategory] = useState('all');
+  const [selectedCategories, setSelectedCategories] = useState(['mobile', 'web', 'backend', 'ai']);
   const [cvDownloaded, setCvDownloaded] = useState(false);
   const [scrollPercent, setScrollPercent] = useState(0);
 
@@ -42,10 +43,10 @@ export default function AboutContent() {
     offset: ['start start', 'end end'],
   });
 
-  // Dedicated Timeline Section Scroll Progress
+  // Dedicated Timeline Section Scroll Progress: Pin progress strictly to the center (50%) of viewport
   const { scrollYProgress: timelineScrollProgress } = useScroll({
     target: timelineRef,
-    offset: ['start 85%', 'end 70%'],
+    offset: ['start center', 'end center'],
   });
 
   useEffect(() => {
@@ -60,6 +61,33 @@ export default function AboutContent() {
     else soundFx.playDownload();
     setCvDownloaded(true);
     setTimeout(() => setCvDownloaded(false), 2600);
+  };
+
+  // Toggle skill category filter with multi-select support
+  const handleToggleCategory = (catId) => {
+    playClick();
+    if (catId === 'all') {
+      setSelectedCategories(['mobile', 'web', 'backend', 'ai']);
+      return;
+    }
+
+    // If all are currently active and user clicks one: isolate that one
+    if (selectedCategories.length === 4) {
+      setSelectedCategories([catId]);
+      return;
+    }
+
+    // Toggle logic
+    if (selectedCategories.includes(catId)) {
+      if (selectedCategories.length === 1) {
+        // If it's the last one, reset to all
+        setSelectedCategories(['mobile', 'web', 'backend', 'ai']);
+      } else {
+        setSelectedCategories(selectedCategories.filter((c) => c !== catId));
+      }
+    } else {
+      setSelectedCategories([...selectedCategories, catId]);
+    }
   };
 
   // Three Key Highlights (100% pixel-aligned & uniform layout)
@@ -87,31 +115,36 @@ export default function AboutContent() {
     },
   ];
 
-  // Re-architectured Interactive Competency Domains (Clean, readable & categorized)
+  // Re-architectured Interactive Competency Domains with deliverables
   const skillDomains = [
     {
       id: 'mobile',
       category: 'mobile',
       icon: Smartphone,
       title: lang === 'kk' ? 'Мобильді әзірлеу' : lang === 'ru' ? 'Мобильная разработка' : 'Mobile Architecture',
-      desc: lang === 'kk' ? 'Flutter & React Native, офлайн-синхрондау, күрделі күйлер және дүкендерге шығару' : lang === 'ru' ? 'Кросс-платформенные приложения на Flutter и React Native, сложный стейт и релизы в сторы' : 'Production mobile apps on Flutter & React Native with offline sync, complex state & store releases',
+      desc: lang === 'kk' ? 'Flutter & React Native, офлайн-синхрондау, күрделі күйлер және дүкендерге шығару.' : lang === 'ru' ? 'Кросс-платформенные приложения на Flutter и React Native, сложный стейт и релизы в App Store и Google Play.' : 'Production mobile apps on Flutter & React Native with offline sync, complex state management & store deployments.',
       skills: [
         'Flutter & Dart',
         'Riverpod',
         'React Native',
         'Expo Framework',
-        'App Store Review',
+        'App Store Deploy',
         'Google Play CI/CD',
         'Firebase Remote Config',
       ],
       metric: 'iOS & Android',
+      deliverables: [
+        lang === 'kk' ? 'BeyimTech AI қосымшасы (Astana Hub релизі, 20+ мектеп)' : lang === 'ru' ? 'BeyimTech AI мобильное приложение (релиз Astana Hub, 20+ школ)' : 'BeyimTech AI Platform (Production Astana Hub release, 20+ schools)',
+        lang === 'kk' ? 'Stolovka FoodTech (Flutter, электронды тапсырыстар, Firebase)' : lang === 'ru' ? 'Stolovka FoodTech сервис (Flutter, электронное меню, Firebase)' : 'Stolovka FoodTech Service (Flutter, cart engine & live orders)',
+        lang === 'kk' ? 'Finance AI Manager (React Native, Expo, түбіртектерді тану)' : lang === 'ru' ? 'Finance AI Manager (React Native, Expo, распознавание чеков)' : 'Finance AI Manager (React Native & Expo cross-platform client)',
+      ],
     },
     {
       id: 'web',
       category: 'web',
       icon: Globe,
       title: lang === 'kk' ? 'Web & Frontend' : lang === 'ru' ? 'Веб и фронтенд архитектура' : 'Modern Web & Frontend',
-      desc: lang === 'kk' ? 'Жоғары өнімді Next.js 15, серверлік рендеринг, дизайн-жүйелер және интерфейс жылдамдығы' : lang === 'ru' ? 'Высокоскоростной Next.js 15, SSR/SSG, масштабируемые дизайн-системы и плавная графика' : 'High-speed Next.js 15, SSR/SSG pipelines, modular design systems & fluid animations',
+      desc: lang === 'kk' ? 'Жоғары өнімді Next.js 15, серверлік рендеринг, дизайн-жүйелер және интерфейс жылдамдығы.' : lang === 'ru' ? 'Высокоскоростной Next.js 15, SSR/SSG, масштабируемые дизайн-системы и плавная графика 60 FPS.' : 'High-speed Next.js 15, SSR/SSG pipelines, modular design systems & fluid animations.',
       skills: [
         'Next.js 15 (App Router)',
         'React 19',
@@ -122,13 +155,18 @@ export default function AboutContent() {
         'Core Web Vitals',
       ],
       metric: '60 FPS / SSR',
+      deliverables: [
+        lang === 'kk' ? 'OpenGov.kz мемлекеттік порталы (Next.js, 3 тілдегі толық локализация)' : lang === 'ru' ? 'OpenGov.kz портал госинициатив (Next.js, полная трехъязычная локализация)' : 'OpenGov.kz National Platform (Next.js SSR & WCAG compliant UI)',
+        lang === 'kk' ? 'TrustMe платформасы (1.5M+ қолданушыға арналған смарт-келісімшарттар)' : lang === 'ru' ? 'TrustMe платформа (смарт-контрактный UI для 1.5M+ пользователей)' : 'TrustMe Contract Portal (Reusable UI library for 1.5M+ active users)',
+        lang === 'kk' ? 'BerikWeb 4K сандық галереясы (High-DPI, 3D өзара әрекеттер)' : lang === 'ru' ? 'BerikWeb 4K галерея (High-DPI арт-витрина, кинетическая верстка)' : 'Berik Zhunusbek Gallery (Kinetic typography & 4K media showcase)',
+      ],
     },
     {
       id: 'backend',
       category: 'backend',
       icon: Server,
       title: lang === 'kk' ? 'Бэкенд және дерекқор' : lang === 'ru' ? 'Бэкенд, базы данных и облако' : 'Backend & Cloud Services',
-      desc: lang === 'kk' ? 'Жылдам API интерфейстері, реляциялық деректер қоры және контейнерленген сервистер' : lang === 'ru' ? 'Быстрые микросервисы на FastAPI, реляционные базы данных и контейнеризация' : 'High-throughput APIs with FastAPI, relational database modeling & containerized deployments',
+      desc: lang === 'kk' ? 'Жылдам API интерфейстері, реляциялық деректер қоры және контейнерленген сервистер.' : lang === 'ru' ? 'Быстрые микросервисы на FastAPI, реляционные базы данных и контейнеризация Docker.' : 'High-throughput APIs with FastAPI, relational database modeling & containerized deployments.',
       skills: [
         'FastAPI (Python)',
         'PostgreSQL',
@@ -139,13 +177,18 @@ export default function AboutContent() {
         'JWT & Auth Flow',
       ],
       metric: 'FastAPI & SQL',
+      deliverables: [
+        lang === 'kk' ? 'FastAPI асинхронды REST эндпоинттары және PostgreSQL үлгілері' : lang === 'ru' ? 'Асинхронные REST эндпоинты на FastAPI и оптимизированные схемы PostgreSQL' : 'Async REST APIs with FastAPI, Pydantic & PostgreSQL schemas',
+        lang === 'kk' ? 'Supabase нақты уақыттағы синхрондау және қауіпсіз рұқсаттар' : lang === 'ru' ? 'Supabase Real-time синхронизация и строгие политики доступа' : 'Supabase integration with Row-Level Security and JWT auth',
+        lang === 'kk' ? 'Docker контейнерлері және бұлтты сервистердегі микроқызметтер' : lang === 'ru' ? 'Docker контейнеризация и оркестрация независимых микросервисов' : 'Containerized Docker microservices and cloud deployment flows',
+      ],
     },
     {
       id: 'ai',
       category: 'ai',
       icon: Bot,
       title: lang === 'kk' ? 'ЖИ және креативті UI' : lang === 'ru' ? 'ИИ и прикладные технологии' : 'AI Systems & Applied Tech',
-      desc: lang === 'kk' ? 'OpenAI интеграциясы, адаптивті чат-боттар, бай мәтіндік редакторлар және аудио синтез' : lang === 'ru' ? 'Интеграция языковых моделей OpenAI, чат-боты, редакторы Lexical и Web Audio синтез' : 'OpenAI model integrations, streaming AI chat agents, rich Lexical editors & Web Audio',
+      desc: lang === 'kk' ? 'OpenAI интеграциясы, адаптивті чат-боттар, бай мәтіндік редакторлар және аудио синтез.' : lang === 'ru' ? 'Интеграция языковых моделей OpenAI, чат-боты, редакторы Lexical и Web Audio синтез.' : 'OpenAI model integrations, streaming AI chat agents, rich Lexical editors & Web Audio synthesizer.',
       skills: [
         'OpenAI API',
         'Real-time AI Chatbots',
@@ -155,13 +198,15 @@ export default function AboutContent() {
         'Prompt Pipelines',
       ],
       metric: 'Applied AI',
+      deliverables: [
+        lang === 'kk' ? 'Оқушыларға арналған BeyimTech AI чат-боттары мен интерактивті көмекшілері' : lang === 'ru' ? 'Чат-боты BeyimTech с контекстным обучением и стримингом ответов' : 'Adaptive educational AI chatbots with streaming responses',
+        lang === 'kk' ? 'Lexical бай markdown редакторы (формулалар мен кестелер қолдауы)' : lang === 'ru' ? 'Кастомный редактор Lexical с поддержкой markdown, формул и тегов' : 'Lexical markdown WYSIWYG editor for interactive curriculum',
+        lang === 'kk' ? 'Сайттағы процедуралық Web Audio синтезаторы (сыртқы файлдарсыз)' : lang === 'ru' ? 'Процедурный аудио-синтезатор Web Audio API (звук без внешних файлов)' : 'Procedural Web Audio synthesizer engine (zero external audio files)',
+      ],
     },
   ];
 
-  const filteredDomains =
-    activeSkillCategory === 'all'
-      ? skillDomains
-      : skillDomains.filter((d) => d.category === activeSkillCategory);
+  const filteredDomains = skillDomains.filter((d) => selectedCategories.includes(d.id));
 
   // Core Engineering Principles
   const principles = [
@@ -205,12 +250,12 @@ export default function AboutContent() {
         </div>
       </div>
 
-      {/* Main Two-Column Master Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-start">
+      {/* Main Two-Column Master Layout (Compact Left Sidebar + Expansive Fluid Right Stream) */}
+      <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12 xl:gap-16">
         {/* ========================================================= */}
-        {/* LEFT COLUMN: DEDICATED STICKY PROFILE POD (PHOTO ONLY)    */}
+        {/* LEFT COLUMN: DEDICATED STICKY PROFILE POD (COMPACT & SLEEK) */}
         {/* ========================================================= */}
-        <div className="lg:col-span-4 xl:col-span-4 lg:sticky lg:top-28 space-y-4">
+        <div className="w-full lg:w-[310px] xl:w-[330px] shrink-0 lg:sticky lg:top-24 space-y-4">
           <div className="cyber-panel p-4 sm:p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_40px_var(--card-hover-glow)]">
             {/* Ambient Corner Decors */}
             <div className="absolute top-2 left-2 text-[9px] text-[var(--accent-color)] font-mono opacity-60">
@@ -221,8 +266,8 @@ export default function AboutContent() {
               <span>ONLINE</span>
             </div>
 
-            {/* Photo Container with Kinetic Scanner & Hue Shift */}
-            <div className="relative w-full aspect-square rounded-xl overflow-hidden mt-3 border border-[var(--border-bright)] bg-black/60 shadow-inner">
+            {/* Photo Container with Controlled Height and Kinetic Scanner */}
+            <div className="relative w-full aspect-[4/4.3] max-h-[330px] rounded-xl overflow-hidden mt-3 border border-[var(--border-bright)] bg-black/60 shadow-inner">
               <img
                 src="/assets/linkedIn_Dias_square.png"
                 alt="Dias Yermek"
@@ -349,7 +394,7 @@ export default function AboutContent() {
         {/* ========================================================= */}
         {/* RIGHT COLUMN: MAIN CONTENT STREAM                         */}
         {/* ========================================================= */}
-        <div className="lg:col-span-8 xl:col-span-8 space-y-16 sm:space-y-20">
+        <div className="flex-1 min-w-0 space-y-16 sm:space-y-20">
           {/* 1. NARRATIVE BIOGRAPHY & MISSION */}
           <section className="space-y-6">
             <div className="space-y-3">
@@ -404,7 +449,7 @@ export default function AboutContent() {
             </div>
           </section>
 
-          {/* 3. INTERACTIVE TECHNICAL COMPETENCY MATRIX */}
+          {/* 3. INTERACTIVE TECHNICAL COMPETENCY MATRIX (MULTI-SELECT & ADAPTIVE LAYOUT) */}
           <section className="space-y-6">
             <div className="border-b border-[var(--border-subtle)] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
@@ -416,81 +461,168 @@ export default function AboutContent() {
                 </p>
               </div>
 
-              {/* Interactive Category Filter Pills */}
+              {/* Multi-Select Category Filter Pills */}
               <div className="flex items-center gap-1.5 flex-wrap">
+                <button
+                  onClick={() => handleToggleCategory('all')}
+                  onMouseEnter={playHover}
+                  className={`px-3 py-1.5 rounded-lg text-[10.5px] font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-1.5 ${
+                    selectedCategories.length === 4
+                      ? 'bg-[var(--accent-color)] text-[#020504] shadow-[0_0_15px_var(--accent-glow)]'
+                      : 'bg-black/50 text-[var(--text-muted)] hover:text-white border border-[var(--border-subtle)]'
+                  }`}
+                >
+                  <span>{lang === 'kk' ? 'БАРЛЫҒЫ' : lang === 'ru' ? 'ВСЕ' : 'ALL'}</span>
+                  {selectedCategories.length === 4 && <Check className="w-3 h-3" />}
+                </button>
+
                 {[
-                  { id: 'all', label: lang === 'kk' ? 'БАРЛЫҒЫ' : lang === 'ru' ? 'ВСЕ' : 'ALL' },
                   { id: 'mobile', label: 'MOBILE' },
                   { id: 'web', label: 'WEB' },
                   { id: 'backend', label: 'BACKEND' },
                   { id: 'ai', label: 'AI & DATA' },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => {
-                      playClick();
-                      setActiveSkillCategory(tab.id);
-                    }}
-                    onMouseEnter={playHover}
-                    className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold tracking-wider uppercase transition-all ${
-                      activeSkillCategory === tab.id
-                        ? 'bg-[var(--accent-color)] text-[#020504] shadow-[0_0_15px_var(--accent-glow)]'
-                        : 'bg-black/40 text-[var(--text-muted)] hover:text-white border border-[var(--border-subtle)]'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
+                ].map((tab) => {
+                  const isSelected = selectedCategories.includes(tab.id);
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => handleToggleCategory(tab.id)}
+                      onMouseEnter={playHover}
+                      className={`px-2.5 py-1.5 rounded-lg text-[10.5px] font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] border border-[var(--accent-border)] shadow-[0_0_12px_var(--accent-glow)]'
+                          : 'bg-black/40 text-[var(--text-muted)] hover:text-white border border-[var(--border-subtle)]'
+                      }`}
+                    >
+                      <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-[var(--accent-color)]' : 'bg-white/30'}`} />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Competency Domain Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {filteredDomains.map((domain) => {
+            {/* ADAPTIVE COMPETENCY LAYOUT */}
+            {filteredDomains.length === 1 ? (
+              /* Case 1: Deep-Dive Full-Width Inspection View (When exactly 1 is chosen) */
+              (() => {
+                const domain = filteredDomains[0];
                 const DomainIcon = domain.icon;
                 return (
-                  <div
-                    key={domain.id}
-                    onMouseEnter={playHover}
-                    className="cyber-panel p-5 rounded-xl flex flex-col justify-between space-y-4 hover:border-[var(--accent-border)] transition-all group"
-                  >
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
-                        <div className="flex items-center gap-2.5">
-                          <div className="p-1.5 rounded-md bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
-                            <DomainIcon className="w-4 h-4" />
-                          </div>
-                          <h3 className="text-xs sm:text-sm font-bold text-[var(--heading-tint)] font-mono">
+                  <div className="cyber-panel p-6 sm:p-8 rounded-2xl space-y-6 border-[var(--accent-border)] shadow-[0_0_35px_var(--card-hover-glow)]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border-subtle)] gap-3">
+                      <div className="flex items-center gap-3.5">
+                        <div className="p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] border border-[var(--border-subtle)]">
+                          <DomainIcon className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h3 className="text-base sm:text-lg font-bold text-[var(--heading-tint)] font-mono">
                             {domain.title}
                           </h3>
+                          <span className="text-[10px] text-[var(--accent-color)] font-mono tracking-widest uppercase">
+                            // DOMAIN_FOCUS · {domain.metric}
+                          </span>
                         </div>
-                        <span className="text-[10px] font-mono text-[var(--accent-color)] tracking-wider px-2 py-0.5 rounded bg-black/50 border border-[var(--border-subtle)]">
-                          {domain.metric}
-                        </span>
                       </div>
-                      <p className="text-xs text-[var(--text-muted)] font-sans leading-relaxed">
-                        {domain.desc}
-                      </p>
+                      <span className="text-xs font-mono text-[var(--accent-color)] px-3 py-1 rounded-full bg-black/60 border border-[var(--border-subtle)] self-start sm:self-auto">
+                        {domain.skills.length} TECHNOLOGIES LOADED
+                      </span>
                     </div>
 
-                    {/* Skill Tags Grid */}
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {domain.skills.map((skill, sIdx) => (
-                        <span
-                          key={sIdx}
-                          className="px-2 py-1 rounded bg-black/60 border border-[var(--border-subtle)] text-[10.5px] text-[var(--text-primary)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] transition-colors cursor-default"
-                        >
-                          {skill}
+                    <p className="text-xs sm:text-sm text-[var(--heading-tint)] font-sans leading-relaxed">
+                      {domain.desc}
+                    </p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                      <div className="space-y-3">
+                        <span className="text-[10.5px] font-mono text-[var(--text-muted)] tracking-wider uppercase block">
+                          CORE_TECHNOLOGY_STACK
                         </span>
-                      ))}
+                        <div className="flex flex-wrap gap-2">
+                          {domain.skills.map((skill, sIdx) => (
+                            <span
+                              key={sIdx}
+                              onMouseEnter={playHover}
+                              className="px-3 py-1.5 rounded-lg bg-black/60 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-xs text-[var(--text-primary)] transition-all font-mono"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="space-y-3 p-4 rounded-xl bg-black/40 border border-[var(--border-subtle)]">
+                        <span className="text-[10.5px] font-mono text-[var(--accent-color)] tracking-wider uppercase block">
+                          PRODUCTION_FOOTPRINT
+                        </span>
+                        <ul className="space-y-2 text-xs text-[var(--text-secondary)] font-sans">
+                          {domain.deliverables.map((item, dIdx) => (
+                            <li key={dIdx} className="flex items-start gap-2">
+                              <ChevronRight className="w-3.5 h-3.5 text-[var(--accent-color)] shrink-0 mt-0.5" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 );
-              })}
-            </div>
+              })()
+            ) : (
+              /* Case 2: Multi-Item Grid (2, 3 or 4 cards displayed in balanced columns) */
+              <div
+                className={`grid gap-4 xl:gap-5 ${
+                  filteredDomains.length === 3
+                    ? 'grid-cols-1 md:grid-cols-3'
+                    : 'grid-cols-1 md:grid-cols-2'
+                }`}
+              >
+                {filteredDomains.map((domain) => {
+                  const DomainIcon = domain.icon;
+                  return (
+                    <div
+                      key={domain.id}
+                      onMouseEnter={playHover}
+                      className="cyber-panel p-5 sm:p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-[var(--accent-border)] transition-all group"
+                    >
+                      <div className="space-y-2.5">
+                        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
+                          <div className="flex items-center gap-2.5">
+                            <div className="p-1.5 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
+                              <DomainIcon className="w-4 h-4" />
+                            </div>
+                            <h3 className="text-xs sm:text-sm font-bold text-[var(--heading-tint)] font-mono">
+                              {domain.title}
+                            </h3>
+                          </div>
+                          <span className="text-[10px] font-mono text-[var(--accent-color)] tracking-wider px-2 py-0.5 rounded bg-black/50 border border-[var(--border-subtle)]">
+                            {domain.metric}
+                          </span>
+                        </div>
+                        <p className="text-xs text-[var(--text-muted)] font-sans leading-relaxed">
+                          {domain.desc}
+                        </p>
+                      </div>
+
+                      {/* Skill Tags Grid */}
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {domain.skills.map((skill, sIdx) => (
+                          <span
+                            key={sIdx}
+                            className="px-2 py-1 rounded bg-black/60 border border-[var(--border-subtle)] text-[10.5px] text-[var(--text-primary)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] transition-colors cursor-default font-mono"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </section>
 
-          {/* 4. CAREER TELEMETRY TIMELINE (PERFECTLY ALIGNED & SCROLL-DRIVEN) */}
+          {/* 4. CAREER TELEMETRY TIMELINE (SCREEN-CENTERED DYNAMIC SCROLL) */}
           <section className="space-y-8" ref={timelineRef}>
             <div className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between">
               <div>
@@ -504,22 +636,22 @@ export default function AboutContent() {
               </span>
             </div>
 
-            {/* Geometric Kinetic Timeline Container */}
+            {/* Kinetic Timeline: Line anchored to center of screen */}
             <div className="relative">
-              {/* 1. Inactive Background Guide Rail (Exact axial alignment with nodes) */}
+              {/* 1. Inactive Background Guide Rail */}
               <div className="absolute left-[15px] sm:left-[19px] top-6 bottom-8 w-[2px] bg-white/10 rounded-full pointer-events-none" />
 
-              {/* 2. Scroll-Driven Glowing Neon Active Line */}
+              {/* 2. Scroll-Driven Glowing Neon Active Line (Triggered strictly at 50% viewport center) */}
               <motion.div
                 style={{ scaleY: timelineScrollProgress, originY: 0 }}
-                className="absolute left-[15px] sm:left-[19px] top-6 bottom-8 w-[2px] bg-gradient-to-b from-[var(--accent-color)] via-emerald-400 to-[var(--accent-color)] rounded-full shadow-[0_0_12px_var(--accent-color)] origin-top pointer-events-none"
+                className="absolute left-[15px] sm:left-[19px] top-6 bottom-8 w-[2px] bg-gradient-to-b from-[var(--accent-color)] via-emerald-400 to-[var(--accent-color)] rounded-full shadow-[0_0_15px_var(--accent-color)] origin-top pointer-events-none"
               />
 
               {/* 3. Timeline Items with Guaranteed Sub-Pixel Symmetry */}
               <div className="space-y-6 sm:space-y-8">
                 {exp.logs.map((log, idx) => (
                   <div key={log.code || idx} className="relative flex items-start gap-4 sm:gap-6 group">
-                    {/* Center Timeline Node (w-8 sm:w-10 perfectly aligns on left: 15px sm:19px) */}
+                    {/* Center Timeline Node */}
                     <div className="relative z-10 shrink-0 w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center mt-3">
                       <div className="w-4 sm:w-4.5 h-4 sm:h-4.5 rounded-full bg-[#020504] border-2 border-[var(--accent-color)] shadow-[0_0_10px_var(--accent-glow)] group-hover:scale-125 group-hover:border-white transition-all flex items-center justify-center">
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] group-hover:bg-white transition-colors" />
