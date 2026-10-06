@@ -7,7 +7,6 @@ import CustomCursor from '../src/components/common/CustomCursor';
 import RouteVeil from '../src/components/common/RouteVeil';
 import ScrollFadeMask from '../src/components/common/ScrollFadeMask';
 import NavHeader from '../src/components/navigation/NavHeader';
-import FloatingFooter from '../src/components/footer/FloatingFooter';
 import { Analytics } from '@vercel/analytics/react';
 
 const bebasNeue = Bebas_Neue({
@@ -147,7 +146,6 @@ export default function RootLayout({ children }) {
           <RouteVeil />
           <NavHeader />
           <ScrollFadeMask>{children}</ScrollFadeMask>
-          <FloatingFooter />
           <Analytics />
         </ThemeAudioProvider>
       </body>
