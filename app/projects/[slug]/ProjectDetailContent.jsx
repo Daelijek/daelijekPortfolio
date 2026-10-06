@@ -153,9 +153,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   return (
     <div className="min-h-screen text-white font-mono selection:bg-[var(--accent-color)] selection:text-[#040608]">
       {/* ========================================================================= */}
-      {/* 1. STICKY TOP HUD CONTROLS (Compact, responsive, zero collision)         */}
+      {/* 1. STICKY TOP HUD CONTROLS (Generous width, crisp single-row layout)       */}
       {/* ========================================================================= */}
-      <div className="sticky top-4 sm:top-6 z-40 px-4 sm:px-8 max-w-7xl mx-auto pointer-events-none mb-4 sm:mb-6">
+      <div className="sticky top-4 sm:top-6 z-40 px-4 sm:px-8 lg:px-12 max-w-[1720px] mx-auto pointer-events-none mb-4 sm:mb-6">
         <div className="pointer-events-auto flex items-center justify-between gap-3 p-2.5 sm:p-3 rounded-2xl bg-[#040608]/92 backdrop-blur-2xl border border-white/10 shadow-2xl">
           {/* Breadcrumbs & Back Button */}
           <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
@@ -172,7 +172,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </Link>
 
             <span className="hidden sm:inline text-white/30 text-xs">/</span>
-            <span className="hidden sm:inline text-white/70 text-xs font-mono truncate max-w-[150px] lg:max-w-[260px]">
+            <span className="hidden sm:inline text-white/70 text-xs font-mono truncate max-w-[150px] lg:max-w-[320px]">
               {project.title}
             </span>
 
@@ -182,7 +182,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
 
           {/* Dynamic Scroll Progress HUD */}
-          <div className="hidden md:flex items-center gap-3 flex-1 max-w-[280px] lg:max-w-[340px] px-2">
+          <div className="hidden md:flex items-center gap-3 flex-1 max-w-[280px] lg:max-w-[400px] px-2">
             <span className="text-[10px] sm:text-[11px] text-white/40 font-mono tracking-widest w-6 text-right">
               {String(scrollProgress).padStart(2, '0')}
             </span>
@@ -239,10 +239,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. PROJECT HERO & IMPACT METRICS                                          */}
+      {/* 2. PROJECT HERO & IMPACT METRICS (Full-Width, Proportional Typography)    */}
       {/* ========================================================================= */}
-      <section className="pt-6 sm:pt-10 pb-10 sm:pb-14 px-6 sm:px-12 max-w-7xl mx-auto space-y-8 sm:space-y-10">
-        <div className="space-y-4 sm:space-y-5">
+      <section className="pt-6 sm:pt-10 pb-10 sm:pb-14 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8 sm:space-y-10">
+        <div className="space-y-3 sm:space-y-4">
           <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs font-mono">
             <span className="px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[var(--accent-color)] font-bold">
               // {project.category}
@@ -259,26 +259,26 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[var(--heading-tint)] font-display tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--heading-tint)] font-display tracking-tight leading-tight">
             {project.title}
           </h1>
 
           {project.tagline && (
-            <p className="text-base sm:text-xl text-[var(--accent-color)] font-mono leading-relaxed max-w-4xl">
+            <p className="text-sm sm:text-base lg:text-lg text-[var(--accent-color)] font-mono leading-relaxed max-w-5xl">
               &gt; {project.tagline}
             </p>
           )}
         </div>
 
-        {/* Quick Metrics Bar (Spacious 4-column cards with room to breathe) */}
+        {/* Quick Metrics Bar (Wide 4-column cards with refined typography) */}
         {project.walkthrough?.impact?.metrics && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 pt-2">
             {project.walkthrough.impact.metrics.map((m, idx) => (
               <div
                 key={idx}
-                className="p-4 sm:p-5 rounded-2xl bg-[#06090D]/80 border border-white/10 hover:border-[var(--accent-border)] transition-colors text-center space-y-1.5 shadow-lg"
+                className="p-4 sm:p-6 rounded-2xl bg-[#06090D]/80 border border-white/10 hover:border-[var(--accent-border)] transition-colors text-center space-y-1 shadow-lg"
               >
-                <span className="block text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--accent-color)] font-display leading-tight">
+                <span className="block text-xl sm:text-2xl lg:text-3xl font-black text-[var(--accent-color)] font-display leading-tight">
                   {m.value}
                 </span>
                 <span className="block text-[10px] sm:text-xs text-white/50 font-mono tracking-widest uppercase">
@@ -291,9 +291,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. HERO PRODUCT SHOWCASE VIEWPORT (Clean, honest, beautiful artwork)       */}
+      {/* 3. HERO PRODUCT SHOWCASE VIEWPORT (Wide, cinema-scale artwork)             */}
       {/* ========================================================================= */}
-      <section className="py-6 sm:py-10 px-6 sm:px-12 max-w-7xl mx-auto">
+      <section className="py-6 sm:py-10 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto">
         <div className="cyber-panel rounded-3xl overflow-hidden border border-white/15 bg-[#020406] shadow-2xl relative">
           {/* Top Preview Header - Clean, professional, no fake buttons */}
           <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/10 bg-black/60 backdrop-blur-md">
@@ -314,10 +314,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </div>
           </div>
 
-          {/* Main Visual Display */}
-          <div className="relative min-h-[340px] sm:min-h-[500px] lg:min-h-[560px] w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#030608] via-[#050B10] to-[#020406] p-4 sm:p-8 lg:p-12">
-            <div className="relative w-full max-w-5xl">
-              <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/20 shadow-[0_0_60px_rgba(0,0,0,0.85)] group">
+          {/* Main Visual Display - Stretches widely across container */}
+          <div className="relative min-h-[380px] sm:min-h-[520px] lg:min-h-[640px] w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#030608] via-[#050B10] to-[#020406] p-4 sm:p-8 lg:p-12 xl:p-16">
+            <div className="relative w-full max-w-6xl xl:max-w-7xl">
+              <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/20 shadow-[0_0_70px_rgba(0,0,0,0.9)] group">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -330,10 +330,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 <div className="absolute inset-0 scanlines-overlay opacity-20 pointer-events-none" />
 
                 {/* Cyber Corner brackets */}
-                <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
+                <div className="absolute top-3.5 left-3.5 w-5 h-5 border-t-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
+                <div className="absolute top-3.5 right-3.5 w-5 h-5 border-t-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
+                <div className="absolute bottom-3.5 left-3.5 w-5 h-5 border-b-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
+                <div className="absolute bottom-3.5 right-3.5 w-5 h-5 border-b-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
 
                 {/* On-screen HUD Telemetry readout badge */}
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/10 text-xs font-mono">
@@ -353,13 +353,13 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. SYSTEM DOSSIER & SPECIFICATIONS BENTO GRID (Generous spacing, NO truncate) */}
+      {/* 4. SYSTEM DOSSIER & SPECIFICATIONS BENTO GRID (Generous Width & Spacing)   */}
       {/* ========================================================================= */}
-      <section className="py-12 sm:py-16 px-6 sm:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+      <section className="py-12 sm:py-16 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Mission & Narrative (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="cyber-panel p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6 bg-[#04070A]/85 backdrop-blur-md shadow-xl">
+            <div className="cyber-panel p-6 sm:p-8 lg:p-10 rounded-3xl border border-white/10 space-y-6 bg-[#04070A]/85 backdrop-blur-md shadow-xl">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <h2 className="text-xs font-bold text-white/50 tracking-widest uppercase font-mono">
                   [ 01 // MISSION STATEMENT & ARCHITECTURE ]
@@ -367,12 +367,12 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 <span className="text-[10px] text-[var(--accent-color)] font-mono font-bold">OVERVIEW</span>
               </div>
 
-              <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed font-sans">
+              <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)] font-sans">
                 {project.overview?.lead || project.description}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-2">
+                <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
                   <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold">
                     {lang === 'ru' ? '// ЦЕЛЕВАЯ АУДИТОРИЯ' : '// TARGET_AUDIENCE'}
                   </span>
@@ -380,7 +380,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                     {project.overview?.targetAudience || 'Modern users & enterprise clients'}
                   </p>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
+                <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
                   <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold">
                     {lang === 'ru' ? '// РОЛЬ ДИАСА' : '// DIAS_ROLE'}
                   </span>
@@ -394,7 +394,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
 
           {/* Right Column: System Dossier Specifications (5 cols - fully visible) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="cyber-panel p-6 sm:p-8 rounded-3xl border border-[var(--border-subtle)] bg-[#040608]/90 backdrop-blur-xl shadow-2xl space-y-6">
+            <div className="cyber-panel p-6 sm:p-8 lg:p-10 rounded-3xl border border-[var(--border-subtle)] bg-[#040608]/90 backdrop-blur-xl shadow-2xl space-y-6">
               {/* Dossier Header */}
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div className="flex items-center gap-2.5">
@@ -469,7 +469,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                   <span className="text-[10px] text-white/40 tracking-widest uppercase font-mono block">
                     PROJECT_COLOR_PALETTE
                   </span>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-4 gap-2.5">
                     {project.dossier.colorPalette.map((c, idx) => (
                       <div
                         key={idx}
@@ -495,10 +495,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       {/* ========================================================================= */}
       {/* 5. CASE STUDY DEEP DIVE (Chapters: Concept, Architecture, Features)       */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-18 px-6 sm:px-12 max-w-7xl mx-auto space-y-10">
+      <section className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8 sm:space-y-10">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-white/10 pb-6">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-display uppercase tracking-wide">
+            <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-wide">
               {lang === 'ru' ? 'АРХИТЕКТУРНЫЙ КЕЙС-СТАДИ' : 'ENGINEERING CASE STUDY'}
             </h2>
             <p className="text-xs text-white/50 font-mono mt-1">
@@ -541,13 +541,13 @@ export default function ProjectDetailContent({ slug: propSlug }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
             >
               <div className="lg:col-span-7 space-y-4">
                 <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
                   // 01 // THE_CONCEPT_&_CHALLENGE
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-white font-display">
+                <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
                   {project.walkthrough?.concept?.title || 'Core Product Vision'}
                 </h3>
                 <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
@@ -555,7 +555,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 </p>
 
                 {project.overview?.challenge && (
-                  <div className="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
+                  <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
                     <span className="text-xs font-bold text-amber-400 font-mono uppercase tracking-wider block">
                       [ THE_PRIMARY_CHALLENGE ]
                     </span>
@@ -594,13 +594,13 @@ export default function ProjectDetailContent({ slug: propSlug }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
             >
               <div className="lg:col-span-7 space-y-4">
                 <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
                   // 02 // ARCHITECTURE_&_EXECUTION
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-bold text-white font-display">
+                <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
                   {project.walkthrough?.architecture?.title || 'System Implementation'}
                 </h3>
                 <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
@@ -608,7 +608,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 </p>
 
                 {project.overview?.solution && (
-                  <div className="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
+                  <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
                     <span className="text-xs font-bold text-[var(--accent-color)] font-mono uppercase tracking-wider block">
                       [ APPLIED_SOLUTION ]
                     </span>
@@ -660,14 +660,14 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-2xl font-black text-[var(--accent-color)] font-display">
+                      <span className="text-xl font-black text-[var(--accent-color)] font-display">
                         {f.num}
                       </span>
                       <span className="px-2 py-0.5 rounded bg-white/5 text-[10px] text-white/60 font-mono">
                         {f.metric}
                       </span>
                     </div>
-                    <h4 className="text-lg font-bold text-white font-display">{f.title}</h4>
+                    <h4 className="text-base font-bold text-white font-display">{f.title}</h4>
                     <p className="text-xs text-white/70 font-sans leading-relaxed">{f.desc}</p>
                   </div>
                   <div className="pt-3 border-t border-white/5 flex items-center gap-1.5 text-[10px] text-[var(--accent-color)] font-mono">
@@ -684,10 +684,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       {/* ========================================================================= */}
       {/* 6. RESPONSIVE MULTI-DEVICE VIEWPORTS (Desktop Frame vs Mobile Frame)      */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-18 px-6 sm:px-12 max-w-7xl mx-auto space-y-8">
+      <section className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white font-sans uppercase">
+            <h2 className="text-lg sm:text-xl font-bold text-white font-sans uppercase">
               {lang === 'ru' ? 'Адаптивная верстка и мультивидовая витрина' : 'Responsive Multi-Device Layouts'}
             </h2>
             <p className="text-xs text-white/40 font-mono mt-0.5">
@@ -727,11 +727,11 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </div>
 
-        {/* Viewport Display Area */}
+        {/* Viewport Display Area - Wide presentation */}
         <div className="flex justify-center items-center py-6">
           {activeDeviceView === 'desktop' ? (
             /* Desktop Browser Mockup Frame */
-            <div className="w-full max-w-5xl rounded-2xl overflow-hidden border border-white/20 bg-[#0A0D10] shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
+            <div className="w-full max-w-6xl xl:max-w-7xl rounded-2xl overflow-hidden border border-white/20 bg-[#0A0D10] shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
               {/* Browser chrome top bar */}
               <div className="h-10 px-4 bg-[#12161B] border-b border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -791,7 +791,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         onMouseLeave={() => setIsNextHovered(false)}
         onMouseMove={handleNextMouseMove}
         ref={nextSectionRef}
-        className="group relative block w-full border-t border-white/15 pt-20 pb-36 px-6 sm:px-12 lg:px-16 overflow-hidden select-none bg-gradient-to-b from-transparent via-black/40 to-black/80 cursor-pointer"
+        className="group relative block w-full border-t border-white/15 pt-20 pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 overflow-hidden select-none bg-gradient-to-b from-transparent via-black/40 to-black/80 cursor-pointer"
       >
         {/* Floating Cursor Thumbnail Preview (Positioned directly above cursor with smooth spring) */}
         <AnimatePresence>
@@ -829,7 +829,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           )}
         </AnimatePresence>
 
-        <div className="w-full max-w-7xl mx-auto">
+        <div className="w-full max-w-[1720px] mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
             <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
               [ UP_NEXT // CONTINUOUS_BROWSE ]
@@ -841,13 +841,13 @@ export default function ProjectDetailContent({ slug: propSlug }) {
 
           <div className="py-4 space-y-3">
             <div className="flex items-center gap-3 flex-wrap">
-              <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[var(--accent-color)] font-display">
+              <span className="text-2xl sm:text-4xl lg:text-5xl font-black text-[var(--accent-color)] font-display">
                 [{nextProject.num}]
               </span>
-              <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display uppercase tracking-tight group-hover:text-[var(--accent-color)] transition-colors">
+              <h3 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white font-display uppercase tracking-tight group-hover:text-[var(--accent-color)] transition-colors">
                 {nextProject.title}
               </h3>
-              <ArrowRight className="w-7 h-7 sm:w-10 sm:h-10 text-[var(--accent-color)] opacity-70 group-hover:opacity-100 group-hover:translate-x-3 transition-all inline-block ml-2" />
+              <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 text-[var(--accent-color)] opacity-70 group-hover:opacity-100 group-hover:translate-x-3 transition-all inline-block ml-2" />
             </div>
             <p className="text-xs sm:text-sm text-white/50 font-mono">
               // {nextProject.category} · {nextProject.tags.join(' · ')}
