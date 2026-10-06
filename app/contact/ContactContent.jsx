@@ -6,6 +6,7 @@ import { portfolioContent } from '../../src/data/portfolioData';
 import { soundFx } from '../../src/audio/soundEffects';
 import { Mail, Send, Copy, Check, ExternalLink, User, AtSign, MessageSquare } from 'lucide-react';
 import { FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa6';
+import { SiLeetcode } from 'react-icons/si';
 import confetti from 'canvas-confetti';
 
 export default function ContactContent() {
@@ -134,6 +135,22 @@ export default function ContactContent() {
                 </div>
                 <span className="text-[11px] text-[var(--accent-color)]">/in/dias-yermek</span>
               </a>
+
+              {contact.leetcode && (
+                <a
+                  href={contact.leetcode}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={playHover}
+                  className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:bg-[var(--card-hover-glow)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] border border-[var(--border-subtle)] transition-colors"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <SiLeetcode className="w-4 h-4 text-amber-400" />
+                    <span>LeetCode</span>
+                  </div>
+                  <span className="text-[11px] text-[var(--accent-color)]">/u/Daelijek</span>
+                </a>
+              )}
             </div>
           </div>
         </div>
