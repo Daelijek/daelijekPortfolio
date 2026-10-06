@@ -131,6 +131,12 @@ html {
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+html.lenis,
+html.lenis body {
+  height: auto;
+  scroll-behavior: auto !important;
+}
+
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);

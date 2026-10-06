@@ -7,6 +7,7 @@ import CustomCursor from '../src/components/common/CustomCursor';
 import RouteVeil from '../src/components/common/RouteVeil';
 import ScrollFadeMask from '../src/components/common/ScrollFadeMask';
 import NavHeader from '../src/components/navigation/NavHeader';
+import SmoothScroll from '../src/components/common/SmoothScroll';
 import { Analytics } from '@vercel/analytics/react';
 
 const bebasNeue = Bebas_Neue({
@@ -140,13 +141,15 @@ export default function RootLayout({ children }) {
       </head>
       <body className="bg-[#040608] text-white selection:bg-[#00FF9F] selection:text-[#040608] min-h-screen overflow-x-hidden">
         <ThemeAudioProvider>
-          <ParticlesCanvas />
-          <NoiseOverlay />
-          <CustomCursor />
-          <RouteVeil />
-          <NavHeader />
-          <ScrollFadeMask>{children}</ScrollFadeMask>
-          <Analytics />
+          <SmoothScroll>
+            <ParticlesCanvas />
+            <NoiseOverlay />
+            <CustomCursor />
+            <RouteVeil />
+            <NavHeader />
+            <ScrollFadeMask>{children}</ScrollFadeMask>
+            <Analytics />
+          </SmoothScroll>
         </ThemeAudioProvider>
       </body>
     </html>
