@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -118,7 +118,20 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeTab, setActiveTab] = useState('concept');
   const [activeDeviceView, setActiveDeviceView] = useState('desktop'); // 'desktop' | 'mobile'
-  const [previewPlaying, setPreviewPlaying] = useState(true);
+
+  // Cursor Following Preview for Next Project Footer
+  const [isNextHovered, setIsNextHovered] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const nextSectionRef = useRef(null);
+
+  const handleNextMouseMove = (e) => {
+    if (!nextSectionRef.current) return;
+    const rect = nextSectionRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -140,30 +153,28 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   return (
     <div className="min-h-screen text-white font-mono selection:bg-[var(--accent-color)] selection:text-[#040608]">
       {/* ========================================================================= */}
-      {/* 1. STICKY TOP HUD CONTROLS (Breadcrumbs, Scroll Progress, Actions)        */}
+      {/* 1. STICKY TOP HUD CONTROLS (Compact, responsive, zero collision)         */}
       {/* ========================================================================= */}
-      <div className="sticky top-20 sm:top-24 z-40 px-4 sm:px-8 max-w-7xl mx-auto pointer-events-none">
-        <div className="pointer-events-auto flex flex-col md:flex-row items-center justify-between gap-3 p-3 sm:p-4 rounded-2xl bg-[#040608]/85 backdrop-blur-xl border border-white/10 shadow-2xl">
+      <div className="sticky top-4 sm:top-6 z-40 px-4 sm:px-8 max-w-7xl mx-auto pointer-events-none mb-4 sm:mb-6">
+        <div className="pointer-events-auto flex items-center justify-between gap-3 p-2.5 sm:p-3 rounded-2xl bg-[#040608]/92 backdrop-blur-2xl border border-white/10 shadow-2xl">
           {/* Breadcrumbs & Back Button */}
-          <div className="flex items-center gap-3 text-xs w-full md:w-auto justify-between md:justify-start">
+          <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
             <Link
               href="/projects"
               onClick={playClick}
               onMouseEnter={playHover}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-[var(--accent-color)] transition-all group"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 hover:text-[var(--accent-color)] transition-all group"
             >
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-bold tracking-wider uppercase text-[11px]">
+              <span className="font-bold tracking-wider uppercase text-[10px] sm:text-[11px]">
                 {lang === 'ru' ? 'ПРОЕКТЫ' : 'PROJECTS'}
               </span>
             </Link>
 
-            <div className="hidden sm:flex items-center gap-2 text-white/30 text-[11px]">
-              <span>/</span>
-              <span className="text-white/60 truncate max-w-[140px] sm:max-w-[200px]">
-                {project.title}
-              </span>
-            </div>
+            <span className="hidden sm:inline text-white/30 text-xs">/</span>
+            <span className="hidden sm:inline text-white/70 text-xs font-mono truncate max-w-[150px] lg:max-w-[260px]">
+              {project.title}
+            </span>
 
             <span className="px-2 py-0.5 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[10px] text-[var(--accent-color)] font-bold">
               {project.num}
@@ -171,28 +182,26 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
 
           {/* Dynamic Scroll Progress HUD */}
-          <div className="flex items-center gap-3 w-full md:w-[320px] px-2">
-            <span className="text-[11px] text-white/40 font-mono tracking-widest w-6 text-right">
+          <div className="hidden md:flex items-center gap-3 flex-1 max-w-[280px] lg:max-w-[340px] px-2">
+            <span className="text-[10px] sm:text-[11px] text-white/40 font-mono tracking-widest w-6 text-right">
               {String(scrollProgress).padStart(2, '0')}
             </span>
-            <div className="relative flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
-              {/* Markers at 25%, 50%, 75% */}
+            <div className="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
               <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/20 z-10" />
               <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/20 z-10" />
               <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/20 z-10" />
-              {/* Progress fill */}
               <div
                 className="h-full bg-[var(--accent-color)] shadow-[0_0_12px_var(--accent-glow)] transition-all duration-150 ease-out"
                 style={{ width: `${scrollProgress}%` }}
               />
             </div>
-            <span className="text-[11px] text-[var(--accent-color)] font-mono font-bold tracking-widest w-7">
+            <span className="text-[10px] sm:text-[11px] text-[var(--accent-color)] font-mono font-bold tracking-widest w-7">
               100
             </span>
           </div>
 
           {/* Quick CTA Actions */}
-          <div className="flex items-center gap-2.5 w-full md:w-auto justify-end">
+          <div className="flex items-center gap-2 shrink-0">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
@@ -200,7 +209,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 rel="noopener noreferrer"
                 onClick={playClick}
                 onMouseEnter={playHover}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
               >
                 <span>{lang === 'ru' ? 'ДЕМО' : 'LIVE SITE'}</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -208,9 +217,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             )}
 
             {project.isPrivate ? (
-              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-[10px] text-white/50 font-mono tracking-wider">
+              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-[10px] text-white/50 font-mono tracking-wider">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 animate-pulse" />
-                <span>{lang === 'ru' ? 'ПРИВАТНЫЙ РЕПО' : 'PRIVATE'}</span>
+                <span className="hidden xs:inline">{lang === 'ru' ? 'ПРИВАТНЫЙ' : 'PRIVATE'}</span>
               </span>
             ) : project.githubUrl ? (
               <a
@@ -230,127 +239,204 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. PROJECT HERO & SYSTEM DOSSIER SPECIFICATION                            */}
+      {/* 2. PROJECT HERO & IMPACT METRICS                                          */}
       {/* ========================================================================= */}
-      <section className="pt-16 pb-20 px-6 sm:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* Left Column: Project Overview & Narrative */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-xs text-[var(--accent-color)] font-bold">
-                // {project.category}
-              </span>
-              <span className="text-xs text-white/40 font-mono">
-                [ENTRY_ID: {project.id}]
-              </span>
-              <span className="text-xs text-white/40 font-mono">
-                [YEAR: {project.dossier?.entryYear || '2025'}]
+      <section className="pt-6 sm:pt-10 pb-10 sm:pb-14 px-6 sm:px-12 max-w-7xl mx-auto space-y-8 sm:space-y-10">
+        <div className="space-y-4 sm:space-y-5">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs font-mono">
+            <span className="px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[var(--accent-color)] font-bold">
+              // {project.category}
+            </span>
+            <span className="text-white/40">
+              [ENTRY_ID: {project.id}]
+            </span>
+            <span className="text-white/40">
+              [YEAR: {project.dossier?.entryYear || '2025'}]
+            </span>
+            <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              {project.status || 'DEPLOYED'}
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[var(--heading-tint)] font-display tracking-tight leading-tight">
+            {project.title}
+          </h1>
+
+          {project.tagline && (
+            <p className="text-base sm:text-xl text-[var(--accent-color)] font-mono leading-relaxed max-w-4xl">
+              &gt; {project.tagline}
+            </p>
+          )}
+        </div>
+
+        {/* Quick Metrics Bar (Spacious 4-column cards with room to breathe) */}
+        {project.walkthrough?.impact?.metrics && (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-2">
+            {project.walkthrough.impact.metrics.map((m, idx) => (
+              <div
+                key={idx}
+                className="p-4 sm:p-5 rounded-2xl bg-[#06090D]/80 border border-white/10 hover:border-[var(--accent-border)] transition-colors text-center space-y-1.5 shadow-lg"
+              >
+                <span className="block text-2xl sm:text-3xl lg:text-4xl font-black text-[var(--accent-color)] font-display leading-tight">
+                  {m.value}
+                </span>
+                <span className="block text-[10px] sm:text-xs text-white/50 font-mono tracking-widest uppercase">
+                  {m.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 3. HERO PRODUCT SHOWCASE VIEWPORT (Clean, honest, beautiful artwork)       */}
+      {/* ========================================================================= */}
+      <section className="py-6 sm:py-10 px-6 sm:px-12 max-w-7xl mx-auto">
+        <div className="cyber-panel rounded-3xl overflow-hidden border border-white/15 bg-[#020406] shadow-2xl relative">
+          {/* Top Preview Header - Clean, professional, no fake buttons */}
+          <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/10 bg-black/60 backdrop-blur-md">
+            <div className="flex items-center gap-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs sm:text-sm font-bold font-mono tracking-wider uppercase text-white/90">
+                PRODUCT_SHOWCASE // PRODUCTION_BUILD
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[var(--heading-tint)] font-display tracking-tight leading-none">
-              {project.title}
-            </h1>
+            <div className="flex items-center gap-3">
+              <span className="text-[11px] text-white/50 font-mono hidden sm:inline">
+                {project.dossier?.targetPlatform || 'Web & Mobile'}
+              </span>
+              <span className="text-[10px] sm:text-xs px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[var(--accent-color)] font-bold font-mono">
+                [VERIFIED_STABLE]
+              </span>
+            </div>
+          </div>
 
-            {project.tagline && (
-              <p className="text-sm sm:text-base text-[var(--accent-color)] font-mono leading-relaxed">
-                &gt; {project.tagline}
-              </p>
-            )}
+          {/* Main Visual Display */}
+          <div className="relative min-h-[340px] sm:min-h-[500px] lg:min-h-[560px] w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#030608] via-[#050B10] to-[#020406] p-4 sm:p-8 lg:p-12">
+            <div className="relative w-full max-w-5xl">
+              <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/20 shadow-[0_0_60px_rgba(0,0,0,0.85)] group">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover object-top filter brightness-[0.95] group-hover:brightness-100 transition-all duration-700"
+                  priority
+                />
 
-            <div className="cyber-panel p-6 sm:p-8 rounded-2xl border border-white/10 space-y-5 bg-[#06080B]/70 backdrop-blur-md">
-              <h2 className="text-xs text-white/40 tracking-widest uppercase font-mono border-b border-white/10 pb-2">
-                [ MISSION_STATEMENT // PROJECT_OVERVIEW ]
-              </h2>
-              <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
+                {/* Subtle scanline texture */}
+                <div className="absolute inset-0 scanlines-overlay opacity-20 pointer-events-none" />
+
+                {/* Cyber Corner brackets */}
+                <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
+                <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
+                <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
+                <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
+
+                {/* On-screen HUD Telemetry readout badge */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/10 text-xs font-mono">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-pulse" />
+                    <span className="text-white/90 font-bold">{project.title}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-[10px] sm:text-xs text-white/50">
+                    <span className="hidden sm:inline">ARCHITECTURE: PRODUCTION</span>
+                    <span className="text-[var(--accent-color)] font-bold">[ONLINE]</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 4. SYSTEM DOSSIER & SPECIFICATIONS BENTO GRID (Generous spacing, NO truncate) */}
+      {/* ========================================================================= */}
+      <section className="py-12 sm:py-16 px-6 sm:px-12 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          {/* Left Column: Mission & Narrative (7 cols) */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="cyber-panel p-6 sm:p-8 rounded-3xl border border-white/10 space-y-6 bg-[#04070A]/85 backdrop-blur-md shadow-xl">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <h2 className="text-xs font-bold text-white/50 tracking-widest uppercase font-mono">
+                  [ 01 // MISSION STATEMENT & ARCHITECTURE ]
+                </h2>
+                <span className="text-[10px] text-[var(--accent-color)] font-mono font-bold">OVERVIEW</span>
+              </div>
+
+              <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed font-sans">
                 {project.overview?.lead || project.description}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5 text-xs font-sans">
-                <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block">
-                    {lang === 'ru' ? '// ДЛЯ КОГО' : '// TARGET_AUDIENCE'}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
+                  <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold">
+                    {lang === 'ru' ? '// ЦЕЛЕВАЯ АУДИТОРИЯ' : '// TARGET_AUDIENCE'}
                   </span>
-                  <p className="text-white/80 leading-snug">
+                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
                     {project.overview?.targetAudience || 'Modern users & enterprise clients'}
                   </p>
                 </div>
-                <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block">
+                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
+                  <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold">
                     {lang === 'ru' ? '// РОЛЬ ДИАСА' : '// DIAS_ROLE'}
                   </span>
-                  <p className="text-white/80 leading-snug">
+                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
                     {project.dossier?.primaryRole || 'Lead Frontend & Mobile Engineer'}
                   </p>
                 </div>
               </div>
             </div>
-
-            {/* Quick Metrics Bar */}
-            {project.walkthrough?.impact?.metrics && (
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                {project.walkthrough.impact.metrics.map((m, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-xl bg-black/40 border border-white/10 text-center space-y-1"
-                  >
-                    <span className="block text-xl sm:text-2xl font-black text-[var(--accent-color)] font-display leading-tight">
-                      {m.value}
-                    </span>
-                    <span className="block text-[9px] sm:text-[10px] text-white/40 font-mono tracking-widest uppercase">
-                      {m.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
-          {/* Right Column: System Dossier HUD Pod */}
-          <div className="lg:col-span-5">
-            <div className="cyber-panel p-6 sm:p-7 rounded-2xl border border-[var(--border-subtle)] bg-[#040608]/90 backdrop-blur-xl shadow-2xl space-y-6">
+          {/* Right Column: System Dossier Specifications (5 cols - fully visible) */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="cyber-panel p-6 sm:p-8 rounded-3xl border border-[var(--border-subtle)] bg-[#040608]/90 backdrop-blur-xl shadow-2xl space-y-6">
               {/* Dossier Header */}
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5">
                   <Cpu className="w-4 h-4 text-[var(--accent-color)]" />
                   <span className="text-xs font-bold text-white tracking-widest uppercase font-mono">
                     SYSTEM_DOSSIER // SPEC
                   </span>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] font-bold">
+                <span className="text-[10px] px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] font-bold font-mono">
                   {project.dossier?.status || 'VERIFIED'}
                 </span>
               </div>
 
-              {/* Dossier Specs List */}
-              <ul className="space-y-3.5 text-xs font-mono">
-                <li className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                  <span className="text-white/40">[ PROJECT_TYPE ]</span>
-                  <span className="text-right text-white/90 font-bold max-w-[200px] truncate">
+              {/* Dossier Specs List - Completely readable, wrap properly without clipping */}
+              <ul className="space-y-4 text-xs font-mono">
+                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
+                  <span className="text-white/40 tracking-wider">[ PROJECT_TYPE ]</span>
+                  <span className="sm:text-right text-white font-bold">
                     {project.dossier?.projectType || project.category}
                   </span>
                 </li>
-                <li className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                  <span className="text-white/40">[ ENTRY_YEAR ]</span>
-                  <span className="text-right text-[var(--accent-color)] font-bold">
+                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
+                  <span className="text-white/40 tracking-wider">[ ENTRY_YEAR ]</span>
+                  <span className="sm:text-right text-[var(--accent-color)] font-bold">
                     {project.dossier?.entryYear || '2025'}
                   </span>
                 </li>
-                <li className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                  <span className="text-white/40">[ TARGET_PLATFORM ]</span>
-                  <span className="text-right text-white/90 font-bold max-w-[200px] truncate">
+                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
+                  <span className="text-white/40 tracking-wider">[ TARGET_PLATFORM ]</span>
+                  <span className="sm:text-right text-white font-bold">
                     {project.dossier?.targetPlatform || 'Web & Mobile'}
                   </span>
                 </li>
-                <li className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                  <span className="text-white/40">[ PRIMARY_ROLE ]</span>
-                  <span className="text-right text-white/90 font-bold max-w-[200px] truncate">
+                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
+                  <span className="text-white/40 tracking-wider">[ PRIMARY_ROLE ]</span>
+                  <span className="sm:text-right text-white font-bold">
                     {project.dossier?.primaryRole || 'Lead Engineer'}
                   </span>
                 </li>
-                <li className="flex items-center justify-between pb-1">
-                  <span className="text-white/40">[ ACCESS_TYPE ]</span>
-                  <span className="text-right font-bold text-white/90">
+                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1">
+                  <span className="text-white/40 tracking-wider">[ ACCESS_TYPE ]</span>
+                  <span className="sm:text-right font-bold">
                     {project.isPrivate ? (
                       <span className="text-amber-400">PROPRIETARY / PRIVATE</span>
                     ) : (
@@ -361,15 +447,15 @@ export default function ProjectDetailContent({ slug: propSlug }) {
               </ul>
 
               {/* Deployed Technologies */}
-              <div className="space-y-2.5 pt-2 border-t border-white/10">
+              <div className="space-y-3 pt-3 border-t border-white/10">
                 <span className="text-[10px] text-white/40 tracking-widest uppercase font-mono block">
                   DEPLOYED_TECHNOLOGIES
                 </span>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {project.tags.map((t, idx) => (
                     <span
                       key={idx}
-                      className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs text-white/80 font-mono hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] transition-colors"
+                      className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-white/90 font-mono hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] transition-colors"
                     >
                       {t}
                     </span>
@@ -379,7 +465,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
 
               {/* Color Palette Swatches */}
               {project.dossier?.colorPalette && (
-                <div className="space-y-2.5 pt-2 border-t border-white/10">
+                <div className="space-y-3 pt-3 border-t border-white/10">
                   <span className="text-[10px] text-white/40 tracking-widest uppercase font-mono block">
                     PROJECT_COLOR_PALETTE
                   </span>
@@ -387,13 +473,13 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                     {project.dossier.colorPalette.map((c, idx) => (
                       <div
                         key={idx}
-                        className="group flex flex-col items-center gap-1.5 p-2 rounded-lg bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all"
+                        className="group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all"
                       >
                         <div
-                          className="w-full h-7 rounded-md border border-white/10 shadow-sm group-hover:scale-105 transition-transform"
+                          className="w-full h-8 rounded-lg border border-white/10 shadow-sm group-hover:scale-105 transition-transform"
                           style={{ backgroundColor: c.hex }}
                         />
-                        <span className="text-[9px] text-white/50 font-mono truncate w-full text-center">
+                        <span className="text-[10px] text-white/50 font-mono truncate w-full text-center">
                           {c.hex}
                         </span>
                       </div>
@@ -407,82 +493,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. DYNAMIC PRODUCT SHOWCASE PREVIEW (Interactive Product Promo Reel)      */}
+      {/* 5. CASE STUDY DEEP DIVE (Chapters: Concept, Architecture, Features)       */}
       {/* ========================================================================= */}
-      <section className="py-12 px-6 sm:px-12 max-w-7xl mx-auto">
-        <div className="cyber-panel rounded-3xl overflow-hidden border border-white/15 bg-[#020406] shadow-2xl relative">
-          {/* Top Preview Control Header */}
-          <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/10 bg-black/60 backdrop-blur-md">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-              <span className="text-xs font-bold font-mono tracking-wider uppercase text-white/90">
-                PRODUCT_SHOWCASE // REEL_VIEWPORT
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] text-white/40 font-mono hidden sm:inline">
-                [60 FPS @ HARDWARE_ACCEL]
-              </span>
-              <button
-                onClick={() => setPreviewPlaying(!previewPlaying)}
-                className="px-3 py-1 rounded bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] text-[var(--accent-color)] font-bold tracking-wider uppercase transition-colors"
-              >
-                {previewPlaying ? 'PAUSE' : 'PLAY'}
-              </button>
-            </div>
-          </div>
-
-          {/* Main Visual Display */}
-          <div className="relative min-h-[380px] sm:min-h-[520px] w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#030608] via-[#050B10] to-[#020406]">
-            {/* Background Laser Scanline Sweep */}
-            <div
-              className={`absolute inset-0 bg-gradient-to-b from-transparent via-[var(--accent-color)]/[0.06] to-transparent pointer-events-none ${
-                previewPlaying ? 'animate-scan' : ''
-              }`}
-            />
-
-            {/* Static Image with High-Tech Presentation Frame */}
-            <div className="relative w-full max-w-4xl p-6 sm:p-10 flex flex-col items-center justify-center">
-              <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/15 shadow-[0_0_50px_rgba(0,0,0,0.8)] group">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover object-top filter brightness-[0.92] group-hover:brightness-100 transition-all duration-700"
-                  priority
-                />
-
-                {/* Scanlines layer */}
-                <div className="absolute inset-0 scanlines-overlay opacity-30 pointer-events-none" />
-
-                {/* Cyber Corner brackets */}
-                <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
-
-                {/* On-screen HUD Telemetry readout badge */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-pulse" />
-                    <span className="text-white/80 font-bold">{project.title}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-[10px] text-white/50">
-                    <span className="hidden sm:inline">DPR: 2.0</span>
-                    <span className="text-[var(--accent-color)] font-bold">[ONLINE]</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 4. CASE STUDY DEEP DIVE (PAGE_INDEX Chapters: Concept, Architecture, Features) */}
-      {/* ========================================================================= */}
-      <section className="py-16 px-6 sm:px-12 max-w-7xl mx-auto space-y-12">
+      <section className="py-14 sm:py-18 px-6 sm:px-12 max-w-7xl mx-auto space-y-10">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-white/10 pb-6">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-display uppercase tracking-wide">
@@ -669,9 +682,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. RESPONSIVE MULTI-DEVICE VIEWPORTS (Desktop Frame vs Mobile Frame)      */}
+      {/* 6. RESPONSIVE MULTI-DEVICE VIEWPORTS (Desktop Frame vs Mobile Frame)      */}
       {/* ========================================================================= */}
-      <section className="py-16 px-6 sm:px-12 max-w-7xl mx-auto space-y-8">
+      <section className="py-14 sm:py-18 px-6 sm:px-12 max-w-7xl mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <h2 className="text-xl sm:text-2xl font-bold text-white font-sans uppercase">
@@ -766,55 +779,95 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. NEXT PROJECT INTERACTIVE TEASER CARD                                   */}
+      {/* 7. FULL-WIDTH NEXT PROJECT FOOTER WITH FLOATING CURSOR PREVIEW            */}
       {/* ========================================================================= */}
-      <section className="py-20 px-6 sm:px-12 max-w-7xl mx-auto border-t border-white/10">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
-            [ UP_NEXT // CONTINUOUS_BROWSE ]
-          </span>
-          <span className="text-xs text-[var(--accent-color)] font-mono">
-            // {nextProject.num}
-          </span>
-        </div>
+      <section
+        ref={nextSectionRef}
+        onMouseEnter={() => setIsNextHovered(true)}
+        onMouseLeave={() => setIsNextHovered(false)}
+        onMouseMove={handleNextMouseMove}
+        className="relative w-full border-t border-white/15 pt-20 pb-36 px-6 sm:px-12 lg:px-16 overflow-hidden select-none bg-gradient-to-b from-transparent via-black/40 to-black/80"
+      >
+        {/* Floating Cursor Thumbnail Preview (follows mouse smoothly across the entire row) */}
+        <AnimatePresence>
+          {isNextHovered && (
+            <Motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                x: mousePos.x,
+                y: mousePos.y - 120,
+                transition: { type: 'spring', damping: 24, stiffness: 220, mass: 0.4 },
+              }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.18 } }}
+              style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 35 }}
+              className="hidden md:block -translate-x-1/2 -translate-y-1/2"
+            >
+              <div className="w-80 sm:w-96 aspect-[16/10] rounded-2xl overflow-hidden border-2 border-white/20 bg-[#06090D] shadow-[0_30px_70px_rgba(0,0,0,0.95),0_0_35px_var(--accent-glow)] p-1.5 relative">
+                <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
+                  <Image
+                    src={nextProject.image}
+                    alt={nextProject.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs font-mono text-white px-2.5 py-1.5 bg-black/85 backdrop-blur-md rounded-lg border border-white/15">
+                    <span className="font-black text-[var(--accent-color)]">{nextProject.num}</span>
+                    <span className="font-bold truncate text-[11px]">{nextProject.title}</span>
+                    <span className="text-[10px] text-white/50 tracking-wider">PREVIEW</span>
+                  </div>
+                </div>
+              </div>
+            </Motion.div>
+          )}
+        </AnimatePresence>
 
         <Link
           href={`/projects/${nextProject.slug || nextProject.id.toLowerCase()}`}
           onClick={playClick}
           onMouseEnter={playHover}
-          className="cyber-panel block p-8 sm:p-12 rounded-3xl border border-white/10 hover:border-[var(--accent-border)] bg-gradient-to-r from-black/80 via-[#060A0E] to-black/80 transition-all group overflow-hidden relative"
+          className="group block w-full max-w-7xl mx-auto cursor-pointer"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-            <div className="lg:col-span-8 space-y-3">
-              <div className="flex items-center gap-3 text-xs">
-                <span className="text-2xl font-black text-[var(--accent-color)] font-display">
-                  {nextProject.num}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
+            <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
+              [ UP_NEXT // CONTINUOUS_BROWSE ]
+            </span>
+            <span className="text-xs text-[var(--accent-color)] font-mono font-bold">
+              // {nextProject.num}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between gap-6 py-4">
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[var(--accent-color)] font-display">
+                  [{nextProject.num}]
                 </span>
-                <span className="text-white/40 font-mono">// {nextProject.category}</span>
+                <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display uppercase tracking-tight group-hover:text-[var(--accent-color)] transition-colors">
+                  {nextProject.title}
+                </h3>
               </div>
-
-              <h3 className="text-2xl sm:text-4xl font-extrabold text-white font-display group-hover:text-[var(--accent-color)] transition-colors">
-                {nextProject.title}
-              </h3>
-
-              <p className="text-sm text-white/60 font-sans max-w-2xl leading-relaxed">
-                {nextProject.description}
+              <p className="text-xs sm:text-sm text-white/50 font-mono">
+                // {nextProject.category} · {nextProject.tags.join(' · ')}
               </p>
-
-              <div className="flex items-center gap-2 text-xs font-bold text-[var(--accent-color)] pt-2">
-                <span>{lang === 'ru' ? 'ПЕРЕЙТИ К ПРОЕКТУ' : 'EXPLORE NEXT CASE STUDY'}</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-              </div>
             </div>
 
-            <div className="lg:col-span-4 relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-white/5 border border-white/10 group-hover:border-[var(--accent-border)] group-hover:bg-[var(--accent-bg-subtle)] flex items-center justify-center text-[var(--accent-color)] transition-all shrink-0 group-hover:scale-105">
+              <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 group-hover:translate-x-1.5 transition-transform" />
+            </div>
+          </div>
+
+          {/* Mobile Only: Inline preview card for touch devices without cursor hover */}
+          <div className="block md:hidden mt-6 pt-6 border-t border-white/5">
+            <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-white/15">
               <Image
                 src={nextProject.image}
                 alt={nextProject.title}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors" />
             </div>
           </div>
         </Link>
