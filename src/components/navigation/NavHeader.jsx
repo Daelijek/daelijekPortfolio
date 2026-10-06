@@ -192,14 +192,16 @@ export default function NavHeader() {
 
       {/* Bottom Right Controls: Aligned strictly to bottom line */}
       <div className="fixed bottom-3 sm:bottom-4 lg:bottom-5 right-3 sm:right-4 lg:right-5 z-50 flex items-end gap-3 font-mono select-none">
-        {/* Navigation Menu Capsule & Expandable Curtain with Two-Phase Width->Height Animation */}
+        {/* Navigation Menu Capsule & Expandable Curtain with Synchronized Fluid Animation */}
         <div
           ref={menuRef}
           style={{
             width: isMenuOpen
               ? (isMobile ? 'calc(100vw - 24px)' : '380px')
               : (isMobile ? '205px' : '260px'),
-            transition: `width 0.42s cubic-bezier(0.22, 1, 0.36, 1) ${isMenuOpen ? '0s' : '0.35s'}`,
+            transition: isMenuOpen
+              ? 'width 0.38s cubic-bezier(0.16, 1, 0.3, 1)'
+              : 'width 0.28s cubic-bezier(0.32, 0, 0.2, 1)',
           }}
           className="relative"
         >
@@ -210,7 +212,7 @@ export default function NavHeader() {
                 : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] shadow-2xl'
             }`}
           >
-            {/* Expanded Content (Expands upwards after width reaches full expansion) */}
+            {/* Expanded Content (Fluid synchronized height expansion without measuring mismatch) */}
             <AnimatePresence initial={false}>
               {isMenuOpen && (
                 <motion.div
@@ -220,26 +222,26 @@ export default function NavHeader() {
                     height: 'auto',
                     opacity: 1,
                     transition: {
-                      height: { duration: 0.42, delay: 0.42, ease: [0.22, 1, 0.36, 1] },
-                      opacity: { duration: 0.32, delay: 0.48, ease: 'easeOut' },
+                      height: { duration: 0.38, ease: [0.16, 1, 0.3, 1] },
+                      opacity: { duration: 0.25, ease: 'easeOut' },
                     },
                   }}
                   exit={{
                     height: 0,
                     opacity: 0,
                     transition: {
-                      height: { duration: 0.32, ease: [0.32, 0, 0.2, 1] },
-                      opacity: { duration: 0.2, ease: 'easeIn' },
+                      height: { duration: 0.28, ease: [0.32, 0, 0.2, 1] },
+                      opacity: { duration: 0.18, ease: 'easeIn' },
                     },
                   }}
                   className="overflow-hidden"
                 >
                   <motion.div
-                    initial={{ y: 14, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 8, opacity: 0 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: 0.44 }}
-                    className="p-4 sm:p-5 pb-3 flex flex-col gap-3.5 sm:gap-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, ease: 'easeOut', delay: 0.05 }}
+                    className="w-[calc(100vw-24px)] md:w-[380px] max-w-[calc(100vw-24px)] p-4 sm:p-5 pb-3 flex flex-col gap-3.5 sm:gap-4 box-border"
                   >
                     {/* 1. Header */}
                     <div className="flex items-start justify-between border-b border-[var(--border-subtle)] pb-2.5">
