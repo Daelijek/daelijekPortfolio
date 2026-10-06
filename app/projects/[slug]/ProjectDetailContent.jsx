@@ -371,24 +371,42 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)] font-sans">
                   {project.overview?.lead || project.description}
                 </p>
+
+                {/* Performance & Architecture Telemetry Strip */}
+                {project.walkthrough?.impact?.metrics && (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3.5 px-4 my-6 rounded-2xl bg-white/[0.02] border border-white/5">
+                    {project.walkthrough.impact.metrics.map((m, idx) => (
+                      <div key={idx} className="flex flex-col">
+                        <span className="text-[10px] text-white/40 font-mono tracking-wider truncate">{m.label}</span>
+                        <span className="text-sm sm:text-base font-bold text-[var(--accent-color)] font-display tracking-wide mt-0.5">
+                          {m.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-6 mt-6 border-t border-white/5">
-                <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
-                  <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold">
-                    {lang === 'ru' ? '// ЦЕЛЕВАЯ АУДИТОРИЯ' : '// TARGET_AUDIENCE'}
-                  </span>
-                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
-                    {project.overview?.targetAudience || 'Modern users & enterprise clients'}
-                  </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-5 mt-4 border-t border-white/5">
+                <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold mb-1">
+                      {lang === 'ru' ? '// ЦЕЛЕВАЯ АУДИТОРИЯ' : '// TARGET_AUDIENCE'}
+                    </span>
+                    <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
+                      {project.overview?.targetAudience || 'Modern users & enterprise clients'}
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
-                  <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold">
-                    {lang === 'ru' ? '// РОЛЬ ДИАСА' : '// DIAS_ROLE'}
-                  </span>
-                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
-                    {project.dossier?.primaryRole || 'Lead Frontend & Mobile Engineer'}
-                  </p>
+                <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold mb-1">
+                      {lang === 'ru' ? '// РОЛЬ И ЗОНА ОТВЕТСТВЕННОСТИ' : '// DIAS_ROLE & SCOPE'}
+                    </span>
+                    <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
+                      {project.overview?.myRole || project.dossier?.primaryRole || 'Lead Frontend & Mobile Engineer'}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -534,8 +552,8 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </div>
 
-        {/* Tab Content Display with stable container height to eliminate layout jumping */}
-        <div className="min-h-[380px] sm:min-h-[420px] lg:min-h-[360px] flex flex-col justify-start">
+        {/* Tab Content Display with fixed stable container height to completely eliminate layout jumping */}
+        <div className="h-[540px] sm:h-[460px] lg:h-[390px] relative w-full overflow-hidden">
           <AnimatePresence mode="wait">
             {activeTab === 'concept' && (
               <Motion.div
@@ -544,21 +562,23 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+                className="w-full h-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch"
               >
-                <div className="lg:col-span-7 space-y-4">
-                  <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
-                    // 01 // THE_CONCEPT_&_CHALLENGE
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
-                    {project.walkthrough?.concept?.title || 'Core Product Vision'}
-                  </h3>
-                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
-                    {project.walkthrough?.concept?.desc || project.description}
-                  </p>
+                <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
+                  <div className="space-y-3">
+                    <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
+                      // 01 // THE_CONCEPT_&_CHALLENGE
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
+                      {project.walkthrough?.concept?.title || 'Core Product Vision'}
+                    </h3>
+                    <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
+                      {project.walkthrough?.concept?.desc || project.description}
+                    </p>
+                  </div>
 
                   {project.overview?.challenge && (
-                    <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2 mt-auto">
                       <span className="text-xs font-bold text-amber-400 font-mono uppercase tracking-wider block">
                         [ THE_PRIMARY_CHALLENGE ]
                       </span>
@@ -569,23 +589,27 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                   )}
                 </div>
 
-                <div className="lg:col-span-5 space-y-3">
-                  <span className="text-xs text-white/40 font-mono tracking-widest uppercase block">
-                    [ KEY_MILESTONES ]
-                  </span>
-                  {(project.walkthrough?.concept?.highlights || [
-                    'High accessibility standards',
-                    'Frictionless responsive UX',
-                    'Instant state reactivity'
-                  ]).map((h, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[var(--accent-border)] transition-colors"
-                    >
-                      <span className="text-[var(--accent-color)] font-bold text-sm">0{idx + 1}.</span>
-                      <span className="text-sm text-white/85 font-sans leading-snug">{h}</span>
+                <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-3">
+                  <div>
+                    <span className="text-xs text-white/40 font-mono tracking-widest uppercase block mb-3">
+                      [ KEY_MILESTONES ]
+                    </span>
+                    <div className="space-y-3">
+                      {(project.walkthrough?.concept?.highlights || [
+                        'High accessibility standards',
+                        'Frictionless responsive UX',
+                        'Instant state reactivity'
+                      ]).map((h, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[var(--accent-border)] transition-colors"
+                        >
+                          <span className="text-[var(--accent-color)] font-bold text-sm">0{idx + 1}.</span>
+                          <span className="text-sm text-white/85 font-sans leading-snug">{h}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
               </Motion.div>
             )}
@@ -597,21 +621,23 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+                className="w-full h-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch"
               >
-                <div className="lg:col-span-7 space-y-4">
-                  <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
-                    // 02 // ARCHITECTURE_&_EXECUTION
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
-                    {project.walkthrough?.architecture?.title || 'System Implementation'}
-                  </h3>
-                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
-                    {project.walkthrough?.architecture?.desc || project.overview?.solution}
-                  </p>
+                <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
+                  <div className="space-y-3">
+                    <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
+                      // 02 // ARCHITECTURE_&_EXECUTION
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
+                      {project.walkthrough?.architecture?.title || 'System Implementation'}
+                    </h3>
+                    <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
+                      {project.walkthrough?.architecture?.desc || project.overview?.solution}
+                    </p>
+                  </div>
 
                   {project.overview?.solution && (
-                    <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2 mt-auto">
                       <span className="text-xs font-bold text-[var(--accent-color)] font-mono uppercase tracking-wider block">
                         [ APPLIED_SOLUTION ]
                       </span>
@@ -622,23 +648,27 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                   )}
                 </div>
 
-                <div className="lg:col-span-5 space-y-3">
-                  <span className="text-xs text-white/40 font-mono tracking-widest uppercase block">
-                    [ ARCHITECTURAL_PILLARS ]
-                  </span>
-                  {(project.walkthrough?.architecture?.highlights || [
-                    'Decoupled domain architecture',
-                    'Optimized network payloads',
-                    'Continuous testing coverage'
-                  ]).map((h, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[var(--accent-border)] transition-colors"
-                    >
-                      <Layers className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-0.5" />
-                      <span className="text-sm text-white/85 font-sans leading-snug">{h}</span>
+                <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-3">
+                  <div>
+                    <span className="text-xs text-white/40 font-mono tracking-widest uppercase block mb-3">
+                      [ ARCHITECTURAL_PILLARS ]
+                    </span>
+                    <div className="space-y-3">
+                      {(project.walkthrough?.architecture?.highlights || [
+                        'Decoupled domain architecture',
+                        'Optimized network payloads',
+                        'Continuous testing coverage'
+                      ]).map((h, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[var(--accent-border)] transition-colors"
+                        >
+                          <Layers className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-0.5" />
+                          <span className="text-sm text-white/85 font-sans leading-snug">{h}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
               </Motion.div>
             )}
@@ -650,7 +680,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                className="w-full h-full grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch"
               >
                 {(project.walkthrough?.features || [
                   { num: '01', title: 'Real-Time Sync', desc: 'Instantaneous data propagation across clients.', metric: 'Sub-50ms' },
@@ -659,9 +689,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 ]).map((f, idx) => (
                   <div
                     key={idx}
-                    className="cyber-panel p-6 rounded-2xl border border-white/10 hover:border-[var(--accent-border)] transition-all flex flex-col justify-between space-y-4"
+                    className="cyber-panel p-6 rounded-2xl border border-white/10 hover:border-[var(--accent-border)] transition-all flex flex-col justify-between h-full space-y-4"
                   >
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-xl font-black text-[var(--accent-color)] font-display">
                           {f.num}
@@ -671,7 +701,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                         </span>
                       </div>
                       <h4 className="text-base font-bold text-white font-display">{f.title}</h4>
-                      <p className="text-xs text-white/70 font-sans leading-relaxed">{f.desc}</p>
+                      <p className="text-xs sm:text-sm text-white/70 font-sans leading-relaxed">{f.desc}</p>
                     </div>
                     <div className="pt-3 border-t border-white/5 flex items-center gap-1.5 text-[10px] text-[var(--accent-color)] font-mono">
                       <Zap className="w-3 h-3" />
@@ -686,7 +716,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. RESPONSIVE MULTI-DEVICE VIEWPORTS (Stable Calibrated Frame Height)     */}
+      {/* 6. RESPONSIVE MULTI-DEVICE VIEWPORTS (Fixed Stable Viewport Stage)         */}
       {/* ========================================================================= */}
       <section className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
@@ -731,8 +761,8 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </div>
 
-        {/* Viewport Display Area with stable calibrated height to eliminate layout jumping */}
-        <div className="flex justify-center items-center py-6 min-h-[580px] sm:min-h-[680px] lg:min-h-[760px] relative overflow-hidden">
+        {/* Viewport Stage Area with fixed stable height - perfectly anchors both Desktop and Mobile mockups */}
+        <div className="h-[620px] sm:h-[680px] lg:h-[720px] w-full flex items-center justify-center relative overflow-hidden py-4">
           <AnimatePresence mode="wait">
             {activeDeviceView === 'desktop' ? (
               <Motion.div
@@ -741,10 +771,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="w-full flex justify-center"
+                className="w-full h-full flex items-center justify-center"
               >
                 {/* Desktop Browser Mockup Frame */}
-                <div className="w-full max-w-6xl xl:max-w-7xl rounded-2xl overflow-hidden border border-white/20 bg-[#0A0D10] shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
+                <div className="w-full max-w-4xl xl:max-w-5xl rounded-2xl overflow-hidden border border-white/20 bg-[#0A0D10] shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
                   {/* Browser chrome top bar */}
                   <div className="h-10 px-4 bg-[#12161B] border-b border-white/10 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -758,8 +788,8 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                     <div className="text-[10px] text-white/30 font-mono">1920 x 1080</div>
                   </div>
 
-                  {/* Viewport image */}
-                  <div className="relative w-full aspect-[16/10] bg-[#020406]">
+                  {/* Viewport image with 16:9 aspect matching label */}
+                  <div className="relative w-full aspect-[16/9] bg-[#020406]">
                     <Image
                       src={project.image}
                       alt={`${project.title} Desktop View`}
@@ -776,10 +806,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="w-full flex justify-center py-2"
+                className="w-full h-full flex items-center justify-center py-2"
               >
                 {/* Mobile Device Mockup Frame */}
-                <div className="w-[280px] sm:w-[320px] rounded-[44px] p-3.5 bg-[#1A1F26] border-2 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative">
+                <div className="w-[280px] sm:w-[300px] rounded-[44px] p-3.5 bg-[#1A1F26] border-2 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative">
                   {/* Phone Speaker / Dynamic Island notch */}
                   <div className="absolute top-6 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-full z-20 flex items-center justify-end px-2">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#0E1318] border border-white/10" />
