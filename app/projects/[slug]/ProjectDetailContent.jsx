@@ -781,14 +781,19 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       {/* ========================================================================= */}
       {/* 7. FULL-WIDTH NEXT PROJECT FOOTER WITH FLOATING CURSOR PREVIEW            */}
       {/* ========================================================================= */}
-      <section
-        ref={nextSectionRef}
-        onMouseEnter={() => setIsNextHovered(true)}
+      <Link
+        href={`/projects/${nextProject.slug || nextProject.id.toLowerCase()}`}
+        onClick={playClick}
+        onMouseEnter={() => {
+          playHover();
+          setIsNextHovered(true);
+        }}
         onMouseLeave={() => setIsNextHovered(false)}
         onMouseMove={handleNextMouseMove}
-        className="relative w-full border-t border-white/15 pt-20 pb-36 px-6 sm:px-12 lg:px-16 overflow-hidden select-none bg-gradient-to-b from-transparent via-black/40 to-black/80"
+        ref={nextSectionRef}
+        className="group relative block w-full border-t border-white/15 pt-20 pb-36 px-6 sm:px-12 lg:px-16 overflow-hidden select-none bg-gradient-to-b from-transparent via-black/40 to-black/80 cursor-pointer"
       >
-        {/* Floating Cursor Thumbnail Preview (follows mouse smoothly across the entire row) */}
+        {/* Floating Cursor Thumbnail Preview (Positioned directly above cursor with smooth spring) */}
         <AnimatePresence>
           {isNextHovered && (
             <Motion.div
@@ -797,14 +802,14 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 opacity: 1,
                 scale: 1,
                 x: mousePos.x,
-                y: mousePos.y - 120,
-                transition: { type: 'spring', damping: 24, stiffness: 220, mass: 0.4 },
+                y: mousePos.y - 24,
+                transition: { type: 'spring', damping: 26, stiffness: 260, mass: 0.4 },
               }}
-              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.18 } }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15 } }}
               style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 35 }}
-              className="hidden md:block -translate-x-1/2 -translate-y-1/2"
+              className="hidden md:block -translate-x-1/2 -translate-y-full pointer-events-none select-none"
             >
-              <div className="w-80 sm:w-96 aspect-[16/10] rounded-2xl overflow-hidden border-2 border-white/20 bg-[#06090D] shadow-[0_30px_70px_rgba(0,0,0,0.95),0_0_35px_var(--accent-glow)] p-1.5 relative">
+              <div className="w-64 sm:w-72 aspect-[16/10] rounded-2xl overflow-hidden border-2 border-white/20 bg-[#06090D] shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_25px_var(--accent-glow)] p-1.5 relative">
                 <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
                   <Image
                     src={nextProject.image}
@@ -813,10 +818,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-xs font-mono text-white px-2.5 py-1.5 bg-black/85 backdrop-blur-md rounded-lg border border-white/15">
+                  <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[11px] font-mono text-white px-2 py-1 bg-black/85 backdrop-blur-md rounded-lg border border-white/15">
                     <span className="font-black text-[var(--accent-color)]">{nextProject.num}</span>
-                    <span className="font-bold truncate text-[11px]">{nextProject.title}</span>
-                    <span className="text-[10px] text-white/50 tracking-wider">PREVIEW</span>
+                    <span className="font-bold truncate text-[10px]">{nextProject.title}</span>
+                    <span className="text-[9px] text-white/50 tracking-wider">PREVIEW</span>
                   </div>
                 </div>
               </div>
@@ -824,12 +829,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           )}
         </AnimatePresence>
 
-        <Link
-          href={`/projects/${nextProject.slug || nextProject.id.toLowerCase()}`}
-          onClick={playClick}
-          onMouseEnter={playHover}
-          className="group block w-full max-w-7xl mx-auto cursor-pointer"
-        >
+        <div className="w-full max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
             <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
               [ UP_NEXT // CONTINUOUS_BROWSE ]
@@ -839,24 +839,19 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </span>
           </div>
 
-          <div className="flex items-center justify-between gap-6 py-4">
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[var(--accent-color)] font-display">
-                  [{nextProject.num}]
-                </span>
-                <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display uppercase tracking-tight group-hover:text-[var(--accent-color)] transition-colors">
-                  {nextProject.title}
-                </h3>
-              </div>
-              <p className="text-xs sm:text-sm text-white/50 font-mono">
-                // {nextProject.category} · {nextProject.tags.join(' · ')}
-              </p>
+          <div className="py-4 space-y-3">
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-black text-[var(--accent-color)] font-display">
+                [{nextProject.num}]
+              </span>
+              <h3 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display uppercase tracking-tight group-hover:text-[var(--accent-color)] transition-colors">
+                {nextProject.title}
+              </h3>
+              <ArrowRight className="w-7 h-7 sm:w-10 sm:h-10 text-[var(--accent-color)] opacity-70 group-hover:opacity-100 group-hover:translate-x-3 transition-all inline-block ml-2" />
             </div>
-
-            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-white/5 border border-white/10 group-hover:border-[var(--accent-border)] group-hover:bg-[var(--accent-bg-subtle)] flex items-center justify-center text-[var(--accent-color)] transition-all shrink-0 group-hover:scale-105">
-              <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 group-hover:translate-x-1.5 transition-transform" />
-            </div>
+            <p className="text-xs sm:text-sm text-white/50 font-mono">
+              // {nextProject.category} · {nextProject.tags.join(' · ')}
+            </p>
           </div>
 
           {/* Mobile Only: Inline preview card for touch devices without cursor hover */}
@@ -870,8 +865,8 @@ export default function ProjectDetailContent({ slug: propSlug }) {
               />
             </div>
           </div>
-        </Link>
-      </section>
+        </div>
+      </Link>
     </div>
   );
 }

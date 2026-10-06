@@ -290,14 +290,14 @@ export default function NavHeader() {
                         <span className="text-xs font-mono truncate">Github</span>
                       </a>
                       <a
-                        href="https://www.upwork.com"
+                        href="https://leetcode.com/u/Daelijek/"
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
                         className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                        <span className="text-xs font-mono truncate">Upwork</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                        <span className="text-xs font-mono truncate">LeetCode</span>
                       </a>
                       <a
                         href="https://t.me/daelijek_og"
@@ -310,18 +310,6 @@ export default function NavHeader() {
                         <span className="text-xs font-mono truncate">Telegram</span>
                       </a>
                     </div>
-
-                    {/* 3. Dev Labs Banner */}
-                    <a
-                      href="https://github.com/Daelijek/FinanceManagementApp"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onMouseEnter={playHover}
-                      className="flex items-center justify-between p-3 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--heading-tint)] font-bold text-xs tracking-wider uppercase transition-colors"
-                    >
-                      <span className="font-display text-xs">DEV LABS</span>
-                      <ExternalLink className="w-4 h-4 text-[var(--accent-color)]" />
-                    </a>
 
                     {/* 3.1 CV // DOSSIER.PDF Accent Block (Dedicated for HR & Recruiters) */}
                     <a
