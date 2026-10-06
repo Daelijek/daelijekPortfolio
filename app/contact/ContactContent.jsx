@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
 import { soundFx } from '../../src/audio/soundEffects';
@@ -29,7 +28,9 @@ export default function ContactContent() {
         origin: { y: 0.8 },
         colors: ['#00FF9F', '#00F3FF', '#FFFFFF'],
       });
-    } catch {}
+    } catch {
+      // Confetti safe ignore
+    }
 
     setTimeout(() => setCopied(false), 3000);
   };
@@ -45,7 +46,9 @@ export default function ContactContent() {
         origin: { y: 0.6 },
         colors: ['#00FF9F', '#00F3FF', '#FFFFFF'],
       });
-    } catch {}
+    } catch {
+      // Confetti safe ignore
+    }
   };
 
   return (

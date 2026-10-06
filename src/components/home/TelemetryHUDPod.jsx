@@ -115,7 +115,7 @@ function TelemetryWaveCanvas() {
 import { portfolioContent } from '../../data/portfolioData';
 
 export default function TelemetryHUDPod() {
-  const { lang, playHover, playClick } = useThemeAudio();
+  const { lang } = useThemeAudio();
   const content = portfolioContent[lang] || portfolioContent.en;
 
   return (
