@@ -113,13 +113,13 @@ export default function ContactContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={playHover}
-                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:bg-[var(--card-hover-glow)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] border border-[var(--border-subtle)] transition-colors"
+                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-white/60 hover:text-white hover:bg-white/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
               >
                 <div className="flex items-center gap-2.5">
-                  <FaGithub className="w-4 h-4 text-[var(--accent-color)]" />
+                  <FaGithub className="w-4 h-4 text-[var(--accent-color)] group-hover:text-white transition-colors" />
                   <span>GitHub</span>
                 </div>
-                <span className="text-[11px] text-[var(--accent-color)]">@Daelijek</span>
+                <span className="text-[11px] text-[var(--accent-color)] group-hover:text-white transition-colors">@Daelijek</span>
               </a>
 
               <a
@@ -127,13 +127,13 @@ export default function ContactContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={playHover}
-                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:bg-[var(--card-hover-glow)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] border border-[var(--border-subtle)] transition-colors"
+                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-[#0A66C2] hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
               >
                 <div className="flex items-center gap-2.5">
-                  <FaLinkedin className="w-4 h-4 text-[var(--accent-color)]" />
+                  <FaLinkedin className="w-4 h-4 text-[var(--accent-color)] group-hover:text-[#0A66C2] transition-colors" />
                   <span>LinkedIn</span>
                 </div>
-                <span className="text-[11px] text-[var(--accent-color)]">/in/dias-yermek</span>
+                <span className="text-[11px] text-[var(--accent-color)] group-hover:text-[#0A66C2] transition-colors">/in/dias-yermek</span>
               </a>
 
               {contact.leetcode && (
@@ -142,13 +142,13 @@ export default function ContactContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
-                  className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:bg-[var(--card-hover-glow)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] border border-[var(--border-subtle)] transition-colors"
+                  className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-[#FFA116] hover:text-[#FFA116] hover:bg-[#FFA116]/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
                 >
                   <div className="flex items-center gap-2.5">
-                    <SiLeetcode className="w-4 h-4 text-amber-400" />
+                    <SiLeetcode className="w-4 h-4 text-amber-400 group-hover:text-[#FFA116] transition-colors" />
                     <span>LeetCode</span>
                   </div>
-                  <span className="text-[11px] text-[var(--accent-color)]">/u/Daelijek</span>
+                  <span className="text-[11px] text-[var(--accent-color)] group-hover:text-[#FFA116] transition-colors">/u/Daelijek</span>
                 </a>
               )}
             </div>

@@ -274,9 +274,9 @@ export default function NavHeader() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[#0A66C2] hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 text-[var(--text-secondary)] transition-all"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#0A66C2] shrink-0" />
                         <span className="text-xs font-mono truncate">LinkedIn</span>
                       </a>
                       <a
@@ -284,9 +284,9 @@ export default function NavHeader() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-white/80 hover:text-white hover:bg-white/10 text-[var(--text-secondary)] transition-all"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/40 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
                         <span className="text-xs font-mono truncate">Github</span>
                       </a>
                       <a
@@ -294,9 +294,9 @@ export default function NavHeader() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[#FFA116] hover:text-[#FFA116] hover:bg-[#FFA116]/10 text-[var(--text-secondary)] transition-all"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#FFA116] shrink-0" />
                         <span className="text-xs font-mono truncate">LeetCode</span>
                       </a>
                       <a
@@ -304,9 +304,9 @@ export default function NavHeader() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
+                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[#229ED9] hover:text-[#229ED9] hover:bg-[#229ED9]/10 text-[var(--text-secondary)] transition-all"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#229ED9] shrink-0" />
                         <span className="text-xs font-mono truncate">Telegram</span>
                       </a>
                     </div>

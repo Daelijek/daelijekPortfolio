@@ -353,25 +353,27 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. SYSTEM DOSSIER & SPECIFICATIONS BENTO GRID (Generous Width & Spacing)   */}
+      {/* 4. SYSTEM DOSSIER & SPECIFICATIONS BENTO GRID (Equal Height & Cohesion)    */}
       {/* ========================================================================= */}
       <section className="py-12 sm:py-16 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Mission & Narrative (7 cols) */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="cyber-panel p-6 sm:p-8 lg:p-10 rounded-3xl border border-white/10 space-y-6 bg-[#04070A]/85 backdrop-blur-md shadow-xl">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <h2 className="text-xs font-bold text-white/50 tracking-widest uppercase font-mono">
-                  [ 01 // MISSION STATEMENT & ARCHITECTURE ]
-                </h2>
-                <span className="text-[10px] text-[var(--accent-color)] font-mono font-bold">OVERVIEW</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+          {/* Left Column: Mission & Narrative (7 cols) - Stretches to equal height */}
+          <div className="lg:col-span-7 flex flex-col h-full">
+            <div className="cyber-panel p-6 sm:p-8 lg:p-10 rounded-3xl border border-white/10 flex flex-col justify-between h-full bg-[#04070A]/85 backdrop-blur-md shadow-xl">
+              <div>
+                <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-5">
+                  <h2 className="text-xs font-bold text-white/50 tracking-widest uppercase font-mono">
+                    [ 01 // MISSION STATEMENT & ARCHITECTURE ]
+                  </h2>
+                  <span className="text-[10px] text-[var(--accent-color)] font-mono font-bold">OVERVIEW</span>
+                </div>
+
+                <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)] font-sans">
+                  {project.overview?.lead || project.description}
+                </p>
               </div>
 
-              <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)] font-sans">
-                {project.overview?.lead || project.description}
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-6 mt-6 border-t border-white/5">
                 <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2">
                   <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold">
                     {lang === 'ru' ? '// ЦЕЛЕВАЯ АУДИТОРИЯ' : '// TARGET_AUDIENCE'}
@@ -392,9 +394,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </div>
           </div>
 
-          {/* Right Column: System Dossier Specifications (5 cols - fully visible) */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="cyber-panel p-6 sm:p-8 lg:p-10 rounded-3xl border border-[var(--border-subtle)] bg-[#040608]/90 backdrop-blur-xl shadow-2xl space-y-6">
+          {/* Right Column: System Dossier Specifications (5 cols - Equal height match) */}
+          <div className="lg:col-span-5 flex flex-col h-full">
+            <div className="cyber-panel p-6 sm:p-8 lg:p-10 rounded-3xl border border-[var(--border-subtle)] bg-[#040608]/90 backdrop-blur-xl shadow-2xl flex flex-col justify-between h-full space-y-6">
               {/* Dossier Header */}
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div className="flex items-center gap-2.5">
@@ -532,157 +534,159 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </div>
 
-        {/* Tab Content Display */}
-        <AnimatePresence mode="wait">
-          {activeTab === 'concept' && (
-            <Motion.div
-              key="concept"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
-            >
-              <div className="lg:col-span-7 space-y-4">
-                <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
-                  // 01 // THE_CONCEPT_&_CHALLENGE
-                </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
-                  {project.walkthrough?.concept?.title || 'Core Product Vision'}
-                </h3>
-                <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
-                  {project.walkthrough?.concept?.desc || project.description}
-                </p>
+        {/* Tab Content Display with stable container height to eliminate layout jumping */}
+        <div className="min-h-[380px] sm:min-h-[420px] lg:min-h-[360px] flex flex-col justify-start">
+          <AnimatePresence mode="wait">
+            {activeTab === 'concept' && (
+              <Motion.div
+                key="concept"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+              >
+                <div className="lg:col-span-7 space-y-4">
+                  <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
+                    // 01 // THE_CONCEPT_&_CHALLENGE
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
+                    {project.walkthrough?.concept?.title || 'Core Product Vision'}
+                  </h3>
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
+                    {project.walkthrough?.concept?.desc || project.description}
+                  </p>
 
-                {project.overview?.challenge && (
-                  <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
-                    <span className="text-xs font-bold text-amber-400 font-mono uppercase tracking-wider block">
-                      [ THE_PRIMARY_CHALLENGE ]
-                    </span>
-                    <p className="text-sm text-white/80 leading-relaxed font-sans">
-                      {project.overview.challenge}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="lg:col-span-5 space-y-3">
-                <span className="text-xs text-white/40 font-mono tracking-widest uppercase block">
-                  [ KEY_MILESTONES ]
-                </span>
-                {(project.walkthrough?.concept?.highlights || [
-                  'High accessibility standards',
-                  'Frictionless responsive UX',
-                  'Instant state reactivity'
-                ]).map((h, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[var(--accent-border)] transition-colors"
-                  >
-                    <span className="text-[var(--accent-color)] font-bold text-sm">0{idx + 1}.</span>
-                    <span className="text-sm text-white/85 font-sans leading-snug">{h}</span>
-                  </div>
-                ))}
-              </div>
-            </Motion.div>
-          )}
-
-          {activeTab === 'architecture' && (
-            <Motion.div
-              key="architecture"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
-            >
-              <div className="lg:col-span-7 space-y-4">
-                <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
-                  // 02 // ARCHITECTURE_&_EXECUTION
-                </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
-                  {project.walkthrough?.architecture?.title || 'System Implementation'}
-                </h3>
-                <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
-                  {project.walkthrough?.architecture?.desc || project.overview?.solution}
-                </p>
-
-                {project.overview?.solution && (
-                  <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
-                    <span className="text-xs font-bold text-[var(--accent-color)] font-mono uppercase tracking-wider block">
-                      [ APPLIED_SOLUTION ]
-                    </span>
-                    <p className="text-sm text-white/80 leading-relaxed font-sans">
-                      {project.overview.solution}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="lg:col-span-5 space-y-3">
-                <span className="text-xs text-white/40 font-mono tracking-widest uppercase block">
-                  [ ARCHITECTURAL_PILLARS ]
-                </span>
-                {(project.walkthrough?.architecture?.highlights || [
-                  'Decoupled domain architecture',
-                  'Optimized network payloads',
-                  'Continuous testing coverage'
-                ]).map((h, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[var(--accent-border)] transition-colors"
-                  >
-                    <Layers className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/85 font-sans leading-snug">{h}</span>
-                  </div>
-                ))}
-              </div>
-            </Motion.div>
-          )}
-
-          {activeTab === 'features' && (
-            <Motion.div
-              key="features"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6"
-            >
-              {(project.walkthrough?.features || [
-                { num: '01', title: 'Real-Time Sync', desc: 'Instantaneous data propagation across clients.', metric: 'Sub-50ms' },
-                { num: '02', title: 'Adaptive Interface', desc: 'Responsive UX tailored for every viewport.', metric: 'Universal' },
-                { num: '03', title: 'Hardened Security', desc: 'Token encryption and strict authorization guards.', metric: 'Zero-Trust' }
-              ]).map((f, idx) => (
-                <div
-                  key={idx}
-                  className="cyber-panel p-6 rounded-2xl border border-white/10 hover:border-[var(--accent-border)] transition-all flex flex-col justify-between space-y-4"
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-xl font-black text-[var(--accent-color)] font-display">
-                        {f.num}
+                  {project.overview?.challenge && (
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+                      <span className="text-xs font-bold text-amber-400 font-mono uppercase tracking-wider block">
+                        [ THE_PRIMARY_CHALLENGE ]
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-white/5 text-[10px] text-white/60 font-mono">
-                        {f.metric}
-                      </span>
+                      <p className="text-sm text-white/80 leading-relaxed font-sans">
+                        {project.overview.challenge}
+                      </p>
                     </div>
-                    <h4 className="text-base font-bold text-white font-display">{f.title}</h4>
-                    <p className="text-xs text-white/70 font-sans leading-relaxed">{f.desc}</p>
-                  </div>
-                  <div className="pt-3 border-t border-white/5 flex items-center gap-1.5 text-[10px] text-[var(--accent-color)] font-mono">
-                    <Zap className="w-3 h-3" />
-                    <span>PRODUCTION_OPTIMIZED</span>
-                  </div>
+                  )}
                 </div>
-              ))}
-            </Motion.div>
-          )}
-        </AnimatePresence>
+
+                <div className="lg:col-span-5 space-y-3">
+                  <span className="text-xs text-white/40 font-mono tracking-widest uppercase block">
+                    [ KEY_MILESTONES ]
+                  </span>
+                  {(project.walkthrough?.concept?.highlights || [
+                    'High accessibility standards',
+                    'Frictionless responsive UX',
+                    'Instant state reactivity'
+                  ]).map((h, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[var(--accent-border)] transition-colors"
+                    >
+                      <span className="text-[var(--accent-color)] font-bold text-sm">0{idx + 1}.</span>
+                      <span className="text-sm text-white/85 font-sans leading-snug">{h}</span>
+                    </div>
+                  ))}
+                </div>
+              </Motion.div>
+            )}
+
+            {activeTab === 'architecture' && (
+              <Motion.div
+                key="architecture"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+              >
+                <div className="lg:col-span-7 space-y-4">
+                  <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
+                    // 02 // ARCHITECTURE_&_EXECUTION
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
+                    {project.walkthrough?.architecture?.title || 'System Implementation'}
+                  </h3>
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
+                    {project.walkthrough?.architecture?.desc || project.overview?.solution}
+                  </p>
+
+                  {project.overview?.solution && (
+                    <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+                      <span className="text-xs font-bold text-[var(--accent-color)] font-mono uppercase tracking-wider block">
+                        [ APPLIED_SOLUTION ]
+                      </span>
+                      <p className="text-sm text-white/80 leading-relaxed font-sans">
+                        {project.overview.solution}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="lg:col-span-5 space-y-3">
+                  <span className="text-xs text-white/40 font-mono tracking-widest uppercase block">
+                    [ ARCHITECTURAL_PILLARS ]
+                  </span>
+                  {(project.walkthrough?.architecture?.highlights || [
+                    'Decoupled domain architecture',
+                    'Optimized network payloads',
+                    'Continuous testing coverage'
+                  ]).map((h, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-[var(--accent-border)] transition-colors"
+                    >
+                      <Layers className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-0.5" />
+                      <span className="text-sm text-white/85 font-sans leading-snug">{h}</span>
+                    </div>
+                  ))}
+                </div>
+              </Motion.div>
+            )}
+
+            {activeTab === 'features' && (
+              <Motion.div
+                key="features"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              >
+                {(project.walkthrough?.features || [
+                  { num: '01', title: 'Real-Time Sync', desc: 'Instantaneous data propagation across clients.', metric: 'Sub-50ms' },
+                  { num: '02', title: 'Adaptive Interface', desc: 'Responsive UX tailored for every viewport.', metric: 'Universal' },
+                  { num: '03', title: 'Hardened Security', desc: 'Token encryption and strict authorization guards.', metric: 'Zero-Trust' }
+                ]).map((f, idx) => (
+                  <div
+                    key={idx}
+                    className="cyber-panel p-6 rounded-2xl border border-white/10 hover:border-[var(--accent-border)] transition-all flex flex-col justify-between space-y-4"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-xl font-black text-[var(--accent-color)] font-display">
+                          {f.num}
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-white/5 text-[10px] text-white/60 font-mono">
+                          {f.metric}
+                        </span>
+                      </div>
+                      <h4 className="text-base font-bold text-white font-display">{f.title}</h4>
+                      <p className="text-xs text-white/70 font-sans leading-relaxed">{f.desc}</p>
+                    </div>
+                    <div className="pt-3 border-t border-white/5 flex items-center gap-1.5 text-[10px] text-[var(--accent-color)] font-mono">
+                      <Zap className="w-3 h-3" />
+                      <span>PRODUCTION_OPTIMIZED</span>
+                    </div>
+                  </div>
+                ))}
+              </Motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. RESPONSIVE MULTI-DEVICE VIEWPORTS (Desktop Frame vs Mobile Frame)      */}
+      {/* 6. RESPONSIVE MULTI-DEVICE VIEWPORTS (Stable Calibrated Frame Height)     */}
       {/* ========================================================================= */}
       <section className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
@@ -727,54 +731,74 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </div>
 
-        {/* Viewport Display Area - Wide presentation */}
-        <div className="flex justify-center items-center py-6">
-          {activeDeviceView === 'desktop' ? (
-            /* Desktop Browser Mockup Frame */
-            <div className="w-full max-w-6xl xl:max-w-7xl rounded-2xl overflow-hidden border border-white/20 bg-[#0A0D10] shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
-              {/* Browser chrome top bar */}
-              <div className="h-10 px-4 bg-[#12161B] border-b border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                </div>
-                <div className="px-6 py-1 rounded-md bg-black/50 border border-white/10 text-[11px] text-white/50 font-mono truncate max-w-xs sm:max-w-md">
-                  https://daelijek-portfolio.vercel.app/projects/{project.slug}
-                </div>
-                <div className="text-[10px] text-white/30 font-mono">1920 x 1080</div>
-              </div>
+        {/* Viewport Display Area with stable calibrated height to eliminate layout jumping */}
+        <div className="flex justify-center items-center py-6 min-h-[580px] sm:min-h-[680px] lg:min-h-[760px] relative overflow-hidden">
+          <AnimatePresence mode="wait">
+            {activeDeviceView === 'desktop' ? (
+              <Motion.div
+                key="desktop-view"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="w-full flex justify-center"
+              >
+                {/* Desktop Browser Mockup Frame */}
+                <div className="w-full max-w-6xl xl:max-w-7xl rounded-2xl overflow-hidden border border-white/20 bg-[#0A0D10] shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
+                  {/* Browser chrome top bar */}
+                  <div className="h-10 px-4 bg-[#12161B] border-b border-white/10 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                      <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                      <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                    </div>
+                    <div className="px-6 py-1 rounded-md bg-black/50 border border-white/10 text-[11px] text-white/50 font-mono truncate max-w-xs sm:max-w-md">
+                      https://daelijek-portfolio.vercel.app/projects/{project.slug}
+                    </div>
+                    <div className="text-[10px] text-white/30 font-mono">1920 x 1080</div>
+                  </div>
 
-              {/* Viewport image */}
-              <div className="relative w-full aspect-[16/10] bg-[#020406]">
-                <Image
-                  src={project.image}
-                  alt={`${project.title} Desktop View`}
-                  fill
-                  className="object-cover object-top"
-                />
-              </div>
-            </div>
-          ) : (
-            /* Mobile Device Mockup Frame */
-            <div className="w-[300px] sm:w-[340px] rounded-[44px] p-3.5 bg-[#1A1F26] border-2 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative">
-              {/* Phone Speaker / Dynamic Island notch */}
-              <div className="absolute top-6 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-full z-20 flex items-center justify-end px-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#0E1318] border border-white/10" />
-              </div>
+                  {/* Viewport image */}
+                  <div className="relative w-full aspect-[16/10] bg-[#020406]">
+                    <Image
+                      src={project.image}
+                      alt={`${project.title} Desktop View`}
+                      fill
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </div>
+              </Motion.div>
+            ) : (
+              <Motion.div
+                key="mobile-view"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="w-full flex justify-center py-2"
+              >
+                {/* Mobile Device Mockup Frame */}
+                <div className="w-[280px] sm:w-[320px] rounded-[44px] p-3.5 bg-[#1A1F26] border-2 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative">
+                  {/* Phone Speaker / Dynamic Island notch */}
+                  <div className="absolute top-6 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-full z-20 flex items-center justify-end px-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#0E1318] border border-white/10" />
+                  </div>
 
-              {/* Screen container */}
-              <div className="relative w-full aspect-[9/19.5] rounded-[34px] overflow-hidden bg-black border border-white/10">
-                <Image
-                  src={project.image}
-                  alt={`${project.title} Mobile View`}
-                  fill
-                  className="object-cover object-top"
-                />
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/40 rounded-full" />
-              </div>
-            </div>
-          )}
+                  {/* Screen container */}
+                  <div className="relative w-full aspect-[9/19.5] rounded-[34px] overflow-hidden bg-black border border-white/10">
+                    <Image
+                      src={project.image}
+                      alt={`${project.title} Mobile View`}
+                      fill
+                      className="object-cover object-top"
+                    />
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/40 rounded-full" />
+                  </div>
+                </div>
+              </Motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 

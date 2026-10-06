@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useScroll } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
 import { soundFx } from '../../src/audio/soundEffects';
@@ -34,17 +34,26 @@ export default function AboutContent() {
   const [scrollPercent, setScrollPercent] = useState(0);
 
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
+  const timelineRef = useRef(null);
+
+  // Global Page Scroll Progress for Left Identity Pod
+  const { scrollYProgress: pageScrollProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
+  // Dedicated Timeline Section Scroll Progress
+  const { scrollYProgress: timelineScrollProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start 85%', 'end 70%'],
+  });
+
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', (latest) => {
+    const unsubscribe = pageScrollProgress.on('change', (latest) => {
       setScrollPercent(Math.min(100, Math.max(0, Math.round(latest * 100))));
     });
     return () => unsubscribe();
-  }, [scrollYProgress]);
+  }, [pageScrollProgress]);
 
   const handleDownloadCv = () => {
     if (playDownload) playDownload();
@@ -179,10 +188,10 @@ export default function AboutContent() {
   return (
     <div
       ref={containerRef}
-      className="min-h-screen pt-28 sm:pt-36 lg:pt-38 pb-32 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto font-mono"
+      className="min-h-screen pt-24 sm:pt-32 lg:pt-36 pb-32 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto font-mono selection:bg-[var(--accent-color)] selection:text-[#040608]"
     >
-      {/* Top Header Tag */}
-      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4 mb-10 sm:mb-12">
+      {/* Top Header System Tag */}
+      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4 mb-8 sm:mb-12">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping" />
           <span className="text-xs font-bold text-[var(--accent-color)] tracking-widest uppercase">
@@ -197,7 +206,7 @@ export default function AboutContent() {
       </div>
 
       {/* Main Two-Column Master Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-start">
         {/* ========================================================= */}
         {/* LEFT COLUMN: DEDICATED STICKY PROFILE POD (PHOTO ONLY)    */}
         {/* ========================================================= */}
@@ -283,47 +292,54 @@ export default function AboutContent() {
                 <span>{cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}</span>
               </a>
 
-              {/* Social Channels Pill Row */}
+              {/* Social Channels Pill Row with Authentic Brand Colors on Hover */}
               <div className="grid grid-cols-4 gap-1.5 pt-1">
+                {/* Telegram: #229ED9 */}
                 <a
                   href={content.contact.telegram}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
                   title="Telegram"
-                  className="flex items-center justify-center p-2 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
+                  className="flex items-center justify-center p-2.5 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[#229ED9] hover:border-[#229ED9] hover:bg-[#229ED9]/10 hover:shadow-[0_0_15px_rgba(34,158,217,0.35)] transition-all"
                 >
-                  <FaTelegram className="w-3.5 h-3.5" />
+                  <FaTelegram className="w-4 h-4" />
                 </a>
+
+                {/* GitHub: #FFFFFF */}
                 <a
                   href={content.contact.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
                   title="GitHub"
-                  className="flex items-center justify-center p-2 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
+                  className="flex items-center justify-center p-2.5 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-white hover:border-white/80 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all"
                 >
-                  <FaGithub className="w-3.5 h-3.5" />
+                  <FaGithub className="w-4 h-4" />
                 </a>
+
+                {/* LinkedIn: #0A66C2 */}
                 <a
                   href={content.contact.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
                   title="LinkedIn"
-                  className="flex items-center justify-center p-2 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-[var(--text-secondary)] transition-colors"
+                  className="flex items-center justify-center p-2.5 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[#0A66C2] hover:border-[#0A66C2] hover:bg-[#0A66C2]/10 hover:shadow-[0_0_15px_rgba(10,102,194,0.35)] transition-all"
                 >
-                  <FaLinkedin className="w-3.5 h-3.5" />
+                  <FaLinkedin className="w-4 h-4" />
                 </a>
+
+                {/* LeetCode: #FFA116 */}
                 <a
                   href={content.contact.leetcode || 'https://leetcode.com/u/Daelijek/'}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
                   title="LeetCode"
-                  className="flex items-center justify-center p-2 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-amber-400/50 hover:text-amber-400 text-[var(--text-secondary)] transition-colors"
+                  className="flex items-center justify-center p-2.5 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[#FFA116] hover:border-[#FFA116] hover:bg-[#FFA116]/10 hover:shadow-[0_0_15px_rgba(255,161,22,0.35)] transition-all"
                 >
-                  <SiLeetcode className="w-3.5 h-3.5" />
+                  <SiLeetcode className="w-4 h-4" />
                 </a>
               </div>
             </div>
@@ -474,8 +490,8 @@ export default function AboutContent() {
             </div>
           </section>
 
-          {/* 4. CAREER TELEMETRY TIMELINE */}
-          <section className="space-y-6">
+          {/* 4. CAREER TELEMETRY TIMELINE (PERFECTLY ALIGNED & SCROLL-DRIVEN) */}
+          <section className="space-y-8" ref={timelineRef}>
             <div className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
@@ -488,51 +504,66 @@ export default function AboutContent() {
               </span>
             </div>
 
-            {/* Vertical Timeline Track with Glowing Spine */}
-            <div className="relative pl-6 sm:pl-8 space-y-6 before:absolute before:left-2 sm:before:left-2.5 before:top-2 before:bottom-2 before:w-[1.5px] before:bg-gradient-to-b before:from-[var(--accent-color)] before:via-[var(--border-subtle)] before:to-transparent">
-              {exp.logs.map((log, idx) => (
-                <div
-                  key={log.code || idx}
-                  onMouseEnter={playHover}
-                  className="relative cyber-panel p-5 sm:p-6 rounded-xl space-y-3 group hover:border-[var(--accent-border)] transition-all"
-                >
-                  {/* Glowing Node on the Vertical Spine */}
-                  <span className="absolute -left-[29px] sm:-left-[37px] top-6 w-3 h-3 rounded-full bg-black border-2 border-[var(--accent-color)] shadow-[0_0_8px_var(--accent-glow)] group-hover:scale-125 transition-transform" />
+            {/* Geometric Kinetic Timeline Container */}
+            <div className="relative">
+              {/* 1. Inactive Background Guide Rail (Exact axial alignment with nodes) */}
+              <div className="absolute left-[15px] sm:left-[19px] top-6 bottom-8 w-[2px] bg-white/10 rounded-full pointer-events-none" />
 
-                  {/* Header: Company, Role & Period */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[var(--border-subtle)] pb-3 gap-2">
-                    <div className="space-y-0.5">
-                      <div className="flex items-center gap-2.5 flex-wrap">
-                        <h3 className="text-base sm:text-lg font-bold text-[var(--heading-tint)] font-display">
-                          {log.company}
-                        </h3>
-                        {log.badge && (
-                          <span className="px-2 py-0.5 rounded text-[10px] bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--accent-color)] font-mono font-bold">
-                            {log.badge}
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-xs text-[var(--text-secondary)] font-mono">
-                        {log.role}
+              {/* 2. Scroll-Driven Glowing Neon Active Line */}
+              <motion.div
+                style={{ scaleY: timelineScrollProgress, originY: 0 }}
+                className="absolute left-[15px] sm:left-[19px] top-6 bottom-8 w-[2px] bg-gradient-to-b from-[var(--accent-color)] via-emerald-400 to-[var(--accent-color)] rounded-full shadow-[0_0_12px_var(--accent-color)] origin-top pointer-events-none"
+              />
+
+              {/* 3. Timeline Items with Guaranteed Sub-Pixel Symmetry */}
+              <div className="space-y-6 sm:space-y-8">
+                {exp.logs.map((log, idx) => (
+                  <div key={log.code || idx} className="relative flex items-start gap-4 sm:gap-6 group">
+                    {/* Center Timeline Node (w-8 sm:w-10 perfectly aligns on left: 15px sm:19px) */}
+                    <div className="relative z-10 shrink-0 w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center mt-3">
+                      <div className="w-4 sm:w-4.5 h-4 sm:h-4.5 rounded-full bg-[#020504] border-2 border-[var(--accent-color)] shadow-[0_0_10px_var(--accent-glow)] group-hover:scale-125 group-hover:border-white transition-all flex items-center justify-center">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] group-hover:bg-white transition-colors" />
                       </div>
                     </div>
 
-                    <div className="text-[11px] font-mono text-[var(--accent-color)] font-bold shrink-0">
-                      {log.period}
+                    {/* Content Cyber Panel */}
+                    <div className="flex-1 min-w-0 cyber-panel p-5 sm:p-7 rounded-2xl space-y-3.5 group-hover:border-[var(--accent-border)] transition-all shadow-md">
+                      {/* Header: Company, Role & Period */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[var(--border-subtle)] pb-3.5 gap-2">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2.5 flex-wrap">
+                            <h3 className="text-base sm:text-lg font-bold text-[var(--heading-tint)] font-display tracking-wide">
+                              {log.company}
+                            </h3>
+                            {log.badge && (
+                              <span className="px-2.5 py-0.5 rounded text-[10px] bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--accent-color)] font-mono font-bold tracking-wider">
+                                {log.badge}
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-xs text-[var(--text-secondary)] font-mono font-medium">
+                            {log.role}
+                          </div>
+                        </div>
+
+                        <div className="text-[11px] font-mono text-[var(--accent-color)] font-bold shrink-0 px-2.5 py-1 rounded bg-black/40 border border-[var(--border-subtle)]">
+                          {log.period}
+                        </div>
+                      </div>
+
+                      {/* Bullet Points with Markers */}
+                      <ul className="space-y-2 pt-1 font-sans">
+                        {log.points.map((pt, pIdx) => (
+                          <li key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-[13px] text-[var(--text-secondary)] leading-relaxed">
+                            <ChevronRight className="w-3.5 h-3.5 text-[var(--accent-color)] shrink-0 mt-1" />
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-
-                  {/* Bullet Points with Accent Markers */}
-                  <ul className="space-y-2 pt-1 font-sans">
-                    {log.points.map((pt, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-[13px] text-[var(--text-secondary)] leading-relaxed">
-                        <ChevronRight className="w-3.5 h-3.5 text-[var(--accent-color)] shrink-0 mt-1" />
-                        <span>{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </section>
 
