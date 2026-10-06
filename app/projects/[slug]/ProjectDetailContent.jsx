@@ -153,9 +153,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   return (
     <div className="min-h-screen text-white font-mono selection:bg-[var(--accent-color)] selection:text-[#040608]">
       {/* ========================================================================= */}
-      {/* 1. STICKY TOP HUD CONTROLS (Generous width, crisp single-row layout)       */}
+      {/* 1. STICKY TOP HUD CONTROLS (Aligned with content section margins)          */}
       {/* ========================================================================= */}
-      <div className="sticky top-4 sm:top-6 z-40 px-4 sm:px-8 lg:px-12 max-w-[1720px] mx-auto pointer-events-none mb-4 sm:mb-6">
+      <div className="sticky top-4 sm:top-6 z-40 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto pointer-events-none mb-4 sm:mb-6">
         <div className="pointer-events-auto flex items-center justify-between gap-3 p-2.5 sm:p-3 rounded-2xl bg-[#040608]/92 backdrop-blur-2xl border border-white/10 shadow-2xl">
           {/* Breadcrumbs & Back Button */}
           <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
@@ -241,7 +241,13 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       {/* ========================================================================= */}
       {/* 2. PROJECT HERO & IMPACT METRICS (Full-Width, Proportional Typography)    */}
       {/* ========================================================================= */}
-      <section className="pt-6 sm:pt-10 pb-10 sm:pb-14 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8 sm:space-y-10">
+      <Motion.section
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="pt-6 sm:pt-10 pb-10 sm:pb-14 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8 sm:space-y-10"
+      >
         <div className="space-y-3 sm:space-y-4">
           <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs font-mono">
             <span className="px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[var(--accent-color)] font-bold">
@@ -270,12 +276,16 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           )}
         </div>
 
-        {/* Quick Metrics Bar (Wide 4-column cards with refined typography) */}
+        {/* Quick Metrics Bar (Wide 4-column cards with refined typography and staggered reveal) */}
         {project.walkthrough?.impact?.metrics && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 pt-2">
             {project.walkthrough.impact.metrics.map((m, idx) => (
-              <div
+              <Motion.div
                 key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.08 + idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="p-4 sm:p-6 rounded-2xl bg-[#06090D]/80 border border-white/10 hover:border-[var(--accent-border)] transition-colors text-center space-y-1 shadow-lg"
               >
                 <span className="block text-xl sm:text-2xl lg:text-3xl font-black text-[var(--accent-color)] font-display leading-tight">
@@ -284,16 +294,22 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 <span className="block text-[10px] sm:text-xs text-white/50 font-mono tracking-widest uppercase">
                   {m.label}
                 </span>
-              </div>
+              </Motion.div>
             ))}
           </div>
         )}
-      </section>
+      </Motion.section>
 
       {/* ========================================================================= */}
       {/* 3. HERO PRODUCT SHOWCASE VIEWPORT (Wide, cinema-scale artwork)             */}
       {/* ========================================================================= */}
-      <section className="py-6 sm:py-10 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto">
+      <Motion.section
+        initial={{ opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="py-6 sm:py-10 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto"
+      >
         <div className="cyber-panel rounded-3xl overflow-hidden border border-white/15 bg-[#020406] shadow-2xl relative">
           {/* Top Preview Header - Clean, professional, no fake buttons */}
           <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/10 bg-black/60 backdrop-blur-md">
@@ -350,12 +366,18 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </div>
           </div>
         </div>
-      </section>
+      </Motion.section>
 
       {/* ========================================================================= */}
       {/* 4. SYSTEM DOSSIER & SPECIFICATIONS BENTO GRID (Equal Height & Cohesion)    */}
       {/* ========================================================================= */}
-      <section className="py-12 sm:py-16 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto">
+      <Motion.section
+        initial={{ opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="py-12 sm:py-16 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           {/* Left Column: Mission & Narrative (7 cols) - Stretches to equal height */}
           <div className="lg:col-span-7 flex flex-col h-full">
@@ -510,12 +532,18 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </div>
           </div>
         </div>
-      </section>
+      </Motion.section>
 
       {/* ========================================================================= */}
       {/* 5. CASE STUDY DEEP DIVE (Chapters: Concept, Architecture, Features)       */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8 sm:space-y-10">
+      <Motion.section
+        initial={{ opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8 sm:space-y-10"
+      >
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-white/10 pb-6">
           <div>
             <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-wide">
@@ -552,21 +580,22 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </div>
 
-        {/* Tab Content Display with fixed stable container height to completely eliminate layout jumping */}
-        <div className="h-[540px] sm:h-[460px] lg:h-[390px] relative w-full overflow-hidden">
+        {/* Tab Content Display with calibrated minimum height to prevent layout jumps without artificial gaps */}
+        <div className="min-h-[480px] sm:min-h-[380px] lg:min-h-[260px] relative w-full">
           <AnimatePresence mode="wait">
             {activeTab === 'concept' && (
               <Motion.div
                 key="concept"
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="w-full h-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch"
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
               >
-                <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
-                  <div className="space-y-3">
-                    <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
+                {/* Left Column: Narrative & Mission Vision */}
+                <div className="lg:col-span-7 flex flex-col space-y-5">
+                  <div className="space-y-2.5">
+                    <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase block">
                       // 01 // THE_CONCEPT_&_CHALLENGE
                     </span>
                     <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
@@ -577,19 +606,24 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                     </p>
                   </div>
 
+                  {/* Primary Challenge Callout - Cyber Amber Briefing Card */}
                   {project.overview?.challenge && (
-                    <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2 mt-auto">
-                      <span className="text-xs font-bold text-amber-400 font-mono uppercase tracking-wider block">
-                        [ THE_PRIMARY_CHALLENGE ]
-                      </span>
-                      <p className="text-sm text-white/80 leading-relaxed font-sans">
+                    <div className="relative rounded-2xl border border-amber-500/25 bg-gradient-to-r from-amber-500/[0.08] via-amber-500/[0.02] to-transparent p-4 sm:p-5 border-l-4 border-l-amber-400 space-y-2 shadow-lg backdrop-blur-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                        <span className="text-[11px] font-bold text-amber-400 font-mono uppercase tracking-wider">
+                          {lang === 'ru' ? 'ОСНОВНОЙ ВЫЗОВ // THE_PRIMARY_CHALLENGE' : 'THE_PRIMARY_CHALLENGE // PROBLEM_SPACE'}
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-sans">
                         {project.overview.challenge}
                       </p>
                     </div>
                   )}
                 </div>
 
-                <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-3">
+                {/* Right Column: Key Milestones */}
+                <div className="lg:col-span-5 flex flex-col space-y-3">
                   <div>
                     <span className="text-xs text-white/40 font-mono tracking-widest uppercase block mb-3">
                       [ KEY_MILESTONES ]
@@ -617,15 +651,16 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             {activeTab === 'architecture' && (
               <Motion.div
                 key="architecture"
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.2, ease: 'easeOut' }}
-                className="w-full h-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch"
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
               >
-                <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
-                  <div className="space-y-3">
-                    <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase">
+                {/* Left Column: Architecture & Execution */}
+                <div className="lg:col-span-7 flex flex-col space-y-5">
+                  <div className="space-y-2.5">
+                    <span className="text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase block">
                       // 02 // ARCHITECTURE_&_EXECUTION
                     </span>
                     <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
@@ -636,19 +671,24 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                     </p>
                   </div>
 
+                  {/* Applied Solution Callout - Cyber Neon Architecture Fix */}
                   {project.overview?.solution && (
-                    <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2 mt-auto">
-                      <span className="text-xs font-bold text-[var(--accent-color)] font-mono uppercase tracking-wider block">
-                        [ APPLIED_SOLUTION ]
-                      </span>
-                      <p className="text-sm text-white/80 leading-relaxed font-sans">
+                    <div className="relative rounded-2xl border border-[var(--accent-border)] bg-gradient-to-r from-[var(--accent-color)]/[0.08] via-[var(--accent-color)]/[0.02] to-transparent p-4 sm:p-5 border-l-4 border-l-[var(--accent-color)] space-y-2 shadow-lg backdrop-blur-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-pulse" />
+                        <span className="text-[11px] font-bold text-[var(--accent-color)] font-mono uppercase tracking-wider">
+                          {lang === 'ru' ? 'ИНЖЕНЕРНОЕ РЕШЕНИЕ // APPLIED_SOLUTION' : 'APPLIED_SOLUTION // ARCHITECTURE_FIX'}
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-sans">
                         {project.overview.solution}
                       </p>
                     </div>
                   )}
                 </div>
 
-                <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-3">
+                {/* Right Column: Architectural Pillars */}
+                <div className="lg:col-span-5 flex flex-col space-y-3">
                   <div>
                     <span className="text-xs text-white/40 font-mono tracking-widest uppercase block mb-3">
                       [ ARCHITECTURAL_PILLARS ]
@@ -713,12 +753,18 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             )}
           </AnimatePresence>
         </div>
-      </section>
+      </Motion.section>
 
       {/* ========================================================================= */}
       {/* 6. RESPONSIVE MULTI-DEVICE VIEWPORTS (Fixed Stable Viewport Stage)         */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8">
+      <Motion.section
+        initial={{ opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8"
+      >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <h2 className="text-lg sm:text-xl font-bold text-white font-sans uppercase">
@@ -830,12 +876,19 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             )}
           </AnimatePresence>
         </div>
-      </section>
+      </Motion.section>
 
       {/* ========================================================================= */}
       {/* 7. FULL-WIDTH NEXT PROJECT FOOTER WITH FLOATING CURSOR PREVIEW            */}
       {/* ========================================================================= */}
-      <Link
+      <Motion.div
+        initial={{ opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full"
+      >
+        <Link
         href={`/projects/${nextProject.slug || nextProject.id.toLowerCase()}`}
         onClick={playClick}
         onMouseEnter={() => {
@@ -921,6 +974,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </div>
       </Link>
+      </Motion.div>
     </div>
   );
 }

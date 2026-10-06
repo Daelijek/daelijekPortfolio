@@ -21,6 +21,9 @@ import {
   ChevronRight,
   Terminal,
   Check,
+  Award,
+  Languages,
+  Phone,
 } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaTelegram } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
@@ -319,6 +322,15 @@ export default function AboutContent() {
               <div className="flex items-center justify-between p-2 rounded bg-black/40 border border-[var(--border-subtle)]">
                 <span className="text-[var(--text-muted)]">DEGREE</span>
                 <span className="text-[var(--heading-tint)] font-bold">B.S. SOFTWARE ENG</span>
+              </div>
+              <div className="flex items-center justify-between p-2 rounded bg-black/40 border border-[var(--border-subtle)]">
+                <span className="text-[var(--text-muted)]">PHONE</span>
+                <a
+                  href={`tel:${content.contact?.phoneRaw || '+77088350549'}`}
+                  className="text-[var(--accent-color)] font-bold hover:underline"
+                >
+                  {content.contact?.phone || '+7 708 835 0549'}
+                </a>
               </div>
             </div>
 
@@ -699,7 +711,107 @@ export default function AboutContent() {
             </div>
           </section>
 
-          {/* 5. ENGINEERING MINDSET & PRINCIPLES */}
+          {/* 5. VERIFIED CREDENTIALS: CERTIFICATIONS & SPOKEN LANGUAGES */}
+          {about.credentials && (
+            <section className="space-y-6">
+              <div className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
+                    {about.credentials.title}
+                  </h2>
+                  <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                    {about.credentials.subtitle}
+                  </p>
+                </div>
+                <span className="text-xs text-[var(--accent-color)] font-mono font-bold">
+                  [ACCREDITED]
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {/* Certifications Card */}
+                <div className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all">
+                  <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
+                        <Award className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[var(--heading-tint)] font-mono">
+                        {about.credentials.certTitle || 'CERTIFICATIONS'}
+                      </h3>
+                    </div>
+                    <span className="text-[10px] font-mono text-[var(--accent-color)] px-2 py-0.5 rounded bg-black/40 border border-[var(--border-subtle)]">
+                      {about.credentials.certifications.length} CERTS
+                    </span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {about.credentials.certifications.map((cert, cIdx) => (
+                      <div
+                        key={cIdx}
+                        onMouseEnter={playHover}
+                        className="p-3.5 rounded-xl bg-black/40 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] transition-all space-y-1.5"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <h4 className="text-xs sm:text-[13px] font-bold text-[var(--heading-tint)] font-mono">
+                            {cert.title}
+                          </h4>
+                          <span className="text-[9.5px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-950/40 border border-emerald-500/20 shrink-0">
+                            {cert.status}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between text-xs text-[var(--text-muted)] font-mono">
+                          <span>{cert.issuer}</span>
+                          <span className="text-[10px] text-[var(--accent-color)]">{cert.badge}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Spoken Languages Card */}
+                <div className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all">
+                  <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
+                        <Languages className="w-4 h-4" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[var(--heading-tint)] font-mono">
+                        {about.credentials.langTitle || 'LANGUAGES'}
+                      </h3>
+                    </div>
+                    <span className="text-[10px] font-mono text-[var(--accent-color)] px-2 py-0.5 rounded bg-black/40 border border-[var(--border-subtle)]">
+                      3 PROFICIENCIES
+                    </span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {about.credentials.languages.map((langItem, lIdx) => (
+                      <div
+                        key={lIdx}
+                        onMouseEnter={playHover}
+                        className="p-3.5 rounded-xl bg-black/40 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] transition-all space-y-1"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs sm:text-[13px] font-bold text-[var(--heading-tint)] font-mono">
+                            {langItem.name}
+                          </span>
+                          <span className="text-[10.5px] font-mono font-bold text-[var(--accent-color)] px-2 py-0.5 rounded bg-black/60 border border-[var(--border-subtle)]">
+                            {langItem.level}
+                          </span>
+                        </div>
+                        <p className="text-[11.5px] text-[var(--text-secondary)] font-sans">
+                          {langItem.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* 6. ENGINEERING MINDSET & PRINCIPLES */}
           <section className="space-y-6">
             <div className="border-b border-[var(--border-subtle)] pb-4">
               <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">

@@ -196,49 +196,58 @@ export const portfolioContent = {
         logs: [
           {
             code: "LOG_01",
-            period: "OCT 2025 – APR 2026",
+            period: "OCT 2025 – PRESENT",
             company: "BEYIMTECH",
-            badge: "EdTech Startup · Astana Hub",
+            badge: "EdTech Startup · Astana, Kazakhstan",
             role: "MIDDLE FRONTEND & MOBILE DEVELOPER",
             points: [
-              "Architected AI-powered educational web products with Next.js 14, React 18, and TypeScript — including rich Lexical markdown editors and next-intl multi-language.",
-              "Spearheaded complete mobile application recovery: full Flutter & Riverpod architecture refactoring, Active Directory authentication, and production AI chatbot integration.",
-              "Built real-time school analytics dashboards for 20+ institutions with RTK Query and created a custom client telemetry system tracking student learning behavior.",
-              "Owned end-to-end iOS & Android deployment pipelines (Apple App Store & Google Play) with Firebase Remote Config in-app updates."
+              "Engineered AI-powered educational ecosystems using Next.js 14, React 18, and TypeScript, integrating complex content editors (Lexical) and multi-language support (next-intl).",
+              "Headed the Mobile App recovery, performing a full architectural refactor using Flutter & Riverpod; stabilized AD authentication and AI chatbot logic for a successful production launch.",
+              "Developed high-load Analytics Dashboards for 20+ schools, visualizing student progress and diagnostic results using RTK Query for efficient data fetching.",
+              "Designed and implemented a Custom Telemetry System from scratch to track user sessions and event interactions, providing the product team with real-time behavior data.",
+              "Streamlined user onboarding by developing a new registration flow and redirection engine, significantly reducing friction between legacy and current platforms.",
+              "Managed the full Deployment Lifecycle for iOS and Android (App Store/Google Play), including an automated in-app update notification system."
             ]
           },
           {
             code: "LOG_02",
             period: "NOV 2023 – JAN 2026",
             company: "TRUSTME",
-            badge: "Blockchain SaaS · 1.5M+ Users",
-            role: "MARKUP DEVELOPER (CONTRACT)",
+            badge: "Blockchain SaaS · 1.5M+ Users & 3,000+ Companies",
+            role: "FRONTEND DEVELOPER (CONTRACT)",
             points: [
-              "Developed and optimized smart-contract UI templates for a national digital trust platform serving over 1,500,000 users and 3,000+ enterprises.",
-              "Engineered REST API integrations for legally binding digital signatures, SMS validation flows, and blockchain credential authentication.",
-              "Authored modular, reusable component systems for the TrustContract web ecosystem."
+              "Developed and optimized Smart Contract templates for a platform serving 1.5M+ users and 3,000+ companies, ensuring high-fidelity document rendering and complex logic.",
+              "Collaborated on REST API integrations to automate legally binding workflows, including SMS gateways and Digital Signature (EDS) providers.",
+              "Implemented frontend logic for blockchain-based authentication and secure document verification processes.",
+              "Streamlined the digitization of contractual relationships by creating reusable UI components and flexible layout structures for the TrustContract ecosystem."
             ]
           },
           {
             code: "LOG_03",
-            period: "FEB 2025 – APR 2025",
+            period: "FEB 2024 – APR 2024",
             company: "QB SOLUTIONS",
-            badge: "GovTech / Enterprise",
+            badge: "GovTech / Enterprise · Remote",
             role: "FRONTEND DEVELOPER (INTERNSHIP)",
             points: [
-              "Engineered the full frontend for the OpenGov.kz platform from scratch with Next.js and React.",
-              "Implemented responsive layouts, news catalogues, civic project listings, and multi-language routing for public access."
+              "Engineered the entire frontend for the \"Open Government\" web platform from scratch using Next.js and React, ensuring a full production-ready deployment.",
+              "Designed the UI/UX architecture from the ground up, creating intuitive layouts for news feeds, project catalogs, and detailed content pages.",
+              "Implemented Full Internationalization (i18n) support, enabling seamless multi-language switching across the entire platform.",
+              "Developed Adaptive & Responsive layouts for all device types, maintaining high performance and visual consistency using modern CSS techniques.",
+              "Applied Agile methodologies during the development lifecycle, utilizing GitHub for version control and project milestone tracking."
             ]
           },
           {
             code: "LOG_04",
             period: "SEP 2023 – NOV 2023",
             company: "STOLOVKA",
-            badge: "FoodTech Startup",
+            badge: "FoodTech Startup · Remote",
             role: "MOBILE DEVELOPER (INTERNSHIP)",
             points: [
-              "Built production-ready Flutter e-commerce application: digital menus, live order cart, and user authentication from Figma specs.",
-              "Configured Firebase App Distribution for continuous QA builds and automated deployment."
+              "Developed a nearly full-featured mobile application using Flutter & Dart, implementing core modules: Product Catalog, Shopping Cart, User Profile, and Authentication (Login/Registration).",
+              "Built high-fidelity mobile interfaces based on Figma designs, ensuring pixel-perfect implementation and smooth user experience across iOS and Android.",
+              "Implemented an In-app Update notification system using Firebase Remote Config to manage versioning and force mandatory updates for end-users.",
+              "Streamlined the internal testing process by managing app distribution through Firebase App Distribution, enabling rapid feedback cycles within the development team.",
+              "Created complex UI flows and navigation structures, focusing on clean code architecture and preparation for future backend API integration."
             ]
           },
           {
@@ -248,8 +257,45 @@ export const portfolioContent = {
             badge: "Astana, Kazakhstan",
             role: "BACHELOR OF SOFTWARE ENGINEERING",
             points: [
-              "Graduated with a Bachelor's Degree in Software Engineering. Focused on distributed systems, modern web architectures, and algorithms."
+              "Bachelor of Software Engineering. Focused on distributed systems, enterprise web & mobile architectures, algorithms, and cloud infrastructure."
             ]
+          }
+        ]
+      },
+      credentials: {
+        title: "CERTIFICATIONS & LANGUAGES",
+        subtitle: "Verified industry credentials and linguistic proficiency",
+        certTitle: "CERTIFICATIONS",
+        langTitle: "LANGUAGES",
+        certifications: [
+          {
+            title: "IT Essentials",
+            issuer: "Cisco Networking Academy",
+            badge: "NETWORKING & HARDWARE",
+            status: "VERIFIED"
+          },
+          {
+            title: "Cloud Computing Concepts",
+            issuer: "Amazon Web Services (AWS)",
+            badge: "CLOUD ARCHITECTURE",
+            status: "VERIFIED"
+          }
+        ],
+        languages: [
+          {
+            name: "English",
+            level: "Upper-Intermediate (B2+)",
+            desc: "Technical documentation, daily communication"
+          },
+          {
+            name: "Kazakh",
+            level: "Native",
+            desc: "Fluent native proficiency"
+          },
+          {
+            name: "Russian",
+            level: "Native",
+            desc: "Fluent native proficiency"
           }
         ]
       }
@@ -612,6 +658,8 @@ export const portfolioContent = {
       tag: "SECTOR_04 // COMMUNICATION PORT",
       title: "INITIALIZE CONTACT",
       lead: "Have an ambitious project, startup venture, or full-time / contract opportunity? My channels are open. Fastest response via Telegram.",
+      phone: "+7 708 835 0549",
+      phoneRaw: "+77088350549",
       email: "dias1605ermek@gmail.com",
       telegram: "https://t.me/daelijek_og",
       github: "https://github.com/Daelijek",
@@ -844,49 +892,58 @@ export const portfolioContent = {
         logs: [
           {
             code: "LOG_01",
-            period: "ОКТ 2025 – АПР 2026",
+            period: "ОКТ 2025 – НАСТОЯЩЕЕ ВРЕМЯ",
             company: "BEYIMTECH",
-            badge: "EdTech Стартап · Astana Hub",
+            badge: "EdTech Стартап · Астана, Казахстан",
             role: "MIDDLE FRONTEND & MOBILE РАЗРАБОТЧИК",
             points: [
-              "Архитектура образовательных веб-продуктов на Next.js 14, React 18 и TypeScript: разработка кастомных редакторов на Lexical и многоязычной локализации (next-intl).",
-              "Руководство полным восстановлением мобильного приложения: рефакторинг архитектуры Flutter & Riverpod, авторизация через Active Directory и внедрение AI-чатбота в прод.",
-              "Создание панелей школьной аналитики для 20+ учреждений с использованием RTK Query и разработка клиентской системы трекинга поведения учеников.",
-              "Управление CI/CD и релизами в Apple App Store и Google Play, поддержка обновлений через Firebase Remote Config."
+              "Разработка образовательных экосистем на базе искусственного интеллекта с использованием Next.js 14, React 18 и TypeScript; интеграция редакторов контента (Lexical) и мультиязычности (next-intl).",
+              "Восстановление и модернизация мобильного приложения: полный архитектурный рефакторинг на Flutter & Riverpod; стабилизация аутентификации через Active Directory и логики AI-чатбота для успешного продакшн-релиза.",
+              "Разработка высоконагруженных дашбордов аналитики для 20+ школ с визуализацией прогресса учащихся и результатов диагностики с использованием RTK Query для эффективной выборки данных.",
+              "Проектирование и создание кастомной системы клиентской телеметрии с нуля для отслеживания пользовательских сессий и событий в реальном времени.",
+              "Оптимизация онбординга: разработка нового флоу регистрации и механизма перенаправлений, существенно снизивших барьер между легаси и текущей платформами.",
+              "Полное управление жизненным циклом развертывания мобильных приложений для iOS и Android (App Store / Google Play), включая автоматическую систему уведомлений об обновлениях."
             ]
           },
           {
             code: "LOG_02",
             period: "НОЯ 2023 – ЯНВ 2026",
             company: "TRUSTME",
-            badge: "Blockchain SaaS · 1.5M+ Пользователей",
-            role: "MARKUP РАЗРАБОТЧИК (КОНТРАКТ)",
+            badge: "Blockchain SaaS · 1.5M+ Пользователей & 3,000+ Компаний",
+            role: "FRONTEND РАЗРАБОТЧИК (КОНТРАКТ)",
             points: [
-              "Разработка и оптимизация UI шаблонов смарт-контрактов для платформы с 1 500 000+ пользователей и 3 000+ компаний.",
-              "Интеграция REST API для юридически значимых цифровых подписей (ЭЦП), SMS-верификации и блокчейн-авторизации.",
-              "Создание модульной библиотеки переиспользуемых компонентов для экосистемы TrustContract."
+              "Разработка и оптимизация шаблонов смарт-контрактов для платформы, обслуживающей 1.5M+ пользователей и 3,000+ компаний, с обеспечением высокой точности рендеринга документов и сложной бизнес-логики.",
+              "Интеграция REST API для автоматизации юридически значимых рабочих процессов, включая SMS-шлюзы и провайдеров электронной цифровой подписи (ЭЦП).",
+              "Реализация фронтенд-логики для блокчейн-аутентификации и безопасных процессов верификации документов.",
+              "Ускорение оцифровки договорных отношений за счет создания библиотеки переиспользуемых UI-компонентов и гибких структур макетов для экосистемы TrustContract."
             ]
           },
           {
             code: "LOG_03",
-            period: "ФЕВ 2025 – АПР 2025",
+            period: "ФЕВ 2024 – АПР 2024",
             company: "QB SOLUTIONS",
-            badge: "GovTech / Enterprise",
+            badge: "GovTech / Enterprise · Remote",
             role: "FRONTEND РАЗРАБОТЧИК (СТАЖИРОВКА)",
             points: [
-              "Разработка фронтенда платформы OpenGov.kz с нуля на Next.js и React.",
-              "Реализация адаптивной верстки, каталогов новостей, разделов гражданских инициатив и мультиязычной маршрутизации."
+              "Разработка с нуля всего фронтенда веб-платформы «Open Government» на Next.js и React для полноценного развертывания в продакшн.",
+              "Проектирование UI/UX архитектуры с нуля: создание интуитивных макетов новостных лент, каталогов проектов и страниц подробного контента.",
+              "Реализация полной поддержки интернационализации (i18n), обеспечивающей бесшовное переключение языков по всей платформе.",
+              "Разработка адаптивных макетов для всех типов устройств с сохранением высокой производительности и визуальной согласованности с использованием современного CSS.",
+              "Применение методологий Agile в цикле разработки и использование GitHub для контроля версий и трекинга этапов проекта."
             ]
           },
           {
             code: "LOG_04",
             period: "СЕН 2023 – НОЯ 2023",
             company: "STOLOVKA",
-            badge: "FoodTech Стартап",
+            badge: "FoodTech Стартап · Remote",
             role: "MOBILE РАЗРАБОТЧИК (СТАЖИРОВКА)",
             points: [
-              "Разработка мобильного приложения на Flutter по дизайн-макетам Figma: цифровое меню, корзина заказов, авторизация пользователей.",
-              "Настройка Firebase App Distribution для непрерывного тестирования и автоматической доставки сборок."
+              "Разработка полнофункционального мобильного приложения на Flutter & Dart: реализация ключевых модулей каталога товаров, корзины покупок, профиля пользователя и аутентификации (вход/регистрация).",
+              "Создание интерфейсов мобильного приложения по макетам Figma с пиксельной точностью и плавным UX на iOS и Android.",
+              "Внедрение системы уведомлений об обновлениях приложения с использованием Firebase Remote Config для управления версиями и принудительных обновлений.",
+              "Настройка дистрибуции сборок через Firebase App Distribution для ускорения цикла обратной связи команды разработки.",
+              "Разработка сложной навигации и UI-флоу с акцентом на чистую архитектуру кода и подготовку к интеграции backend API."
             ]
           },
           {
@@ -896,8 +953,45 @@ export const portfolioContent = {
             badge: "Астана, Казахстан",
             role: "БАКАЛАВР ПРОГРАММНОЙ ИНЖЕНЕРИИ",
             points: [
-              "Окончил бакалавриат по специальности Software Engineering. Глубокое изучение алгоритмов, распределенных систем и веб-технологий."
+              "Бакалавр программной инженерии (Software Engineering). Специализация на распределенных системах, корпоративных веб- и мобильных архитектурах, алгоритмах и облачной инфраструктуре."
             ]
+          }
+        ]
+      },
+      credentials: {
+        title: "СЕРТИФИКАТЫ И ЯЗЫКИ",
+        subtitle: "Подтвержденная квалификация и языковые компетенции",
+        certTitle: "СЕРТИФИКАТЫ",
+        langTitle: "ЯЗЫКИ",
+        certifications: [
+          {
+            title: "IT Essentials",
+            issuer: "Cisco Networking Academy",
+            badge: "СЕТЕВЫЕ ТЕХНОЛОГИИ & HARDWARE",
+            status: "ПОДТВЕРЖДЕНО"
+          },
+          {
+            title: "Cloud Computing Concepts",
+            issuer: "Amazon Web Services (AWS)",
+            badge: "ОБЛАЧНАЯ АРХИТЕКТУРА",
+            status: "ПОДТВЕРЖДЕНО"
+          }
+        ],
+        languages: [
+          {
+            name: "Английский (English)",
+            level: "Upper-Intermediate (B2+)",
+            desc: "Техническая документация, свободное профессиональное общение"
+          },
+          {
+            name: "Казахский (Kazakh)",
+            level: "Родной (Native)",
+            desc: "Свободное владение"
+          },
+          {
+            name: "Русский (Russian)",
+            level: "Родной (Native)",
+            desc: "Свободное владение"
           }
         ]
       }
@@ -1260,6 +1354,8 @@ export const portfolioContent = {
       tag: "СЕКТОР_04 // КАНАЛ СВЯЗИ",
       title: "ИНИЦИАЛИЗАЦИЯ КОНТАКТА",
       lead: "Есть амбициозный проект, стартап или предложение о сотрудничестве (Full-time / Contract)? Каналы открыты. Самый быстрый ответ в Telegram.",
+      phone: "+7 708 835 0549",
+      phoneRaw: "+77088350549",
       email: "dias1605ermek@gmail.com",
       telegram: "https://t.me/daelijek_og",
       github: "https://github.com/Daelijek",
@@ -1492,49 +1588,58 @@ export const portfolioContent = {
         logs: [
           {
             code: "LOG_01",
-            period: "ҚАЗ 2025 – СӘУ 2026",
+            period: "ҚАЗ 2025 – ҚАЗІРГІ УАҚЫТ",
             company: "BEYIMTECH",
-            badge: "EdTech Стартап · Astana Hub",
+            badge: "EdTech Стартап · Астана, Қазақстан",
             role: "MIDDLE FRONTEND & MOBILE ӘЗІРЛЕУШІ",
             points: [
-              "Next.js 14, React 18 және TypeScript-те AI білім беру веб-өнімдерінің архитектурасын жасау: Lexical редакторлары мен next-intl локализациясы.",
-              "Мобильді қосымшаны қалпына келтіру мен шығару: Flutter & Riverpod рефакторингі, Active Directory авторизациясы және AI-чатботты енгізу.",
-              "20+ мектепке арналған RTK Query көмегімен мектеп аналитикасын жасау және оқушылардың білім алу мінез-құлқын бақылайтын клиенттік телеметрия құру.",
-              "Apple App Store және Google Play релиздерін толық жүргізу, Firebase Remote Config арқылы қолданба ішінде жаңартуларды баптау."
+              "Next.js 14, React 18 және TypeScript көмегімен жасанды интеллектке негізделген білім беру экожүйелерін әзірлеу, күрделі контент редакторларын (Lexical) және көптілділікті (next-intl) біріктіру.",
+              "Мобильді қосымшаны қалпына келтіру мен шығаруды басқару: Flutter & Riverpod көмегімен толық архитектуралық рефакторинг жасау; AD аутентификациясы мен AI-чатбот логикасын тұрақтандырып, өндіріске сәтті шығару.",
+              "20+ мектепке арналған RTK Query көмегімен деректерді тиімді алу арқылы оқушылардың үлгерімі мен диагностикалық нәтижелерін визуализациялайтын жүктемелі аналитика дашбордтарын жасау.",
+              "Пайдаланушы сессиялары мен оқиғаларды нақты уақытта бақылау үшін нөлден клиенттік телеметрия жүйесін құру.",
+              "Жаңа тіркелу ағыны мен бағыттау қозғалтқышын әзірлеу арқылы ескі және ағымдағы платформалар арасындағы кедергіні айтарлықтай азайту.",
+              "iOS және Android (App Store/Google Play) үшін қосымшаларды шығарудың толық өмірлік циклін басқару, соның ішінде жаңартулар туралы автоматты хабарландыру жүйесін енгізу."
             ]
           },
           {
             code: "LOG_02",
             period: "ҚАР 2023 – ҚАҢ 2026",
             company: "TRUSTME",
-            badge: "Blockchain SaaS · 1.5M+ Пайдаланушы",
-            role: "MARKUP ӘЗІРЛЕУШІ (КЕЛІСІМШАРТ)",
+            badge: "Blockchain SaaS · 1.5M+ Пайдаланушы & 3,000+ Компания",
+            role: "FRONTEND ӘЗІРЛЕУШІ (КЕЛІСІМШАРТ)",
             points: [
-              "1 500 000+ пайдаланушы мен 3 000+ компанияға арналған цифрлық сенім платформасы үшін смарт-келісімшарт үлгілерінің UI жасау және оңтайландыру.",
-              "Заңды күші бар ЭЦҚ, SMS-растау және блокчейн-авторизация үшін REST API интеграциясын жүзеге асыру.",
-              "TrustContract экожүйесі үшін қайта қолданылатын модульдік компоненттер жүйесін әзірлеу."
+              "1.5M+ пайдаланушы мен 3 000+ компанияға қызмет көрсететін платформа үшін құжаттарды жоғары сапада визуализациялау және күрделі логиканы қамтамасыз ететін Smart Contract шаблондарын әзірлеу және оңтайландыру.",
+              "Заңды күші бар жұмыс процестерін, соның ішінде SMS-шлюздер мен электрондық цифрлық қолтаңба (ЭЦҚ) провайдерлерін автоматтандыру үшін REST API интеграциясы бойынша бірлесіп жұмыс істеу.",
+              "Блокчейнге негізделген аутентификация және құжаттарды қауіпсіз тексеру үшін фронтенд логикасын жүзеге асыру.",
+              "TrustContract экожүйесі үшін қайта қолданылатын UI компоненттері мен икемді орналасу құрылымдарын жасау арқылы шарттық қатынастарды цифрландыруды оңтайландыру."
             ]
           },
           {
             code: "LOG_03",
-            period: "АҚП 2025 – СӘУ 2025",
+            period: "АҚП 2024 – СӘУ 2024",
             company: "QB SOLUTIONS",
-            badge: "GovTech / Enterprise",
+            badge: "GovTech / Enterprise · Қашықтан",
             role: "FRONTEND ӘЗІРЛЕУШІ (ТАҒЫЛЫМДАМА)",
             points: [
-              "OpenGov.kz ресми платформасының фронтендін Next.js және React-те нөлден бастап әзірлеу.",
-              "Адаптивті дизайн, жаңалықтар мен азаматтық бастамалар каталогын және көптілді маршрутизацияны енгізу."
+              "Өндіріске толық дайын шығаруды қамтамасыз ете отырып, Next.js және React көмегімен «Open Government» веб-платформасының толық фронтендін нөлден бастап әзірлеу.",
+              "Жаңалықтар легі, жобалар каталогтары және егжей-тегжейлі мазмұн беттері үшін интуитивті орналасуларды жасай отырып, UI/UX архитектурасын нөлден бастап жобалау.",
+              "Бүкіл платформа бойынша тілдерді үздіксіз ауыстыруға мүмкіндік беретін интернационализацияны (i18n) толық енгізу.",
+              "Заманауи CSS әдістерін қолдана отырып, жоғары өнімділік пен визуалды үйлесімділікті сақтай отырып, құрылғылардың барлық түрлері үшін бейімделгіш және респонсивті макеттерді әзірлеу.",
+              "Нұсқаларды бақылау және жоба кезеңдерін бақылау үшін GitHub-ты пайдаланып, әзірлеу циклі барысында Agile әдістемелерін қолдану."
             ]
           },
           {
             code: "LOG_04",
             period: "ҚЫР 2023 – ҚАР 2023",
             company: "STOLOVKA",
-            badge: "FoodTech Стартап",
+            badge: "FoodTech Стартап · Қашықтан",
             role: "MOBILE ӘЗІРЛЕУШІ (ТАҒЫЛЫМДАМА)",
             points: [
-              "Figma макеттері бойынша Flutter-де мобильді қосымша жасау: цифрлық мәзір, тапсырыс себеті, қолданушы авторизациясы.",
-              "Сынақ нұсқаларын үздіксіз жеткізу үшін Firebase App Distribution баптау."
+              "Flutter & Dart көмегімен мобильді қосымшаны әзірлеу, негізгі модульдерді жүзеге асыру: Өнімдер каталогы, Себет, Пайдаланушы профилі және Аутентификация (Кіру/Тіркелу).",
+              "Figma дизайндары негізінде iOS және Android жүйелерінде пиксельдік дәлдікті және үздік UX-ті қамтамасыз ететін мобильді интерфейстер құру.",
+              "Нұсқаларды басқару және пайдаланушылар үшін міндетті жаңартуларды енгізу мақсатында Firebase Remote Config көмегімен қолданба ішіндегі жаңартулар туралы хабарландыру жүйесін енгізу.",
+              "Әзірлеу тобы ішінде жылдам кері байланыс алу үшін Firebase App Distribution арқылы қосымшаны таратуды басқару.",
+              "Таза код архитектурасына және болашақ бэкенд API интеграциясына бағытталған күрделі UI ағындары мен навигация құрылымдарын құру."
             ]
           },
           {
@@ -1544,8 +1649,45 @@ export const portfolioContent = {
             badge: "Астана, Қазақстан",
             role: "БАҒДАРЛАМАЛЫҚ ИНЖЕНЕРИЯ БАКАЛАВРЫ",
             points: [
-              "Software Engineering мамандығы бойынша бакалавр дипломын алдым. Алгоритмдер, үлестірілген жүйелер және қазіргі заманғы веб-архитектураларға баса назар аударылды."
+              "Software Engineering мамандығы бойынша бакалавр дипломы. Үлестірілген жүйелер, корпоративтік веб және мобильді архитектуралар, алгоритмдер және бұлттық инфрақұрылым."
             ]
+          }
+        ]
+      },
+      credentials: {
+        title: "СЕРТИФИКАТТАР МЕН ТІЛДЕР",
+        subtitle: "Расталған кәсіби біліктілік пен тілдік құзыреттер",
+        certTitle: "СЕРТИФИКАТТАР",
+        langTitle: "ТІЛДЕР",
+        certifications: [
+          {
+            title: "IT Essentials",
+            issuer: "Cisco Networking Academy",
+            badge: "ЖЕЛІЛІК ТЕХНОЛОГИЯЛАР & АППАРАТТЫҚ ҚАМТАМАСЫЗ ЕТУ",
+            status: "РАСТАЛҒАН"
+          },
+          {
+            title: "Cloud Computing Concepts",
+            issuer: "Amazon Web Services (AWS)",
+            badge: "БҰЛТТЫҚ АРХИТЕКТУРА",
+            status: "РАСТАЛҒАН"
+          }
+        ],
+        languages: [
+          {
+            name: "Ағылшын (English)",
+            level: "Upper-Intermediate (B2+)",
+            desc: "Техникалық құжаттама, еркін кәсіби қарым-қатынас"
+          },
+          {
+            name: "Қазақ (Kazakh)",
+            level: "Ана тілі (Native)",
+            desc: "Еркін меңгерген"
+          },
+          {
+            name: "Орыс (Russian)",
+            level: "Ана тілі (Native)",
+            desc: "Еркін меңгерген"
           }
         ]
       }
@@ -1634,6 +1776,8 @@ export const portfolioContent = {
       tag: "СЕКТОР_04 // БАЙЛАНЫС ПОРТЫ",
       title: "БАЙЛАНЫСҚА ШЫҒУ",
       lead: "Амбициялы жобаңыз, стартапыңыз немесе ұсынысыңыз (Full-time / Contract) бар ма? Менің арналарым ашық. Ең жылдам жауап Telegram арқылы.",
+      phone: "+7 708 835 0549",
+      phoneRaw: "+77088350549",
       email: "dias1605ermek@gmail.com",
       telegram: "https://t.me/daelijek_og",
       github: "https://github.com/Daelijek",

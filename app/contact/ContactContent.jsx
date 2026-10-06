@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
 import { soundFx } from '../../src/audio/soundEffects';
-import { Mail, Send, Copy, Check, ExternalLink, User, AtSign, MessageSquare } from 'lucide-react';
+import { Mail, Send, Copy, Check, ExternalLink, User, AtSign, MessageSquare, Phone } from 'lucide-react';
 import { FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
 import confetti from 'canvas-confetti';
@@ -104,6 +104,22 @@ export default function ContactContent() {
               >
                 &gt;&gt; {contact.copied}
               </motion.div>
+            )}
+
+            {/* Phone Direct */}
+            {contact.phone && (
+              <a
+                href={`tel:${contact.phoneRaw || '+77088350549'}`}
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="w-full flex items-center justify-between p-4 rounded-lg bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-[var(--heading-tint)] text-xs font-bold tracking-wider uppercase transition-all hover:scale-[1.02] active:scale-95 group"
+              >
+                <div className="flex items-center gap-3 truncate">
+                  <Phone className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
+                  <span className="truncate">{contact.phone}</span>
+                </div>
+                <ExternalLink className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-color)] group-hover:translate-x-0.5 transition-all" />
+              </a>
             )}
 
             {/* Social Grid */}
