@@ -239,7 +239,13 @@ export default function AboutContent() {
       className="min-h-screen pt-24 sm:pt-32 lg:pt-36 pb-32 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto font-mono selection:bg-[var(--accent-color)] selection:text-[#040608]"
     >
       {/* Top Header System Tag */}
-      <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4 mb-8 sm:mb-12">
+      <motion.div
+        initial={{ opacity: 0, y: -16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4 mb-8 sm:mb-12"
+      >
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping" />
           <span className="text-xs font-bold text-[var(--accent-color)] tracking-widest uppercase">
@@ -251,7 +257,7 @@ export default function AboutContent() {
           <span className="text-[var(--accent-color)]">&bull;</span>
           <span>DIAS YERMEK</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Two-Column Master Layout (Compact Left Sidebar + Expansive Fluid Right Stream) */}
       <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12 xl:gap-16">
@@ -259,7 +265,13 @@ export default function AboutContent() {
         {/* LEFT COLUMN: DEDICATED STICKY PROFILE POD (COMPACT & SLEEK) */}
         {/* ========================================================= */}
         <div className="w-full lg:w-[310px] xl:w-[330px] shrink-0 lg:sticky lg:top-24 space-y-4">
-          <div className="cyber-panel p-4 sm:p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_40px_var(--card-hover-glow)]">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="cyber-panel p-4 sm:p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_40px_var(--card-hover-glow)]"
+          >
             {/* Ambient Corner Decors */}
             <div className="absolute top-2 left-2 text-[9px] text-[var(--accent-color)] font-mono opacity-60">
               [SYS_ID // 0x01]
@@ -269,7 +281,7 @@ export default function AboutContent() {
               <span>ONLINE</span>
             </div>
 
-            {/* Photo Container with Controlled Height and Kinetic Scanner */}
+            {/* Photo Container with Controlled Height */}
             <div className="relative w-full aspect-[4/4.3] max-h-[330px] rounded-xl overflow-hidden mt-3 border border-[var(--border-bright)] bg-black/60 shadow-inner">
               <img
                 src="/assets/linkedIn_Dias_square.png"
@@ -279,9 +291,6 @@ export default function AboutContent() {
 
               {/* Theme Hue Overlay */}
               <div className="absolute inset-0 bg-[var(--accent-color)] opacity-[0.06] mix-blend-color pointer-events-none" />
-
-              {/* Laser Scanline Micro-Animation */}
-              <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[var(--accent-color)] to-transparent opacity-75 shadow-[0_0_12px_var(--accent-color)] pointer-events-none animate-[scanline_4s_ease-in-out_infinite]" />
 
               {/* Bottom Photo Stamp Overlay */}
               <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end justify-between text-xs pointer-events-none">
@@ -400,7 +409,7 @@ export default function AboutContent() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* ========================================================= */}
@@ -408,7 +417,13 @@ export default function AboutContent() {
         {/* ========================================================= */}
         <div className="flex-1 min-w-0 space-y-16 sm:space-y-20">
           {/* 1. NARRATIVE BIOGRAPHY & MISSION */}
-          <section className="space-y-6">
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6"
+          >
             <div className="space-y-3">
               <span className="text-xs text-[var(--accent-color)] font-bold tracking-widest uppercase">
                 // {content.system.role} &bull; {content.system.location}
@@ -428,11 +443,15 @@ export default function AboutContent() {
 
             {/* 2. THE THREE HIGHLIGHT CARDS (100% UNIFORM ALIGNMENT & SIZING) */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4">
-              {highlightCards.map((card) => {
+              {highlightCards.map((card, idx) => {
                 const CardIcon = card.Icon;
                 return (
-                  <div
+                  <motion.div
                     key={card.id}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 0.5, delay: 0.05 + idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={playHover}
                     className="cyber-panel p-4 sm:p-5 rounded-xl flex flex-col justify-between h-[126px] hover:border-[var(--accent-border)] transition-all group"
                   >
@@ -455,14 +474,20 @@ export default function AboutContent() {
                         {card.subtitle}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
-          </section>
+          </motion.section>
 
           {/* 3. INTERACTIVE TECHNICAL COMPETENCY MATRIX (MULTI-SELECT & ADAPTIVE LAYOUT) */}
-          <section className="space-y-6">
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6"
+          >
             <div className="border-b border-[var(--border-subtle)] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
@@ -521,7 +546,13 @@ export default function AboutContent() {
                 const domain = filteredDomains[0];
                 const DomainIcon = domain.icon;
                 return (
-                  <div className="cyber-panel p-6 sm:p-8 rounded-2xl space-y-6 border-[var(--accent-border)] shadow-[0_0_35px_var(--card-hover-glow)]">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.15 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="cyber-panel p-6 sm:p-8 rounded-2xl space-y-6 border-[var(--accent-border)] shadow-[0_0_35px_var(--card-hover-glow)]"
+                  >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border-subtle)] gap-3">
                       <div className="flex items-center gap-3.5">
                         <div className="p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] border border-[var(--border-subtle)]">
@@ -577,7 +608,7 @@ export default function AboutContent() {
                         </ul>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })()
             ) : (
@@ -589,11 +620,15 @@ export default function AboutContent() {
                     : 'grid-cols-1 md:grid-cols-2'
                 }`}
               >
-                {filteredDomains.map((domain) => {
+                {filteredDomains.map((domain, idx) => {
                   const DomainIcon = domain.icon;
                   return (
-                    <div
+                    <motion.div
                       key={domain.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: false, amount: 0.15 }}
+                      transition={{ duration: 0.5, delay: 0.05 + idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                       onMouseEnter={playHover}
                       className="cyber-panel p-5 sm:p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-[var(--accent-border)] transition-all group"
                     >
@@ -627,15 +662,22 @@ export default function AboutContent() {
                           </span>
                         ))}
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
             )}
-          </section>
+          </motion.section>
 
           {/* 4. CAREER TELEMETRY TIMELINE (SCREEN-CENTERED DYNAMIC SCROLL) */}
-          <section className="space-y-8" ref={timelineRef}>
+          <motion.section
+            ref={timelineRef}
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-8"
+          >
             <div className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
@@ -662,7 +704,14 @@ export default function AboutContent() {
               {/* 3. Timeline Items with Guaranteed Sub-Pixel Symmetry */}
               <div className="space-y-6 sm:space-y-8">
                 {exp.logs.map((log, idx) => (
-                  <div key={log.code || idx} className="relative flex items-start gap-4 sm:gap-6 group">
+                  <motion.div
+                    key={log.code || idx}
+                    initial={{ opacity: 0, y: 24, x: -8 }}
+                    whileInView={{ opacity: 1, y: 0, x: 0 }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 0.55, delay: 0.05 + idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative flex items-start gap-4 sm:gap-6 group"
+                  >
                     {/* Center Timeline Node */}
                     <div className="relative z-10 shrink-0 w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center mt-3">
                       <div className="w-4 sm:w-4.5 h-4 sm:h-4.5 rounded-full bg-[#020504] border-2 border-[var(--accent-color)] shadow-[0_0_10px_var(--accent-glow)] group-hover:scale-125 group-hover:border-white transition-all flex items-center justify-center">
@@ -705,15 +754,21 @@ export default function AboutContent() {
                         ))}
                       </ul>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
-          </section>
+          </motion.section>
 
           {/* 5. VERIFIED CREDENTIALS: CERTIFICATIONS & SPOKEN LANGUAGES */}
           {about.credentials && (
-            <section className="space-y-6">
+            <motion.section
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.15 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-6"
+            >
               <div className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between">
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
@@ -730,7 +785,13 @@ export default function AboutContent() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {/* Certifications Card */}
-                <div className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all"
+                >
                   <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
                     <div className="flex items-center gap-2.5">
                       <div className="p-2 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
@@ -767,10 +828,16 @@ export default function AboutContent() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Spoken Languages Card */}
-                <div className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all"
+                >
                   <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
                     <div className="flex items-center gap-2.5">
                       <div className="p-2 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
@@ -806,13 +873,19 @@ export default function AboutContent() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               </div>
-            </section>
+            </motion.section>
           )}
 
           {/* 6. ENGINEERING MINDSET & PRINCIPLES */}
-          <section className="space-y-6">
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6"
+          >
             <div className="border-b border-[var(--border-subtle)] pb-4">
               <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
                 {lang === 'kk' ? 'ИНЖЕНЕРЛІК ҰСТАНЫМДАР' : lang === 'ru' ? 'ПРИНЦИПЫ И ИНЖЕНЕРНЫЙ ПОДХОД' : 'ENGINEERING PRINCIPLES & MINDSET'}
@@ -823,11 +896,15 @@ export default function AboutContent() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {principles.map((p) => {
+              {principles.map((p, idx) => {
                 const PrincipleIcon = p.icon;
                 return (
-                  <div
+                  <motion.div
                     key={p.num}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 0.5, delay: 0.05 + idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={playHover}
                     className="cyber-panel p-5 rounded-xl flex flex-col justify-between space-y-4 hover:border-[var(--accent-border)] transition-all group"
                   >
@@ -848,14 +925,20 @@ export default function AboutContent() {
                         {p.desc}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
-          </section>
+          </motion.section>
 
-          {/* 6. CALL TO ACTION BAR */}
-          <section className="cyber-panel p-8 sm:p-10 rounded-2xl text-center space-y-6">
+          {/* 7. CALL TO ACTION BAR */}
+          <motion.section
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="cyber-panel p-8 sm:p-10 rounded-2xl text-center space-y-6"
+          >
             <div className="space-y-2">
               <h2 className="text-2xl sm:text-3xl font-black text-[var(--heading-tint)] font-display uppercase tracking-wider">
                 {content.system.ctaSecondary}
@@ -889,7 +972,7 @@ export default function AboutContent() {
                 <span>{cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}</span>
               </a>
             </div>
-          </section>
+          </motion.section>
         </div>
       </div>
     </div>
