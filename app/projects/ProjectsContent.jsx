@@ -79,7 +79,7 @@ export default function ProjectsContent() {
                 href={`/projects/${slug}`}
                 onClick={playClick}
                 onMouseEnter={playHover}
-                className="relative block rounded-3xl bg-[#04070B]/90 border border-white/10 hover:border-[var(--accent-border)] backdrop-blur-xl transition-all duration-500 overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_16px_50px_var(--card-hover-glow)] hover:-translate-y-1.5 group cursor-pointer"
+                className="relative block rounded-3xl bg-[#04070B]/90 border border-white/10 hover:border-[var(--accent-border)] backdrop-blur-xl transition-all duration-500 overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_16px_50px_var(--card-hover-glow)] group cursor-pointer"
               >
                 {/* 4 Precision Blueprint Corner Crosshairs (+) */}
                 <div className="absolute top-3 left-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 group-hover:opacity-100 group-hover:scale-125 transition-all pointer-events-none select-none z-20">
@@ -234,7 +234,7 @@ export default function ProjectsContent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-              className="relative cyber-panel p-5 sm:p-6 rounded-2xl border border-white/10 hover:border-[var(--accent-border)] transition-all group flex flex-col justify-between space-y-4 hover:shadow-[0_0_30px_var(--card-hover-glow)] hover:-translate-y-1"
+              className="relative cyber-panel p-5 sm:p-6 rounded-2xl border border-white/10 hover:border-[var(--accent-border)] transition-all group flex flex-col justify-between space-y-4 hover:shadow-[0_0_30px_var(--card-hover-glow)]"
             >
               {/* Corner Blueprint Crosshairs (+) */}
               <div className="absolute top-2.5 left-2.5 font-mono text-[9px] text-[var(--accent-color)] opacity-30 group-hover:opacity-100 transition-opacity select-none pointer-events-none">
