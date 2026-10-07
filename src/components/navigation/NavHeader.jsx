@@ -525,11 +525,23 @@ export default function NavHeader() {
                 </div>
               </div>
 
-              {/* [02] Audio Engine cards matching reference */}
+              {/* [02] Audio Engine cards matching reference with full mute toggle */}
               <div className="mb-3.5">
                 <div className="flex items-center justify-between text-xs text-white/60 mb-2 font-mono font-bold">
                   <span>{content.nav.audioEngine}</span>
-                  <span className="text-[11px] text-[var(--accent-color)] font-bold">{soundEnabled ? 'ON' : 'OFF'}</span>
+                  <button
+                    onClick={() => setSoundEnabled(!soundEnabled)}
+                    onMouseEnter={playHover}
+                    className={`text-[10px] px-2 py-0.5 rounded border transition-all flex items-center gap-1.5 font-mono font-bold ${
+                      soundEnabled
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
+                        : 'bg-rose-500/15 border-rose-500/30 text-rose-400 hover:bg-rose-500/25'
+                    }`}
+                    title={soundEnabled ? 'Mute all sounds' : 'Unmute sounds'}
+                  >
+                    {soundEnabled ? <Volume2 className="w-3 h-3" /> : <VolumeX className="w-3 h-3" />}
+                    <span>{soundEnabled ? (content.nav.audioStatusOn || 'ONLINE') : (content.nav.audioStatusMuted || 'MUTED')}</span>
+                  </button>
                 </div>
                 <div className="space-y-2">
                   {/* Default card */}
@@ -581,6 +593,36 @@ export default function NavHeader() {
                         <span className="w-1 h-4.5 bg-cyan-400 animate-pulse delay-75 rounded-full" />
                         <span className="w-1 h-2.5 bg-cyan-400 animate-pulse delay-150 rounded-full" />
                       </div>
+                    )}
+                  </button>
+
+                  {/* Dedicated Mute Card (Silent Mode) */}
+                  <button
+                    onClick={() => {
+                      setSoundEnabled(!soundEnabled);
+                    }}
+                    onMouseEnter={playHover}
+                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
+                      !soundEnabled
+                        ? 'bg-rose-500/10 border-rose-500/40 text-white shadow-md'
+                        : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    <div>
+                      <p className={`text-xs sm:text-sm font-bold uppercase tracking-wider ${!soundEnabled ? 'text-rose-400' : 'text-white'}`}>
+                        {content.nav.audioMute || 'Mute All Sounds'}
+                      </p>
+                      <p className="text-[10px] text-white/40 tracking-wider font-mono mt-0.5">
+                        {content.nav.audioMuteSub || 'SILENT MODE / NO SFX'}
+                      </p>
+                    </div>
+                    {!soundEnabled ? (
+                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 text-[10px] font-mono font-bold">
+                        <VolumeX className="w-3.5 h-3.5" />
+                        <span>{content.nav.audioStatusMuted || 'MUTED'}</span>
+                      </div>
+                    ) : (
+                      <VolumeX className="w-4 h-4 text-white/30" />
                     )}
                   </button>
                 </div>
