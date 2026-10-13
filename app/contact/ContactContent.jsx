@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
 import { soundFx } from '../../src/audio/soundEffects';
-import { Mail, Send, Copy, Check, ExternalLink, User, AtSign, MessageSquare } from 'lucide-react';
+import { Mail, Send, Copy, Check, ExternalLink, User, AtSign, MessageSquare, Phone } from 'lucide-react';
 import { FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa6';
+import { SiLeetcode } from 'react-icons/si';
 import confetti from 'canvas-confetti';
 
 export default function ContactContent() {
@@ -29,7 +29,9 @@ export default function ContactContent() {
         origin: { y: 0.8 },
         colors: ['#00FF9F', '#00F3FF', '#FFFFFF'],
       });
-    } catch {}
+    } catch {
+      // Confetti safe ignore
+    }
 
     setTimeout(() => setCopied(false), 3000);
   };
@@ -45,7 +47,9 @@ export default function ContactContent() {
         origin: { y: 0.6 },
         colors: ['#00FF9F', '#00F3FF', '#FFFFFF'],
       });
-    } catch {}
+    } catch {
+      // Confetti safe ignore
+    }
   };
 
   return (
@@ -102,6 +106,22 @@ export default function ContactContent() {
               </motion.div>
             )}
 
+            {/* Phone Direct */}
+            {contact.phone && (
+              <a
+                href={`tel:${contact.phoneRaw || '+77088350549'}`}
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="w-full flex items-center justify-between p-4 rounded-lg bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-[var(--heading-tint)] text-xs font-bold tracking-wider uppercase transition-all hover:scale-[1.02] active:scale-95 group"
+              >
+                <div className="flex items-center gap-3 truncate">
+                  <Phone className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
+                  <span className="truncate">{contact.phone}</span>
+                </div>
+                <ExternalLink className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-color)] group-hover:translate-x-0.5 transition-all" />
+              </a>
+            )}
+
             {/* Social Grid */}
             <div className="space-y-2 pt-2 border-t border-[var(--border-subtle)] text-xs">
               <a
@@ -109,13 +129,13 @@ export default function ContactContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={playHover}
-                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:bg-[var(--card-hover-glow)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] border border-[var(--border-subtle)] transition-colors"
+                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-white/60 hover:text-white hover:bg-white/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
               >
                 <div className="flex items-center gap-2.5">
-                  <FaGithub className="w-4 h-4 text-[var(--accent-color)]" />
+                  <FaGithub className="w-4 h-4 text-[var(--accent-color)] group-hover:text-white transition-colors" />
                   <span>GitHub</span>
                 </div>
-                <span className="text-[11px] text-[var(--accent-color)]">@Daelijek</span>
+                <span className="text-[11px] text-[var(--accent-color)] group-hover:text-white transition-colors">@Daelijek</span>
               </a>
 
               <a
@@ -123,14 +143,30 @@ export default function ContactContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={playHover}
-                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:bg-[var(--card-hover-glow)] text-[var(--text-secondary)] hover:text-[var(--heading-tint)] border border-[var(--border-subtle)] transition-colors"
+                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-[#0A66C2] hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
               >
                 <div className="flex items-center gap-2.5">
-                  <FaLinkedin className="w-4 h-4 text-[var(--accent-color)]" />
+                  <FaLinkedin className="w-4 h-4 text-[var(--accent-color)] group-hover:text-[#0A66C2] transition-colors" />
                   <span>LinkedIn</span>
                 </div>
-                <span className="text-[11px] text-[var(--accent-color)]">/in/dias-yermek</span>
+                <span className="text-[11px] text-[var(--accent-color)] group-hover:text-[#0A66C2] transition-colors">/in/dias-yermek</span>
               </a>
+
+              {contact.leetcode && (
+                <a
+                  href={contact.leetcode}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={playHover}
+                  className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-[#FFA116] hover:text-[#FFA116] hover:bg-[#FFA116]/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <SiLeetcode className="w-4 h-4 text-amber-400 group-hover:text-[#FFA116] transition-colors" />
+                    <span>LeetCode</span>
+                  </div>
+                  <span className="text-[11px] text-[var(--accent-color)] group-hover:text-[#FFA116] transition-colors">/u/Daelijek</span>
+                </a>
+              )}
             </div>
           </div>
         </div>

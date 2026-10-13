@@ -167,7 +167,9 @@ export default function HomePage() {
         setIsBooted(true);
         return;
       }
-    } catch { }
+    } catch {
+      // Storage access safe ignore
+    }
 
     let isMounted = true;
     let targetProgress = 0;
@@ -194,7 +196,9 @@ export default function HomePage() {
       if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
         try {
           await document.fonts.ready;
-        } catch { }
+        } catch {
+          // Font ready safe ignore
+        }
       }
       targetProgress = 50;
       await new Promise((r) => setTimeout(r, 140));
@@ -262,6 +266,7 @@ export default function HomePage() {
       isMounted = false;
       clearInterval(progressTicker);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBooted]);
 
   const handleEnter = () => {
@@ -269,13 +274,17 @@ export default function HomePage() {
     setIsBooted(true);
     try {
       sessionStorage.setItem('daelijek_booted', 'true');
-    } catch { }
+    } catch {
+      // Storage access safe ignore
+    }
   };
 
-  const triggerBoot = () => {
+  const _triggerBoot = () => {
     try {
       sessionStorage.removeItem('daelijek_booted');
-    } catch { }
+    } catch {
+      // Storage access safe ignore
+    }
     setProgress(0);
     setIsBooted(false);
   };
@@ -523,8 +532,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Bottom Row: Wanna Say Hello? (Left) & Local Time (Right next to it) */}
-          <div className="pointer-events-auto hidden md:max-xl:landscape:flex xl:flex items-end gap-6 sm:gap-8 lg:gap-12 font-mono text-xs select-none">
+          {/* Bottom Row: Wanna Say Hello? (Left) & Local Time (Right next to it) - Desktop only */}
+          <div className="pointer-events-auto hidden xl:flex items-end gap-6 sm:gap-8 lg:gap-12 font-mono text-xs select-none">
             {/* Email */}
             <div>
               <p className="text-[10px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider mb-0.5">{content.system.wannaSayHello}</p>

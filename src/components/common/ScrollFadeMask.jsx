@@ -6,8 +6,9 @@ import { usePathname } from 'next/navigation';
 export default function ScrollFadeMask({ children }) {
   const pathname = usePathname();
 
-  // Root HUD landing page is fixed and has its own layout
-  if (pathname === '/') {
+  // Root HUD landing page and project detail pages have their own layouts and headers
+  const isProjectDetail = pathname?.startsWith('/projects/') && pathname !== '/projects';
+  if (pathname === '/' || isProjectDetail) {
     return <>{children}</>;
   }
 

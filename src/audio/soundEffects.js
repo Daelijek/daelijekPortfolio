@@ -146,7 +146,9 @@ class SoundEngine {
         osc.start(now);
         osc.stop(now + 0.07);
       }
-    } catch {}
+    } catch {
+      // Audio context policy safe ignore
+    }
   }
 
   // Switch sound (Theme change, tabs, options)
@@ -200,7 +202,9 @@ class SoundEngine {
           osc.stop(t + 0.12);
         });
       }
-    } catch {}
+    } catch {
+      // Audio context policy safe ignore
+    }
   }
 
   // Instant signature audio profile preview when selecting in Settings
@@ -254,7 +258,9 @@ class SoundEngine {
           osc.stop(t + 0.2);
         });
       }
-    } catch {}
+    } catch {
+      // Audio context policy safe ignore
+    }
   }
 
   // Boot sequence initialization chime
@@ -308,7 +314,9 @@ class SoundEngine {
           osc.stop(t + 0.3);
         });
       }
-    } catch {}
+    } catch {
+      // Audio context policy safe ignore
+    }
   }
 
   // Futuristic telemetry download chime
@@ -338,7 +346,9 @@ class SoundEngine {
         osc.start(t);
         osc.stop(t + 0.15);
       });
-    } catch {}
+    } catch {
+      // Audio context policy safe ignore
+    }
   }
 }
 

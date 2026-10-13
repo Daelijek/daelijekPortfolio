@@ -61,7 +61,9 @@ export function ThemeAudioProvider({ children }) {
       if (savedPerf) {
         setPerfTierState(savedPerf);
       }
-    } catch {}
+    } catch {
+      // Storage access safe ignore
+    }
   }, []);
 
   const setTheme = (newTheme) => {
@@ -69,7 +71,9 @@ export function ThemeAudioProvider({ children }) {
     document.documentElement.setAttribute('data-theme', newTheme);
     try {
       localStorage.setItem('daelijek_theme', newTheme);
-    } catch {}
+    } catch {
+      // Storage access safe ignore
+    }
     soundFx.playSwitch();
   };
 
@@ -78,7 +82,9 @@ export function ThemeAudioProvider({ children }) {
     soundFx.setEnabled(val);
     try {
       localStorage.setItem('daelijek_sound', val ? 'true' : 'false');
-    } catch {}
+    } catch {
+      // Storage access safe ignore
+    }
     if (val) soundFx.playClick();
   };
 
@@ -87,7 +93,9 @@ export function ThemeAudioProvider({ children }) {
     soundFx.setProfile(profile);
     try {
       localStorage.setItem('daelijek_audio_profile', profile);
-    } catch {}
+    } catch {
+      // Storage access safe ignore
+    }
     soundFx.playProfileDemo(profile);
   };
 
@@ -95,7 +103,9 @@ export function ThemeAudioProvider({ children }) {
     setLangState(newLang);
     try {
       localStorage.setItem('daelijek_lang', newLang);
-    } catch {}
+    } catch {
+      // Storage access safe ignore
+    }
     soundFx.playSwitch();
   };
 
@@ -103,7 +113,9 @@ export function ThemeAudioProvider({ children }) {
     setPerfTierState(tier);
     try {
       localStorage.setItem('daelijek_perf', tier);
-    } catch {}
+    } catch {
+      // Storage access safe ignore
+    }
     soundFx.playSwitch();
   };
 
