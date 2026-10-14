@@ -272,3 +272,57 @@ p, span, a, button, li, div {
 .text-glow-strong {
   text-shadow: 0 0 20px var(--accent-color), 0 0 50px var(--accent-glow);
 }
+
+/* ==========================================================================
+   Futuristic Neon Laser Border Beam (Nav Menu Route Links)
+   ========================================================================== */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes laserBorderSweep {
+  0% {
+    --beam-angle: 0deg;
+  }
+  100% {
+    --beam-angle: 360deg;
+  }
+}
+
+.nav-laser-beam {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.nav-laser-beam::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg) at 50% 50%,
+    transparent 0deg,
+    transparent 220deg,
+    rgba(255, 255, 255, 0.05) 240deg,
+    var(--accent-glow) 290deg,
+    var(--accent-color) 345deg,
+    #ffffff 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.nav-laser-beam:hover::before {
+  opacity: 1;
+  animation: laserBorderSweep 2.2s linear infinite;
+}

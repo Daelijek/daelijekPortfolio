@@ -352,15 +352,15 @@ export default function NavHeader() {
                             setIsMenuOpen(false);
                           }}
                           onMouseEnter={playHover}
-                          className="flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
+                          className="nav-laser-beam relative flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-transparent bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] hover:shadow-[0_0_15px_var(--accent-glow)] text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 relative z-10">
                             <span className="text-xs text-[var(--text-muted)] font-mono">[{item.index}]</span>
                             <span className="text-sm sm:text-base font-bold uppercase tracking-wider font-display">
                               {item.label}
                             </span>
                           </div>
-                          <span className="w-2 h-2 rounded-full bg-[var(--border-bright)] group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
+                          <span className="relative z-10 w-2 h-2 rounded-full bg-[var(--border-bright)] group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
                         </Link>
                       ))}
                     </nav>
