@@ -352,8 +352,57 @@ export default function NavHeader() {
                             setIsMenuOpen(false);
                           }}
                           onMouseEnter={playHover}
-                          className="nav-laser-beam relative flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-transparent bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] hover:shadow-[0_0_15px_var(--accent-glow)] text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
+                          className="relative flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-transparent bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)]/15 text-[var(--text-secondary)] hover:text-[var(--accent-color)] hover:shadow-[0_0_20px_var(--accent-glow)] transition-all group overflow-visible"
                         >
+                          {/* Animated 3-Tier Neon Laser Border Beam */}
+                          <svg
+                            className="absolute -inset-[1px] w-[calc(100%+2px)] h-[calc(100%+2px)] rounded-xl pointer-events-none overflow-visible opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            aria-hidden="true"
+                          >
+                            {/* Tail (soft wide neon trail) */}
+                            <rect
+                              x="1"
+                              y="1"
+                              width="calc(100% - 2px)"
+                              height="calc(100% - 2px)"
+                              rx="12"
+                              fill="none"
+                              stroke="var(--accent-color)"
+                              strokeWidth="1.5"
+                              pathLength="100"
+                              strokeDasharray="35 65"
+                              className="laser-beam-tail"
+                            />
+                            {/* Body (bright neon beam) */}
+                            <rect
+                              x="1"
+                              y="1"
+                              width="calc(100% - 2px)"
+                              height="calc(100% - 2px)"
+                              rx="12"
+                              fill="none"
+                              stroke="var(--accent-color)"
+                              strokeWidth="2"
+                              pathLength="100"
+                              strokeDasharray="18 82"
+                              className="laser-beam-body"
+                            />
+                            {/* Head (intense white laser tip) */}
+                            <rect
+                              x="1"
+                              y="1"
+                              width="calc(100% - 2px)"
+                              height="calc(100% - 2px)"
+                              rx="12"
+                              fill="none"
+                              stroke="#ffffff"
+                              strokeWidth="2.5"
+                              pathLength="100"
+                              strokeDasharray="5 95"
+                              className="laser-beam-head"
+                            />
+                          </svg>
+
                           <div className="flex items-center gap-3 relative z-10">
                             <span className="text-xs text-[var(--text-muted)] font-mono">[{item.index}]</span>
                             <span className="text-sm sm:text-base font-bold uppercase tracking-wider font-display">
