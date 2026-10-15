@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
 import { soundFx } from '../../src/audio/soundEffects';
-import { Mail, Send, Copy, Check, ExternalLink, User, AtSign, MessageSquare, Phone } from 'lucide-react';
+import { ArrowUpRight, Copy, Check, Phone } from 'lucide-react';
 import { FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
 import confetti from 'canvas-confetti';
@@ -13,254 +14,257 @@ export default function ContactContent() {
   const { lang, playHover, playClick } = useThemeAudio();
   const content = portfolioContent[lang] || portfolioContent.en;
   const contact = content.contact;
-  const [copied, setCopied] = useState(false);
-  const [formSent, setFormSent] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
-  const handleCopyEmail = () => {
+  const [copied, setCopied] = useState(false);
+  const [astanaTime, setAstanaTime] = useState('');
+
+  // Astana real-time clock (UTC+5)
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        const now = new Date();
+        const timeStr = new Intl.DateTimeFormat('en-GB', {
+          timeZone: 'Asia/Almaty',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        }).format(now);
+        setAstanaTime(timeStr);
+      } catch {
+        const d = new Date();
+        setAstanaTime(d.toTimeString().split(' ')[0]);
+      }
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleCopyEmail = (e) => {
+    e?.preventDefault?.();
     navigator.clipboard.writeText(contact.email);
     setCopied(true);
     soundFx.playSwitch();
 
     try {
       confetti({
-        particleCount: 35,
-        spread: 60,
-        origin: { y: 0.8 },
+        particleCount: 25,
+        spread: 50,
+        origin: { y: 0.5 },
         colors: ['#00FF9F', '#00F3FF', '#FFFFFF'],
       });
     } catch {
-      // Confetti safe ignore
+      // safe ignore
     }
 
-    setTimeout(() => setCopied(false), 3000);
+    setTimeout(() => setCopied(false), 2200);
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    soundFx.playBootChime();
-    setFormSent(true);
-    try {
-      confetti({
-        particleCount: 50,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#00FF9F', '#00F3FF', '#FFFFFF'],
-      });
-    } catch {
-      // Confetti safe ignore
-    }
+  const labels = {
+    en: {
+      tag: '// CONTACT',
+      title: 'GET IN TOUCH',
+      telegramTag: 'OPEN TELEGRAM',
+      emailCopy: 'COPY EMAIL',
+      copied: 'COPIED TO CLIPBOARD',
+      phoneCall: 'CALL',
+      available: 'AVAILABLE FOR WORK',
+      location: 'ASTANA, KZ',
+    },
+    ru: {
+      tag: '// КОНТАКТЫ',
+      title: 'СВЯЗАТЬСЯ СО МНОЙ',
+      telegramTag: 'ОТКРЫТЬ TELEGRAM',
+      emailCopy: 'СКОПИРОВАТЬ EMAIL',
+      copied: 'СКОПИРОВАНО В БУФЕР',
+      phoneCall: 'ПОЗВОНИТЬ',
+      available: 'ОТКРЫТ К ПРЕДЛОЖЕНИЯМ',
+      location: 'АСТАНА, КАЗАХСТАН',
+    },
+    kk: {
+      tag: '// БАЙЛАНЫС',
+      title: 'БАЙЛАНЫСҚА ШЫҒУ',
+      telegramTag: 'TELEGRAM АШУ',
+      emailCopy: 'EMAIL КӨШІРУ',
+      copied: 'БУФЕРГЕ КӨШІРІЛДІ',
+      phoneCall: 'ҚОҢЫРАУ ШАЛУ',
+      available: 'ҰСЫНЫСТАРҒА АШЫҚ',
+      location: 'АСТАНА, ҚАЗАҚСТАН',
+    },
   };
+
+  const t = labels[lang] || labels.en;
+
+  const socialLinks = [
+    {
+      name: 'GitHub',
+      handle: '@Daelijek',
+      url: contact.github,
+      icon: FaGithub,
+    },
+    {
+      name: 'LinkedIn',
+      handle: '/in/dias-yermek',
+      url: contact.linkedin,
+      icon: FaLinkedin,
+    },
+    {
+      name: 'LeetCode',
+      handle: '/u/Daelijek',
+      url: contact.leetcode,
+      icon: SiLeetcode,
+    },
+  ];
 
   return (
-    <div className="min-h-screen pt-44 sm:pt-56 lg:pt-60 pb-36 px-6 sm:px-12 max-w-5xl mx-auto font-mono">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-        {/* Left Column: Direct Links & Info */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="cyber-panel p-6 sm:p-8 rounded-xl space-y-6">
-            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3 text-xs text-[var(--text-muted)]">
-              <span className="text-[var(--accent-color)] font-bold">{contact.quickChannels}</span>
-              <span>{contact.encrypted}</span>
-            </div>
+    <div className="min-h-screen flex flex-col justify-center items-center px-6 py-24 sm:py-32 selection:bg-[var(--accent-color)] selection:text-black">
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="w-full max-w-2xl mx-auto flex flex-col items-center text-center space-y-10 sm:space-y-12"
+      >
+        {/* Simple, Non-pretentious Centered Header */}
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-[var(--accent-color)] tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
+            <span>{t.tag}</span>
+          </div>
+          <h1 className="text-3xl sm:text-5xl font-condensed tracking-wider uppercase text-[var(--heading-tint)]">
+            {t.title}
+          </h1>
+        </div>
 
-            {/* Telegram Direct */}
+        {/* =====================================================================
+            MAIN CONTACTS (Centered, Large Typography, Zero Boxes/Cards)
+           ===================================================================== */}
+        <div className="w-full space-y-4">
+          {/* 1. TELEGRAM (Primary & Direct) */}
+          <a
+            href={contact.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={playClick}
+            onMouseEnter={playHover}
+            className="group flex flex-col sm:flex-row items-center justify-between py-5 sm:py-6 px-4 border-b border-[var(--border-subtle)] hover:border-[var(--accent-color)] transition-all duration-300"
+          >
+            <div className="flex items-center gap-3">
+              <FaTelegram className="w-5 h-5 text-[var(--accent-color)] group-hover:scale-110 transition-transform" />
+              <span className="text-xl sm:text-2xl md:text-3xl font-display font-bold uppercase text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors">
+                TELEGRAM
+              </span>
+            </div>
+            <div className="flex items-center gap-3 mt-1 sm:mt-0">
+              <span className="text-sm sm:text-base font-mono text-[var(--accent-color)] font-semibold">
+                @daelijek_og
+              </span>
+              <ArrowUpRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-color)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
+          </a>
+
+          {/* 2. EMAIL (Click to Copy) */}
+          <button
+            onClick={handleCopyEmail}
+            onMouseEnter={playHover}
+            className="w-full group flex flex-col sm:flex-row items-center justify-between py-5 sm:py-6 px-4 border-b border-[var(--border-subtle)] hover:border-[var(--accent-color)] transition-all duration-300 cursor-pointer text-left"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-mono text-[var(--accent-color)] font-bold">@</span>
+              <span className="text-xl sm:text-2xl md:text-3xl font-display font-bold uppercase text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors">
+                EMAIL
+              </span>
+            </div>
+            <div className="flex items-center gap-3 mt-1 sm:mt-0">
+              <span className="text-sm sm:text-base font-mono text-[var(--text-secondary)] group-hover:text-[var(--heading-tint)] transition-colors truncate">
+                {contact.email}
+              </span>
+              <span
+                className={`text-[11px] font-mono px-2 py-0.5 rounded transition-all ${
+                  copied
+                    ? 'bg-[var(--accent-color)] text-black font-bold shadow-[0_0_12px_var(--accent-glow)]'
+                    : 'text-[var(--text-muted)] group-hover:text-[var(--accent-color)]'
+                }`}
+              >
+                {copied ? (
+                  <span className="flex items-center gap-1">
+                    <Check className="w-3 h-3" />
+                    {t.copied}
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-1">
+                    <Copy className="w-3 h-3" />
+                    {t.emailCopy}
+                  </span>
+                )}
+              </span>
+            </div>
+          </button>
+
+          {/* 3. PHONE / VOICE */}
+          {contact.phone && (
             <a
-              href={contact.telegram}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`tel:${contact.phoneRaw || '+77088350549'}`}
               onClick={playClick}
               onMouseEnter={playHover}
-              className="flex items-center justify-between p-4 rounded-lg bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_25px_var(--accent-glow)] transition-all hover:scale-[1.02] active:scale-95 group"
+              className="group flex flex-col sm:flex-row items-center justify-between py-5 sm:py-6 px-4 border-b border-[var(--border-subtle)] hover:border-[var(--accent-color)] transition-all duration-300"
             >
               <div className="flex items-center gap-3">
-                <FaTelegram className="w-4 h-4" />
-                <span>{contact.openTelegram}</span>
+                <Phone className="w-4 h-4 text-[var(--accent-color)] group-hover:scale-110 transition-transform" />
+                <span className="text-xl sm:text-2xl md:text-3xl font-display font-bold uppercase text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors">
+                  PHONE
+                </span>
               </div>
-              <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <div className="flex items-center gap-3 mt-1 sm:mt-0">
+                <span className="text-sm sm:text-base font-mono text-[var(--text-secondary)] group-hover:text-[var(--heading-tint)] transition-colors">
+                  {contact.phone}
+                </span>
+                <ArrowUpRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-color)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
             </a>
+          )}
+        </div>
 
-            {/* Copy Email */}
-            <button
-              onClick={handleCopyEmail}
-              onMouseEnter={playHover}
-              className="w-full flex items-center justify-between p-4 rounded-lg bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-[var(--heading-tint)] text-xs font-bold tracking-wider uppercase transition-all hover:scale-[1.02] active:scale-95"
-            >
-              <div className="flex items-center gap-3 truncate">
-                <Mail className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
-                <span className="truncate">{contact.email}</span>
-              </div>
-              {copied ? (
-                <Check className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
-              ) : (
-                <Copy className="w-4 h-4 text-[var(--text-muted)] shrink-0" />
-              )}
-            </button>
-
-            {copied && (
-              <motion.div
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center text-xs text-[var(--accent-color)] font-bold"
-              >
-                &gt;&gt; {contact.copied}
-              </motion.div>
-            )}
-
-            {/* Phone Direct */}
-            {contact.phone && (
+        {/* =====================================================================
+            SOCIALS (Sleek Horizontal Links Centered Below)
+           ===================================================================== */}
+        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 pt-2 font-mono text-xs">
+          {socialLinks.map((s) => {
+            const Icon = s.icon;
+            return (
               <a
-                href={`tel:${contact.phoneRaw || '+77088350549'}`}
+                key={s.name}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={playClick}
                 onMouseEnter={playHover}
-                className="w-full flex items-center justify-between p-4 rounded-lg bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-[var(--heading-tint)] text-xs font-bold tracking-wider uppercase transition-all hover:scale-[1.02] active:scale-95 group"
+                className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
               >
-                <div className="flex items-center gap-3 truncate">
-                  <Phone className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
-                  <span className="truncate">{contact.phone}</span>
-                </div>
-                <ExternalLink className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-color)] group-hover:translate-x-0.5 transition-all" />
+                <Icon className="w-3.5 h-3.5 text-[var(--accent-color)] group-hover:scale-110 transition-transform" />
+                <span className="font-bold tracking-wider">{s.name}</span>
+                <span className="text-[11px] text-[var(--text-muted)] group-hover:text-[var(--accent-color)] transition-colors">
+                  {s.handle}
+                </span>
               </a>
-            )}
-
-            {/* Social Grid */}
-            <div className="space-y-2 pt-2 border-t border-[var(--border-subtle)] text-xs">
-              <a
-                href={contact.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={playHover}
-                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-white/60 hover:text-white hover:bg-white/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <FaGithub className="w-4 h-4 text-[var(--accent-color)] group-hover:text-white transition-colors" />
-                  <span>GitHub</span>
-                </div>
-                <span className="text-[11px] text-[var(--accent-color)] group-hover:text-white transition-colors">@Daelijek</span>
-              </a>
-
-              <a
-                href={contact.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={playHover}
-                className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-[#0A66C2] hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
-              >
-                <div className="flex items-center gap-2.5">
-                  <FaLinkedin className="w-4 h-4 text-[var(--accent-color)] group-hover:text-[#0A66C2] transition-colors" />
-                  <span>LinkedIn</span>
-                </div>
-                <span className="text-[11px] text-[var(--accent-color)] group-hover:text-[#0A66C2] transition-colors">/in/dias-yermek</span>
-              </a>
-
-              {contact.leetcode && (
-                <a
-                  href={contact.leetcode}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseEnter={playHover}
-                  className="flex items-center justify-between p-3 rounded bg-[var(--accent-bg-subtle)] hover:border-[#FFA116] hover:text-[#FFA116] hover:bg-[#FFA116]/10 text-[var(--text-secondary)] border border-[var(--border-subtle)] transition-all group"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <SiLeetcode className="w-4 h-4 text-amber-400 group-hover:text-[#FFA116] transition-colors" />
-                    <span>LeetCode</span>
-                  </div>
-                  <span className="text-[11px] text-[var(--accent-color)] group-hover:text-[#FFA116] transition-colors">/u/Daelijek</span>
-                </a>
-              )}
-            </div>
-          </div>
+            );
+          })}
         </div>
 
-        {/* Right Column: Direct Message Transmission */}
-        <div className="lg:col-span-7">
-          <div className="cyber-panel p-6 sm:p-8 rounded-xl space-y-6">
-            <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3 text-xs text-[var(--text-muted)]">
-              <span className="text-[var(--accent-color)] font-bold">{contact.formTitle}</span>
-              <span>{contact.formReady}</span>
-            </div>
-
-            {formSent ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="p-8 text-center space-y-4"
-              >
-                <div className="w-12 h-12 rounded-full bg-[var(--accent-glow)] border border-[var(--accent-border)] text-[var(--accent-color)] flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-[var(--heading-tint)] font-display uppercase">
-                  {contact.messageSent}
-                </h3>
-                <p className="text-xs text-[var(--text-secondary)] max-w-sm mx-auto font-sans leading-relaxed">
-                  {contact.messageSentDesc}
-                </p>
-                <button
-                  onClick={() => setFormSent(false)}
-                  className="px-6 py-2 rounded bg-black/40 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] text-xs text-[var(--text-secondary)] hover:text-[var(--heading-tint)] font-bold tracking-wider uppercase transition-all mt-4"
-                >
-                  {contact.sendAnother}
-                </button>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleFormSubmit} className="space-y-4 text-xs">
-                <div>
-                  <label className="block text-[var(--text-secondary)] text-[11px] font-bold uppercase mb-1.5 flex items-center gap-1.5">
-                    <User className="w-3.5 h-3.5 text-[var(--accent-color)]" />
-                    <span>{contact.nameLabel}</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder={contact.namePlaceholder}
-                    className="w-full bg-black/50 border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-lg p-3 text-[var(--heading-tint)] placeholder-[var(--text-muted)] outline-none transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[var(--text-secondary)] text-[11px] font-bold uppercase mb-1.5 flex items-center gap-1.5">
-                    <AtSign className="w-3.5 h-3.5 text-[var(--accent-color)]" />
-                    <span>{contact.emailLabel}</span>
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder={contact.emailPlaceholder}
-                    className="w-full bg-black/50 border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-lg p-3 text-[var(--heading-tint)] placeholder-[var(--text-muted)] outline-none transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[var(--text-secondary)] text-[11px] font-bold uppercase mb-1.5 flex items-center gap-1.5">
-                    <MessageSquare className="w-3.5 h-3.5 text-[var(--accent-color)]" />
-                    <span>{contact.messageLabel}</span>
-                  </label>
-                  <textarea
-                    rows={4}
-                    required
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder={contact.messagePlaceholder}
-                    className="w-full bg-black/50 border border-[var(--border-subtle)] focus:border-[var(--accent-border)] rounded-lg p-3 text-[var(--heading-tint)] placeholder-[var(--text-muted)] outline-none transition-colors resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  onMouseEnter={playHover}
-                  className="w-full py-3.5 rounded-lg bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-widest uppercase hover:shadow-[0_0_25px_var(--accent-glow)] transition-all hover:scale-[1.01] active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>{contact.sendButton}</span>
-                </button>
-              </form>
-            )}
-          </div>
+        {/* Minimalist Centered Footer Status */}
+        <div className="pt-6 flex flex-wrap items-center justify-center gap-4 text-[11px] font-mono text-[var(--text-muted)] border-t border-[var(--border-subtle)] w-full">
+          <span className="text-[var(--accent-color)] flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)]" />
+            {t.available}
+          </span>
+          <span>·</span>
+          <span>{t.location}</span>
+          <span>·</span>
+          <span className="tabular-nums font-bold text-[var(--heading-tint)]">
+            {astanaTime || '14:00:00'} [UTC+5]
+          </span>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

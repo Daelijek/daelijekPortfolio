@@ -206,11 +206,10 @@ export default function NavHeader() {
           className="relative"
         >
           <div
-            className={`w-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl transition-colors duration-300 font-mono select-none overflow-hidden border-2 box-border ${
-              isMenuOpen
+            className={`w-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl transition-colors duration-300 font-mono select-none overflow-hidden border-2 box-border ${isMenuOpen
                 ? 'bg-[#04080A]/95 border-[var(--accent-color)] shadow-[0_0_50px_var(--accent-glow)]'
                 : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] shadow-2xl'
-            }`}
+              }`}
           >
             {/* Expanded Content (Fluid synchronized height expansion without measuring mismatch) */}
             <AnimatePresence initial={false}>
@@ -241,7 +240,7 @@ export default function NavHeader() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.25, ease: 'easeOut', delay: 0.05 }}
-                    className="w-[calc(100vw-24px)] md:w-[380px] max-w-[calc(100vw-24px)] p-4 sm:p-5 pb-3 flex flex-col gap-3.5 sm:gap-4 box-border"
+                    className="w-[calc(100vw-24px)] md:w-[380px] max-w-[calc(100vw-24px)] p-4 sm:p-5 pb-0 sm:pb-0 flex flex-col gap-3.5 sm:gap-4 box-border"
                   >
                     {/* 1. Header */}
                     <div className="flex items-start justify-between border-b border-[var(--border-subtle)] pb-2.5">
@@ -339,8 +338,11 @@ export default function NavHeader() {
                       </span>
                     </a>
 
+                    {/* Separator between CV and navigation routes */}
+                    <div className="h-[1px] w-full bg-[var(--border-subtle)]" />
+
                     {/* 4. Navigation Routes (Counting upwards towards bottom bar) */}
-                    <nav className="space-y-1.5 pt-1 border-t border-[var(--border-subtle)]">
+                    <nav className="space-y-1.5">
                       {otherRoutes.map((item) => (
                         <Link
                           key={item.href}
@@ -350,20 +352,26 @@ export default function NavHeader() {
                             setIsMenuOpen(false);
                           }}
                           onMouseEnter={playHover}
-                          className="flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent-border)] bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)] text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
+                          className="relative flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-transparent bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)]/15 text-[var(--text-secondary)] hover:text-[var(--accent-color)] hover:shadow-[0_0_20px_var(--accent-glow)] transition-all group overflow-visible"
                         >
-                          <div className="flex items-center gap-3">
+                          {/* Animated Continuous Gradient Neon Border Beam */}
+                          <div className="nav-border-beam-mask opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
+                            <div className="nav-border-beam-ray" />
+                          </div>
+
+                          <div className="flex items-center gap-3 relative z-10">
                             <span className="text-xs text-[var(--text-muted)] font-mono">[{item.index}]</span>
                             <span className="text-sm sm:text-base font-bold uppercase tracking-wider font-display">
                               {item.label}
                             </span>
                           </div>
-                          <span className="w-2 h-2 rounded-full bg-[var(--border-bright)] group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
+                          <span className="relative z-10 w-2 h-2 rounded-full bg-[var(--border-bright)] group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_8px_var(--accent-color)] transition-all" />
                         </Link>
                       ))}
                     </nav>
+
                     {/* Fixed separator before bottom capsule */}
-                    <div className="h-[1px] w-full bg-[var(--border-subtle)] mt-0.5" />
+                    <div className="h-[1px] w-full bg-[var(--border-subtle)] mt-1 sm:mt-1.5" />
                   </motion.div>
                 </motion.div>
               )}
@@ -388,21 +396,19 @@ export default function NavHeader() {
               }}
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="group flex items-center justify-between pl-4 xs:pl-5 sm:pl-6 pr-1.5 xs:pr-2 h-[46px] xs:h-[50px] sm:h-[56px] cursor-pointer gap-2 xs:gap-3"
+              className="group flex items-center justify-between pl-4 xs:pl-5 sm:pl-6 pr-1.5 xs:pr-2 h-[48px] xs:h-[52px] sm:h-[58px] cursor-pointer gap-2 xs:gap-3"
             >
               {/* Index & Label */}
               <div className="flex items-center gap-2 xs:gap-3">
                 <span
-                  className={`text-xs sm:text-sm font-mono font-bold transition-colors ${
-                    isMenuOpen ? 'text-[var(--accent-color)]' : 'text-[var(--text-muted)] group-hover:text-[var(--accent-color)]'
-                  }`}
+                  className={`text-xs sm:text-sm font-mono font-bold transition-colors ${isMenuOpen ? 'text-[var(--accent-color)]' : 'text-[var(--text-muted)] group-hover:text-[var(--accent-color)]'
+                    }`}
                 >
                   [{currentNav.index}]
                 </span>
                 <span
-                  className={`text-sm xs:text-base sm:text-lg font-black tracking-widest uppercase font-display transition-colors ${
-                    isMenuOpen ? 'text-[var(--accent-color)]' : 'text-[var(--heading-tint)]'
-                  }`}
+                  className={`text-sm xs:text-base sm:text-lg font-black tracking-widest uppercase font-display transition-colors ${isMenuOpen ? 'text-[var(--accent-color)]' : 'text-[var(--heading-tint)]'
+                    }`}
                 >
                   {currentNav.label}
                 </span>
@@ -410,11 +416,10 @@ export default function NavHeader() {
 
               {/* Theme-Tinted Matrix Icon Button */}
               <div
-                className={`w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-500 shrink-0 ${
-                  isMenuOpen
+                className={`w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-md group-hover:scale-105 transition-all duration-500 shrink-0 ${isMenuOpen
                     ? 'bg-white text-black rotate-90 shadow-[0_0_20px_rgba(255,255,255,0.4)]'
                     : 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_10px_var(--card-hover-glow)]'
-                }`}
+                  }`}
               >
                 <div className="grid grid-cols-2 gap-1 w-2.5 h-2.5 xs:w-3 xs:h-3 items-center justify-center">
                   <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
@@ -430,9 +435,8 @@ export default function NavHeader() {
         {/* System Settings Gear Button */}
         <div
           ref={settingsRef}
-          className={`fixed right-2.5 xs:right-3.5 top-1/2 -translate-y-1/2 md:translate-y-0 md:relative md:top-auto md:right-auto md:self-end select-none font-mono transition-opacity duration-300 z-30 ${
-            isMenuOpen ? 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto' : 'opacity-100'
-          }`}
+          className={`fixed right-2.5 xs:right-3.5 top-1/2 -translate-y-1/2 md:translate-y-0 md:relative md:top-auto md:right-auto md:self-end select-none font-mono transition-opacity duration-300 z-30 ${isMenuOpen ? 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto' : 'opacity-100'
+            }`}
         >
           <button
             onClick={() => {
@@ -441,11 +445,10 @@ export default function NavHeader() {
               if (isMenuOpen) setIsMenuOpen(false);
             }}
             onMouseEnter={playHover}
-            className={`w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 md:w-[60px] md:h-[60px] rounded-xl sm:rounded-2xl md:rounded-3xl backdrop-blur-2xl border-2 transition-all flex items-center justify-center shadow-2xl box-border ${
-              isSettingsOpen
+            className={`w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 md:w-[60px] md:h-[60px] rounded-xl sm:rounded-2xl md:rounded-3xl backdrop-blur-2xl border-2 transition-all flex items-center justify-center shadow-2xl box-border ${isSettingsOpen
                 ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
                 : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] hover:shadow-[0_0_20px_var(--card-hover-glow)]'
-            }`}
+              }`}
             aria-label="Global System Settings"
           >
             <Settings className={`w-4 h-4 xs:w-5 xs:h-5 md:w-6 md:h-6 transition-transform duration-500 ${isSettingsOpen ? 'rotate-90 text-black' : 'group-hover:rotate-45'}`} />
@@ -508,11 +511,10 @@ export default function NavHeader() {
                         key={t.id}
                         onClick={() => setTheme(t.id)}
                         onMouseEnter={playHover}
-                        className={`relative flex items-center justify-center transition-all ${
-                          isSelected
+                        className={`relative flex items-center justify-center transition-all ${isSelected
                             ? 'w-9 h-9 rounded-xl border-2 border-white/90 bg-white/15 shadow-[0_0_12px_rgba(255,255,255,0.2)]'
                             : 'w-8 h-8 rounded-xl hover:bg-white/5 opacity-70 hover:opacity-100 hover:scale-105'
-                        }`}
+                          }`}
                         title={t.name}
                       >
                         <span
@@ -532,11 +534,10 @@ export default function NavHeader() {
                   <button
                     onClick={() => setSoundEnabled(!soundEnabled)}
                     onMouseEnter={playHover}
-                    className={`text-[10px] px-2 py-0.5 rounded border transition-all flex items-center gap-1.5 font-mono font-bold ${
-                      soundEnabled
+                    className={`text-[10px] px-2 py-0.5 rounded border transition-all flex items-center gap-1.5 font-mono font-bold ${soundEnabled
                         ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
                         : 'bg-rose-500/15 border-rose-500/30 text-rose-400 hover:bg-rose-500/25'
-                    }`}
+                      }`}
                     title={soundEnabled ? 'Mute all sounds' : 'Unmute sounds'}
                   >
                     {soundEnabled ? <Volume2 className="w-3 h-3" /> : <VolumeX className="w-3 h-3" />}
@@ -551,11 +552,10 @@ export default function NavHeader() {
                       setAudioProfile('default');
                     }}
                     onMouseEnter={playHover}
-                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
-                      soundEnabled && audioProfile === 'default'
+                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${soundEnabled && audioProfile === 'default'
                         ? 'bg-white/10 border-white/30 text-white shadow-md'
                         : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
-                    }`}
+                      }`}
                   >
                     <div>
                       <p className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">{content.nav.audioDefault}</p>
@@ -577,11 +577,10 @@ export default function NavHeader() {
                       setAudioProfile('minimal');
                     }}
                     onMouseEnter={playHover}
-                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
-                      soundEnabled && audioProfile === 'minimal'
+                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${soundEnabled && audioProfile === 'minimal'
                         ? 'bg-white/10 border-white/30 text-white shadow-md'
                         : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
-                    }`}
+                      }`}
                   >
                     <div>
                       <p className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">{content.nav.audioMinimal}</p>
@@ -602,11 +601,10 @@ export default function NavHeader() {
                       setSoundEnabled(!soundEnabled);
                     }}
                     onMouseEnter={playHover}
-                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${
-                      !soundEnabled
+                    className={`w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl border text-left transition-all ${!soundEnabled
                         ? 'bg-rose-500/10 border-rose-500/40 text-white shadow-md'
                         : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
-                    }`}
+                      }`}
                   >
                     <div>
                       <p className={`text-xs sm:text-sm font-bold uppercase tracking-wider ${!soundEnabled ? 'text-rose-400' : 'text-white'}`}>
@@ -646,11 +644,10 @@ export default function NavHeader() {
                         key={tier}
                         onClick={() => setPerfTier(tier)}
                         onMouseEnter={playHover}
-                        className={`py-2 rounded-lg text-xs font-bold transition-all uppercase tracking-wider ${
-                          isActive
+                        className={`py-2 rounded-lg text-xs font-bold transition-all uppercase tracking-wider ${isActive
                             ? 'bg-white/20 text-white border border-white/30 shadow-md font-black'
                             : 'text-white/50 hover:text-white hover:bg-white/5'
-                        }`}
+                          }`}
                       >
                         {label}
                       </button>
@@ -671,33 +668,30 @@ export default function NavHeader() {
                   <button
                     onClick={() => setLang('en')}
                     onMouseEnter={playHover}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                      lang === 'en'
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${lang === 'en'
                         ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'
                         : 'text-white/60 hover:text-white'
-                    }`}
+                      }`}
                   >
                     EN
                   </button>
                   <button
                     onClick={() => setLang('ru')}
                     onMouseEnter={playHover}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                      lang === 'ru'
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${lang === 'ru'
                         ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'
                         : 'text-white/60 hover:text-white'
-                    }`}
+                      }`}
                   >
                     RU
                   </button>
                   <button
                     onClick={() => setLang('kk')}
                     onMouseEnter={playHover}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                      lang === 'kk'
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${lang === 'kk'
                         ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'
                         : 'text-white/60 hover:text-white'
-                    }`}
+                      }`}
                   >
                     KZ
                   </button>
