@@ -354,92 +354,10 @@ export default function NavHeader() {
                           onMouseEnter={playHover}
                           className="relative flex items-center justify-between p-3 rounded-xl border border-[var(--border-subtle)] hover:border-transparent bg-[var(--accent-bg-subtle)] hover:bg-[var(--accent-glow)]/15 text-[var(--text-secondary)] hover:text-[var(--accent-color)] hover:shadow-[0_0_20px_var(--accent-glow)] transition-all group overflow-visible"
                         >
-                          {/* Animated Tapered Neon Laser Border Beam (Smooth Continuous Intensity & Round Caps) */}
-                          <svg
-                            className="absolute -inset-[1px] w-[calc(100%+2px)] h-[calc(100%+2px)] rounded-xl pointer-events-none overflow-visible opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                            aria-hidden="true"
-                          >
-                            {/* Level 1: Long soft tail (35%) */}
-                            <rect
-                              x="1"
-                              y="1"
-                              width="calc(100% - 2px)"
-                              height="calc(100% - 2px)"
-                              rx="12"
-                              fill="none"
-                              stroke="var(--accent-color)"
-                              strokeWidth="1.2"
-                              strokeLinecap="round"
-                              pathLength="100"
-                              strokeDasharray="35 65"
-                              opacity="0.12"
-                              className="laser-beam-sweep"
-                            />
-                            {/* Level 2: Mid-low tail (25%) */}
-                            <rect
-                              x="1"
-                              y="1"
-                              width="calc(100% - 2px)"
-                              height="calc(100% - 2px)"
-                              rx="12"
-                              fill="none"
-                              stroke="var(--accent-color)"
-                              strokeWidth="1.6"
-                              strokeLinecap="round"
-                              pathLength="100"
-                              strokeDasharray="25 75"
-                              opacity="0.25"
-                              className="laser-beam-sweep"
-                            />
-                            {/* Level 3: Mid body (17%) */}
-                            <rect
-                              x="1"
-                              y="1"
-                              width="calc(100% - 2px)"
-                              height="calc(100% - 2px)"
-                              rx="12"
-                              fill="none"
-                              stroke="var(--accent-color)"
-                              strokeWidth="1.9"
-                              strokeLinecap="round"
-                              pathLength="100"
-                              strokeDasharray="17 83"
-                              opacity="0.45"
-                              className="laser-beam-sweep"
-                            />
-                            {/* Level 4: Bright body (10%) */}
-                            <rect
-                              x="1"
-                              y="1"
-                              width="calc(100% - 2px)"
-                              height="calc(100% - 2px)"
-                              rx="12"
-                              fill="none"
-                              stroke="var(--accent-color)"
-                              strokeWidth="2.2"
-                              strokeLinecap="round"
-                              pathLength="100"
-                              strokeDasharray="10 90"
-                              opacity="0.75"
-                              className="laser-beam-body"
-                            />
-                            {/* Level 5: Intense Head (4%) with white core glow */}
-                            <rect
-                              x="1"
-                              y="1"
-                              width="calc(100% - 2px)"
-                              height="calc(100% - 2px)"
-                              rx="12"
-                              fill="none"
-                              stroke="var(--accent-color)"
-                              strokeWidth="2.5"
-                              strokeLinecap="round"
-                              pathLength="100"
-                              strokeDasharray="4 96"
-                              opacity="1.0"
-                              className="laser-beam-head"
-                            />
-                          </svg>
+                          {/* Animated Continuous Gradient Neon Border Beam */}
+                          <div className="nav-border-beam-mask opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
+                            <div className="nav-border-beam-ray" />
+                          </div>
 
                           <div className="flex items-center gap-3 relative z-10">
                             <span className="text-xs text-[var(--text-muted)] font-mono">[{item.index}]</span>

@@ -275,26 +275,37 @@ p, span, a, button, li, div {
 
 /* ==========================================================================
    Futuristic Neon Laser Border Beam (Nav Menu Route Links)
+   Smooth Continuous Gradient Motion Path
    ========================================================================== */
-@keyframes laserSweepDash {
+@keyframes borderBeamTravel {
   0% {
-    stroke-dashoffset: 0;
+    offset-distance: 0%;
   }
   100% {
-    stroke-dashoffset: -100;
+    offset-distance: 100%;
   }
 }
 
-.laser-beam-sweep {
-  animation: laserSweepDash 2.4s linear infinite;
+.nav-border-beam-mask {
+  pointer-events: none;
+  position: absolute;
+  inset: -1px;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
 }
 
-.laser-beam-body {
-  animation: laserSweepDash 2.4s linear infinite;
-  filter: drop-shadow(0 0 6px var(--accent-color));
-}
-
-.laser-beam-head {
-  animation: laserSweepDash 2.4s linear infinite;
-  filter: drop-shadow(0 0 4px #ffffff) drop-shadow(0 0 10px var(--accent-color));
+.nav-border-beam-ray {
+  position: absolute;
+  width: 110px;
+  height: 24px;
+  offset-path: rect(0 auto auto 0 round 12px);
+  offset-anchor: 100% 50%;
+  offset-rotate: auto;
+  animation: borderBeamTravel 2.4s linear infinite;
+  background: linear-gradient(to left, #ffffff 0%, var(--accent-color) 25%, transparent 100%);
+  filter: drop-shadow(0 0 6px var(--accent-color)) drop-shadow(0 0 12px var(--accent-glow));
 }
