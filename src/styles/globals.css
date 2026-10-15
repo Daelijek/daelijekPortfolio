@@ -285,17 +285,16 @@ p, span, a, button, li, div {
   }
 }
 
-.laser-beam-tail {
+.laser-beam-sweep {
   animation: laserSweepDash 2.4s linear infinite;
-  opacity: 0.45;
 }
 
 .laser-beam-body {
   animation: laserSweepDash 2.4s linear infinite;
-  filter: drop-shadow(0 0 6px var(--accent-color)) drop-shadow(0 0 12px var(--accent-glow));
+  filter: drop-shadow(0 0 6px var(--accent-color));
 }
 
 .laser-beam-head {
   animation: laserSweepDash 2.4s linear infinite;
-  filter: drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 10px var(--accent-color));
+  filter: drop-shadow(0 0 4px #ffffff) drop-shadow(0 0 10px var(--accent-color));
 }
