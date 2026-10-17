@@ -338,10 +338,10 @@ export const portfolioContent = {
               security: ["JWT Authentication", "bcrypt Hashing", "Google OAuth", "fastapi-mail Verification"]
             },
             colorPalette: [
-              { name: "Emerald Accent", hex: "#00FF9F" },
-              { name: "Deep Background", hex: "#060A10" },
-              { name: "Slate Panel", hex: "#161D26" },
-              { name: "Expense Red", hex: "#FF453A" }
+              { name: "Primary Blue", hex: "#2563EB" },
+              { name: "Sky Accent", hex: "#3B82F6" },
+              { name: "Income Emerald", hex: "#10B981" },
+              { name: "Expense Red", hex: "#EF4444" }
             ],
             status: "DEPLOYED"
           },
@@ -1038,10 +1038,10 @@ export const portfolioContent = {
               security: ["JWT авторизация", "bcrypt хэширование", "Google OAuth", "fastapi-mail"]
             },
             colorPalette: [
-              { name: "Изумрудный акцент", hex: "#00FF9F" },
-              { name: "Глубокий фон", hex: "#060A10" },
-              { name: "Слейт панелей", hex: "#161D26" },
-              { name: "Цвет расхода", hex: "#FF453A" }
+              { name: "Основной синий", hex: "#2563EB" },
+              { name: "Небесный акцент", hex: "#3B82F6" },
+              { name: "Доходный зеленый", hex: "#10B981" },
+              { name: "Расходный красный", hex: "#EF4444" }
             ],
             status: "PRODUCTION"
           },
@@ -1738,10 +1738,10 @@ export const portfolioContent = {
               security: ["JWT аутентификация", "bcrypt хэштеу", "Google OAuth", "fastapi-mail"]
             },
             colorPalette: [
-              { name: "Изумруд акцент", hex: "#00FF9F" },
-              { name: "Терең фон", hex: "#060A10" },
-              { name: "Слейт панельдері", hex: "#161D26" },
-              { name: "Шығын түсі", hex: "#FF453A" }
+              { name: "Негізгі көк", hex: "#2563EB" },
+              { name: "Аспан көк", hex: "#3B82F6" },
+              { name: "Кіріс жасылы", hex: "#10B981" },
+              { name: "Шығыс қызылы", hex: "#EF4444" }
             ],
             status: "PRODUCTION"
           },

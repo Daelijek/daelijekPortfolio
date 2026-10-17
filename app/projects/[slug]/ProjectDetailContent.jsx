@@ -480,13 +480,17 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                   <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span className="text-xs text-white/80 font-mono">
-                    AES-256 &bull; TLS 1.3 &bull; GDPR Ready
+                    {project.slug === 'finance-management-app'
+                      ? 'JWT & bcrypt • Session Auth • OAuth2'
+                      : 'AES-256 • TLS 1.3 • Production Ready'}
                   </span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                   <Zap className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
                   <span className="text-xs text-white/80 font-mono">
-                    Sub-100ms API Latency
+                    {project.slug === 'finance-management-app'
+                      ? 'FastAPI Async • <50ms P99 Latency'
+                      : 'Sub-100ms API Latency'}
                   </span>
                 </div>
               </div>
@@ -496,29 +500,43 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <span className="text-xs font-mono font-bold text-white/50 uppercase tracking-wider block">
-                  {lang === 'ru' ? 'Цветовая палитра интерфейса' : 'Interface Palette'}
+                  {lang === 'ru' ? 'Цветовая палитра интерфейса' : lang === 'kk' ? 'Интерфейс түс палитрасы' : 'Interface Palette'}
                 </span>
-                <p className="text-xs text-white/60 font-sans">
-                  {lang === 'ru'
-                    ? 'Гармоничная темная тема с акцентными сигналами для быстрого считывания финансовой аналитики.'
-                    : 'Tailored dark theme with high contrast visual cues for dense data visualization.'}
+                <p className="text-xs text-white/60 font-sans leading-relaxed">
+                  {project.slug === 'finance-management-app'
+                    ? (lang === 'ru'
+                        ? 'Фирменные токены интерфейса: бренд-синий (#2563EB), небесный акцент (#3B82F6), доходный изумруд (#10B981) и расходный красный (#EF4444).'
+                        : lang === 'kk'
+                        ? 'Интерфейстің фирмалық токендері: бренд-көк (#2563EB), аспан акценті (#3B82F6), кіріс изумруды (#10B981) және шығыс қызылы (#EF4444).'
+                        : 'Production UI color tokens: primary blue (#2563EB), sky accent (#3B82F6), income emerald (#10B981), and expense crimson (#EF4444).')
+                    : (lang === 'ru'
+                        ? `${project.title}: официальные цветовые токены дизайн-системы интерфейса.`
+                        : lang === 'kk'
+                        ? `${project.title}: интерфейстің ресми дизайн токендері мен түс гаммасы.`
+                        : `${project.title}: official design tokens utilized across the interface.`)}
                 </p>
               </div>
 
               {project.dossier?.colorPalette && (
-                <div className="grid grid-cols-4 gap-2 pt-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
                   {project.dossier.colorPalette.map((c, idx) => (
                     <div
                       key={idx}
-                      className="group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all"
+                      className="group flex flex-col items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/30 hover:bg-white/[0.06] transition-all min-w-0"
+                      title={`${c.name}: ${c.hex}`}
                     >
                       <div
-                        className="w-full h-8 rounded-lg border border-white/10 shadow-sm group-hover:scale-105 transition-transform"
+                        className="w-full h-10 rounded-lg border border-white/20 shadow-md group-hover:scale-105 transition-transform"
                         style={{ backgroundColor: c.hex }}
                       />
-                      <span className="text-[10px] text-white/50 font-mono truncate w-full text-center">
-                        {c.hex}
-                      </span>
+                      <div className="w-full text-center min-w-0">
+                        <span className="block text-[11px] text-white font-mono font-semibold truncate tracking-tight">
+                          {c.hex}
+                        </span>
+                        <span className="block text-[10px] text-white/50 truncate tracking-tight mt-0.5" title={c.name}>
+                          {c.name}
+                        </span>
+                      </div>
                     </div>
                   ))}
                 </div>
