@@ -39,9 +39,20 @@ export default function NavHeader() {
   const [isMobile, setIsMobile] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [cvDownloaded, setCvDownloaded] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef(null);
   const settingsRef = useRef(null);
   const settingsModalRef = useRef(null);
+
+  // Track page scroll to gracefully yield top-left corner to docked project title
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDownloadCv = () => {
     if (playDownload) playDownload();
@@ -144,7 +155,13 @@ export default function NavHeader() {
     <>
       {/* Top Left Brand Stamp (Rendered on subpages) */}
       {pathname !== '/' && (
-        <header className="fixed top-8 left-8 sm:left-12 z-40 font-mono select-none">
+        <header
+          className={`fixed top-8 left-8 sm:left-12 z-40 font-mono select-none transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            pathname.startsWith('/projects/') && pathname !== '/projects' && isScrolled
+              ? 'opacity-0 -translate-y-4 pointer-events-none'
+              : 'opacity-100 translate-y-0'
+          }`}
+        >
           <Link
             href="/"
             onMouseEnter={playHover}

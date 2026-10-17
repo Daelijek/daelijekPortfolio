@@ -172,6 +172,17 @@ export default function ProjectDetailContent({ slug: propSlug }) {
     }
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const backText = lang === 'ru' ? 'Все проекты' : lang === 'kk' ? 'Барлық жобалар' : 'All Projects';
   const roleLabel = lang === 'ru' ? 'Роль' : lang === 'kk' ? 'Рөлі' : 'Role';
   const platformLabel = lang === 'ru' ? 'Платформа' : lang === 'kk' ? 'Платформа' : 'Platform';
@@ -186,36 +197,59 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   return (
     <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0">
       {/* ========================================================================= */}
-      {/* 1. TOP HEADER & BREADCRUMB (Proper breathing room from fixed nav)          */}
+      {/* 1. STICKY TOP HEADER WITH DOCKED TITLE AND ALL PROJECTS BUTTON             */}
       {/* ========================================================================= */}
-      <div className="pt-28 sm:pt-36 lg:pt-40 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1500px] mx-auto">
-        <Motion.div
-          initial={{ opacity: 0, y: -12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.1 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-6 mb-10 sm:mb-14 font-mono text-xs"
-        >
-          {/* Back button link */}
-          <Link
-            href="/projects"
-            onClick={playClick}
-            onMouseEnter={playHover}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white/70 hover:text-white transition-all group"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-semibold uppercase tracking-wider text-[11px] sm:text-xs">
-              {backText}
-            </span>
-          </Link>
+      <header
+        className={`sticky top-0 z-30 w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isScrolled
+            ? 'bg-[#040608]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)] py-3 sm:py-3.5'
+            : 'bg-transparent border-b border-transparent pt-24 sm:pt-32 pb-4'
+        }`}
+      >
+        <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-4">
+          {/* Left: Back button + Morphing Title */}
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            {/* Back button link */}
+            <Link
+              href="/projects"
+              onClick={playClick}
+              onMouseEnter={playHover}
+              className={`inline-flex items-center gap-2 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white/80 hover:text-white transition-all group shrink-0 ${
+                isScrolled ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-xs sm:text-sm'
+              }`}
+            >
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-mono font-semibold uppercase tracking-wider hidden sm:inline">
+                {backText}
+              </span>
+            </Link>
+
+            {/* Subtle Divider (visible when scrolled) */}
+            <div
+              className={`h-4 w-px bg-white/20 transition-opacity duration-300 shrink-0 ${
+                isScrolled ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+
+            {/* Title: Smoothly shrinks & docks to top-left boundary */}
+            <h1
+              className={`font-display uppercase tracking-tight text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                isScrolled
+                  ? 'text-sm sm:text-base lg:text-lg font-bold tracking-wide truncate max-w-[200px] sm:max-w-md md:max-w-xl lg:max-w-2xl'
+                  : 'text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight'
+              }`}
+            >
+              {project.title}
+            </h1>
+          </div>
 
           {/* Right Meta & Actions */}
-          <div className="flex items-center gap-3">
-            <span className="text-[11px] text-white/50 hidden sm:inline">
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-mono text-xs">
+            <span className="text-[11px] text-white/50 hidden md:inline">
               {project.category}
             </span>
-            <span className="w-1 h-1 rounded-full bg-white/20 hidden sm:inline" />
-            <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/25 font-bold text-[11px]">
+            <span className="w-1 h-1 rounded-full bg-white/20 hidden md:inline" />
+            <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/25 font-bold text-[11px] hidden sm:inline">
               {project.num}
             </span>
             {project.liveUrl && (
@@ -245,17 +279,19 @@ export default function ProjectDetailContent({ slug: propSlug }) {
               </a>
             )}
           </div>
-        </Motion.div>
+        </div>
+      </header>
 
-        {/* ========================================================================= */}
-        {/* 2. PROJECT HERO (Clean Editorial Typography, No Cluttered Boxes)          */}
-        {/* ========================================================================= */}
+      {/* ========================================================================= */}
+      {/* 2. PROJECT HERO BODY (Clean Editorial, Tagline, Specs, 90% Width)         */}
+      {/* ========================================================================= */}
+      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-4 sm:pt-6">
         <Motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-6 max-w-4xl mb-12 sm:mb-16"
+          className="space-y-6 mb-12 sm:mb-16"
         >
           <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
             <span className="text-[var(--accent-color)] font-bold uppercase tracking-wider">
@@ -270,11 +306,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display tracking-tight leading-tight uppercase">
-            {project.title}
-          </h1>
-
-          <p className="text-base sm:text-xl text-white/70 font-sans leading-relaxed">
+          <p className="text-base sm:text-xl text-white/70 font-sans leading-relaxed max-w-4xl">
             {project.tagline || project.description}
           </p>
 
@@ -822,7 +854,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             )}
           </AnimatePresence>
 
-          <div className="w-full max-w-[1500px] mx-auto">
+          <div className="w-[90%] max-w-[1920px] mx-auto">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
               <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
                 {nextCaseText}
