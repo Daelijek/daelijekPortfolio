@@ -421,12 +421,17 @@ export default function NavHeader() {
                     : 'bg-[var(--heading-tint)] text-[#020504] shadow-[0_0_10px_var(--card-hover-glow)]'
                   }`}
               >
-                <div className="grid grid-cols-2 gap-1 w-2.5 h-2.5 xs:w-3 xs:h-3 items-center justify-center">
-                  <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
-                  <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
-                  <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
-                  <span className="w-1 xs:w-1.5 h-1 xs:h-1.5 rounded-full bg-[#020504]" />
-                </div>
+                <svg
+                  className="w-4 h-4 xs:w-[18px] xs:h-[18px] sm:w-5 sm:h-5 transition-colors"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <circle cx="6" cy="6" r="2.7" />
+                  <circle cx="14" cy="6" r="2.7" />
+                  <circle cx="6" cy="14" r="2.7" />
+                  <circle cx="14" cy="14" r="2.7" />
+                </svg>
               </div>
             </div>
           </div>
