@@ -148,28 +148,26 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   }, []);
 
   const updateNextMouseCoords = (e) => {
-    if (!nextSectionRef.current) return null;
-    const rect = nextSectionRef.current.getBoundingClientRect();
+    const halfWidth = 150;
+    const clampedX = typeof window !== 'undefined'
+      ? Math.max(halfWidth + 12, Math.min(window.innerWidth - halfWidth - 12, e.clientX))
+      : e.clientX;
     return {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: clampedX,
+      y: e.clientY,
     };
   };
 
   const handleNextMouseEnter = (e) => {
     playHover?.();
     const coords = updateNextMouseCoords(e);
-    if (coords) {
-      setMousePos(coords);
-    }
+    setMousePos(coords);
     setIsNextHovered(true);
   };
 
   const handleNextMouseMove = (e) => {
     const coords = updateNextMouseCoords(e);
-    if (coords) {
-      setMousePos(coords);
-    }
+    setMousePos(coords);
   };
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -816,44 +814,6 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           ref={nextSectionRef}
           className="group relative block w-full border-t border-white/10 pt-16 sm:pt-24 pb-28 sm:pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 select-none bg-gradient-to-b from-transparent via-black/40 to-black/85 cursor-pointer"
         >
-          {/* Floating Cursor Thumbnail Preview */}
-          <AnimatePresence>
-            {isNextHovered && (
-              <Motion.div
-                initial={{ opacity: 0, scale: 0.85, x: mousePos.x, y: mousePos.y }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  x: mousePos.x,
-                  y: mousePos.y,
-                  transition: { type: 'spring', damping: 28, stiffness: 320, mass: 0.35 },
-                }}
-                exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
-                style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 40 }}
-                className="hidden md:block pointer-events-none select-none"
-              >
-                <div className="-translate-x-1/2 -translate-y-[115%] pointer-events-none">
-                  <div className="w-64 sm:w-72 aspect-[16/10] rounded-2xl overflow-hidden border border-white/20 bg-[#06090D] shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_25px_var(--accent-glow)] p-1.5 relative">
-                    <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
-                      <Image
-                        src={nextProject.image}
-                        alt={nextProject.title}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
-                      <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[11px] font-mono text-white px-2 py-1 bg-black/85 backdrop-blur-md rounded-lg border border-white/15">
-                        <span className="font-black text-[var(--accent-color)]">{nextProject.num}</span>
-                        <span className="font-bold truncate text-[10px]">{nextProject.title}</span>
-                        <span className="text-[9px] text-white/50 tracking-wider">PREVIEW</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Motion.div>
-            )}
-          </AnimatePresence>
-
           <div className="w-[90%] max-w-[1920px] mx-auto">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
               <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
@@ -893,6 +853,44 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </Link>
       </Motion.div>
+
+      {/* Floating Cursor Thumbnail Preview for Next Project Footer (Fixed viewport coordinates, zero scroll overflow) */}
+      <AnimatePresence>
+        {isNextHovered && (
+          <Motion.div
+            initial={{ opacity: 0, scale: 0.85, x: mousePos.x, y: mousePos.y }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              x: mousePos.x,
+              y: mousePos.y,
+              transition: { type: 'spring', damping: 28, stiffness: 320, mass: 0.35 },
+            }}
+            exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
+            style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 50 }}
+            className="hidden md:block pointer-events-none select-none"
+          >
+            <div className="-translate-x-1/2 -translate-y-[115%] pointer-events-none">
+              <div className="w-64 sm:w-72 aspect-[16/10] rounded-2xl overflow-hidden border border-white/20 bg-[#06090D] shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_25px_var(--accent-glow)] p-1.5 relative">
+                <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
+                  <Image
+                    src={nextProject.image}
+                    alt={nextProject.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+                  <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[11px] font-mono text-white px-2 py-1 bg-black/85 backdrop-blur-md rounded-lg border border-white/15">
+                    <span className="font-black text-[var(--accent-color)]">{nextProject.num}</span>
+                    <span className="font-bold truncate text-[10px]">{nextProject.title}</span>
+                    <span className="text-[9px] text-white/50 tracking-wider">PREVIEW</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Lightbox Zoom Modal for Ribbon Screens */}
       <AnimatePresence>
