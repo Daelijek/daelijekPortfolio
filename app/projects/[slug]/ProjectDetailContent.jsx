@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -18,7 +18,11 @@ import {
   CheckCircle2,
   Layers,
   Users,
-  UserCheck
+  UserCheck,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Maximize2
 } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 
@@ -123,6 +127,25 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   const [isNextHovered, setIsNextHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const nextSectionRef = useRef(null);
+
+  // Gallery Horizontal Ribbon
+  const galleryScrollRef = useRef(null);
+  const [activeModalScreen, setActiveModalScreen] = useState(null);
+
+  const scrollGallery = (direction) => {
+    if (!galleryScrollRef.current) return;
+    const amount = direction === 'left' ? -320 : 320;
+    galleryScrollRef.current.scrollBy({ left: amount, behavior: 'smooth' });
+    playClick?.();
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setActiveModalScreen(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleNextMouseMove = (e) => {
     if (!nextSectionRef.current) return;
@@ -333,6 +356,128 @@ export default function ProjectDetailContent({ slug: propSlug }) {
               })}
             </div>
           </Motion.div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* HORIZONTAL INTERFACE SCREEN REEL / RIBBON                                  */}
+        {/* ========================================================================= */}
+        {project.gallery && project.gallery.length > 0 && (
+          <Motion.section
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-16 sm:mb-24 space-y-6"
+          >
+            {/* Header & Slider Navigation */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5">
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] shadow-[0_0_8px_var(--accent-color)]" />
+                  <span className="text-xs font-mono font-bold text-[var(--accent-color)] uppercase tracking-wider">
+                    // INTERFACE_GALLERY_TAPE
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-tight">
+                  {lang === 'ru'
+                    ? 'Лента интерфейса приложения'
+                    : lang === 'kk'
+                    ? 'Қосымшаның интерфейс лентасы'
+                    : 'Interactive Mobile Ribbon'}
+                </h2>
+                <p className="text-xs sm:text-sm text-white/60 font-sans max-w-xl">
+                  {lang === 'ru'
+                    ? 'Горизонтальная лента экранов: листайте стрелками, колесиком мыши или кликните для детального просмотра.'
+                    : lang === 'kk'
+                    ? 'Интерфейс экрандарының көлденең лентасы: бағыттауыштармен жылжытыңыз немесе толық көру үшін басыңыз.'
+                    : 'Horizontal screen tape: swipe with arrows, trackpad, or click any screen card to inspect UI details.'}
+                </p>
+              </div>
+
+              {/* Slider Arrow Controls */}
+              <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                <button
+                  type="button"
+                  onClick={() => scrollGallery('left')}
+                  onMouseEnter={playHover}
+                  className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/70 hover:text-white transition-all active:scale-95"
+                  aria-label="Previous screen"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollGallery('right')}
+                  onMouseEnter={playHover}
+                  className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/70 hover:text-white transition-all active:scale-95"
+                  aria-label="Next screen"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Horizontal Ribbon Track with Gradient Fade Masks */}
+            <div className="relative group/track">
+              {/* Left & Right Subtle Fade Masks */}
+              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-[#040608] via-[#040608]/80 to-transparent z-10" />
+              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-[#040608] via-[#040608]/80 to-transparent z-10" />
+
+              {/* Scrollable Container */}
+              <div
+                ref={galleryScrollRef}
+                className="flex gap-5 sm:gap-6 overflow-x-auto pb-4 pt-2 px-4 sm:px-6 scroll-smooth no-scrollbar snap-x snap-mandatory"
+              >
+                {project.gallery.map((item, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      playClick?.();
+                      setActiveModalScreen(item);
+                    }}
+                    onMouseEnter={playHover}
+                    className="w-[230px] sm:w-[260px] md:w-[280px] shrink-0 snap-start group/card cursor-pointer"
+                  >
+                    {/* Device Mockup Shell */}
+                    <div className="relative rounded-[2.2rem] p-2.5 bg-[#090D14] border border-white/10 group-hover/card:border-[var(--accent-color)]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)] group-hover/card:shadow-[0_20px_50px_var(--card-hover-glow)] group-hover/card:-translate-y-2">
+                      {/* Top Dynamic Island / Bezel */}
+                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-3.5 bg-black/80 rounded-full z-20 pointer-events-none border border-white/5" />
+
+                      {/* Screen Image Frame */}
+                      <div className="relative aspect-[9/19.5] w-full rounded-[1.7rem] overflow-hidden bg-black">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          className="object-cover object-top group-hover/card:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 640px) 230px, 280px"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100">
+                          <span className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg">
+                            <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+                            <span>{lang === 'ru' ? 'Открыть' : 'Preview'}</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Card Caption Info */}
+                      <div className="p-3 pt-3.5 space-y-1">
+                        <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider block uppercase">
+                          {item.tag || `0${idx + 1} // SCREEN`}
+                        </span>
+                        <h3 className="text-xs sm:text-sm font-bold text-white font-display group-hover/card:text-[var(--accent-color)] transition-colors truncate">
+                          {item.title}
+                        </h3>
+                        <p className="text-[11px] text-white/50 font-sans line-clamp-1">
+                          {item.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Motion.section>
         )}
 
         {/* ========================================================================= */}
@@ -701,6 +846,63 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           </div>
         </Link>
       </Motion.div>
+
+      {/* Lightbox Zoom Modal for Ribbon Screens */}
+      <AnimatePresence>
+        {activeModalScreen && (
+          <Motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-2xl"
+            onClick={() => setActiveModalScreen(null)}
+          >
+            <Motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-sm w-full bg-[#080C12] border border-white/15 rounded-[2.5rem] p-3 sm:p-4 shadow-[0_25px_80px_rgba(0,0,0,0.9)] flex flex-col space-y-3"
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setActiveModalScreen(null)}
+                className="absolute -top-3 -right-3 z-30 p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-all hover:scale-110 active:scale-95"
+                aria-label="Close modal"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              {/* High-res Screen */}
+              <div className="relative aspect-[9/19.5] w-full rounded-[1.8rem] overflow-hidden bg-black shadow-inner">
+                <Image
+                  src={activeModalScreen.image}
+                  alt={activeModalScreen.title}
+                  fill
+                  priority
+                  className="object-cover object-top"
+                  sizes="400px"
+                />
+              </div>
+
+              {/* Caption */}
+              <div className="px-2 pt-1 pb-2 text-center space-y-1">
+                <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase">
+                  {activeModalScreen.tag}
+                </span>
+                <h4 className="text-base font-bold text-white font-display">
+                  {activeModalScreen.title}
+                </h4>
+                <p className="text-xs text-white/60 font-sans">
+                  {activeModalScreen.subtitle}
+                </p>
+              </div>
+            </Motion.div>
+          </Motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

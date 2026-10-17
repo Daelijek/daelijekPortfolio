@@ -326,6 +326,64 @@ export const portfolioContent = {
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
           status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Home & Balance Overview",
+              subtitle: "Total balance card with monthly delta and recent transaction logs",
+              tag: "DASHBOARD",
+              image: "/assets/projects/fintrack/screen-01-home.jpg"
+            },
+            {
+              id: "02",
+              title: "Transactions & Category Distribution",
+              subtitle: "Categorized expense ring with instant category filtering",
+              tag: "TRANSACTIONS",
+              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+            },
+            {
+              id: "03",
+              title: "Budget Planning & Limits",
+              subtitle: "Real-time budget consumption bars with overspending warnings",
+              tag: "BUDGETS",
+              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+            },
+            {
+              id: "04",
+              title: "Monthly Analytics & Trends",
+              subtitle: "Interactive SVG spline charts tracking spending velocity",
+              tag: "ANALYTICS",
+              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+            },
+            {
+              id: "05",
+              title: "Financial Reports & Savings Rate",
+              subtitle: "Income vs expenses comparison with net balance indicators",
+              tag: "REPORTS",
+              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+            },
+            {
+              id: "06",
+              title: "Report Export Engine",
+              subtitle: "One-tap PDF and CSV generation with configurable period filters",
+              tag: "EXPORTS",
+              image: "/assets/projects/fintrack/screen-06-export.jpg"
+            },
+            {
+              id: "07",
+              title: "Profile & Account Management",
+              subtitle: "Multi-currency switcher, credit telemetry, and security settings",
+              tag: "PROFILE",
+              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+            },
+            {
+              id: "08",
+              title: "Conversational Financial Assistant",
+              subtitle: "Natural language query interface for spending and budget queries",
+              tag: "ASSISTANT",
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+            }
+          ],
           dossier: {
             projectType: "Full-Stack Personal Finance & Budget Management System",
             entryYear: "2024 - 2025",
@@ -1026,6 +1084,64 @@ export const portfolioContent = {
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
           status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Главный экран и баланс",
+              subtitle: "Карта общего баланса с помесячной дельтой и лентой операций",
+              tag: "ДАШБОРД",
+              image: "/assets/projects/fintrack/screen-01-home.jpg"
+            },
+            {
+              id: "02",
+              title: "Транзакции и распределение трат",
+              subtitle: "Кольцевая диаграмма расходов с быстрой фильтрацией по категориям",
+              tag: "ТРАНЗАКЦИИ",
+              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+            },
+            {
+              id: "03",
+              title: "Планирование и лимиты бюджетов",
+              subtitle: "Шкалы расхода бюджета в реальном времени с алертами перерасхода",
+              tag: "БЮДЖЕТ",
+              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+            },
+            {
+              id: "04",
+              title: "Месячная аналитика и графики",
+              subtitle: "Интерактивные сплайн-диаграммы динамики ежедневных расходов",
+              tag: "АНАЛИТИКА",
+              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+            },
+            {
+              id: "05",
+              title: "Финансовые отчеты и сальдо",
+              subtitle: "Сравнение доходов и расходов с показателем нормы сбережений",
+              tag: "ОТЧЕТЫ",
+              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+            },
+            {
+              id: "06",
+              title: "Экспорт финансовых отчетов",
+              subtitle: "Генерация отчетов в PDF и CSV с выбором отчетного периода",
+              tag: "ЭКСПОРТ",
+              image: "/assets/projects/fintrack/screen-06-export.jpg"
+            },
+            {
+              id: "07",
+              title: "Профиль и управление счетами",
+              subtitle: "Мультивалютный переключатель, кредитная телеметрия и настройки",
+              tag: "ПРОФИЛЬ",
+              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+            },
+            {
+              id: "08",
+              title: "Финансовый ассистент",
+              subtitle: "Диалоговый интерфейс запросов по балансам и советам по бюджету",
+              tag: "АССИСТЕНТ",
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+            }
+          ],
           dossier: {
             projectType: "Full-Stack мобильная система персональных финансов и бюджетирования",
             entryYear: "2024 - 2025",
@@ -1726,6 +1842,64 @@ export const portfolioContent = {
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
           status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Басты экран және жалпы баланс",
+              subtitle: "Айлық динамикасы мен соңғы операциялар тізімі бар баланс картасы",
+              tag: "БАСТЫ БЕТ",
+              image: "/assets/projects/fintrack/screen-01-home.jpg"
+            },
+            {
+              id: "02",
+              title: "Транзакциялар және санаттар",
+              subtitle: "Санаттар бойынша жылдам сүзгісі бар шығындардың дөңгелек диаграммасы",
+              tag: "ОПЕРАЦИЯЛАР",
+              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+            },
+            {
+              id: "03",
+              title: "Бюджетті жоспарлау және лимиттер",
+              subtitle: "Артық шығынды ескерту жүйесі бар бюджеттің орындалу шкаласы",
+              tag: "БЮДЖЕТ",
+              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+            },
+            {
+              id: "04",
+              title: "Айлық аналитика және графиктік есеп",
+              subtitle: "Күнделікті шығындар серпінін көрсететін интерактивті сплайн-диаграммалар",
+              tag: "АНАЛИТИКА",
+              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+            },
+            {
+              id: "05",
+              title: "Қаржылық есептер және сальдо",
+              subtitle: "Кірістер мен шығыстарды салыстыру және жинақтау пайызы",
+              tag: "ЕСЕПТЕР",
+              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+            },
+            {
+              id: "06",
+              title: "Қаржылық есептерді экспорттау",
+              subtitle: "Таңдалған кезеңге арналған PDF және CSV форматындағы есептер",
+              tag: "ЭКСПОРТ",
+              image: "/assets/projects/fintrack/screen-06-export.jpg"
+            },
+            {
+              id: "07",
+              title: "Профиль және шоттарды басқару",
+              subtitle: "Мультивалюталық ауыстырғыш, несие телеметриясы және баптаулар",
+              tag: "ПРОФИЛЬ",
+              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+            },
+            {
+              id: "08",
+              title: "Қаржылық көмекші",
+              subtitle: "Бюджет және шығыстар бойынша табиғи тілдегі кеңесші интерфейсі",
+              tag: "КӨМЕКШІ",
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+            }
+          ],
           dossier: {
             projectType: "Жеке қаржы мен бюджетті басқаруға арналған Full-Stack жүйесі",
             entryYear: "2024 - 2025",
