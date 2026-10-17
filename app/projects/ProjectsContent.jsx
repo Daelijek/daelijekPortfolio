@@ -141,11 +141,11 @@ export default function ProjectsContent() {
                     {metrics.length > 0 && (
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 border-t border-white/[0.06]">
                         {metrics.slice(0, 3).map((m, mIdx) => (
-                          <div key={mIdx} className="space-y-0.5">
-                            <span className="block text-lg sm:text-xl font-extrabold text-[var(--accent-color)] font-display">
+                          <div key={mIdx} className="min-w-0 space-y-0.5">
+                            <span className="block text-lg sm:text-xl font-extrabold text-[var(--accent-color)] font-display truncate">
                               {m.value}
                             </span>
-                            <span className="block text-[11px] text-white/50 font-mono uppercase tracking-wider">
+                            <span className="block text-[11px] text-white/50 font-mono uppercase tracking-wider truncate">
                               {m.label}
                             </span>
                           </div>

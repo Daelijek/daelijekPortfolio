@@ -301,19 +301,34 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-16 sm:mb-24 p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08]"
+            className="mb-16 sm:mb-24 p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] overflow-hidden"
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 divide-y md:divide-y-0 md:divide-x divide-white/[0.08]">
-              {project.walkthrough.impact.metrics.map((m, idx) => (
-                <div key={idx} className={`${idx > 0 ? 'pt-4 md:pt-0 md:pl-8' : ''} space-y-1`}>
-                  <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--accent-color)] font-display tracking-tight leading-none">
-                    {m.value}
-                  </span>
-                  <span className="block text-xs sm:text-sm text-white/70 font-sans">
-                    {m.label}
-                  </span>
-                </div>
-              ))}
+              {project.walkthrough.impact.metrics.map((m, idx) => {
+                const isLong = (m.value || '').length > 7;
+                return (
+                  <div
+                    key={idx}
+                    className={`min-w-0 flex flex-col justify-center space-y-1.5 ${
+                      idx > 0 ? 'pt-5 md:pt-0 md:pl-6 lg:pl-8' : ''
+                    }`}
+                  >
+                    <span
+                      title={m.value}
+                      className={`block font-black text-[var(--accent-color)] font-display tracking-tight leading-tight truncate ${
+                        isLong
+                          ? 'text-2xl sm:text-3xl lg:text-3xl xl:text-4xl'
+                          : 'text-3xl sm:text-4xl lg:text-4xl xl:text-5xl'
+                      }`}
+                    >
+                      {m.value}
+                    </span>
+                    <span className="block text-xs font-mono uppercase tracking-wider text-white/50 truncate">
+                      {m.label}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </Motion.div>
         )}
