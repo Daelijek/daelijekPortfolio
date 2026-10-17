@@ -22,7 +22,7 @@ export default function ProjectsContent() {
       <Motion.div
         initial={{ opacity: 0, y: -12 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-8 sm:mb-12 font-mono"
       >
@@ -43,7 +43,7 @@ export default function ProjectsContent() {
       <Motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.15 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="mb-12 sm:mb-16 space-y-3"
       >
@@ -75,7 +75,7 @@ export default function ProjectsContent() {
               key={proj.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
+              viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
@@ -187,7 +187,7 @@ export default function ProjectsContent() {
       <Motion.section
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
+        viewport={{ once: false, amount: 0.15 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="space-y-8"
       >
@@ -216,7 +216,7 @@ export default function ProjectsContent() {
               onMouseEnter={playHover}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: false, amount: 0.15 }}
               transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="group relative p-6 rounded-2xl bg-[#05080D]/70 border border-white/[0.08] hover:border-[var(--accent-color)]/40 hover:bg-[#070C14]/90 transition-all duration-300 flex flex-col justify-between space-y-5 shadow-lg hover:shadow-[0_10px_30px_var(--card-hover-glow)]"
             >

@@ -152,7 +152,8 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       <div className="pt-28 sm:pt-36 lg:pt-40 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1500px] mx-auto">
         <Motion.div
           initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-6 mb-10 sm:mb-14 font-mono text-xs"
         >
@@ -212,7 +213,8 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         {/* ========================================================================= */}
         <Motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-6 max-w-4xl mb-12 sm:mb-16"
         >
@@ -260,7 +262,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         <Motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.15 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14 sm:mb-20"
         >
@@ -299,7 +301,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="mb-16 sm:mb-24 p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] overflow-hidden"
           >
@@ -339,7 +341,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         <Motion.section
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.15 }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 sm:mb-24 space-y-8"
         >
@@ -434,7 +436,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         <Motion.section
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.15 }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 sm:mb-24 space-y-6"
         >
@@ -552,7 +554,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           <Motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="mb-20 sm:mb-28 space-y-8"
           >
