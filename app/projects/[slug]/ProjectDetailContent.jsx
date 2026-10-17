@@ -4,7 +4,7 @@ import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useThemeAudio } from '../../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../../src/data/portfolioData';
 import {
@@ -170,16 +170,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
     setMousePos(coords);
   };
 
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Fluid scroll-driven title scaling with physics spring damping (zero layout shift, zero jitter)
+  const { scrollY } = useScroll();
+  const rawScale = useTransform(scrollY, [0, 140], [1, 0.44]);
+  const titleScale = useSpring(rawScale, { stiffness: 350, damping: 32 });
 
   const backText = lang === 'ru' ? 'Все проекты' : lang === 'kk' ? 'Барлық жобалар' : 'All Projects';
   const roleLabel = lang === 'ru' ? 'Роль' : lang === 'kk' ? 'Рөлі' : 'Role';
@@ -195,95 +189,77 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   return (
     <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0">
       {/* ========================================================================= */}
-      {/* 1. STICKY TOP HEADER WITH DOCKED TITLE AND ALL PROJECTS BUTTON             */}
+      {/* 1. TOP SPACING & HERO CONTAINER (90% Width, Stable Flow, Zero Layout Shift) */}
       {/* ========================================================================= */}
-      <header
-        className={`sticky top-0 z-30 w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isScrolled
-            ? 'bg-[#040608]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_10px_30px_rgba(0,0,0,0.6)] py-3 sm:py-3.5'
-            : 'bg-transparent border-b border-transparent pt-24 sm:pt-32 pb-4'
-        }`}
-      >
-        <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-4">
-          {/* Left: Back button + Morphing Title */}
-          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            {/* Back button link */}
-            <Link
-              href="/projects"
-              onClick={playClick}
-              onMouseEnter={playHover}
-              className={`inline-flex items-center gap-2 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white/80 hover:text-white transition-all group shrink-0 ${
-                isScrolled ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-xs sm:text-sm'
-              }`}
-            >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-mono font-semibold uppercase tracking-wider hidden sm:inline">
-                {backText}
+      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-28 sm:pt-36">
+        {/* Sticky Floating Docked Bar (100% Transparent, No Header Box, No Borders) */}
+        <div className="sticky top-6 sm:top-8 z-30 w-full pointer-events-none mb-8 sm:mb-12">
+          <div className="flex items-center justify-between gap-4">
+            {/* Left: Back button + Super Smooth Shrinking Title */}
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0 pointer-events-auto">
+              {/* Back button link */}
+              <Link
+                href="/projects"
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 hover:bg-black/70 border border-white/15 hover:border-white/30 text-white/90 hover:text-white transition-all group shrink-0 backdrop-blur-md shadow-sm"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                <span className="font-mono font-semibold uppercase tracking-wider text-[11px] sm:text-xs hidden sm:inline">
+                  {backText}
+                </span>
+              </Link>
+
+              {/* Title: Fluidly scales on scroll without any DOM reflow or jerking */}
+              <Motion.h1
+                style={{
+                  scale: titleScale,
+                  transformOrigin: 'left center',
+                }}
+                className="font-display font-black uppercase tracking-tight text-white text-2xl sm:text-4xl md:text-5xl lg:text-6xl max-w-[70vw] truncate sm:max-w-none sm:overflow-visible whitespace-nowrap select-none drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]"
+              >
+                {project.title}
+              </Motion.h1>
+            </div>
+
+            {/* Right: Meta & Actions (Transparent, Floating) */}
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-mono text-xs pointer-events-auto">
+              <span className="text-[11px] text-white/50 hidden md:inline">
+                {project.category}
               </span>
-            </Link>
-
-            {/* Subtle Divider (visible when scrolled) */}
-            <div
-              className={`h-4 w-px bg-white/20 transition-opacity duration-300 shrink-0 ${
-                isScrolled ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
-
-            {/* Title: Smoothly shrinks & docks to top-left boundary */}
-            <h1
-              className={`font-display uppercase tracking-tight text-white transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                isScrolled
-                  ? 'text-sm sm:text-base lg:text-lg font-bold tracking-wide truncate max-w-[200px] sm:max-w-md md:max-w-xl lg:max-w-2xl'
-                  : 'text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight'
-              }`}
-            >
-              {project.title}
-            </h1>
-          </div>
-
-          {/* Right Meta & Actions */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-mono text-xs">
-            <span className="text-[11px] text-white/50 hidden md:inline">
-              {project.category}
-            </span>
-            <span className="w-1 h-1 rounded-full bg-white/20 hidden md:inline" />
-            <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/25 font-bold text-[11px] hidden sm:inline">
-              {project.num}
-            </span>
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
-              >
-                <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {project.githubUrl && !project.isPrivate && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 hover:text-white text-xs font-bold transition-all"
-              >
-                <FaGithub className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{lang === 'ru' ? 'Код' : 'Code'}</span>
-              </a>
-            )}
+              <span className="w-1 h-1 rounded-full bg-white/20 hidden md:inline" />
+              <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/25 font-bold text-[11px] hidden sm:inline">
+                {project.num}
+              </span>
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
+                >
+                  <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.githubUrl && !project.isPrivate && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 hover:bg-black/70 border border-white/15 text-white/80 hover:text-white text-xs font-bold transition-all backdrop-blur-md"
+                >
+                  <FaGithub className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{lang === 'ru' ? 'Код' : 'Code'}</span>
+                </a>
+              )}
+            </div>
           </div>
         </div>
-      </header>
-
-      {/* ========================================================================= */}
-      {/* 2. PROJECT HERO BODY (Clean Editorial, Tagline, Specs, 90% Width)         */}
-      {/* ========================================================================= */}
-      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-4 sm:pt-6">
         <Motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
