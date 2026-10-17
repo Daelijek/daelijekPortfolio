@@ -314,74 +314,74 @@ export const portfolioContent = {
       featured: [
         {
           num: "01",
-          id: "FINANCE_MANAGEMENT_AI",
+          id: "FINANCE_MANAGEMENT_APP",
           slug: "finance-management-app",
-          title: "Personal Finance Management Application",
-          tagline: "Empirically validated AI-powered personal finance & literacy ecosystem",
-          category: "Full-Stack Mobile App & AI",
+          title: "FinTrack — Personal Finance Management",
+          tagline: "Cross-platform mobile application and asynchronous REST API for personal budget tracking, multi-account analytics, and financial control",
+          category: "Mobile & Backend // FinTech",
           isPrivate: false,
-          description: "An AI-powered cross-platform personal finance ecosystem built with React Native (Expo) and an asynchronous FastAPI/PostgreSQL backend. Features GPT-4 intelligent financial advisory, interactive budget allocations, Material Design UI, PDF/CSV report exports, and AES-256 data protection.",
-          tags: ["React Native", "FastAPI", "OpenAI GPT-4", "PostgreSQL", "AES-256", "Expo"],
+          description: "Full-stack personal finance application built with React Native (Expo) and FastAPI/PostgreSQL. Provides multi-account balance management, drag-and-drop category budgeting, visual expense analytics, multi-currency support (USD, EUR, KZT, RUB, GBP), and secure JWT/OAuth authentication.",
+          tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "EMPIRICALLY_VALIDATED",
+          status: "PRODUCTION",
           dossier: {
-            projectType: "AI-Enhanced Personal Finance & Financial Literacy Mobile Ecosystem",
+            projectType: "Full-Stack Personal Finance & Budget Management System",
             entryYear: "2024 - 2025",
-            targetPlatform: "Cross-Platform Mobile (iOS & Android) + Async Cloud REST API",
-            primaryRole: "Lead Full-Stack Software Engineer & System Architect",
+            targetPlatform: "iOS & Android (React Native) + Async Cloud REST API (FastAPI)",
+            primaryRole: "Full-Stack Software Engineer & Mobile Developer",
             technologies: {
-              core: ["React Native (Expo SDK)", "TypeScript", "FastAPI (Python 3.11)", "PostgreSQL"],
-              frontendUI: ["React Native Paper", "React Native Elements", "React Native Chart Kit", "AsyncStorage"],
-              backend: ["SQLAlchemy ORM", "AsyncIO", "JWT Authentication", "bcrypt", "Swagger OpenAPI"],
-              securityAI: ["OpenAI GPT-4 API", "AES-256 Encryption", "TLS 1.3", "GDPR Compliance", "PDF/CSV Reporting"]
+              core: ["React Native 0.79", "Expo 53", "FastAPI 0.115", "PostgreSQL", "Python 3.11"],
+              frontendUI: ["React Navigation 7", "React Native Paper", "React Native Chart Kit", "Draggable FlatList", "AsyncStorage", "i18next"],
+              backend: ["SQLAlchemy 2.0 ORM", "Alembic Migrations", "Pydantic v2", "Uvicorn"],
+              security: ["JWT Authentication", "bcrypt Hashing", "Google OAuth", "fastapi-mail Verification"]
             },
             colorPalette: [
-              { name: "Emerald Cyber", hex: "#00FF9F" },
-              { name: "Midnight Onyx", hex: "#090E11" },
-              { name: "Terminal Slate", hex: "#1A262C" },
-              { name: "Alert Crimson", hex: "#FF0055" }
+              { name: "Emerald Accent", hex: "#00FF9F" },
+              { name: "Deep Background", hex: "#060A10" },
+              { name: "Slate Panel", hex: "#161D26" },
+              { name: "Expense Red", hex: "#FF453A" }
             ],
-            status: "EMPIRICALLY_VALIDATED_BUILD"
+            status: "DEPLOYED"
           },
           overview: {
-            lead: "A comprehensive AI-enhanced Personal Finance Management (PFM) system engineered to solve the global financial literacy gap and bridge the disconnect between routine transaction logging and actionable, intelligent wealth coaching.",
-            targetAudience: "Engineered for young professionals aged 20-35, university students, and freelancers seeking mobile-first financial control, automated budgeting, and AI-driven educational assistance.",
-            challenge: "Competitive analysis (Mint, YNAB, Habitica) and empirical research revealed that most PFM apps operate merely as digital ledgers without contextual financial education, lack personalized AI insights, and raise user security anxieties regarding data privacy.",
-            solution: "Architected an end-to-end mobile application combining a high-performance React Native client with an asynchronous FastAPI microservice. Integrated a GPT-4 conversational financial advisor providing contextual spending breakdowns, dynamic category budget enforcers, multi-format PDF/CSV reporting, and bank-grade AES-256 data encryption.",
-            myRole: "Designed system architecture and UI/UX, built cross-platform mobile client with React Native and Chart Kit, authored high-throughput FastAPI REST endpoints with PostgreSQL, integrated GPT-4 token-optimized advisory streams, and conducted empirical user validation."
+            lead: "A comprehensive personal finance ecosystem engineered to deliver seamless mobile budget tracking, multi-account balance aggregation, and visual spending analytics with an asynchronous, robust backend.",
+            targetAudience: "Individuals, freelancers, and families seeking organized multi-currency money management, budget discipline, and transparent expense insights across bank accounts and cash flows.",
+            challenge: "Traditional financial trackers often lack flexible multi-currency support, suffer from cumbersome transaction logging, offer static category structures without customization, and fail to provide responsive mobile performance across devices.",
+            solution: "Architected a decoupled architecture: an intuitive React Native mobile application paired with a high-throughput FastAPI REST API and PostgreSQL. Features dynamic category customization with drag-and-drop reordering, interactive SVG charts, multi-account tracking (savings, checking, credit), and secure JWT authentication with email verification.",
+            myRole: "Designed the relational database schema and API architecture, implemented the full FastAPI backend with SQLAlchemy 2.0 and Alembic migrations, developed the cross-platform React Native client with React Navigation 7 and Chart Kit, and implemented multi-language localization (KZ, RU, EN)."
           },
           walkthrough: {
             concept: {
-              title: "Empirical Research & Architectural Vision",
-              desc: "Formulated through a 50-participant empirical user survey (58% ages 18-25, 68% students) showing 66% demand for real-time tracking, 60% for proactive budgeting, and 58% data security concerns.",
+              title: "Product Architecture & User Flow",
+              desc: "Engineered around high-speed transaction logging, flexible budget limits, and instant financial clarity across all active accounts and currencies.",
               highlights: [
-                "Integration of GPT-4 conversational advisory for contextual financial literacy",
-                "Sub-40ms API latency via FastAPI AsyncIO connection pools and PostgreSQL",
-                "Multi-layer data protection with AES-256 encryption and TLS 1.3 protocols"
+                "Unified financial overview with aggregate balance, savings, and credit health",
+                "Multi-currency support: dynamic conversion and preferences for USD, EUR, KZT, RUB, and GBP",
+                "Complete internationalization with on-the-fly language switching across Kazakh, Russian, and English"
               ]
             },
             architecture: {
-              title: "Asynchronous Dual-Engine Stack",
-              desc: "React Native with Material Design compliance and Chart Kit data visualizations backed by FastAPI, SQLAlchemy ORM, and secure file handling for on-demand financial report generation.",
+              title: "Decoupled Client-Server Engine",
+              desc: "React Native frontend with Material Design components and Chart Kit analytics communicating with an asynchronous FastAPI microservice backed by PostgreSQL and SQLAlchemy 2.0.",
               highlights: [
-                "Persistent local caching with AsyncStorage for offline resilience",
-                "JWT authentication with bcrypt password hashing and GDPR-compliant data isolation",
-                "Automated PDF and CSV analytical report export engine"
+                "High-concurrency async endpoints with Pydantic v2 validation and sub-50ms response latency",
+                "Local persistent caching via AsyncStorage for offline accessibility and fluid mobile UX",
+                "Secure auth cycle: JWT access/refresh tokens, bcrypt password hashing, Google OAuth, and email verification"
               ]
             },
             features: [
-              { num: "01", title: "GPT-4 Conversational Advisor", desc: "Interactive AI financial advisor providing natural language analysis of user spending velocity, anomalous charges, and tailored literacy coaching.", metric: "60% User Engagement" },
-              { num: "02", title: "Visual Budget & Category Telemetry", desc: "Interactive category allocation with real-time threshold meters, donut distribution charts, and proactive limit warnings.", metric: "100% Adoption Rate" },
-              { num: "03", title: "PDF & CSV Report Export", desc: "On-demand analytical report generator compiling monthly summaries, category allocations, and historical trend charts into exportable documents.", metric: "80% Export Success" }
+              { num: "01", title: "Budget & Category Customization", desc: "Granular expense and income budget limits with custom icon assignment, HEX color palettes, and drag-and-drop category reordering.", metric: "Flexible Limits" },
+              { num: "02", title: "Multi-Account & Cash Tracking", desc: "Seamless management of checking accounts, savings deposits, and credit cards with payment method tagging (cash/card) and receipt attachments.", metric: "Multi-Account" },
+              { num: "03", title: "Visual Analytics & Dynamics", desc: "Interactive SVG line and donut charts illustrating category breakdowns, monthly spending velocity, and real-time threshold progress bars.", metric: "Real-Time Telemetry" }
             ],
             impact: {
               metrics: [
-                { label: "TASK_TIME", value: "-40%" },
-                { label: "TASK_SUCCESS", value: "80%" },
-                { label: "SURVEY_SAMPLE", value: "n=50" },
-                { label: "SECURITY", value: "AES-256" }
+                { label: "API_LATENCY", value: "<50MS" },
+                { label: "CURRENCIES", value: "5 CODES" },
+                { label: "LOCALES", value: "KZ/RU/EN" },
+                { label: "SECURITY", value: "JWT+BCRYPT" }
               ]
             }
           }
@@ -1014,74 +1014,74 @@ export const portfolioContent = {
       featured: [
         {
           num: "01",
-          id: "FINANCE_MANAGEMENT_AI",
+          id: "FINANCE_MANAGEMENT_APP",
           slug: "finance-management-app",
-          title: "Personal Finance Management Application",
-          tagline: "Эмпирически валидированная AI-экосистема персональных финансов и финансовой грамотности",
-          category: "Full-Stack Мобильное приложение & AI",
+          title: "FinTrack — Управление персональными финансами",
+          tagline: "Кроссплатформенное мобильное приложение и асинхронный REST API для учета бюджета, аналитики счетов и контроля расходов",
+          category: "Мобильное приложение & Бэкенд / FinTech",
           isPrivate: false,
-          description: "Кроссплатформенная мобильная экосистема для учета финансов на React Native (Expo) с асинхронным бэкендом на FastAPI/PostgreSQL. Включает интеллектуального AI-советника на базе GPT-4, интерактивное бюджетирование, экспорт отчетов в PDF/CSV и сквозное шифрование AES-256.",
-          tags: ["React Native", "FastAPI", "OpenAI GPT-4", "PostgreSQL", "AES-256", "Expo"],
+          description: "Full-Stack экосистема для учета личных финансов, разработанная на React Native (Expo) и FastAPI/PostgreSQL. Включает агрегацию банковских счетов, гибкое бюджетирование с drag-and-drop сортировкой категорий, наглядную аналитику расходов, мультивалютность (KZT, USD, EUR, RUB, GBP) и безопасную авторизацию.",
+          tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "EMPIRICALLY_VALIDATED",
+          status: "PRODUCTION",
           dossier: {
-            projectType: "FinTech мобильная экосистема с AI и обучением финансовой грамотности",
+            projectType: "Full-Stack мобильная система персональных финансов и бюджетирования",
             entryYear: "2024 - 2025",
-            targetPlatform: "Кроссплатформа (iOS & Android) + Асинхронный Cloud REST API",
-            primaryRole: "Lead Full-Stack Инженер & Архитектор системы",
+            targetPlatform: "iOS & Android (React Native) + Асинхронный Cloud REST API (FastAPI)",
+            primaryRole: "Full-Stack инженер & мобильный разработчик",
             technologies: {
-              core: ["React Native (Expo SDK)", "TypeScript", "FastAPI (Python 3.11)", "PostgreSQL"],
-              frontendUI: ["React Native Paper", "React Native Elements", "React Native Chart Kit", "AsyncStorage"],
-              backend: ["SQLAlchemy ORM", "AsyncIO", "JWT авторизация", "bcrypt", "Swagger OpenAPI"],
-              securityAI: ["OpenAI GPT-4 API", "AES-256 шифрование", "TLS 1.3", "GDPR соответствие", "Генератор PDF/CSV"]
+              core: ["React Native 0.79", "Expo 53", "FastAPI 0.115", "PostgreSQL", "Python 3.11"],
+              frontendUI: ["React Navigation 7", "React Native Paper", "React Native Chart Kit", "Draggable FlatList", "AsyncStorage", "i18next"],
+              backend: ["SQLAlchemy 2.0 ORM", "Alembic Migrations", "Pydantic v2", "Uvicorn"],
+              security: ["JWT авторизация", "bcrypt хэширование", "Google OAuth", "fastapi-mail"]
             },
             colorPalette: [
-              { name: "Изумрудный Cyber", hex: "#00FF9F" },
-              { name: "Глубокий Оникс", hex: "#090E11" },
-              { name: "Терминальный Слейт", hex: "#1A262C" },
-              { name: "Сигнальный Кримсон", hex: "#FF0055" }
+              { name: "Изумрудный акцент", hex: "#00FF9F" },
+              { name: "Глубокий фон", hex: "#060A10" },
+              { name: "Слейт панелей", hex: "#161D26" },
+              { name: "Цвет расхода", hex: "#FF453A" }
             ],
-            status: "ВАЛИДИРОВАННЫЙ_PRODUCTION_БИЛД"
+            status: "PRODUCTION"
           },
           overview: {
-            lead: "Комплексная экосистема персонального финансового менеджмента (PFM) с искусственным интеллектом, созданная для решения проблемы финансовой грамотности и преодоления барьера между простой фиксацией трат и осмысленным управлением капиталом.",
-            targetAudience: "Разработано для молодых специалистов 20–35 лет, студентов вузов и фрилансеров, которым необходим мобильный контроль мультикатегорийных бюджетов, подсказки на естественном языке и строгая конфиденциальность данных.",
-            challenge: "Конкурентный анализ (Mint, YNAB, Habitica) и опрос 50 респондентов выявили главные боли: существующие сервисы служат лишь «цифровыми блокнотами», не обучают базовым финансовым концепциям, не дают персонализированных AI-рекомендаций и вызывают опасения по поводу безопасности данных.",
-            solution: "Спроектировал мобильное приложение на React Native и асинхронный микросервис на FastAPI. Интегрировал диалогового ассистента на GPT-4 для анализа финансового поведения, интерактивные шкалы категориальных лимитов, модуль экспорта отчетов в PDF/CSV и банковское шифрование AES-256.",
-            myRole: "Спроектировал архитектуру системы и UI/UX, разработал мобильный клиент с интерактивными графиками Chart Kit, реализовал асинхронный REST API на FastAPI и PostgreSQL, настроил промпты GPT-4 и провел альфа-тестирование с эмпирической валидацией."
+            lead: "Полнофункциональное мобильное приложение для персонального финансового учета, объединяющее управление несколькими счетами, гибкое планирование бюджетов и наглядную аналитику трат с высокопроизводительным асинхронным бэкендом.",
+            targetAudience: "Пользователи, фрилансеры и семьи, которым необходим прозрачный контроль мультивалютных финансов, дисциплина в бюджетах и быстрый учет операций наличными и картами.",
+            challenge: "Большинство существующих сервисов либо перегружены лишними подписками, либо не поддерживают мультивалютность (KZT/USD/EUR), не позволяют гибко настраивать свои категории расходов и медленно работают при слабом мобильном интернете.",
+            solution: "Спроектировал модульную архитектуру: кроссплатформенный клиент на React Native и асинхронный бэкенд на FastAPI с базой PostgreSQL. Реализовал кастомизацию категорий с drag-and-drop сортировкой, интерактивные SVG-графики расходов, поддержку мультивалютности, учет счетов (дебет, кредит, накопления) и безопасную аутентификацию с подтверждением почты.",
+            myRole: "Спроектировал реляционную схему данных и API, написал весь бэкенд на FastAPI с SQLAlchemy 2.0 и миграциями Alembic, разработал мобильное приложение на React Native с навигацией React Navigation 7, графиками Chart Kit и мультиязычностью (KZ, RU, EN)."
           },
           walkthrough: {
             concept: {
-              title: "Эмпирическое исследование и концепция",
-              desc: "Архитектура основана на исследовании 50 респондентов (58% — 18–25 лет, 68% — студенты): 66% отметили критическую важность трекинга в реальном времени, 60% — инструментов бюджетирования, а 58% выразили беспокойство за безопасность данных.",
+              title: "Архитектура продукта и пользовательский опыт",
+              desc: "Фокус на моментальной фиксации операций, прозрачном контроле лимитов по категориям и наглядном отображении общего финансового состояния.",
               highlights: [
-                "Интеграция диалогового советника GPT-4 для финансового просвещения",
-                "Задержка API менее 40 мс благодаря пулу соединений AsyncIO и PostgreSQL",
-                "Многоуровневая защита данных: шифрование AES-256 и протокол TLS 1.3"
+                "Сводная панель баланса: агрегация банковских счетов, накоплений и кредитных показателей",
+                "Мультивалютность: поддержка и переключение между KZT, USD, EUR, RUB и GBP",
+                "Полная интернационализация: мгновенное переключение языка между казахским, русским и английским"
               ]
             },
             architecture: {
-              title: "Асинхронная двухзвенная архитектура",
-              desc: "Клиент на React Native с поддержкой Material Design и визуализацией на React Native Chart Kit в связке с FastAPI, SQLAlchemy ORM и модулем выгрузки аналитических отчетов.",
+              title: "Асинхронный клиент-серверный стек",
+              desc: "React Native с компонентами Material Design и графиками Chart Kit, взаимодействующий с асинхронным микросервисом на FastAPI, PostgreSQL и SQLAlchemy 2.0.",
               highlights: [
-                "Локальное персистентное кэширование на AsyncStorage для мгновенного отклика",
-                "Авторизация по JWT токенам с хэшированием bcrypt и изоляцией по GDPR",
-                "Автоматизированный движок экспорта финансовой аналитики в PDF и CSV"
+                "Высокая пропускная способность асинхронных эндпоинтов с валидацией Pydantic v2 и задержкой менее 50 мс",
+                "Локальное кэширование на AsyncStorage для быстродействия и плавной работы мобильного интерфейса",
+                "Надежный контур безопасности: токены JWT (access/refresh), хэширование bcrypt, Google OAuth и email-верификация"
               ]
             },
             features: [
-              { num: "01", title: "Диалоговый советник GPT-4", desc: "Интеллектуальный ассистент, анализирующий структуру трат, динамику расходов и обучающий финансовым концепциям на естественном языке.", metric: "60% Вовлеченность" },
-              { num: "02", title: "Визуальный бюджет и телеметрия категорий", desc: "Интерактивное распределение средств с круговыми диаграммами распределения, индикаторами прогресса и предупреждениями о перерасходе.", metric: "100% Внедрение" },
-              { num: "03", title: "Экспорт отчетов в PDF и CSV", desc: "Генератор детальных финансовых отчетов за выбранный месяц для глубокого анализа динамики накоплений и структуры трат.", metric: "80% Успешных Выгрузок" }
+              { num: "01", title: "Кастомизация бюджетов и категорий", desc: "Установка лимитов по категориям с выбором иконок, HEX-палитры цветов и сортировкой drag-and-drop для максимального удобства.", metric: "Гибкие лимиты" },
+              { num: "02", title: "Мультисчета и детализация операций", desc: "Учет дебетовых, сберегательных и кредитных счетов, выбор способа оплаты (карта/наличные), прикрепление фото чеков и заметок.", metric: "Мультисчета" },
+              { num: "03", title: "Интерактивная аналитика и графики", desc: "Визуализация структуры расходов на SVG-диаграммах, отслеживание динамики по дням и прогресс-бары расхода бюджета.", metric: "Аналитика" }
             ],
             impact: {
               metrics: [
-                { label: "ВРЕМЯ_ЗАДАЧИ", value: "-40%" },
-                { label: "УСПЕХ_ОПЕРАЦИЙ", value: "80%" },
-                { label: "ВЫБОРКА_ОПРОСА", value: "n=50" },
-                { label: "БЕЗОПАСНОСТЬ", value: "AES-256" }
+                { label: "ОТКЛИК_API", value: "<50МС" },
+                { label: "ВАЛЮТЫ", value: "5 КОДОВ" },
+                { label: "ЯЗЫКИ", value: "KZ/RU/EN" },
+                { label: "БЕЗОПАСНОСТЬ", value: "JWT+BCRYPT" }
               ]
             }
           }
@@ -1714,74 +1714,74 @@ export const portfolioContent = {
       featured: [
         {
           num: "01",
-          id: "FINANCE_MANAGEMENT_AI",
+          id: "FINANCE_MANAGEMENT_APP",
           slug: "finance-management-app",
-          title: "Personal Finance Management Application",
-          tagline: "Эмпирикалық түрде тексерілген AI-қаржылық және қаржылық сауаттылық экожүйесі",
-          category: "Full-Stack Мобильді қосымша & AI",
+          title: "FinTrack — Жеке қаржыны басқару",
+          tagline: "Бюджетті есепке алу, шоттар аналитикасы және шығындарды бақылауға арналған кроссплатформалық мобильді қосымша және асинхронды REST API",
+          category: "Мобильді қосымша және Бэкенд / FinTech",
           isPrivate: false,
-          description: "React Native (Expo) және асинхронды FastAPI/PostgreSQL негізінде жасалған дербес қаржыны басқару экожүйесі. GPT-4 ақылды кеңесшісі, интерактивті бюджет лимиттері, PDF/CSV есептерін экспорттау және AES-256 деректерді қорғау жүйесі енгізілген.",
-          tags: ["React Native", "FastAPI", "OpenAI GPT-4", "PostgreSQL", "AES-256", "Expo"],
+          description: "React Native (Expo) және FastAPI/PostgreSQL негізінде әзірленген жеке қаржыны басқаруға арналған Full-Stack экожүйесі. Банктік шоттарды біріктіру, санаттарды drag-and-drop арқылы реттеу, шығындар аналитикасы, мультивалюта (KZT, USD, EUR, RUB, GBP) және қауіпсіз JWT аутентификациясы қарастырылған.",
+          tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "EMPIRICALLY_VALIDATED",
+          status: "PRODUCTION",
           dossier: {
-            projectType: "AI мен қаржылық сауаттылықты арттыруға арналған FinTech экожүйесі",
+            projectType: "Жеке қаржы мен бюджетті басқаруға арналған Full-Stack жүйесі",
             entryYear: "2024 - 2025",
-            targetPlatform: "Кроссплатформа (iOS & Android) + Асинхронды Cloud REST API",
-            primaryRole: "Lead Full-Stack Инженер & Жүйелік Архитектор",
+            targetPlatform: "iOS & Android (React Native) + Асинхронды Cloud REST API (FastAPI)",
+            primaryRole: "Full-Stack инженер және мобильді әзірлеуші",
             technologies: {
-              core: ["React Native (Expo SDK)", "TypeScript", "FastAPI (Python 3.11)", "PostgreSQL"],
-              frontendUI: ["React Native Paper", "React Native Elements", "React Native Chart Kit", "AsyncStorage"],
-              backend: ["SQLAlchemy ORM", "AsyncIO", "JWT Аутентификация", "bcrypt", "Swagger OpenAPI"],
-              securityAI: ["OpenAI GPT-4 API", "AES-256 Шифрлау", "TLS 1.3", "GDPR Сәйкестік", "PDF/CSV Экспорт"]
+              core: ["React Native 0.79", "Expo 53", "FastAPI 0.115", "PostgreSQL", "Python 3.11"],
+              frontendUI: ["React Navigation 7", "React Native Paper", "React Native Chart Kit", "Draggable FlatList", "AsyncStorage", "i18next"],
+              backend: ["SQLAlchemy 2.0 ORM", "Alembic Migrations", "Pydantic v2", "Uvicorn"],
+              security: ["JWT аутентификация", "bcrypt хэштеу", "Google OAuth", "fastapi-mail"]
             },
             colorPalette: [
-              { name: "Изумруд Cyber", hex: "#00FF9F" },
-              { name: "Терең Оникс", hex: "#090E11" },
-              { name: "Терминалды Слейт", hex: "#1A262C" },
-              { name: "Дабыл Кримсон", hex: "#FF0055" }
+              { name: "Изумруд акцент", hex: "#00FF9F" },
+              { name: "Терең фон", hex: "#060A10" },
+              { name: "Слейт панельдері", hex: "#161D26" },
+              { name: "Шығын түсі", hex: "#FF453A" }
             ],
-            status: "ВАЛИДАЦИЯЛАНҒАН_PRODUCTION_БИЛД"
+            status: "PRODUCTION"
           },
           overview: {
-            lead: "Қаржылық сауаттылық мәселесін шешуге және қарапайым шығындарды тіркеу мен ақылды капиталды басқару арасындағы алшақтықты жоюға арналған жасанды интеллектпен күшейтілген жеке қаржыны басқару жүйесі (PFM).",
-            targetAudience: "20–35 жас аралығындағы жас мамандар, университет студенттері мен фрилансерлер үшін мобильді бақылау, табиғи тілдегі кеңестер және қауіпсіздікке бағытталған.",
-            challenge: "Бәсекелестерді талдау (Mint, YNAB, Habitica) және 50 адам арасында жүргізілген зерттеу көрсеткендей: қазіргі қосымшалар тек қарапайым жазу дәптері ретінде қызмет етеді, қаржылық түсініктерді үйретпейді және AI арқылы жекелендірілген қолдау көрсетпейді.",
-            solution: "React Native негізінде мобильді клиент және FastAPI көмегімен асинхронды микросервис жасалды. Шығындар үлгісін талдайтын GPT-4 көмекшісі, интерактивті бюджет шкалалары, PDF/CSV есептерін экспорттау және банктік деңгейдегі AES-256 шифрлау енгізілді.",
-            myRole: "Жүйе сәулеті мен UI/UX әзірлеу, Chart Kit интерактивті графиктері бар мобильді клиент құру, FastAPI мен PostgreSQL-де асинхронды REST API жазу, GPT-4 промпттарын реттеу және альфа-тестілеуден өткізу."
+            lead: "Бірнеше шотты басқаруды, икемді бюджеттеуді және шығындар аналитикасын жылдам асинхронды бэкендпен үйлестіретін толыққанды мобильді қаржылық қосымша.",
+            targetAudience: "Мультивалюталық қаржысын ашық бақылап, бюджеттік тәртіп орнатқысы келетін және қолма-қол ақша мен карта операцияларын жеңіл тіркеуді қалайтын қолданушылар мен фрилансерлер.",
+            challenge: "Қолданыстағы қосымшалар көбінесе KZT/USD/EUR сияқты жергілікті мультивалюталық режимді қолдамайды, санаттарды икемді реттеуге мүмкіндік бермейді және интернет баяу болғанда қатып қалады.",
+            solution: "Модульдік архитектура жасалды: React Native клиенті және PostgreSQL дерекқоры бар асинхронды FastAPI бэкенді. Drag-and-drop арқылы санаттарды реттеу, интерактивті SVG-графиктер, шоттарды есепке алу (дебет, несие, жинақ) және email растауы бар қауіпсіз авторизация енгізілді.",
+            myRole: "Реляциялық деректер сұлбасы мен API архитектурасын жобалау, FastAPI және SQLAlchemy 2.0-де Alembic миграцияларымен толық бэкенд жазу, React Native-те React Navigation 7 және Chart Kit қолданып мобильді клиент әзірлеу, 3 тілдік локализацияны (KZ, RU, EN) қосу."
           },
           walkthrough: {
             concept: {
-              title: "Эмпирикалық зерттеу және тұжырымдама",
-              desc: "Сәулет 50 респондент арасындағы зерттеуге негізделген (58% — 18–25 жас, 68% — студенттер): 66% нақты уақытта бақылаудың маңыздылығын, 60% — бюджеттеу құралдарын, ал 58% — деректер қауіпсіздігін баса атап өтті.",
+              title: "Өнім архитектурасы және пайдаланушы тәжірибесі",
+              desc: "Операцияларды жылдам енгізуге, санаттар бойынша лимиттерді қадағалауға және жалпы қаржылық жағдайды нақты көрсетуге бағытталған.",
               highlights: [
-                "Қаржылық сауаттылықты арттыруға арналған GPT-4 диалогтық кеңесшісі",
-                "FastAPI AsyncIO және PostgreSQL арқылы 40 мс-тан төмен API жылдамдығы",
-                "AES-256 шифрлауы және TLS 1.3 хаттамасы бар көпдеңгейлі қауіпсіздік"
+                "Жиынтық баланс панелі: банктік шоттар, жинақтар және несиелік көрсеткіштер агрегациясы",
+                "Мультивалюталық қолдау: KZT, USD, EUR, RUB және GBP арасында жылдам ауысу",
+                "Толық интернационализация: қазақ, орыс және ағылшын тілдерін қосымша ішінде ауыстыру"
               ]
             },
             architecture: {
-              title: "Асинхронды қос қозғалтқышты архитектура",
-              desc: "Material Design талаптарына сай React Native клиенті мен React Native Chart Kit визуализациясы FastAPI, SQLAlchemy ORM және талдау есептерін генерациялау модулімен байланысқан.",
+              title: "Асинхронды клиент-серверлік стек",
+              desc: "Material Design компоненттері мен Chart Kit графиктері бар React Native клиенті FastAPI, PostgreSQL және SQLAlchemy 2.0 микросервисімен байланысқан.",
               highlights: [
-                "Офлайн жұмыс пен жылдам жауап үшін AsyncStorage локалды кештеу",
-                "bcrypt хэштеуі бар JWT авторизациясы және GDPR бойынша оқшаулау",
-                "Қаржылық аналитиканы PDF және CSV форматына экспорттау қозғалтқышы"
+                "Pydantic v2 валидациясы мен 50 мс-тан төмен кідірісі бар жоғары өнімді асинхронды эндпоинттер",
+                "Мобильді интерфейстің үздіксіз жұмысы үшін AsyncStorage арқылы жергілікті кештеу",
+                "Сенімді қауіпсіздік шеңбері: JWT токендері (access/refresh), bcrypt хэштеу, Google OAuth және email растау"
               ]
             },
             features: [
-              { num: "01", title: "GPT-4 диалогтық кеңесшісі", desc: "Шығындар құрылымын, қаржылық динамиканы талдайтын және табиғи тілде кеңес беретін ақылды көмекші.", metric: "60% Қатысу" },
-              { num: "02", title: "Визуалды бюджет және санаттар телеметриясы", desc: "Дөңгелек диаграммалар, орындалу шкалалары және артық шығындар туралы автоматты ескертулер бар интерактивті бюджеттеу.", metric: "100% Қолданыс" },
-              { num: "03", title: "PDF және CSV есептерін экспорттау", desc: "Шығындар мен жинақтар динамикасын терең талдау үшін таңдалған айға арналған толық қаржылық есептерді құрастыру.", metric: "80% Сәтті Экспорт" }
+              { num: "01", title: "Бюджет пен санаттарды баптау", desc: "Санаттар бойынша шекті сомаларды белгілеу, белгішелер мен түс палитрасын таңдау, drag-and-drop арқылы реттеу.", metric: "Икемді лимиттер" },
+              { num: "02", title: "Мультишоттар және операциялар", desc: "Дебеттік, жинақ және несиелік шоттарды басқару, төлем түрін таңдау (карта/қолма-қол), түбіртектер суреті мен жазбаларды қосу.", metric: "Мультишоттар" },
+              { num: "03", title: "Интерактивті аналитика және графиктер", desc: "SVG-диаграммалар арқылы шығындар құрылымын бақылау, күнделікті динамика және бюджеттің жұмсалу шкалалары.", metric: "Аналитика" }
             ],
             impact: {
               metrics: [
-                { label: "ТАПСЫРМА_УАҚЫТЫ", value: "-40%" },
-                { label: "СӘТТІ_ӘРЕКЕТ", value: "80%" },
-                { label: "ТАҢДАУ_КӨЛЕМІ", value: "n=50" },
-                { label: "ҚАУІПСІЗДІК", value: "AES-256" }
+                { label: "API_ЖЫЛДАМДЫҒЫ", value: "<50МС" },
+                { label: "ВАЛЮТАЛАР", value: "5 КОД" },
+                { label: "ТІЛДЕР", value: "KZ/RU/EN" },
+                { label: "ҚАУІПСІЗДІК", value: "JWT+BCRYPT" }
               ]
             }
           }
