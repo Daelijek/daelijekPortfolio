@@ -316,26 +316,26 @@ export const portfolioContent = {
           num: "01",
           id: "FINANCE_MANAGEMENT_AI",
           slug: "finance-management-app",
-          title: "Finance Management Application",
-          tagline: "Autonomous personal finance ecosystem with real-time AI spending analytics",
+          title: "Personal Finance Management Application",
+          tagline: "Empirically validated AI-powered personal finance & literacy ecosystem",
           category: "Full-Stack Mobile App & AI",
           isPrivate: false,
-          description: "Intelligent cross-platform personal finance ecosystem built with React Native (Expo) and a high-performance FastAPI/PostgreSQL backend. Features an integrated OpenAI assistant that analyzes spending patterns in real-time, interactive budget trackers, and automated limit alerts.",
-          tags: ["React Native", "Expo", "FastAPI", "OpenAI API", "PostgreSQL"],
+          description: "An AI-powered cross-platform personal finance ecosystem built with React Native (Expo) and an asynchronous FastAPI/PostgreSQL backend. Features GPT-4 intelligent financial advisory, interactive budget allocations, Material Design UI, PDF/CSV report exports, and AES-256 data protection.",
+          tags: ["React Native", "FastAPI", "OpenAI GPT-4", "PostgreSQL", "AES-256", "Expo"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "ACTIVE_REPOSITORY",
+          status: "EMPIRICALLY_VALIDATED",
           dossier: {
-            projectType: "AI-Powered FinTech Mobile Ecosystem",
+            projectType: "AI-Enhanced Personal Finance & Financial Literacy Mobile Ecosystem",
             entryYear: "2024 - 2025",
-            targetPlatform: "Cross-Platform Mobile (iOS & Android) + Cloud API",
-            primaryRole: "Lead Mobile & Backend Software Engineer",
+            targetPlatform: "Cross-Platform Mobile (iOS & Android) + Async Cloud REST API",
+            primaryRole: "Lead Full-Stack Software Engineer & System Architect",
             technologies: {
-              core: ["React Native", "Expo SDK", "TypeScript", "FastAPI (Python)"],
-              backend: ["Python 3.11", "PostgreSQL", "SQLAlchemy", "AsyncIO"],
-              aiCloud: ["OpenAI GPT API", "Vector Prompting", "Docker Containers"],
-              tools: ["NativeWind (Tailwind)", "Axios", "Zustand State Engine"]
+              core: ["React Native (Expo SDK)", "TypeScript", "FastAPI (Python 3.11)", "PostgreSQL"],
+              frontendUI: ["React Native Paper", "React Native Elements", "React Native Chart Kit", "AsyncStorage"],
+              backend: ["SQLAlchemy ORM", "AsyncIO", "JWT Authentication", "bcrypt", "Swagger OpenAPI"],
+              securityAI: ["OpenAI GPT-4 API", "AES-256 Encryption", "TLS 1.3", "GDPR Compliance", "PDF/CSV Reporting"]
             },
             colorPalette: [
               { name: "Emerald Cyber", hex: "#00FF9F" },
@@ -343,45 +343,45 @@ export const portfolioContent = {
               { name: "Terminal Slate", hex: "#1A262C" },
               { name: "Alert Crimson", hex: "#FF0055" }
             ],
-            status: "ACTIVE_PRODUCTION_BUILD"
+            status: "EMPIRICALLY_VALIDATED_BUILD"
           },
           overview: {
-            lead: "An intelligent personal wealth and budgeting ecosystem engineered to help modern users automate expenditure monitoring, categorize cash flow in real-time, and make data-driven financial decisions via an integrated OpenAI assistant.",
-            targetAudience: "Designed for tech-savvy individuals, freelance contractors, and young professionals requiring real-time visibility into complex multi-currency finances without manual spreadsheet overhead.",
-            challenge: "Personal budgeting apps frequently suffer from tedious manual entry hurdles, vague categorization rules, and delayed bank sync latency that discourages consistent habit formation.",
-            solution: "Architected an end-to-end mobile client powered by React Native and Expo with instantaneous local caching, backed by an ultra-low latency FastAPI microservice. Built a conversational OpenAI financial advisor capable of scanning transaction history, answering budget questions in plain language, and forecasting upcoming monthly deficits.",
-            myRole: "Engineered the cross-platform UI/UX in React Native, authored the FastAPI REST APIs with PostgreSQL persistence, implemented OpenAI token-optimized prompts, and created real-time financial telemetry widgets."
+            lead: "A comprehensive AI-enhanced Personal Finance Management (PFM) system engineered to solve the global financial literacy gap and bridge the disconnect between routine transaction logging and actionable, intelligent wealth coaching.",
+            targetAudience: "Engineered for young professionals aged 20-35, university students, and freelancers seeking mobile-first financial control, automated budgeting, and AI-driven educational assistance.",
+            challenge: "Competitive analysis (Mint, YNAB, Habitica) and empirical research revealed that most PFM apps operate merely as digital ledgers without contextual financial education, lack personalized AI insights, and raise user security anxieties regarding data privacy.",
+            solution: "Architected an end-to-end mobile application combining a high-performance React Native client with an asynchronous FastAPI microservice. Integrated a GPT-4 conversational financial advisor providing contextual spending breakdowns, dynamic category budget enforcers, multi-format PDF/CSV reporting, and bank-grade AES-256 data encryption.",
+            myRole: "Designed system architecture and UI/UX, built cross-platform mobile client with React Native and Chart Kit, authored high-throughput FastAPI REST endpoints with PostgreSQL, integrated GPT-4 token-optimized advisory streams, and conducted empirical user validation."
           },
           walkthrough: {
             concept: {
-              title: "The Vision & Core Architecture",
-              desc: "The mission was to deliver zero-friction financial telemetry. Every tap reflects instant state updates with sub-50ms render latency and military-grade SSL data security.",
+              title: "Empirical Research & Architectural Vision",
+              desc: "Formulated through a 50-participant empirical user survey (58% ages 18-25, 68% students) showing 66% demand for real-time tracking, 60% for proactive budgeting, and 58% data security concerns.",
               highlights: [
-                "Real-time financial telemetry dashboard with interactive meters",
-                "Zero-latency optimistic UI updates backed by local storage",
-                "Contextual OpenAI financial analysis engine for plain-language queries"
+                "Integration of GPT-4 conversational advisory for contextual financial literacy",
+                "Sub-40ms API latency via FastAPI AsyncIO connection pools and PostgreSQL",
+                "Multi-layer data protection with AES-256 encryption and TLS 1.3 protocols"
               ]
             },
             architecture: {
-              title: "Dual-Engine Mobile & Backend Synergy",
-              desc: "Leveraging Expo SDK with React Native for native 60fps gesture handling, backed by Python FastAPI's asynchronous event loop and PostgreSQL relational queries.",
+              title: "Asynchronous Dual-Engine Stack",
+              desc: "React Native with Material Design compliance and Chart Kit data visualizations backed by FastAPI, SQLAlchemy ORM, and secure file handling for on-demand financial report generation.",
               highlights: [
-                "AsyncIO connection pooling for maximum API throughput",
-                "Encrypted credential storage via Expo SecureStore",
-                "Prompt engineering with dynamic spending context injection"
+                "Persistent local caching with AsyncStorage for offline resilience",
+                "JWT authentication with bcrypt password hashing and GDPR-compliant data isolation",
+                "Automated PDF and CSV analytical report export engine"
               ]
             },
             features: [
-              { num: "01", title: "Autonomous AI Financial Advisor", desc: "Interactive conversational agent that provides actionable breakdowns of spending velocity and anomalous charges.", metric: "<1.2s AI Response" },
-              { num: "02", title: "Dynamic Budget Limit Enforcer", desc: "Interactive threshold meters that pulse and alert users before category limits are breached.", metric: "100% Client-Side Sync" },
-              { num: "03", title: "Multi-Category Telemetry Charts", desc: "High-density data visualization charts tracking daily burn rates and investment savings ratios.", metric: "60 FPS Render" }
+              { num: "01", title: "GPT-4 Conversational Advisor", desc: "Interactive AI financial advisor providing natural language analysis of user spending velocity, anomalous charges, and tailored literacy coaching.", metric: "60% User Engagement" },
+              { num: "02", title: "Visual Budget & Category Telemetry", desc: "Interactive category allocation with real-time threshold meters, donut distribution charts, and proactive limit warnings.", metric: "100% Adoption Rate" },
+              { num: "03", title: "PDF & CSV Report Export", desc: "On-demand analytical report generator compiling monthly summaries, category allocations, and historical trend charts into exportable documents.", metric: "80% Export Success" }
             ],
             impact: {
               metrics: [
-                { label: "API_LATENCY", value: "38MS" },
-                { label: "AI_ACCURACY", value: "97.4%" },
-                { label: "TEST_COVERAGE", value: "91%" },
-                { label: "SYSTEM_UPTIME", value: "99.9%" }
+                { label: "TASK_TIME", value: "-40%" },
+                { label: "TASK_SUCCESS", value: "80%" },
+                { label: "SURVEY_SAMPLE", value: "n=50" },
+                { label: "SECURITY", value: "AES-256" }
               ]
             }
           }
@@ -1016,26 +1016,26 @@ export const portfolioContent = {
           num: "01",
           id: "FINANCE_MANAGEMENT_AI",
           slug: "finance-management-app",
-          title: "Finance Management Application",
-          tagline: "Автономная кроссплатформенная экосистема учета личных финансов с AI-аналитикой трат",
+          title: "Personal Finance Management Application",
+          tagline: "Эмпирически валидированная AI-экосистема персональных финансов и финансовой грамотности",
           category: "Full-Stack Мобильное приложение & AI",
           isPrivate: false,
-          description: "Интеллектуальная кроссплатформенная экосистема для учета финансов на React Native (Expo) с бэкендом на FastAPI/PostgreSQL. Включает интегрированного AI-ассистента на базе OpenAI для анализа трат, интерактивные лимиты и графики бюджета.",
-          tags: ["React Native", "Expo", "FastAPI", "OpenAI API", "PostgreSQL"],
+          description: "Кроссплатформенная мобильная экосистема для учета финансов на React Native (Expo) с асинхронным бэкендом на FastAPI/PostgreSQL. Включает интеллектуального AI-советника на базе GPT-4, интерактивное бюджетирование, экспорт отчетов в PDF/CSV и сквозное шифрование AES-256.",
+          tags: ["React Native", "FastAPI", "OpenAI GPT-4", "PostgreSQL", "AES-256", "Expo"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "ACTIVE_REPOSITORY",
+          status: "EMPIRICALLY_VALIDATED",
           dossier: {
-            projectType: "FinTech мобильная экосистема с искусственным интеллектом",
+            projectType: "FinTech мобильная экосистема с AI и обучением финансовой грамотности",
             entryYear: "2024 - 2025",
-            targetPlatform: "Кроссплатформа (iOS & Android) + Cloud REST API",
-            primaryRole: "Lead Mobile & Backend Инженер",
+            targetPlatform: "Кроссплатформа (iOS & Android) + Асинхронный Cloud REST API",
+            primaryRole: "Lead Full-Stack Инженер & Архитектор системы",
             technologies: {
-              core: ["React Native", "Expo SDK", "TypeScript", "FastAPI (Python)"],
-              backend: ["Python 3.11", "PostgreSQL", "SQLAlchemy", "AsyncIO"],
-              aiCloud: ["OpenAI GPT API", "Векторный промптинг", "Docker"],
-              tools: ["NativeWind (Tailwind)", "Axios", "Zustand"]
+              core: ["React Native (Expo SDK)", "TypeScript", "FastAPI (Python 3.11)", "PostgreSQL"],
+              frontendUI: ["React Native Paper", "React Native Elements", "React Native Chart Kit", "AsyncStorage"],
+              backend: ["SQLAlchemy ORM", "AsyncIO", "JWT авторизация", "bcrypt", "Swagger OpenAPI"],
+              securityAI: ["OpenAI GPT-4 API", "AES-256 шифрование", "TLS 1.3", "GDPR соответствие", "Генератор PDF/CSV"]
             },
             colorPalette: [
               { name: "Изумрудный Cyber", hex: "#00FF9F" },
@@ -1043,45 +1043,45 @@ export const portfolioContent = {
               { name: "Терминальный Слейт", hex: "#1A262C" },
               { name: "Сигнальный Кримсон", hex: "#FF0055" }
             ],
-            status: "АКТИВНЫЙ_PRODUCTION_БИЛД"
+            status: "ВАЛИДИРОВАННЫЙ_PRODUCTION_БИЛД"
           },
           overview: {
-            lead: "Интеллектуальная персональная финансовая экосистема, созданная для полной автоматизации трекинга расходов, мгновенной категоризации денежных потоков и принятия финансовых решений с поддержкой встроенного OpenAI-ассистента.",
-            targetAudience: "Разработано для IT-специалистов, фрилансеров и молодых профессионалов, которым нужен наглядный контроль над мультивалютными бюджетами без ручной рутины в таблицах.",
-            challenge: "Большинство приложений для учета финансов отталкивают сложным ручным вводом, невнятной категоризацией и задержками синхронизации, из-за чего пользователи быстро забрасывают учет.",
-            solution: "Спроектировал мобильный клиент на React Native и Expo с мгновенным локальным кэшированием и асинхронный микросервис на FastAPI. Внедрил диалогового финансового советника на базе OpenAI, который анализирует структуру трат, отвечает на естественном языке и прогнозирует кассовые разрывы.",
-            myRole: "Спроектировал UI/UX на React Native, разработал REST API на FastAPI с персистентностью в PostgreSQL, оптимизировал промпты OpenAI и создал компоненты финансовой телеметрии в реальном времени."
+            lead: "Комплексная экосистема персонального финансового менеджмента (PFM) с искусственным интеллектом, созданная для решения проблемы финансовой грамотности и преодоления барьера между простой фиксацией трат и осмысленным управлением капиталом.",
+            targetAudience: "Разработано для молодых специалистов 20–35 лет, студентов вузов и фрилансеров, которым необходим мобильный контроль мультикатегорийных бюджетов, подсказки на естественном языке и строгая конфиденциальность данных.",
+            challenge: "Конкурентный анализ (Mint, YNAB, Habitica) и опрос 50 респондентов выявили главные боли: существующие сервисы служат лишь «цифровыми блокнотами», не обучают базовым финансовым концепциям, не дают персонализированных AI-рекомендаций и вызывают опасения по поводу безопасности данных.",
+            solution: "Спроектировал мобильное приложение на React Native и асинхронный микросервис на FastAPI. Интегрировал диалогового ассистента на GPT-4 для анализа финансового поведения, интерактивные шкалы категориальных лимитов, модуль экспорта отчетов в PDF/CSV и банковское шифрование AES-256.",
+            myRole: "Спроектировал архитектуру системы и UI/UX, разработал мобильный клиент с интерактивными графиками Chart Kit, реализовал асинхронный REST API на FastAPI и PostgreSQL, настроил промпты GPT-4 и провел альфа-тестирование с эмпирической валидацией."
           },
           walkthrough: {
             concept: {
-              title: "Концепция и архитектурное ядро",
-              desc: "Главная цель — нулевое трение при фиксации финансовых операций. Каждый тап обновляет состояние с задержкой рендера менее 50 мс и сквозным SSL-шифрованием.",
+              title: "Эмпирическое исследование и концепция",
+              desc: "Архитектура основана на исследовании 50 респондентов (58% — 18–25 лет, 68% — студенты): 66% отметили критическую важность трекинга в реальном времени, 60% — инструментов бюджетирования, а 58% выразили беспокойство за безопасность данных.",
               highlights: [
-                "Дашборд финансовой телеметрии с интерактивными шкалами",
-                "Оптимистичные UI-апдейты без задержки сети",
-                "Контекстный анализ трат языковой моделью OpenAI"
+                "Интеграция диалогового советника GPT-4 для финансового просвещения",
+                "Задержка API менее 40 мс благодаря пулу соединений AsyncIO и PostgreSQL",
+                "Многоуровневая защита данных: шифрование AES-256 и протокол TLS 1.3"
               ]
             },
             architecture: {
-              title: "Синергия мобильного клиента и FastAPI",
-              desc: "Expo SDK и React Native обеспечивают нативную скорость 60 FPS для жестов и анимаций, а асинхронный event loop FastAPI мгновенно обрабатывает реляционные запросы PostgreSQL.",
+              title: "Асинхронная двухзвенная архитектура",
+              desc: "Клиент на React Native с поддержкой Material Design и визуализацией на React Native Chart Kit в связке с FastAPI, SQLAlchemy ORM и модулем выгрузки аналитических отчетов.",
               highlights: [
-                "Пул соединений AsyncIO для максимальной пропускной способности",
-                "Защищенное хранилище токенов через Expo SecureStore",
-                "Промпт-инжиниринг с динамическим внедрением финансовых срезов"
+                "Локальное персистентное кэширование на AsyncStorage для мгновенного отклика",
+                "Авторизация по JWT токенам с хэшированием bcrypt и изоляцией по GDPR",
+                "Автоматизированный движок экспорта финансовой аналитики в PDF и CSV"
               ]
             },
             features: [
-              { num: "01", title: "Автономный AI-советник", desc: "Диалоговый агент, формирующий детальные срезы динамики трат и предупреждающий об аномалиях.", metric: "<1.2с Ответ AI" },
-              { num: "02", title: "Контроль бюджетных лимитов", desc: "Пульсирующие индикаторы категорий, предупреждающие о перерасходе до совершения транзакции.", metric: "100% Клиентский Синхрон" },
-              { num: "03", title: "Графики финансовой телеметрии", desc: "Информативные визуализации burn rate и динамики накоплений.", metric: "60 FPS Рендер" }
+              { num: "01", title: "Диалоговый советник GPT-4", desc: "Интеллектуальный ассистент, анализирующий структуру трат, динамику расходов и обучающий финансовым концепциям на естественном языке.", metric: "60% Вовлеченность" },
+              { num: "02", title: "Визуальный бюджет и телеметрия категорий", desc: "Интерактивное распределение средств с круговыми диаграммами распределения, индикаторами прогресса и предупреждениями о перерасходе.", metric: "100% Внедрение" },
+              { num: "03", title: "Экспорт отчетов в PDF и CSV", desc: "Генератор детальных финансовых отчетов за выбранный месяц для глубокого анализа динамики накоплений и структуры трат.", metric: "80% Успешных Выгрузок" }
             ],
             impact: {
               metrics: [
-                { label: "API_LATENCY", value: "38MS" },
-                { label: "AI_ACCURACY", value: "97.4%" },
-                { label: "TEST_COVERAGE", value: "91%" },
-                { label: "SYSTEM_UPTIME", value: "99.9%" }
+                { label: "ВРЕМЯ_ЗАДАЧИ", value: "-40%" },
+                { label: "УСПЕХ_ОПЕРАЦИЙ", value: "80%" },
+                { label: "ВЫБОРКА_ОПРОСА", value: "n=50" },
+                { label: "БЕЗОПАСНОСТЬ", value: "AES-256" }
               ]
             }
           }
@@ -1716,16 +1716,75 @@ export const portfolioContent = {
           num: "01",
           id: "FINANCE_MANAGEMENT_AI",
           slug: "finance-management-app",
-          title: "Finance Management Application",
-          tagline: "Шығындарды нақты уақытта талдайтын AI-көмекшісі бар дербес қаржы экожүйесі",
+          title: "Personal Finance Management Application",
+          tagline: "Эмпирикалық түрде тексерілген AI-қаржылық және қаржылық сауаттылық экожүйесі",
           category: "Full-Stack Мобильді қосымша & AI",
           isPrivate: false,
-          description: "React Native (Expo) және FastAPI/PostgreSQL негізінде жасалған дербес қаржыны басқару экожүйесі. Шығындарды нақты уақытта талдайтын кірістірілген OpenAI көмекшісі, интерактивті бюджет пен автоматты ескертулер бар.",
-          tags: ["React Native", "Expo", "FastAPI", "OpenAI API", "PostgreSQL"],
+          description: "React Native (Expo) және асинхронды FastAPI/PostgreSQL негізінде жасалған дербес қаржыны басқару экожүйесі. GPT-4 ақылды кеңесшісі, интерактивті бюджет лимиттері, PDF/CSV есептерін экспорттау және AES-256 деректерді қорғау жүйесі енгізілген.",
+          tags: ["React Native", "FastAPI", "OpenAI GPT-4", "PostgreSQL", "AES-256", "Expo"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "ACTIVE_REPOSITORY"
+          status: "EMPIRICALLY_VALIDATED",
+          dossier: {
+            projectType: "AI мен қаржылық сауаттылықты арттыруға арналған FinTech экожүйесі",
+            entryYear: "2024 - 2025",
+            targetPlatform: "Кроссплатформа (iOS & Android) + Асинхронды Cloud REST API",
+            primaryRole: "Lead Full-Stack Инженер & Жүйелік Архитектор",
+            technologies: {
+              core: ["React Native (Expo SDK)", "TypeScript", "FastAPI (Python 3.11)", "PostgreSQL"],
+              frontendUI: ["React Native Paper", "React Native Elements", "React Native Chart Kit", "AsyncStorage"],
+              backend: ["SQLAlchemy ORM", "AsyncIO", "JWT Аутентификация", "bcrypt", "Swagger OpenAPI"],
+              securityAI: ["OpenAI GPT-4 API", "AES-256 Шифрлау", "TLS 1.3", "GDPR Сәйкестік", "PDF/CSV Экспорт"]
+            },
+            colorPalette: [
+              { name: "Изумруд Cyber", hex: "#00FF9F" },
+              { name: "Терең Оникс", hex: "#090E11" },
+              { name: "Терминалды Слейт", hex: "#1A262C" },
+              { name: "Дабыл Кримсон", hex: "#FF0055" }
+            ],
+            status: "ВАЛИДАЦИЯЛАНҒАН_PRODUCTION_БИЛД"
+          },
+          overview: {
+            lead: "Қаржылық сауаттылық мәселесін шешуге және қарапайым шығындарды тіркеу мен ақылды капиталды басқару арасындағы алшақтықты жоюға арналған жасанды интеллектпен күшейтілген жеке қаржыны басқару жүйесі (PFM).",
+            targetAudience: "20–35 жас аралығындағы жас мамандар, университет студенттері мен фрилансерлер үшін мобильді бақылау, табиғи тілдегі кеңестер және қауіпсіздікке бағытталған.",
+            challenge: "Бәсекелестерді талдау (Mint, YNAB, Habitica) және 50 адам арасында жүргізілген зерттеу көрсеткендей: қазіргі қосымшалар тек қарапайым жазу дәптері ретінде қызмет етеді, қаржылық түсініктерді үйретпейді және AI арқылы жекелендірілген қолдау көрсетпейді.",
+            solution: "React Native негізінде мобильді клиент және FastAPI көмегімен асинхронды микросервис жасалды. Шығындар үлгісін талдайтын GPT-4 көмекшісі, интерактивті бюджет шкалалары, PDF/CSV есептерін экспорттау және банктік деңгейдегі AES-256 шифрлау енгізілді.",
+            myRole: "Жүйе сәулеті мен UI/UX әзірлеу, Chart Kit интерактивті графиктері бар мобильді клиент құру, FastAPI мен PostgreSQL-де асинхронды REST API жазу, GPT-4 промпттарын реттеу және альфа-тестілеуден өткізу."
+          },
+          walkthrough: {
+            concept: {
+              title: "Эмпирикалық зерттеу және тұжырымдама",
+              desc: "Сәулет 50 респондент арасындағы зерттеуге негізделген (58% — 18–25 жас, 68% — студенттер): 66% нақты уақытта бақылаудың маңыздылығын, 60% — бюджеттеу құралдарын, ал 58% — деректер қауіпсіздігін баса атап өтті.",
+              highlights: [
+                "Қаржылық сауаттылықты арттыруға арналған GPT-4 диалогтық кеңесшісі",
+                "FastAPI AsyncIO және PostgreSQL арқылы 40 мс-тан төмен API жылдамдығы",
+                "AES-256 шифрлауы және TLS 1.3 хаттамасы бар көпдеңгейлі қауіпсіздік"
+              ]
+            },
+            architecture: {
+              title: "Асинхронды қос қозғалтқышты архитектура",
+              desc: "Material Design талаптарына сай React Native клиенті мен React Native Chart Kit визуализациясы FastAPI, SQLAlchemy ORM және талдау есептерін генерациялау модулімен байланысқан.",
+              highlights: [
+                "Офлайн жұмыс пен жылдам жауап үшін AsyncStorage локалды кештеу",
+                "bcrypt хэштеуі бар JWT авторизациясы және GDPR бойынша оқшаулау",
+                "Қаржылық аналитиканы PDF және CSV форматына экспорттау қозғалтқышы"
+              ]
+            },
+            features: [
+              { num: "01", title: "GPT-4 диалогтық кеңесшісі", desc: "Шығындар құрылымын, қаржылық динамиканы талдайтын және табиғи тілде кеңес беретін ақылды көмекші.", metric: "60% Қатысу" },
+              { num: "02", title: "Визуалды бюджет және санаттар телеметриясы", desc: "Дөңгелек диаграммалар, орындалу шкалалары және артық шығындар туралы автоматты ескертулер бар интерактивті бюджеттеу.", metric: "100% Қолданыс" },
+              { num: "03", title: "PDF және CSV есептерін экспорттау", desc: "Шығындар мен жинақтар динамикасын терең талдау үшін таңдалған айға арналған толық қаржылық есептерді құрастыру.", metric: "80% Сәтті Экспорт" }
+            ],
+            impact: {
+              metrics: [
+                { label: "ТАПСЫРМА_УАҚЫТЫ", value: "-40%" },
+                { label: "СӘТТІ_ӘРЕКЕТ", value: "80%" },
+                { label: "ТАҢДАУ_КӨЛЕМІ", value: "n=50" },
+                { label: "ҚАУІПСІЗДІК", value: "AES-256" }
+              ]
+            }
+          }
         },
         {
           num: "02",

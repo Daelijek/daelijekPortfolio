@@ -23,4 +23,5 @@ out/
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+# PDF documents
+*.pdf

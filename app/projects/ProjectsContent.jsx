@@ -13,56 +13,59 @@ export default function ProjectsContent() {
   const content = portfolioContent[lang] || portfolioContent.en;
   const projects = content.projects;
 
+  const viewCaseText = lang === 'ru' ? 'Смотреть кейс' : lang === 'kk' ? 'Кейсті ашу' : 'Explore Case Study';
+  const archiveTitle = lang === 'ru' ? 'Архив проектов и утилиты' : lang === 'kk' ? 'Жобалар архиві және утилиталар' : 'System Archive & Tools';
+
   return (
-    <div className="min-h-screen pt-24 sm:pt-32 lg:pt-36 pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto font-mono selection:bg-[var(--accent-color)] selection:text-[#040608]">
-      {/* 1. TOP SYSTEM HEADER BAR */}
+    <div className="min-h-screen pt-24 sm:pt-32 lg:pt-36 pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1600px] mx-auto font-sans selection:bg-[var(--accent-color)] selection:text-[#040608]">
+      {/* 1. TOP SECTION HEADER */}
       <Motion.div
-        initial={{ opacity: 0, y: -16 }}
+        initial={{ opacity: 0, y: -12 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4 mb-8 sm:mb-12"
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-8 sm:mb-12 font-mono"
       >
-        <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping" />
-          <span className="text-xs font-bold text-[var(--accent-color)] tracking-widest uppercase">
-            {projects.tag || '// SECTOR_02 · PORTFOLIO SHOWCASE'}
+        <div className="flex items-center gap-2.5">
+          <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] shadow-[0_0_8px_var(--accent-color)]" />
+          <span className="text-xs font-bold text-[var(--accent-color)] tracking-wider uppercase">
+            {projects.tag || '// PORTFOLIO SHOWCASE'}
           </span>
         </div>
-        <div className="text-xs text-[var(--text-muted)] hidden sm:flex items-center gap-2">
-          <span>PORTFOLIO // 2026</span>
-          <span className="text-[var(--accent-color)]">&bull;</span>
+        <div className="text-xs text-white/40 hidden sm:flex items-center gap-2">
+          <span>PORTFOLIO 2026</span>
+          <span>&bull;</span>
           <span>DIAS YERMEK</span>
         </div>
       </Motion.div>
 
-      {/* 2. PAGE TITLE & INTRO */}
+      {/* 2. PAGE TITLE & SUBTITLE */}
       <Motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-10 sm:mb-14 space-y-3"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="mb-12 sm:mb-16 space-y-3"
       >
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[var(--heading-tint)] font-display uppercase tracking-wide leading-tight">
-              {projects.title || 'FEATURED PRODUCTION BUILDS'}
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display uppercase tracking-tight leading-tight">
+              {projects.title || 'FEATURED PROJECTS'}
             </h1>
-            <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans max-w-2xl mt-1.5 leading-relaxed">
-              {projects.subtitle || 'Engineered with precision for web, mobile, and AI architectures.'}
+            <p className="text-sm sm:text-base text-white/60 max-w-2xl mt-2 leading-relaxed">
+              {projects.subtitle || 'High-performance web, mobile, and AI production architectures.'}
             </p>
           </div>
-          <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-muted)] shrink-0 pb-1">
-            <span className="px-3 py-1 rounded bg-black/40 border border-[var(--border-subtle)] text-[var(--accent-color)] font-bold">
-              [INDEX_COUNT: {projects.featured.length.toString().padStart(2, '0')}]
+          <div className="flex items-center gap-2 text-xs font-mono text-white/40 shrink-0 pb-1">
+            <span className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-[var(--accent-color)] font-bold">
+              {projects.featured.length} {lang === 'ru' ? 'проекта' : 'PROJECTS'}
             </span>
           </div>
         </div>
       </Motion.div>
 
-      {/* 3. MINIMALIST HYBRID PROJECT CARDS */}
-      <div className="space-y-8 sm:space-y-10 mb-28">
+      {/* 3. CLEAN, PREMIUM FEATURED PROJECT CARDS */}
+      <div className="space-y-10 sm:space-y-12 mb-32">
         {projects.featured.map((proj, idx) => {
           const metrics = proj.walkthrough?.impact?.metrics || [];
           const slug = proj.slug || proj.id.toLowerCase();
@@ -70,124 +73,107 @@ export default function ProjectsContent() {
           return (
             <Motion.div
               key={proj.id}
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
-              transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
                 href={`/projects/${slug}`}
                 onClick={playClick}
                 onMouseEnter={playHover}
-                className="relative block rounded-3xl bg-[#04070B]/90 border border-white/10 hover:border-[var(--accent-border)] backdrop-blur-xl transition-all duration-500 overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_16px_50px_var(--card-hover-glow)] group cursor-pointer"
+                className="group relative block rounded-3xl bg-[#05080D]/85 border border-white/[0.08] hover:border-[var(--accent-color)]/50 backdrop-blur-2xl transition-all duration-500 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_60px_-15px_var(--card-hover-glow)] p-6 sm:p-8 lg:p-10"
               >
-                {/* 4 Precision Blueprint Corner Crosshairs (+) */}
-                <div className="absolute top-3 left-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 group-hover:opacity-100 group-hover:scale-125 transition-all pointer-events-none select-none z-20">
-                  +
-                </div>
-                <div className="absolute top-3 right-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 group-hover:opacity-100 group-hover:scale-125 transition-all pointer-events-none select-none z-20">
-                  +
-                </div>
-                <div className="absolute bottom-3 left-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 group-hover:opacity-100 group-hover:scale-125 transition-all pointer-events-none select-none z-20">
-                  +
-                </div>
-                <div className="absolute bottom-3 right-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 group-hover:opacity-100 group-hover:scale-125 transition-all pointer-events-none select-none z-20">
-                  +
-                </div>
+                {/* Subtle Ambient Radial Glow on Hover */}
+                <div
+                  className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-3xl"
+                  style={{
+                    background: 'radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%)',
+                  }}
+                />
 
-                {/* CARD TOP TELEMETRY RIBBON */}
-                <div className="relative z-10 px-6 sm:px-8 py-3.5 border-b border-white/10 bg-black/40 flex flex-wrap items-center justify-between gap-3 text-[11px]">
-                  <div className="flex items-center gap-3 font-mono">
-                    <span className="text-xl sm:text-2xl font-black text-[var(--accent-color)] font-display tracking-tight leading-none">
-                      {proj.num}
-                    </span>
-                    <span className="text-[var(--accent-color)] font-bold tracking-wider">
-                      // SPECIMEN_{proj.id}
-                    </span>
-                    <span className="text-white/30 hidden sm:inline">&bull;</span>
-                    <span className="text-white/60 font-mono tracking-wide hidden sm:inline">
-                      [{proj.category}]
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3 font-mono">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold text-[10px]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>{proj.status || 'DEPLOYED'}</span>
-                    </span>
-                    <span className="text-[11px] text-[var(--accent-color)] font-bold flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
-                      <span>{lang === 'ru' ? 'ОТКРЫТЬ КЕЙС' : lang === 'kk' ? 'КЕЙСТІ АШУ' : 'OPEN DOSSIER'}</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" />
-                    </span>
-                  </div>
-                </div>
-
-                {/* CARD MAIN CONTENT: Balanced 2-Column Grid */}
-                <div className="relative z-10 p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-                  {/* Left Column: Title, Tagline & Telemetry Meters */}
-                  <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-between space-y-4">
-                    <div>
-                      <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--heading-tint)] font-display tracking-tight group-hover:text-[var(--accent-color)] transition-colors leading-tight">
-                        {proj.title}
-                      </h2>
-                      {proj.tagline && (
-                        <p className="text-xs sm:text-sm text-[var(--accent-color)] font-mono mt-1.5 tracking-wide flex items-center gap-1.5 leading-relaxed">
-                          <span>&gt;</span>
-                          <span>{proj.tagline}</span>
-                        </p>
-                      )}
+                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                  {/* Left Column: Narrative, Category, Title, Stack & Metrics */}
+                  <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+                    {/* Top Meta Line: Clean Index & Category Badge */}
+                    <div className="flex items-center justify-between gap-4 font-mono text-xs">
+                      <div className="flex items-center gap-3">
+                        <span className="text-lg sm:text-xl font-black text-[var(--accent-color)] font-display">
+                          {proj.num}
+                        </span>
+                        <span className="px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-white/80 font-medium text-[11px] sm:text-xs">
+                          {proj.category}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="text-[11px] text-emerald-400/90 font-medium hidden sm:inline">
+                          {proj.status || 'PRODUCTION'}
+                        </span>
+                      </div>
                     </div>
 
-                    {/* Telemetry Metric Meters (Compact, high-density impact metrics) */}
-                    {metrics.length > 0 && (
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-                        {metrics.slice(0, 4).map((m, mIdx) => (
-                          <div
-                            key={mIdx}
-                            className="p-2 sm:p-2.5 rounded-xl bg-black/50 border border-white/5 group-hover:border-[var(--accent-border)]/40 transition-all text-center space-y-0.5 shadow-inner"
+                    {/* Title & Description */}
+                    <div className="space-y-2.5">
+                      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white font-display tracking-tight group-hover:text-[var(--accent-color)] transition-colors leading-tight">
+                        {proj.title}
+                      </h2>
+                      <p className="text-sm sm:text-base text-white/70 leading-relaxed font-sans max-w-2xl">
+                        {proj.tagline || proj.description}
+                      </p>
+                    </div>
+
+                    {/* Tech Stack Pills */}
+                    {proj.tags && proj.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {proj.tags.slice(0, 5).map((t, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs text-white/80 font-mono"
                           >
-                            <span className="block text-sm sm:text-base font-black text-[var(--accent-color)] font-display leading-tight group-hover:scale-105 transition-transform">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Key Metrics Row (Clean, readable, no visual noise) */}
+                    {metrics.length > 0 && (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 border-t border-white/[0.06]">
+                        {metrics.slice(0, 3).map((m, mIdx) => (
+                          <div key={mIdx} className="space-y-0.5">
+                            <span className="block text-lg sm:text-xl font-extrabold text-[var(--accent-color)] font-display">
                               {m.value}
                             </span>
-                            <span className="block text-[9px] text-white/50 font-mono tracking-wider uppercase truncate">
+                            <span className="block text-[11px] text-white/50 font-mono uppercase tracking-wider">
                               {m.label}
                             </span>
                           </div>
                         ))}
                       </div>
                     )}
+
+                    {/* CTA Button */}
+                    <div className="pt-2">
+                      <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold font-mono text-[var(--accent-color)] group-hover:gap-3 transition-all duration-300">
+                        <span>{viewCaseText}</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Right Column: Compact Cinema Viewport (Height matches left text block!) */}
-                  <div className="lg:col-span-5 xl:col-span-4 flex justify-center lg:justify-end">
-                    <div className="relative w-full max-w-[340px] sm:max-w-[380px] h-[150px] sm:h-[165px] rounded-2xl overflow-hidden border border-white/15 group-hover:border-[var(--accent-border)] bg-[#020305] shadow-xl group/viewport transition-colors">
-                      {/* Top Viewport HUD Bar */}
-                      <div className="absolute top-0 inset-x-0 z-20 flex items-center justify-between p-2.5 bg-gradient-to-b from-black/90 to-transparent text-[9.5px] text-white/60 font-mono pointer-events-none">
-                        <span className="flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)]" />
-                          <span>VIEWPORT // 60 FPS</span>
-                        </span>
-                        <span className="text-[var(--accent-color)] font-bold">[1920x1080]</span>
-                      </div>
-
-                      {/* Screenshot with Smooth Zoom */}
-                      <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                        <Image
-                          src={proj.image}
-                          alt={proj.title}
-                          fill
-                          className="object-cover object-top opacity-85 group-hover:opacity-100 transition-opacity"
-                          sizes="(max-width: 1024px) 100vw, 380px"
-                        />
-                      </div>
-
-                      {/* Floating Hover Label */}
-                      <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none bg-black/30 backdrop-blur-[1.5px]">
-                        <div className="px-3.5 py-1.5 rounded-lg bg-black/85 border border-[var(--accent-border)] text-[var(--accent-color)] font-bold text-[10.5px] tracking-wider uppercase flex items-center gap-1.5 shadow-[0_0_20px_var(--accent-glow)] transform translate-y-1 group-hover:translate-y-0 transition-transform">
-                          <span>{lang === 'ru' ? 'СМОТРЕТЬ КЕЙС' : lang === 'kk' ? 'КЕЙСТІ КӨРУ' : 'VIEW CASE'}</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </div>
-                      </div>
+                  {/* Right Column: Generous, High-Fidelity UI Viewport */}
+                  <div className="lg:col-span-5 flex justify-center">
+                    <div className="relative w-full aspect-[16/10] sm:aspect-[16/10] rounded-2xl overflow-hidden border border-white/10 group-hover:border-[var(--accent-color)]/40 bg-[#020407] shadow-2xl transition-all duration-500">
+                      <Image
+                        src={proj.image}
+                        alt={proj.title}
+                        fill
+                        className="object-cover object-top filter brightness-[0.92] group-hover:brightness-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                        sizes="(max-width: 1024px) 100vw, 550px"
+                      />
+                      {/* Gentle bottom shadow gradient to elevate image depth */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 pointer-events-none" />
                     </div>
                   </div>
                 </div>
@@ -199,29 +185,27 @@ export default function ProjectsContent() {
 
       {/* 4. SYSTEM ARCHIVE & SECONDARY PROJECTS */}
       <Motion.section
-        initial={{ opacity: 0, y: 28 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.15 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="space-y-8"
       >
-        <div className="border-b border-white/10 pb-4 flex items-center justify-between">
+        <div className="border-b border-white/[0.08] pb-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
+            <div className="p-2 rounded-xl bg-white/[0.05] text-[var(--accent-color)]">
               <FolderGit2 className="w-4 h-4" />
             </div>
-            <div>
-              <h2 className="text-lg sm:text-xl font-bold text-white font-sans uppercase tracking-wide">
-                {projects.otherTitle || 'System Archive & Secondary Projects'}
-              </h2>
-            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-wide">
+              {projects.otherTitle || archiveTitle}
+            </h2>
           </div>
-          <span className="text-xs text-[var(--accent-color)] font-mono font-bold">
-            [INDEX_COUNT: {projects.otherProjects?.length?.toString().padStart(2, '0') || '06'}]
+          <span className="text-xs text-white/50 font-mono font-medium">
+            {projects.otherProjects?.length || 0} {lang === 'ru' ? 'проектов' : 'REPOS'}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.otherProjects.map((mini, idx) => (
             <Motion.a
               key={mini.id}
@@ -230,40 +214,32 @@ export default function ProjectsContent() {
               rel="noopener noreferrer"
               onClick={playClick}
               onMouseEnter={playHover}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-              className="relative cyber-panel p-5 sm:p-6 rounded-2xl border border-white/10 hover:border-[var(--accent-border)] transition-all group flex flex-col justify-between space-y-4 hover:shadow-[0_0_30px_var(--card-hover-glow)]"
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative p-6 rounded-2xl bg-[#05080D]/70 border border-white/[0.08] hover:border-[var(--accent-color)]/40 hover:bg-[#070C14]/90 transition-all duration-300 flex flex-col justify-between space-y-5 shadow-lg hover:shadow-[0_10px_30px_var(--card-hover-glow)]"
             >
-              {/* Corner Blueprint Crosshairs (+) */}
-              <div className="absolute top-2.5 left-2.5 font-mono text-[9px] text-[var(--accent-color)] opacity-30 group-hover:opacity-100 transition-opacity select-none pointer-events-none">
-                +
-              </div>
-              <div className="absolute top-2.5 right-2.5 font-mono text-[9px] text-[var(--accent-color)] opacity-30 group-hover:opacity-100 transition-opacity select-none pointer-events-none">
-                +
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between text-xs mb-3 border-b border-white/5 pb-2.5">
-                  <span className="text-[10px] text-[var(--accent-color)] font-mono font-bold">
-                    // SPECIMEN_{mini.id}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-[11px] text-[var(--accent-color)] font-mono font-bold tracking-wider">
+                    {mini.id}
                   </span>
                   <ExternalLink className="w-3.5 h-3.5 text-white/40 group-hover:text-[var(--accent-color)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </div>
-                <h3 className="text-base font-bold text-white font-sans mb-2 group-hover:text-[var(--accent-color)] transition-colors">
+                <h3 className="text-lg font-bold text-white group-hover:text-[var(--accent-color)] transition-colors">
                   {mini.title}
                 </h3>
-                <p className="text-xs text-white/60 leading-relaxed font-sans mb-4">
+                <p className="text-xs sm:text-sm text-white/60 leading-relaxed line-clamp-3">
                   {mini.desc}
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5">
+              <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/[0.06]">
                 {mini.tags.map((t, tIdx) => (
                   <span
                     key={tIdx}
-                    className="px-2 py-0.5 rounded bg-black/60 border border-white/5 text-[10px] text-white/50 font-mono"
+                    className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10.5px] text-white/60 font-mono"
                   >
                     {t}
                   </span>
