@@ -223,9 +223,9 @@ export default function NavHeader() {
           className="relative"
         >
           <div
-            className={`w-full rounded-2xl sm:rounded-3xl backdrop-blur-2xl transition-colors duration-300 font-mono select-none overflow-hidden border-2 box-border ${isMenuOpen
-                ? 'bg-[#04080A]/95 border-[var(--accent-color)] shadow-[0_0_50px_var(--accent-glow)]'
-                : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] shadow-2xl'
+            className={`w-full rounded-2xl sm:rounded-3xl backdrop-blur-3xl transition-all duration-300 font-mono select-none overflow-hidden border box-border ${isMenuOpen
+                ? 'bg-[#060a0f]/80 border-white/20 shadow-[0_30px_70px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.35),inset_0_0_40px_rgba(255,255,255,0.02)]'
+                : 'bg-[#060a0f]/70 border-white/15 hover:border-white/35 shadow-[0_15px_35px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.25)]'
               }`}
           >
             {/* Expanded Content (Fluid synchronized height expansion without measuring mismatch) */}
@@ -283,47 +283,66 @@ export default function NavHeader() {
                       </span>
                     </div>
 
-                    {/* 2. Quick Connect Socials (2x2 Grid matching reference) */}
+                    {/* 2. Quick Connect Socials with Dynamic Moving Border Light Rays */}
                     <div className="grid grid-cols-2 gap-2 text-xs">
+                      {/* LinkedIn */}
                       <a
                         href="https://www.linkedin.com/in/dias-yermek/"
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[#0A66C2] hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 text-[var(--text-secondary)] transition-all"
+                        className="relative flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-transparent hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 text-[var(--text-secondary)] transition-all group overflow-visible"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#0A66C2] shrink-0" />
-                        <span className="text-xs font-mono truncate">LinkedIn</span>
+                        <div className="nav-border-beam-mask opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
+                          <div className="nav-border-beam-ray nav-border-beam-ray-linkedin" />
+                        </div>
+                        <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-[#0A66C2] shrink-0" />
+                        <span className="relative z-10 text-xs font-mono truncate">LinkedIn</span>
                       </a>
+
+                      {/* GitHub */}
                       <a
                         href="https://github.com/Daelijek"
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-white/80 hover:text-white hover:bg-white/10 text-[var(--text-secondary)] transition-all"
+                        className="relative flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-transparent hover:text-white hover:bg-white/10 text-[var(--text-secondary)] transition-all group overflow-visible"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
-                        <span className="text-xs font-mono truncate">Github</span>
+                        <div className="nav-border-beam-mask opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
+                          <div className="nav-border-beam-ray nav-border-beam-ray-github" />
+                        </div>
+                        <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-white shrink-0" />
+                        <span className="relative z-10 text-xs font-mono truncate">Github</span>
                       </a>
+
+                      {/* LeetCode */}
                       <a
                         href="https://leetcode.com/u/Daelijek/"
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[#FFA116] hover:text-[#FFA116] hover:bg-[#FFA116]/10 text-[var(--text-secondary)] transition-all"
+                        className="relative flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-transparent hover:text-[#FFA116] hover:bg-[#FFA116]/10 text-[var(--text-secondary)] transition-all group overflow-visible"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FFA116] shrink-0" />
-                        <span className="text-xs font-mono truncate">LeetCode</span>
+                        <div className="nav-border-beam-mask opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
+                          <div className="nav-border-beam-ray nav-border-beam-ray-leetcode" />
+                        </div>
+                        <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-[#FFA116] shrink-0" />
+                        <span className="relative z-10 text-xs font-mono truncate">LeetCode</span>
                       </a>
+
+                      {/* Telegram */}
                       <a
                         href="https://t.me/daelijek_og"
                         target="_blank"
                         rel="noopener noreferrer"
                         onMouseEnter={playHover}
-                        className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-[#229ED9] hover:text-[#229ED9] hover:bg-[#229ED9]/10 text-[var(--text-secondary)] transition-all"
+                        className="relative flex items-center gap-2 p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] hover:border-transparent hover:text-[#229ED9] hover:bg-[#229ED9]/10 text-[var(--text-secondary)] transition-all group overflow-visible"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#229ED9] shrink-0" />
-                        <span className="text-xs font-mono truncate">Telegram</span>
+                        <div className="nav-border-beam-mask opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true">
+                          <div className="nav-border-beam-ray nav-border-beam-ray-telegram" />
+                        </div>
+                        <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-[#229ED9] shrink-0" />
+                        <span className="relative z-10 text-xs font-mono truncate">Telegram</span>
                       </a>
                     </div>
 
@@ -467,9 +486,9 @@ export default function NavHeader() {
               if (isMenuOpen) setIsMenuOpen(false);
             }}
             onMouseEnter={playHover}
-            className={`w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 md:w-[60px] md:h-[60px] rounded-xl sm:rounded-2xl md:rounded-3xl backdrop-blur-2xl border-2 transition-all flex items-center justify-center shadow-2xl box-border ${isSettingsOpen
-                ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
-                : 'bg-[var(--card-bg)] border-[var(--accent-border)] hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-[var(--accent-color)] hover:shadow-[0_0_20px_var(--card-hover-glow)]'
+            className={`w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 md:w-[60px] md:h-[60px] rounded-xl sm:rounded-2xl md:rounded-3xl backdrop-blur-3xl border transition-all flex items-center justify-center shadow-2xl box-border ${isSettingsOpen
+                ? 'bg-white text-black border-white shadow-[0_0_25px_rgba(255,255,255,0.5)]'
+                : 'bg-[#060a0f]/70 border-white/15 hover:border-white/35 text-[var(--heading-tint)] hover:text-white shadow-[0_15px_35px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.25)]'
               }`}
             aria-label="Global System Settings"
           >
@@ -497,7 +516,7 @@ export default function NavHeader() {
               animate={{ opacity: 1, scale: 1, x: isMobile ? '-50%' : 0, y: isMobile ? '-50%' : 0 }}
               exit={{ opacity: 0, scale: 0.94, x: isMobile ? '-50%' : 0, y: isMobile ? '-50%' : 0 }}
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed left-1/2 top-1/2 w-[calc(100vw-32px)] max-w-[360px] md:left-auto md:top-auto md:bottom-24 lg:bottom-[98px] md:right-4 lg:right-5 md:w-[350px] md:max-w-[360px] bg-[#070b10]/90 backdrop-blur-2xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(255,255,255,0.3),inset_0_0_30px_rgba(255,255,255,0.02)] font-mono z-50 max-h-[88vh] overflow-y-auto"
+              className="fixed left-1/2 top-1/2 w-[calc(100vw-32px)] max-w-[360px] md:left-auto md:top-auto md:bottom-24 lg:bottom-[98px] md:right-4 lg:right-5 md:w-[350px] md:max-w-[360px] bg-[#060a0f]/80 backdrop-blur-3xl border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-[0_30px_70px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.35),inset_0_0_40px_rgba(255,255,255,0.02)] font-mono z-50 max-h-[88vh] overflow-y-auto"
             >
               {/* Header matching reference with close button */}
               <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3.5">

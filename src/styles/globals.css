@@ -308,4 +308,37 @@ p, span, a, button, li, div {
   animation: borderBeamTravel 2.4s linear infinite;
   background: linear-gradient(to left, #ffffff 0%, var(--accent-color) 25%, transparent 100%);
   filter: drop-shadow(0 0 6px var(--accent-color)) drop-shadow(0 0 12px var(--accent-glow));
+}
+
+/* Individual Brand Colored Moving Border Light Rays for Socials */
+.nav-border-beam-ray-linkedin {
+  width: 90px;
+  height: 20px;
+  animation: borderBeamTravel 2.2s linear infinite;
+  background: linear-gradient(to left, #ffffff 0%, #0A66C2 35%, transparent 100%);
+  filter: drop-shadow(0 0 6px #0A66C2) drop-shadow(0 0 12px rgba(10, 102, 194, 0.7));
+}
+
+.nav-border-beam-ray-github {
+  width: 90px;
+  height: 20px;
+  animation: borderBeamTravel 2.2s linear infinite;
+  background: linear-gradient(to left, #ffffff 0%, #e2e8f0 40%, transparent 100%);
+  filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px rgba(255, 255, 255, 0.7));
+}
+
+.nav-border-beam-ray-leetcode {
+  width: 90px;
+  height: 20px;
+  animation: borderBeamTravel 2.2s linear infinite;
+  background: linear-gradient(to left, #ffffff 0%, #FFA116 35%, transparent 100%);
+  filter: drop-shadow(0 0 6px #FFA116) drop-shadow(0 0 12px rgba(255, 161, 22, 0.7));
+}
+
+.nav-border-beam-ray-telegram {
+  width: 90px;
+  height: 20px;
+  animation: borderBeamTravel 2.2s linear infinite;
+  background: linear-gradient(to left, #ffffff 0%, #229ED9 35%, transparent 100%);
+  filter: drop-shadow(0 0 6px #229ED9) drop-shadow(0 0 12px rgba(34, 158, 217, 0.7));
 }
