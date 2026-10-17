@@ -147,13 +147,29 @@ export default function ProjectDetailContent({ slug: propSlug }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleNextMouseMove = (e) => {
-    if (!nextSectionRef.current) return;
+  const updateNextMouseCoords = (e) => {
+    if (!nextSectionRef.current) return null;
     const rect = nextSectionRef.current.getBoundingClientRect();
-    setMousePos({
+    return {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
-    });
+    };
+  };
+
+  const handleNextMouseEnter = (e) => {
+    playHover?.();
+    const coords = updateNextMouseCoords(e);
+    if (coords) {
+      setMousePos(coords);
+    }
+    setIsNextHovered(true);
+  };
+
+  const handleNextMouseMove = (e) => {
+    const coords = updateNextMouseCoords(e);
+    if (coords) {
+      setMousePos(coords);
+    }
   };
 
   const backText = lang === 'ru' ? 'Все проекты' : lang === 'kk' ? 'Барлық жобалар' : 'All Projects';
@@ -168,7 +184,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   const nextCaseText = lang === 'ru' ? 'Следующий кейс' : lang === 'kk' ? 'Келесі жоба' : 'Next Case Study';
 
   return (
-    <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-32">
+    <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0">
       {/* ========================================================================= */}
       {/* 1. TOP HEADER & BREADCRUMB (Proper breathing room from fixed nav)          */}
       {/* ========================================================================= */}
@@ -757,49 +773,48 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.15 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full mt-10"
+        className="w-full mt-10 mb-0"
       >
         <Link
           href={`/projects/${nextProject.slug || nextProject.id.toLowerCase()}`}
           onClick={playClick}
-          onMouseEnter={() => {
-            playHover();
-            setIsNextHovered(true);
-          }}
+          onMouseEnter={handleNextMouseEnter}
           onMouseLeave={() => setIsNextHovered(false)}
           onMouseMove={handleNextMouseMove}
           ref={nextSectionRef}
-          className="group relative block w-full border-t border-white/10 pt-16 sm:pt-24 pb-28 sm:pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 overflow-hidden select-none bg-gradient-to-b from-transparent via-black/40 to-black/85 cursor-pointer"
+          className="group relative block w-full border-t border-white/10 pt-16 sm:pt-24 pb-28 sm:pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 select-none bg-gradient-to-b from-transparent via-black/40 to-black/85 cursor-pointer"
         >
           {/* Floating Cursor Thumbnail Preview */}
           <AnimatePresence>
             {isNextHovered && (
               <Motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.85, x: mousePos.x, y: mousePos.y }}
                 animate={{
                   opacity: 1,
                   scale: 1,
                   x: mousePos.x,
-                  y: mousePos.y - 24,
-                  transition: { type: 'spring', damping: 26, stiffness: 260, mass: 0.4 },
+                  y: mousePos.y,
+                  transition: { type: 'spring', damping: 28, stiffness: 320, mass: 0.35 },
                 }}
-                exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15 } }}
-                style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 35 }}
-                className="hidden md:block -translate-x-1/2 -translate-y-full pointer-events-none select-none"
+                exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
+                style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 40 }}
+                className="hidden md:block pointer-events-none select-none"
               >
-                <div className="w-64 sm:w-72 aspect-[16/10] rounded-2xl overflow-hidden border border-white/20 bg-[#06090D] shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_25px_var(--accent-glow)] p-1.5 relative">
-                  <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
-                    <Image
-                      src={nextProject.image}
-                      alt={nextProject.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
-                    <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[11px] font-mono text-white px-2 py-1 bg-black/85 backdrop-blur-md rounded-lg border border-white/15">
-                      <span className="font-black text-[var(--accent-color)]">{nextProject.num}</span>
-                      <span className="font-bold truncate text-[10px]">{nextProject.title}</span>
-                      <span className="text-[9px] text-white/50 tracking-wider">PREVIEW</span>
+                <div className="-translate-x-1/2 -translate-y-[115%] pointer-events-none">
+                  <div className="w-64 sm:w-72 aspect-[16/10] rounded-2xl overflow-hidden border border-white/20 bg-[#06090D] shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_25px_var(--accent-glow)] p-1.5 relative">
+                    <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
+                      <Image
+                        src={nextProject.image}
+                        alt={nextProject.title}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+                      <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[11px] font-mono text-white px-2 py-1 bg-black/85 backdrop-blur-md rounded-lg border border-white/15">
+                        <span className="font-black text-[var(--accent-color)]">{nextProject.num}</span>
+                        <span className="font-bold truncate text-[10px]">{nextProject.title}</span>
+                        <span className="text-[9px] text-white/50 tracking-wider">PREVIEW</span>
+                      </div>
                     </div>
                   </div>
                 </div>
