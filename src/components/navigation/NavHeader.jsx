@@ -156,11 +156,7 @@ export default function NavHeader() {
       {/* Top Left Brand Stamp (Rendered on subpages) */}
       {pathname !== '/' && (
         <header
-          className={`fixed top-8 left-8 sm:left-12 z-40 font-mono select-none transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            pathname.startsWith('/projects/') && pathname !== '/projects' && isScrolled
-              ? 'opacity-0 -translate-y-4 pointer-events-none'
-              : 'opacity-100 translate-y-0'
-          }`}
+          className="fixed top-8 left-8 sm:left-12 z-40 font-mono select-none transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-100 translate-y-0"
         >
           <Link
             href="/"

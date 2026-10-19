@@ -26,6 +26,272 @@ import {
 } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 
+/**
+ * Infinite Interactive Gallery Ribbon
+ * - Infinite seamless auto-scrolling with GPU translate3d compositing
+ * - Physically smoothed deceleration on hover and smooth acceleration on resume
+ * - Nudge arrows with smooth velocity interpolation
+ * - No horizontal scrollbar / line (overflow: hidden)
+ * - Complete drag & selection prevention across images, cards, and text
+ * - Click-to-preview lightbox modal
+ */
+function InfiniteGalleryRibbon({ items, lang, playClick, playHover, onOpenModal, isModalOpen }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const isHoveredRef = useRef(false);
+  isHoveredRef.current = isHovered || isModalOpen;
+
+  const tapeRef = useRef(null);
+  const set1Ref = useRef(null);
+  const offsetRef = useRef(0);
+  const currentSpeedRef = useRef(0.65); // base slow speed in px/frame (~39px/s)
+  const nudgeDeltaRef = useRef(0);
+  const setWidthRef = useRef(0);
+  const rafIdRef = useRef(null);
+
+  // Ensure base set has at least 6 items for ultra-smooth seamless looping on wide displays
+  const normalizedItems = useMemo(() => {
+    if (!items || items.length === 0) return [];
+    let list = items;
+    while (list.length < 6) {
+      list = [...list, ...items];
+    }
+    return list;
+  }, [items]);
+
+  useEffect(() => {
+    const baseSpeed = 0.65;
+    let lastTime = performance.now();
+
+    const measureWidth = () => {
+      if (set1Ref.current && tapeRef.current) {
+        const rect = set1Ref.current.getBoundingClientRect();
+        const style = window.getComputedStyle(tapeRef.current);
+        const gap = parseFloat(style.columnGap || style.gap || '24') || 24;
+        if (rect.width > 0) {
+          setWidthRef.current = rect.width + gap;
+        }
+      }
+    };
+
+    measureWidth();
+    const timer = setTimeout(measureWidth, 150);
+    const ro = new ResizeObserver(() => measureWidth());
+    if (set1Ref.current) ro.observe(set1Ref.current);
+
+    const animate = (time) => {
+      const dt = Math.min((time - lastTime) / (1000 / 60), 3);
+      lastTime = time;
+
+      // When hovered or modal is open: target speed is 0; otherwise baseSpeed
+      const targetSpeed = isHoveredRef.current ? 0 : baseSpeed;
+
+      // Smooth momentum lerp:
+      // Hover stop: 0.07 gives a silky-smooth ~400ms deceleration curve
+      // Resume: 0.045 gives a gentle smooth acceleration
+      const lerpFactor = isHoveredRef.current ? 0.07 : 0.045;
+      currentSpeedRef.current += (targetSpeed - currentSpeedRef.current) * (lerpFactor * dt);
+
+      if (isHoveredRef.current && Math.abs(currentSpeedRef.current) < 0.005) {
+        currentSpeedRef.current = 0;
+      }
+
+      // Handle manual arrow nudge with smooth easing
+      if (Math.abs(nudgeDeltaRef.current) > 0.2) {
+        const nudgeStep = nudgeDeltaRef.current * (0.08 * dt);
+        offsetRef.current += nudgeStep;
+        nudgeDeltaRef.current -= nudgeStep;
+      }
+
+      // Increment continuous position
+      offsetRef.current += currentSpeedRef.current * dt;
+
+      // Seamless infinite modulo loop
+      const setW = setWidthRef.current;
+      if (setW > 0) {
+        if (offsetRef.current >= setW) {
+          offsetRef.current = offsetRef.current % setW;
+        } else if (offsetRef.current < 0) {
+          offsetRef.current = (offsetRef.current % setW) + setW;
+        }
+      }
+
+      if (tapeRef.current) {
+        tapeRef.current.style.transform = `translate3d(-${offsetRef.current}px, 0, 0)`;
+      }
+
+      rafIdRef.current = requestAnimationFrame(animate);
+    };
+
+    rafIdRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      clearTimeout(timer);
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      ro.disconnect();
+    };
+  }, []);
+
+  const handleNudge = (direction) => {
+    playClick?.();
+    const amount = direction === 'left' ? -320 : 320;
+    nudgeDeltaRef.current += amount;
+  };
+
+  const renderCard = (item, keyIndex) => (
+    <div
+      key={keyIndex}
+      onClick={() => {
+        playClick?.();
+        onOpenModal?.(item);
+      }}
+      onMouseEnter={playHover}
+      draggable={false}
+      onDragStart={(e) => e.preventDefault()}
+      style={{ userSelect: 'none', WebkitUserSelect: 'none', WebkitUserDrag: 'none' }}
+      className="w-[230px] sm:w-[260px] md:w-[280px] shrink-0 group/card cursor-pointer select-none"
+    >
+      {/* Device Mockup Shell */}
+      <div className="relative rounded-[2.2rem] p-2.5 bg-[#090D14] border border-white/10 group-hover/card:border-[var(--accent-color)]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)] group-hover/card:shadow-[0_20px_50px_var(--card-hover-glow)] group-hover/card:-translate-y-2 select-none">
+        {/* Top Dynamic Island / Bezel */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-3.5 bg-black/80 rounded-full z-20 pointer-events-none border border-white/5 select-none" />
+
+        {/* Screen Image Frame */}
+        <div className="relative aspect-[9/19.5] w-full rounded-[1.7rem] overflow-hidden bg-black select-none">
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
+            className="object-cover object-top group-hover/card:scale-105 transition-transform duration-500 pointer-events-none select-none"
+            sizes="(max-width: 640px) 230px, 280px"
+            style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
+          />
+          <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100 pointer-events-none select-none">
+            <span className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg select-none">
+              <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+              <span>{lang === 'ru' ? 'Открыть' : 'Preview'}</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Card Caption Info */}
+        <div className="p-3 pt-3.5 space-y-1 select-none">
+          <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider block uppercase select-none">
+            {item.tag || `SCREEN`}
+          </span>
+          <h3 className="text-xs sm:text-sm font-bold text-white font-display group-hover/card:text-[var(--accent-color)] transition-colors truncate select-none">
+            {item.title}
+          </h3>
+          <p className="text-[11px] text-white/50 font-sans line-clamp-1 select-none">
+            {item.subtitle}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="space-y-6 select-none" style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
+      {/* Header & Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5 select-none">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] shadow-[0_0_8px_var(--accent-color)]" />
+            <span className="text-xs font-mono font-bold text-[var(--accent-color)] uppercase tracking-wider">
+              // INTERFACE_GALLERY_TAPE
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-tight">
+            {lang === 'ru'
+              ? 'Лента интерфейса приложения'
+              : lang === 'kk'
+              ? 'Қосымшаның интерфейс лентасы'
+              : 'Interactive Mobile Ribbon'}
+          </h2>
+          <p className="text-xs sm:text-sm text-white/60 font-sans max-w-xl">
+            {lang === 'ru'
+              ? 'Бесконечная интерактивная лента: наведите для плавной остановки или нажмите для детального просмотра.'
+              : lang === 'kk'
+              ? 'Шексіз интерактивті лента: бірқалыпты тоқтату үшін меңзерді апарыңыз немесе толық көру үшін басыңыз.'
+              : 'Infinite interactive tape: hover to smoothly pause or click any card to inspect UI details.'}
+          </p>
+        </div>
+
+        {/* Nudge Arrow Controls */}
+        <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+          <button
+            type="button"
+            onClick={() => handleNudge('left')}
+            onMouseEnter={playHover}
+            className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/70 hover:text-white transition-all active:scale-95"
+            aria-label="Previous screen"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNudge('right')}
+            onMouseEnter={playHover}
+            className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/70 hover:text-white transition-all active:scale-95"
+            aria-label="Next screen"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Infinite Ribbon Track with Gradient Fade Masks & ZERO Scrollbar Line */}
+      <div
+        className="relative overflow-hidden py-3 select-none"
+        onMouseEnter={() => {
+          setIsHovered(true);
+          isHoveredRef.current = true;
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          isHoveredRef.current = false;
+        }}
+        onTouchStart={() => {
+          setIsHovered(true);
+          isHoveredRef.current = true;
+        }}
+        onTouchEnd={() => {
+          setIsHovered(false);
+          isHoveredRef.current = false;
+        }}
+        style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+      >
+        {/* Left & Right Subtle Fade Masks */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-r from-[#040608] via-[#040608]/85 to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-l from-[#040608] via-[#040608]/85 to-transparent z-10" />
+
+        {/* Continuous Moving Tape Container */}
+        <div
+          ref={tapeRef}
+          className="flex gap-5 sm:gap-6 will-change-transform select-none"
+          style={{ width: 'max-content' }}
+        >
+          {/* Set 1 (measured for seamless modulo width) */}
+          <div ref={set1Ref} className="flex gap-5 sm:gap-6 shrink-0">
+            {normalizedItems.map((item, idx) => renderCard(item, `set1-${idx}-${item.id || idx}`))}
+          </div>
+
+          {/* Set 2 (seamless continuation) */}
+          <div className="flex gap-5 sm:gap-6 shrink-0" aria-hidden="true">
+            {normalizedItems.map((item, idx) => renderCard(item, `set2-${idx}-${item.id || idx}`))}
+          </div>
+
+          {/* Set 3 (buffer for ultra-wide displays) */}
+          <div className="flex gap-5 sm:gap-6 shrink-0" aria-hidden="true">
+            {normalizedItems.map((item, idx) => renderCard(item, `set3-${idx}-${item.id || idx}`))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProjectDetailContent({ slug: propSlug }) {
   const params = useParams();
   const slug = propSlug || params?.slug;
@@ -128,16 +394,8 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const nextSectionRef = useRef(null);
 
-  // Gallery Horizontal Ribbon
-  const galleryScrollRef = useRef(null);
+  // Gallery Modal Lightbox State
   const [activeModalScreen, setActiveModalScreen] = useState(null);
-
-  const scrollGallery = (direction) => {
-    if (!galleryScrollRef.current) return;
-    const amount = direction === 'left' ? -320 : 320;
-    galleryScrollRef.current.scrollBy({ left: amount, behavior: 'smooth' });
-    playClick?.();
-  };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -170,11 +428,28 @@ export default function ProjectDetailContent({ slug: propSlug }) {
     setMousePos(coords);
   };
 
-  // Scroll-driven docked bar for top corner when scrolling
+  // Scroll-driven sticky header & animated shrinking project title
   const { scrollY } = useScroll();
-  const dockedOpacity = useTransform(scrollY, [60, 130], [0, 1]);
-  const dockedY = useTransform(scrollY, [60, 130], [-8, 0]);
-  const dockedPointerEvents = useTransform(scrollY, (v) => (v > 60 ? 'auto' : 'none'));
+  const backBtnRef = useRef(null);
+  const [backWidth, setBackWidth] = useState(140);
+
+  useEffect(() => {
+    const measureBackWidth = () => {
+      if (backBtnRef.current) {
+        const w = backBtnRef.current.offsetWidth;
+        setBackWidth(w > 0 ? w + 16 : 140);
+      }
+    };
+    measureBackWidth();
+    window.addEventListener('resize', measureBackWidth);
+    return () => window.removeEventListener('resize', measureBackWidth);
+  }, []);
+
+  // Continuous real-time scroll transforms:
+  // Title moves from below back button into top navbar row and scales down to compact size
+  const titleScale = useTransform(scrollY, [0, 110], [1, 0.38]);
+  const titleY = useTransform(scrollY, [0, 110], [58, 0]);
+  const titleX = useTransform(scrollY, [0, 110], [-backWidth, 0]);
 
   const backText = lang === 'ru' ? 'Все проекты' : lang === 'kk' ? 'Барлық жобалар' : 'All Projects';
   const roleLabel = lang === 'ru' ? 'Роль' : lang === 'kk' ? 'Рөлі' : 'Role';
@@ -190,125 +465,84 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   return (
     <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0">
       {/* ========================================================================= */}
-      {/* 0. FLOATING DOCKED BAR ON SCROLL (100% Transparent, No Box Container)     */}
+      {/* UNIFIED STICKY SCROLL-ANIMATED HEADER (100% Transparent, No Container Box) */}
       {/* ========================================================================= */}
-      <Motion.div
-        style={{ opacity: dockedOpacity, y: dockedY, pointerEvents: dockedPointerEvents }}
-        className="fixed top-6 sm:top-8 left-0 right-0 z-40 w-full select-none"
+      <Motion.header
+        className="sticky top-0 z-40 w-full bg-transparent border-none shadow-none pointer-events-none select-none"
       >
-        <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-4">
-          {/* Left: Compact back button + Truncated Title pinned to top-left corner */}
-          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <Link
-              href="/projects"
-              onClick={playClick}
-              onMouseEnter={playHover}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white/90 hover:text-white transition-all group shrink-0 backdrop-blur-md shadow-md"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-mono font-semibold uppercase tracking-wider text-[11px] sm:text-xs hidden sm:inline">
-                {backText}
+        <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pointer-events-auto">
+          <div className="h-16 sm:h-20 flex items-center justify-between gap-4">
+            {/* Left: Back button + Animated Shrinking Title Target */}
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <Link
+                ref={backBtnRef}
+                href="/projects"
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/80 hover:text-white transition-all group shrink-0 backdrop-blur-sm"
+              >
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                <span className="font-mono font-semibold uppercase tracking-wider text-xs hidden sm:inline">
+                  {backText}
+                </span>
+              </Link>
+
+              {/* Title: starts as large hero title below back button, shrinks & docks on scroll */}
+              <Motion.div
+                style={{
+                  x: titleX,
+                  y: titleY,
+                  scale: titleScale,
+                  transformOrigin: '0% 50%',
+                }}
+                className="shrink min-w-0 will-change-transform pointer-events-auto"
+              >
+                <h1 className="font-display font-black uppercase tracking-tight text-white text-[clamp(1.5rem,3.2vw,3.5rem)] whitespace-nowrap drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] max-w-full">
+                  {project.title}
+                </h1>
+              </Motion.div>
+            </div>
+
+            {/* Right: Actions */}
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-mono text-xs">
+              <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/25 font-bold text-[11px] hidden sm:inline">
+                {project.num}
               </span>
-            </Link>
-            <span className="text-sm sm:text-base lg:text-lg font-bold font-display uppercase tracking-wide text-white truncate max-w-[220px] sm:max-w-md md:max-w-xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
-              {project.title}
-            </span>
-          </div>
-
-          {/* Right: Actions */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-mono text-xs">
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95 shadow-md"
-              >
-                <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {project.githubUrl && !project.isPrivate && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/60 hover:bg-black/90 border border-white/20 text-white/90 hover:text-white text-xs font-bold transition-all backdrop-blur-md shadow-md"
-              >
-                <FaGithub className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{lang === 'ru' ? 'Код' : 'Code'}</span>
-              </a>
-            )}
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95 shadow-md"
+                >
+                  <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.githubUrl && !project.isPrivate && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white/80 hover:text-white text-xs font-bold transition-all backdrop-blur-sm"
+                >
+                  <FaGithub className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{lang === 'ru' ? 'Код' : 'Code'}</span>
+                </a>
+              )}
+            </div>
           </div>
         </div>
-      </Motion.div>
+      </Motion.header>
 
       {/* ========================================================================= */}
-      {/* 1. TOP SPACING & HERO CONTAINER (90% Width, Stable Flow, Zero Layout Shift) */}
+      {/* 1. HERO CONTENT CONTAINER (Spacious flow directly below sticky header)    */}
       {/* ========================================================================= */}
-      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-28 sm:pt-36">
-        {/* Top Navigation Row: [← All Projects] ABOVE Project Title + Meta Actions */}
-        <div className="flex items-center justify-between gap-4 mb-6 sm:mb-8">
-          <Link
-            href="/projects"
-            onClick={playClick}
-            onMouseEnter={playHover}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/80 hover:text-white transition-all group shrink-0 backdrop-blur-sm"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-mono font-semibold uppercase tracking-wider text-xs">
-              {backText}
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-mono text-xs">
-            <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/25 font-bold text-[11px] hidden sm:inline">
-              {project.num}
-            </span>
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
-              >
-                <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {project.githubUrl && !project.isPrivate && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white/80 hover:text-white text-xs font-bold transition-all backdrop-blur-sm"
-              >
-                <FaGithub className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{lang === 'ru' ? 'Код' : 'Code'}</span>
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Dedicated Full-Width Project Title (Zero collisions, spacious & majestic) */}
-        <Motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-6 sm:mb-8"
-        >
-          <h1 className="font-display font-black uppercase tracking-tight text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] max-w-6xl break-words select-none">
-            {project.title}
-          </h1>
-        </Motion.div>
+      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 sm:pt-20">
         <Motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -375,14 +609,17 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             </div>
 
             {/* Main Screenshot Display */}
-            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] bg-[#020407]">
+            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] bg-[#020407] select-none">
               <Image
                 src={project.image}
                 alt={project.title}
                 fill
                 priority
-                className="object-cover object-top"
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                className="object-cover object-top select-none pointer-events-none"
                 sizes="(max-width: 1500px) 100vw, 1500px"
+                style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
               />
             </div>
           </div>
@@ -440,114 +677,14 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="mb-16 sm:mb-24 space-y-6"
           >
-            {/* Header & Slider Navigation */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5">
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] shadow-[0_0_8px_var(--accent-color)]" />
-                  <span className="text-xs font-mono font-bold text-[var(--accent-color)] uppercase tracking-wider">
-                    // INTERFACE_GALLERY_TAPE
-                  </span>
-                </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-tight">
-                  {lang === 'ru'
-                    ? 'Лента интерфейса приложения'
-                    : lang === 'kk'
-                    ? 'Қосымшаның интерфейс лентасы'
-                    : 'Interactive Mobile Ribbon'}
-                </h2>
-                <p className="text-xs sm:text-sm text-white/60 font-sans max-w-xl">
-                  {lang === 'ru'
-                    ? 'Горизонтальная лента экранов: листайте стрелками, колесиком мыши или кликните для детального просмотра.'
-                    : lang === 'kk'
-                    ? 'Интерфейс экрандарының көлденең лентасы: бағыттауыштармен жылжытыңыз немесе толық көру үшін басыңыз.'
-                    : 'Horizontal screen tape: swipe with arrows, trackpad, or click any screen card to inspect UI details.'}
-                </p>
-              </div>
-
-              {/* Slider Arrow Controls */}
-              <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
-                <button
-                  type="button"
-                  onClick={() => scrollGallery('left')}
-                  onMouseEnter={playHover}
-                  className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/70 hover:text-white transition-all active:scale-95"
-                  aria-label="Previous screen"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollGallery('right')}
-                  onMouseEnter={playHover}
-                  className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/70 hover:text-white transition-all active:scale-95"
-                  aria-label="Next screen"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Horizontal Ribbon Track with Gradient Fade Masks */}
-            <div className="relative group/track">
-              {/* Left & Right Subtle Fade Masks */}
-              <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-[#040608] via-[#040608]/80 to-transparent z-10" />
-              <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-[#040608] via-[#040608]/80 to-transparent z-10" />
-
-              {/* Scrollable Container */}
-              <div
-                ref={galleryScrollRef}
-                className="flex gap-5 sm:gap-6 overflow-x-auto pb-4 pt-2 px-4 sm:px-6 scroll-smooth no-scrollbar snap-x snap-mandatory"
-              >
-                {project.gallery.map((item, idx) => (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      playClick?.();
-                      setActiveModalScreen(item);
-                    }}
-                    onMouseEnter={playHover}
-                    className="w-[230px] sm:w-[260px] md:w-[280px] shrink-0 snap-start group/card cursor-pointer"
-                  >
-                    {/* Device Mockup Shell */}
-                    <div className="relative rounded-[2.2rem] p-2.5 bg-[#090D14] border border-white/10 group-hover/card:border-[var(--accent-color)]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)] group-hover/card:shadow-[0_20px_50px_var(--card-hover-glow)] group-hover/card:-translate-y-2">
-                      {/* Top Dynamic Island / Bezel */}
-                      <div className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-3.5 bg-black/80 rounded-full z-20 pointer-events-none border border-white/5" />
-
-                      {/* Screen Image Frame */}
-                      <div className="relative aspect-[9/19.5] w-full rounded-[1.7rem] overflow-hidden bg-black">
-                        <Image
-                          src={item.image}
-                          alt={item.title}
-                          fill
-                          className="object-cover object-top group-hover/card:scale-105 transition-transform duration-500"
-                          sizes="(max-width: 640px) 230px, 280px"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100">
-                          <span className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg">
-                            <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
-                            <span>{lang === 'ru' ? 'Открыть' : 'Preview'}</span>
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Card Caption Info */}
-                      <div className="p-3 pt-3.5 space-y-1">
-                        <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider block uppercase">
-                          {item.tag || `0${idx + 1} // SCREEN`}
-                        </span>
-                        <h3 className="text-xs sm:text-sm font-bold text-white font-display group-hover/card:text-[var(--accent-color)] transition-colors truncate">
-                          {item.title}
-                        </h3>
-                        <p className="text-[11px] text-white/50 font-sans line-clamp-1">
-                          {item.subtitle}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <InfiniteGalleryRibbon
+              items={project.gallery}
+              lang={lang}
+              playClick={playClick}
+              playHover={playHover}
+              onOpenModal={setActiveModalScreen}
+              isModalOpen={Boolean(activeModalScreen)}
+            />
           </Motion.section>
         )}
 
@@ -946,14 +1083,17 @@ export default function ProjectDetailContent({ slug: propSlug }) {
               </button>
 
               {/* High-res Screen */}
-              <div className="relative aspect-[9/19.5] w-full rounded-[1.8rem] overflow-hidden bg-black shadow-inner">
+              <div className="relative aspect-[9/19.5] w-full rounded-[1.8rem] overflow-hidden bg-black shadow-inner select-none">
                 <Image
                   src={activeModalScreen.image}
                   alt={activeModalScreen.title}
                   fill
                   priority
-                  className="object-cover object-top"
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
+                  className="object-cover object-top select-none pointer-events-none"
                   sizes="400px"
+                  style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
                 />
               </div>
 
