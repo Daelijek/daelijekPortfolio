@@ -21,6 +21,12 @@ export default function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.85,
     },
+    {
+      url: `${baseUrl}/projects/rolesieve`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
 
     {
       url: `${baseUrl}/projects/opengov-kz`,

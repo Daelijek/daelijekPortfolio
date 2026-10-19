@@ -2,12 +2,14 @@ import ProjectsContent from './ProjectsContent';
 
 export const metadata = {
   title: 'Projects by Dias Yermek | Production Mobile & Web Builds // HUD Showcase',
-  description: 'Featured production engineering projects: Finance AI Manager (React Native & FastAPI), OpenGov.kz (Next.js & i18n), and BerikWeb 3D Gallery.',
+  description: 'Featured production engineering projects: RoleSieve (Next.js 16 & FastAPI), Finance AI Manager (React Native & FastAPI), OpenGov.kz (Next.js & i18n), and BerikWeb 3D Gallery.',
   keywords: [
     'Dias Yermek Projects',
+    'RoleSieve HeadHunter Analytics',
     'React Native Portfolio',
     'Flutter Projects',
-    'Next.js 15 Applications',
+    'Next.js 16 Applications',
+    'FastAPI Python Microservices',
     'OpenGov.kz',
     'Finance Management AI',
     'Mobile App Developer Kazakhstan'

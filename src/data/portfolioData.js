@@ -446,6 +446,173 @@ export const portfolioContent = {
         },
         {
           num: "02",
+          id: "ROLESIEVE",
+          slug: "rolesieve",
+          title: "RoleSieve — Vacancy Analytics & Resume Intelligence",
+          tagline: "Automated HeadHunter vacancy intelligence platform turning live market demands into actionable resume optimization plans and Excel reports",
+          category: "Full-Stack & NLP // Career Intelligence",
+          isPrivate: true,
+          description: "End-to-end analytical platform that connects to official HeadHunter public APIs, ingests job postings across regions and roles, extracts verified key_skills tags and lemmatized n-gram phrases via pymorphy2, and outputs both an interactive real-time telemetry dashboard and clean, deduplicated Excel (.xlsx) workbooks.",
+          tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
+          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          liveUrl: "https://role-sieve-mu.vercel.app/",
+          githubUrl: null,
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Hero Section & Search Parameters",
+              subtitle: "Launchpad interface with mode selection and query parameter configuration",
+              tag: "HERO INTERFACE",
+              image: "/assets/projects/rolesieve/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Two Distinct Ingestion Modes",
+              subtitle: "Targeted URL/ID harvesting or automated multi-parameter HeadHunter query scanning",
+              tag: "INGESTION MODES",
+              image: "/assets/projects/rolesieve/two-modes-section.png"
+            },
+            {
+              id: "03",
+              title: "Processing Architecture & NLP Pipeline",
+              subtitle: "Three-stage pipeline: official API collection, pymorphy2 lemmatization, and report generation",
+              tag: "PIPELINE ARCHITECTURE",
+              image: "/assets/projects/rolesieve/how-it-works-section.png"
+            },
+            {
+              id: "04",
+              title: "Skill Telemetry & Clean Excel Export",
+              subtitle: "Live keyword frequency dashboard and styled, deduplicated .XLSX workbook generation",
+              tag: "ARTIFACTS",
+              image: "/assets/projects/rolesieve/what-you-get-section.png"
+            },
+            {
+              id: "05",
+              title: "Platform Metrics & High-Load Reliability",
+              subtitle: "Telemetry logs on ingestion speed, token accuracy, and zero-drop API rate handling",
+              tag: "PLATFORM METRICS",
+              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+            },
+            {
+              id: "06",
+              title: "Interactive Run Results HUD",
+              subtitle: "Aggregated run metrics with skill coverage charts and vacancy intelligence distribution",
+              tag: "RESULTS HUD",
+              image: "/assets/projects/rolesieve/run-results-section.png"
+            },
+            {
+              id: "07",
+              title: "Extracted Key Skills Frequency Table",
+              subtitle: "Comprehensive list of extracted skills with frequency percentages across job postings",
+              tag: "SKILL FREQUENCY",
+              image: "/assets/projects/rolesieve/run-results-list.png"
+            },
+            {
+              id: "08",
+              title: "Neural Skill Gap Analytics",
+              subtitle: "Semantic alignment evaluation comparing candidate capabilities against market demand",
+              tag: "NEURAL ANALYSIS",
+              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+            },
+            {
+              id: "09",
+              title: "Instant Analysis Launcher CTA",
+              subtitle: "Streamlined search input with URL validation and real-time task queue telemetry",
+              tag: "LAUNCHER",
+              image: "/assets/projects/rolesieve/try-it-now-section.png"
+            },
+            {
+              id: "10",
+              title: "Use Cases & User Success Scenarios",
+              subtitle: "Practical application workflows for software engineers and technical recruiters",
+              tag: "SUCCESS SCENARIOS",
+              image: "/assets/projects/rolesieve/success-stories-section.png"
+            },
+            {
+              id: "11",
+              title: "Documentation & Quick Start Guide",
+              subtitle: "Step-by-step developer documentation on ingestion parameters and Excel schema",
+              tag: "DOCUMENTATION",
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+            },
+            {
+              id: "12",
+              title: "Support Channels & Contact Port",
+              subtitle: "Direct communication links, issue reporting, and engineering discussion hub",
+              tag: "CONTACTS",
+              image: "/assets/projects/rolesieve/contacts-page.png"
+            },
+            {
+              id: "13",
+              title: "Full Product Landing Architecture",
+              subtitle: "End-to-end full-length capture of the entire landing page and interface hierarchy",
+              tag: "FULL ARCHITECTURE",
+              image: "/assets/projects/rolesieve/all-landing-page.png"
+            }
+          ],
+          dossier: {
+            projectType: "Full-Stack Job Market Analytics & Resume Optimization Engine",
+            entryYear: "2025 - 2026",
+            targetPlatform: "Web Cloud Platform (Next.js 16 App Router) + Async Python API (FastAPI)",
+            primaryRole: "Full-Stack Software Engineer & System Architect",
+            technologies: {
+              core: ["Next.js 16 (App Router)", "React 19", "FastAPI 0.115", "Python 3.12", "TypeScript 5"],
+              frontendUI: ["Tailwind CSS 4", "Framer Motion", "Radix UI", "Lucide React", "next-themes", "i18n (RU/EN)"],
+              backend: ["FastAPI", "Pydantic v2", "Uvicorn", "Requests", "openpyxl", "BeautifulSoup4"],
+              nlpQueue: ["pymorphy2 Lemmatizer", "N-Gram Tokenizer", "RQ (Redis Queue)", "In-Process Thread Queue"]
+            },
+            colorPalette: [
+              { name: "Signature Violet", hex: "#8B5CF6" },
+              { name: "Coral Gradient", hex: "#F43F5E" },
+              { name: "Emerald Signal", hex: "#22C55E" },
+              { name: "Obsidian Canvas", hex: "#07070C" }
+            ],
+            status: "PRODUCTION_DEPLOYED"
+          },
+          overview: {
+            lead: "RoleSieve eliminates guesswork from job applications by transforming raw HeadHunter market data into high-signal skill rankings, n-gram keyword patterns, and clean Excel reports without scraping violations or raw text clutter.",
+            targetAudience: "Software engineers, career consultants, HR market researchers, and tech leads seeking data-driven clarity on actual market requirements and skill frequencies.",
+            challenge: "Job seekers manually parse dozens of vacancy descriptions, guess which skills are in demand, and fall victim to buzzword overload. Traditional scrapers violate platform terms, while raw HTML descriptions contain thousands of noisy tokens (styling, boilerplate, legal notes) that cloud actual hiring criteria.",
+            solution: "Built an asynchronous data pipeline consuming only official dev.hh.ru endpoints. Implemented morphological lemmatization (pymorphy2) to consolidate Russian terms, extracted explicit key_skills fields, built an intelligent deduplication flow, and delivered a high-aesthetic Next.js 16 frontend with live telemetry and streaming Excel (.xlsx) export.",
+            myRole: "Architected and developed the entire ecosystem: FastAPI backend with rate limiting & exponential retry logic, pymorphy2 NLP extraction engine, openpyxl Excel spreadsheet generator, Next.js 16 React 19 UI with fluid animations, and dual-language (RU/EN) internationalization."
+          },
+          walkthrough: {
+            concept: {
+              title: "From Market Noise to Evidence-Based Resumes",
+              desc: "Replacing subjective intuition with empirical job market signals extracted directly from active employer postings.",
+              highlights: [
+                "Zero scraping: 100% compliant with official HeadHunter public API",
+                "Deep signal extraction: explicit key_skills combined with lemmatized description phrases",
+                "Dual deliverable: real-time browser HUD and styled, audit-ready Excel reports"
+              ]
+            },
+            architecture: {
+              title: "Decoupled Next.js 16 + FastAPI Pipeline",
+              desc: "Modern frontend built with Next.js 16 App Router and Tailwind 4 communicating with an asynchronous FastAPI microservice backed by openpyxl and a hybrid queue (RQ/Redis or in-process threading).",
+              highlights: [
+                "Resilient client respecting Retry-After with exponential backoff on 429/5xx and network dropouts",
+                "In-memory openpyxl workbook generator with conditional formatting and duplicate highlighting",
+                "Streaming HTTP export endpoints with base64url X-Export-Summary telemetry headers"
+              ]
+            },
+            features: [
+              { num: "01", title: "Dual Query Modes", desc: "Manual mode for batch ID/URL lists or Auto Search with granular HH filters (region, experience, schedule, employer, period).", metric: "Manual + Auto" },
+              { num: "02", title: "NLP Lemmatization & Deduplication", desc: "Pymorphy2 morphological engine extracting frequent 1-to-3-grams while discarding Russian stopwords and maintaining strict vacancy order.", metric: "pymorphy2 NLP" },
+              { num: "03", title: "Interactive Telemetry HUD & XLSX", desc: "Live vacancy metrics, skill frequency distribution, data quality coverage ring, and one-click formatted Excel workbook generation.", metric: ".XLSX + HUD" }
+            ],
+            impact: {
+              metrics: [
+                { label: "HH_API_COMPLIANCE", value: "100%" },
+                { label: "SAMPLE_CAPACITY", value: "100+ JOBS" },
+                { label: "TIME_TO_EXCEL", value: "<30S" },
+                { label: "LOCALES", value: "RU / EN" }
+              ]
+            }
+          }
+        },
+        {
+          num: "03",
           id: "OPENGOV_KZ_PORTAL",
           slug: "opengov-kz",
           title: "OpenGov.kz Platform",
@@ -519,7 +686,7 @@ export const portfolioContent = {
           }
         },
         {
-          num: "03",
+          num: "04",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Berik Zhunusbek Digital Gallery",
@@ -615,6 +782,14 @@ export const portfolioContent = {
           tag: "MOBILE & AI",
           status: "PRODUCTION",
           desc: "Smart financial tracking app with AI receipt processing and analytics."
+        },
+        {
+          id: "rolesieve",
+          title: "RoleSieve Analytics",
+          category: "Next.js 16 // React 19 // FastAPI // NLP",
+          tag: "AI & CAREER INTELLIGENCE",
+          status: "PRODUCTION",
+          desc: "HeadHunter job posting intelligence engine converting live requirements into actionable resume plans."
         },
         {
           id: "opengov",
@@ -1122,6 +1297,173 @@ export const portfolioContent = {
         },
         {
           num: "02",
+          id: "ROLESIEVE",
+          slug: "rolesieve",
+          title: "RoleSieve — Анализ вакансий HH для улучшения резюме",
+          tagline: "Аналитическая платформа HeadHunter, превращающая реальные требования работодателей в доказательный план усиления резюме и чистый Excel-отчёт",
+          category: "Full-Stack & NLP // Карьерная аналитика",
+          isPrivate: true,
+          description: "Full-Stack сервис для анализа открытых вакансий HeadHunter через официальный API. Извлекает подтвержденные теги key_skills и частотные n-граммы описаний с лемматизацией (pymorphy2), формируя интерактивный дашборд покрытия навыков и чистый Excel (.xlsx) отчёт с подсветкой повторов.",
+          tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
+          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          liveUrl: "https://role-sieve-mu.vercel.app/",
+          githubUrl: null,
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Главный экран и параметры поиска",
+              subtitle: "Стартовый интерфейс с выбором режима сбора вакансий и настройкой запроса",
+              tag: "ГЛАВНЫЙ ЭКРАН",
+              image: "/assets/projects/rolesieve/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Два режима анализа вакансий",
+              subtitle: "Точечный сбор по ссылкам и ID или автоматический парсинг по фильтрам HeadHunter",
+              tag: "РЕЖИМЫ СБОРА",
+              image: "/assets/projects/rolesieve/two-modes-section.png"
+            },
+            {
+              id: "03",
+              title: "Архитектура и пайплайн обработки",
+              subtitle: "Трехэтапный конвейер: сбор через API dev.hh.ru, NLP-лемматизация и генерация отчетов",
+              tag: "ПРИНЦИП РАБОТЫ",
+              image: "/assets/projects/rolesieve/how-it-works-section.png"
+            },
+            {
+              id: "04",
+              title: "Дашборд навыков и чистый Excel",
+              subtitle: "Визуальная аналитика частотности ключевых навыков и стилизованный экспорт в .XLSX",
+              tag: "АРТЕФАКТЫ",
+              image: "/assets/projects/rolesieve/what-you-get-section.png"
+            },
+            {
+              id: "05",
+              title: "Метрики и производительность платформы",
+              subtitle: "Показатели скорости сбора, точности извлечения n-грамм и устойчивости к лимитам API",
+              tag: "МЕТРИКИ",
+              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+            },
+            {
+              id: "06",
+              title: "Интерактивный дашборд результатов",
+              subtitle: "Сводные показатели завершенного прогона с графиками покрытия и картой компетенций",
+              tag: "РЕЗУЛЬТАТЫ",
+              image: "/assets/projects/rolesieve/run-results-section.png"
+            },
+            {
+              id: "07",
+              title: "Рейтинг ключевых навыков и технологий",
+              subtitle: "Таблица извлеченных key_skills с процентом упоминаемости в исследуемой выборке",
+              tag: "НАВЫКИ",
+              image: "/assets/projects/rolesieve/run-results-list.png"
+            },
+            {
+              id: "08",
+              title: "Нейросетевая аналитика профиля",
+              subtitle: "Оценка семантического соответствия стека кандидата и детекция пробелов в резюме",
+              tag: "НЕЙРО-АНАЛИЗ",
+              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+            },
+            {
+              id: "09",
+              title: "Интерактивный блок запуска анализа",
+              subtitle: "Форма моментального запуска с валидацией ссылок и индикатором очереди задач",
+              tag: "ЗАПУСК АНАЛИЗА",
+              image: "/assets/projects/rolesieve/try-it-now-section.png"
+            },
+            {
+              id: "10",
+              title: "Сценарии применения и кейсы",
+              subtitle: "Практические сценарии использования платформы соискателями и карьерными консультантами",
+              tag: "СЦЕНАРИИ",
+              image: "/assets/projects/rolesieve/success-stories-section.png"
+            },
+            {
+              id: "11",
+              title: "Документация и быстрый старт",
+              subtitle: "Интерактивное руководство по настройке параметров сбора и формату выгрузок",
+              tag: "ДОКУМЕНТАЦИЯ",
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+            },
+            {
+              id: "12",
+              title: "Контакты и обратная связь",
+              subtitle: "Каналы связи, техническая поддержка и ссылки на сообщество проекта",
+              tag: "КОНТАКТЫ",
+              image: "/assets/projects/rolesieve/contacts-page.png"
+            },
+            {
+              id: "13",
+              title: "Сквозная структура лендинга",
+              subtitle: "Полная панорама архитектуры экранов и информационных блоков продуктовой страницы",
+              tag: "ПОЛНЫЙ ОБЗОР",
+              image: "/assets/projects/rolesieve/all-landing-page.png"
+            }
+          ],
+          dossier: {
+            projectType: "Full-Stack система аналитики рынка труда и оптимизации резюме",
+            entryYear: "2025 - 2026",
+            targetPlatform: "Веб-платформа (Next.js 16 App Router) + Асинхронный Python API (FastAPI)",
+            primaryRole: "Full-Stack инженер и архитектор системы",
+            technologies: {
+              core: ["Next.js 16 (App Router)", "React 19", "FastAPI 0.115", "Python 3.12", "TypeScript 5"],
+              frontendUI: ["Tailwind CSS 4", "Framer Motion", "Radix UI", "Lucide React", "next-themes", "i18n (RU/EN)"],
+              backend: ["FastAPI", "Pydantic v2", "Uvicorn", "Requests", "openpyxl", "BeautifulSoup4"],
+              nlpQueue: ["Лемматизатор pymorphy2", "Токенизатор N-грамм", "RQ (Redis Queue)", "Фоновый In-Process Thread"]
+            },
+            colorPalette: [
+              { name: "Фирменный Violet", hex: "#8B5CF6" },
+              { name: "Коралловый Акцент", hex: "#F43F5E" },
+              { name: "Изумрудный Сигнал", hex: "#22C55E" },
+              { name: "Обсидиановый Холст", hex: "#07070C" }
+            ],
+            status: "PRODUCTION_DEPLOYED"
+          },
+          overview: {
+            lead: "RoleSieve закрывает разрыв между субъективными догадками соискателей и реальным рынком труда, извлекая доказательную выборку ключевых навыков и терминов из вакансий HeadHunter.",
+            targetAudience: "IT-специалисты, карьерные консультанты, HR-исследователи рынка и тимлиды, которым нужны объективные данные по спросу на навыки.",
+            challenge: "Соискатели тратят часы на ручной просмотр вакансий, выписывая требования в блокнот и гадая, что действительно в тренде. Скрапинг блокируется антифрод-системами, а полотна HTML-текстов забиты шаблонными фразами и юридической информацией.",
+            solution: "Спроектирован микросервисный пайплайн, работающий исключительно с официальным dev.hh.ru API. Внедрена лемматизация русского языка на pymorphy2 для объединения словоформ, автоматическая дедупликация вакансий, дашборд покрытия key_skills и генерация чистого отчёта в Excel с условным форматированием.",
+            myRole: "Полная разработка архитектуры: бэкенд на FastAPI с ретраями 429/5xx и таймаутами, NLP-пайплайн извлечения n-грамм, сборщик Excel-файлов на openpyxl, высокоэстетичный интерфейс на Next.js 16 / React 19 с плавной анимацией и двуязычной локализацией."
+          },
+          walkthrough: {
+            concept: {
+              title: "От рыночного шума к доказательному резюме",
+              desc: "Замена догадок проверяемой аналитикой спроса, собранной напрямую из базы актуальных вакансий.",
+              highlights: [
+                "Без парсинга верстки: 100% официальный публичный HeadHunter API",
+                "Глубокое извлечение сигналов: явные key_skills + лемматизированные фразы",
+                "Два готовых артефакта: наглядный UI-дашборд и готовая Excel-таблица"
+              ]
+            },
+            architecture: {
+              title: "Декупленная архитектура Next.js 16 + FastAPI",
+              desc: "Фронтенд на Next.js 16 App Router с Tailwind 4 взаимодействует с асинхронным FastAPI через REST API с поддержкой очередей задач (RQ/Redis или фоновые треды).",
+              highlights: [
+                "Клиент с поддержкой Retry-After и экспоненциальным backoff при 429/5xx",
+                "Потоковая отдача .xlsx файлов и заголовка X-Export-Summary в base64url",
+                "Асинхронные прогоны через job_id с прогрессом и статусами выполнения"
+              ]
+            },
+            features: [
+              { num: "01", title: "Два режима выборки", desc: "Manual — точечный ввод ссылок и ID; Auto — поиск по профессии с фильтрами по городам, опыту, формату и периоду.", metric: "Manual + Auto" },
+              { num: "02", title: "NLP-лемматизация и фильтрация", desc: "Пакетная нормализация фраз на pymorphy2, очистка от стоп-слов и отсечение дублей с сохранением исходного порядка.", metric: "pymorphy2 NLP" },
+              { num: "03", title: "Интерактивный дашборд и Excel", desc: "Рейтинг топ-20 навыков, облако фраз, кольцо покрытия key_skills, статистика ошибок и стилизованный XLSX-отчёт.", metric: ".XLSX + HUD" }
+            ],
+            impact: {
+              metrics: [
+                { label: "HH_API_СТАНДАРТ", value: "100% ЧИСТО" },
+                { label: "ОБЪЁМ_ВЫБОРКИ", value: "100+ ВАКАНСИЙ" },
+                { label: "ВРЕМЯ_ГЕНЕРАЦИИ", value: "<30 СЕК" },
+                { label: "ЯЗЫКИ", value: "RU / EN" }
+              ]
+            }
+          }
+        },
+        {
+          num: "03",
           id: "OPENGOV_KZ_PORTAL",
           slug: "opengov-kz",
           title: "Платформа OpenGov.kz",
@@ -1195,7 +1537,7 @@ export const portfolioContent = {
           }
         },
         {
-          num: "03",
+          num: "04",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Галерея Берика Жунусбека",
@@ -1291,6 +1633,14 @@ export const portfolioContent = {
           tag: "MOBILE & AI",
           status: "PRODUCTION",
           desc: "Умный финансовый трекер с AI-распознаванием чеков и аналитикой трат."
+        },
+        {
+          id: "rolesieve",
+          title: "RoleSieve Аналитика",
+          category: "Next.js 16 // React 19 // FastAPI // NLP",
+          tag: "AI & КАРЬЕРНАЯ АНАЛИТИКА",
+          status: "ПРОДАКШН",
+          desc: "Платформа анализа вакансий HeadHunter, превращающая рыночные требования в план усиления резюме."
         },
         {
           id: "opengov",
@@ -1798,6 +2148,173 @@ export const portfolioContent = {
         },
         {
           num: "02",
+          id: "ROLESIEVE",
+          slug: "rolesieve",
+          title: "RoleSieve — Түйіндемені жақсартуға арналған HH бос орындарын талдау",
+          tagline: "Жұмыс берушілердің нақты талаптарын түйіндемені күшейтудің нақты жоспары мен таза Excel есебіне айналдыратын HeadHunter талдау платформасы",
+          category: "Full-Stack & NLP // Мансап аналитикасы",
+          isPrivate: true,
+          description: "HeadHunter ресми API арқылы ашық бос орындарды талдайтын Full-Stack сервисі. Pymorphy2 лемматизациясы арқылы тексерілген key_skills тегтері мен жиі қолданылатын n-граммаларды бөліп алады, дағдыларды қамту дашбордын және қайталануларды белгілейтін таза Excel (.xlsx) есебін ұсынады.",
+          tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
+          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          liveUrl: "https://role-sieve-mu.vercel.app/",
+          githubUrl: null,
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Басты бет және іздеу параметрлері",
+              subtitle: "Бос орындарды жинау режимін таңдау және сұраныс параметрлерін баптау экраны",
+              tag: "БАСТЫ БЕТ",
+              image: "/assets/projects/rolesieve/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Екі түрлі талдау режимі",
+              subtitle: "Сілтемелер мен ID бойынша нүктелік жинау немесе HeadHunter сүзгілерімен автоматты іздеу",
+              tag: "ЖИНАУ РЕЖИМДЕРІ",
+              image: "/assets/projects/rolesieve/two-modes-section.png"
+            },
+            {
+              id: "03",
+              title: "Архитектура және өңдеу конвейері",
+              subtitle: "Үш кезеңді жүйе: dev.hh.ru API деректер жинау, pymorphy2 лемматизациясы және есеп жасау",
+              tag: "ЖҰМЫС ҚАҒИДАСЫ",
+              image: "/assets/projects/rolesieve/how-it-works-section.png"
+            },
+            {
+              id: "04",
+              title: "Дағдылар дашборды және таза Excel",
+              subtitle: "Негізгі дағдылар жиілігінің визуалды аналитикасы және .XLSX пішіміндегі стильді есеп",
+              tag: "НӘТИЖЕЛЕР",
+              image: "/assets/projects/rolesieve/what-you-get-section.png"
+            },
+            {
+              id: "05",
+              title: "Платформа метрикалары мен өнімділігі",
+              subtitle: "Жинау жылдамдығы, n-граммаларды анықтау дәлдігі және API шектеулеріне төзімділік",
+              tag: "МЕТРИКАЛАР",
+              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+            },
+            {
+              id: "06",
+              title: "Нәтижелердің интерактивті дашборды",
+              subtitle: "Дағдылар қамтылуы графиктері бар аяқталған талдаудың жиынтық көрсеткіштері",
+              tag: "ДАШБОРД",
+              image: "/assets/projects/rolesieve/run-results-section.png"
+            },
+            {
+              id: "07",
+              title: "Негізгі дағдылар мен технологиялар рейтингі",
+              subtitle: "Талданған бос орындардағы key_skills кездесу пайызы көрсетілген толық кесте",
+              tag: "ДАҒДЫЛАР",
+              image: "/assets/projects/rolesieve/run-results-list.png"
+            },
+            {
+              id: "08",
+              title: "Профильді нейрожелілік талдау",
+              subtitle: "Үміткер дағдыларының сәйкестігін бағалау және түйіндемедегі олқылықтарды анықтау",
+              tag: "НЕЙРО-ТАЛДАУ",
+              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+            },
+            {
+              id: "09",
+              title: "Талдауды жылдам бастау блогы",
+              subtitle: "Сілтемелерді тексеру және тапсырмалар кезегі индикаторы бар жылдам іске қосу формасы",
+              tag: "ІСКЕ ҚОСУ",
+              image: "/assets/projects/rolesieve/try-it-now-section.png"
+            },
+            {
+              id: "10",
+              title: "Қолдану сценарийлері мен кейстер",
+              subtitle: "Ізденушілер мен мансап кеңесшілері үшін платформаны тиімді пайдалану жолдары",
+              tag: "СЦЕНАРИЙЛЕР",
+              image: "/assets/projects/rolesieve/success-stories-section.png"
+            },
+            {
+              id: "11",
+              title: "Құжаттама және жылдам бастау",
+              subtitle: "Жинау параметрлерін баптау және экспортталған есептер пішімі бойынша нұсқаулық",
+              tag: "ҚҰЖАТТАМА",
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+            },
+            {
+              id: "12",
+              title: "Байланыс және кері байланыс",
+              subtitle: "Байланыс арналары, техникалық қолдау және жоба қауымдастығының сілтемелері",
+              tag: "БАЙЛАНЫС",
+              image: "/assets/projects/rolesieve/contacts-page.png"
+            },
+            {
+              id: "13",
+              title: "Лендингтің толық құрылымы",
+              subtitle: "Өнімдік парақшаның барлық экрандары мен ақпараттық блоктарының толық панорамасы",
+              tag: "ТОЛЫҚ ШОЛУ",
+              image: "/assets/projects/rolesieve/all-landing-page.png"
+            }
+          ],
+          dossier: {
+            projectType: "Еңбек нарығын талдау және түйіндемені оңтайландыру жүйесі",
+            entryYear: "2025 - 2026",
+            targetPlatform: "Веб-платформа (Next.js 16 App Router) + Асинхронды Python API (FastAPI)",
+            primaryRole: "Full-Stack бағдарламалық инженер және жүйелік архитектор",
+            technologies: {
+              core: ["Next.js 16 (App Router)", "React 19", "FastAPI 0.115", "Python 3.12", "TypeScript 5"],
+              frontendUI: ["Tailwind CSS 4", "Framer Motion", "Radix UI", "Lucide React", "next-themes", "i18n (RU/EN)"],
+              backend: ["FastAPI", "Pydantic v2", "Uvicorn", "Requests", "openpyxl", "BeautifulSoup4"],
+              nlpQueue: ["pymorphy2 Лемматизаторы", "N-Gram токенизаторы", "RQ (Redis Queue)", "In-Process Thread"]
+            },
+            colorPalette: [
+              { name: "Фирмалық Violet", hex: "#8B5CF6" },
+              { name: "Маржан Акцент", hex: "#F43F5E" },
+              { name: "Изумруд Сигнал", hex: "#22C55E" },
+              { name: "Обсидиан Кенеп", hex: "#07070C" }
+            ],
+            status: "PRODUCTION_DEPLOYED"
+          },
+          overview: {
+            lead: "RoleSieve HeadHunter ашық деректерінен негізгі дағдылар мен талаптарды жинақтап, түйіндемені нақты дәлелдерге сүйене отырып жетілдіруге мүмкіндік береді.",
+            targetAudience: "IT мамандары, мансап кеңесшілері және еңбек нарығын зерттеушілер.",
+            challenge: "Үміткерлер бос орындарды қолмен қарап, көп уақыт жоғалтады және қандай технологиялардың сұранысқа ие екенін болжауға мәжбүр болады.",
+            solution: "Dev.hh.ru ресми API-мен жұмыс істейтін асинхронды деректер жүйесі жасалды. Pymorphy2 арқылы сөз формаларын біріздендіру, дағдылар қамтылуын визуалдау және Excel-ге экспорттау жүзеге асырылды.",
+            myRole: "Экожүйенің толық архитектурасы мен әзірленуі: FastAPI бэкенді, NLP өңдеу модулі, openpyxl есеп генераторы және Next.js 16 / React 19 негізіндегі веб-интерфейс."
+          },
+          walkthrough: {
+            concept: {
+              title: "Нарық шуылынан дәлелді түйіндемеге дейін",
+              desc: "Болжамдарды HeadHunter бос орындарының нақты деректерімен алмастыру.",
+              highlights: [
+                "Парсингсіз: 100% ресми HeadHunter ашық API",
+                "Терең сигнал талдауы: key_skills және жиілік фраз",
+                "Екі дайын нәтиже: интерактивті дашборд және Excel файлы"
+              ]
+            },
+            architecture: {
+              title: "Бөлінген Next.js 16 + FastAPI архитектурасы",
+              desc: "Next.js 16 App Router пен асинхронды FastAPI микросервисінің өзара тиімді әрекеттесуі.",
+              highlights: [
+                "429/5xx қателеріне қарсы экспоненциалды қайталау алгоритмі",
+                "X-Export-Summary деректері бар жылдам .xlsx ағынды экспорты",
+                "Тапсырмалар кезегімен (RQ/Redis) ұзақ прогондарды қолдау"
+              ]
+            },
+            features: [
+              { num: "01", title: "Екі түрлі жинау режимі", desc: "Сілтемелер мен ID бойынша нүктелік жинау немесе кеңейтілген сүзгілері бар автоматты іздеу.", metric: "Manual + Auto" },
+              { num: "02", title: "NLP-лемматизация", desc: "Pymorphy2 көмегімен сөздерді қалыпқа келтіру және қажетсіз стоп-сөздерді сүзу.", metric: "pymorphy2 NLP" },
+              { num: "03", title: "Интерактивті дашборд және Excel", desc: "Үздік 20 дағды рейтингі, сапа көрсеткіштері және стильдендірілген XLSX есебі.", metric: ".XLSX + HUD" }
+            ],
+            impact: {
+              metrics: [
+                { label: "HH_API_СӘЙКЕСТІК", value: "100%" },
+                { label: "ТАЛДАУ_КӨЛЕМІ", value: "100+ ВАКАНСИЯ" },
+                { label: "ГЕНЕРАЦИЯ_УАҚЫТЫ", value: "<30 СЕК" },
+                { label: "ТІЛДЕР", value: "RU / EN" }
+              ]
+            }
+          }
+        },
+        {
+          num: "03",
           id: "OPENGOV_KZ_PORTAL",
           slug: "opengov-kz",
           title: "OpenGov.kz Платформасы",
@@ -1812,7 +2329,7 @@ export const portfolioContent = {
           status: "PRODUCTION_DEPLOYED"
         },
         {
-          num: "03",
+          num: "04",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Берік Жүнісбек галереясы",
