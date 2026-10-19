@@ -39,20 +39,9 @@ export default function NavHeader() {
   const [isMobile, setIsMobile] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [cvDownloaded, setCvDownloaded] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef(null);
   const settingsRef = useRef(null);
   const settingsModalRef = useRef(null);
-
-  // Track page scroll to gracefully yield top-left corner to docked project title
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleDownloadCv = () => {
     if (playDownload) playDownload();

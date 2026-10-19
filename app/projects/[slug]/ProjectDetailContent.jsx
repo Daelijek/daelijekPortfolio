@@ -321,7 +321,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         description: otherMatch.desc,
         tags: otherMatch.tags,
         image: '/assets/Finance.png',
-        liveUrl: otherMatch.url,
+        liveUrl: null,
         githubUrl: otherMatch.url,
         status: 'ARCHIVE_DEPLOYED',
         dossier: {
