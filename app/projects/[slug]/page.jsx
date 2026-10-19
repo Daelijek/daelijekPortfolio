@@ -12,7 +12,8 @@ function getProject(rawSlug) {
     (p) =>
       (p.slug && p.slug.toLowerCase() === slug) ||
       (p.id && p.id.toLowerCase() === slug) ||
-      (slug === 'finance-ai-manager' && p.slug === 'finance-management-app')
+      (slug === 'finance-ai-manager' && p.slug === 'finance-management-app') ||
+      (slug === 'role-sieve' && p.slug === 'rolesieve')
   );
   if (featured) return featured;
 
@@ -36,7 +37,7 @@ export async function generateStaticParams() {
   );
 
   // Include popular direct aliases
-  const aliasSlugs = ['finance-ai-manager'];
+  const aliasSlugs = ['finance-ai-manager', 'role-sieve'];
 
   const allSlugs = Array.from(
     new Set([...featuredSlugs, ...otherSlugs, ...aliasSlugs])

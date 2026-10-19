@@ -446,80 +446,320 @@ export const portfolioContent = {
         },
         {
           num: "02",
-          id: "OPENGOV_KZ_PORTAL",
-          slug: "opengov-kz",
-          title: "OpenGov.kz Platform",
-          tagline: "National civic engagement & open governance portal for public transparency",
-          category: "GovTech Web Platform",
-          isPrivate: false,
-          description: "Engineered the official OpenGov.kz platform frontend from scratch with Next.js and React. Deployed full multi-language localization (i18n), news catalogs, civic participation portals, and blazing-fast server-rendered performance for citizen-government transparency.",
-          tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
-          image: "/assets/openGov.png",
-          liveUrl: "https://qbs-solutions.vercel.app/",
-          githubUrl: "https://github.com/Daelijek/www-opengov-kz",
-          status: "PRODUCTION_DEPLOYED",
+          id: "ROLESIEVE",
+          slug: "rolesieve",
+          title: "RoleSieve — Vacancy Analytics & Resume Intelligence",
+          tagline: "Automated HeadHunter vacancy intelligence platform turning live market demands into actionable resume optimization plans and Excel reports",
+          category: "Full-Stack & NLP // Career Intelligence",
+          isPrivate: true,
+          description: "End-to-end analytical platform that connects to official HeadHunter public APIs, ingests job postings across regions and roles, extracts verified key_skills tags and lemmatized n-gram phrases via pymorphy2, and outputs both an interactive real-time telemetry dashboard and clean, deduplicated Excel (.xlsx) workbooks.",
+          tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
+          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          liveUrl: "https://role-sieve-mu.vercel.app/",
+          githubUrl: null,
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Hero Section & Search Parameters",
+              subtitle: "Launchpad interface with mode selection and query parameter configuration",
+              tag: "HERO INTERFACE",
+              image: "/assets/projects/rolesieve/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Two Distinct Ingestion Modes",
+              subtitle: "Targeted URL/ID harvesting or automated multi-parameter HeadHunter query scanning",
+              tag: "INGESTION MODES",
+              image: "/assets/projects/rolesieve/two-modes-section.png"
+            },
+            {
+              id: "03",
+              title: "Processing Architecture & NLP Pipeline",
+              subtitle: "Three-stage pipeline: official API collection, pymorphy2 lemmatization, and report generation",
+              tag: "PIPELINE ARCHITECTURE",
+              image: "/assets/projects/rolesieve/how-it-works-section.png"
+            },
+            {
+              id: "04",
+              title: "Skill Telemetry & Clean Excel Export",
+              subtitle: "Live keyword frequency dashboard and styled, deduplicated .XLSX workbook generation",
+              tag: "ARTIFACTS",
+              image: "/assets/projects/rolesieve/what-you-get-section.png"
+            },
+            {
+              id: "05",
+              title: "Platform Metrics & High-Load Reliability",
+              subtitle: "Telemetry logs on ingestion speed, token accuracy, and zero-drop API rate handling",
+              tag: "PLATFORM METRICS",
+              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+            },
+            {
+              id: "06",
+              title: "Interactive Run Results HUD",
+              subtitle: "Aggregated run metrics with skill coverage charts and vacancy intelligence distribution",
+              tag: "RESULTS HUD",
+              image: "/assets/projects/rolesieve/run-results-section.png"
+            },
+            {
+              id: "07",
+              title: "Extracted Key Skills Frequency Table",
+              subtitle: "Comprehensive list of extracted skills with frequency percentages across job postings",
+              tag: "SKILL FREQUENCY",
+              image: "/assets/projects/rolesieve/run-results-list.png"
+            },
+            {
+              id: "08",
+              title: "Neural Skill Gap Analytics",
+              subtitle: "Semantic alignment evaluation comparing candidate capabilities against market demand",
+              tag: "NEURAL ANALYSIS",
+              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+            },
+            {
+              id: "09",
+              title: "Instant Analysis Launcher CTA",
+              subtitle: "Streamlined search input with URL validation and real-time task queue telemetry",
+              tag: "LAUNCHER",
+              image: "/assets/projects/rolesieve/try-it-now-section.png"
+            },
+            {
+              id: "10",
+              title: "Use Cases & User Success Scenarios",
+              subtitle: "Practical application workflows for software engineers and technical recruiters",
+              tag: "SUCCESS SCENARIOS",
+              image: "/assets/projects/rolesieve/success-stories-section.png"
+            },
+            {
+              id: "11",
+              title: "Documentation & Quick Start Guide",
+              subtitle: "Step-by-step developer documentation on ingestion parameters and Excel schema",
+              tag: "DOCUMENTATION",
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+            },
+            {
+              id: "12",
+              title: "Support Channels & Contact Port",
+              subtitle: "Direct communication links, issue reporting, and engineering discussion hub",
+              tag: "CONTACTS",
+              image: "/assets/projects/rolesieve/contacts-page.png"
+            },
+            {
+              id: "13",
+              title: "Full Product Landing Architecture",
+              subtitle: "End-to-end full-length capture of the entire landing page and interface hierarchy",
+              tag: "FULL ARCHITECTURE",
+              image: "/assets/projects/rolesieve/all-landing-page.png"
+            }
+          ],
           dossier: {
-            projectType: "Public GovTech Transparency Portal",
-            entryYear: "2024",
-            targetPlatform: "Web Platform (Next.js SSR & SSG)",
-            primaryRole: "Frontend Lead Engineer",
+            projectType: "Full-Stack Job Market Analytics & Resume Optimization Engine",
+            entryYear: "2025 - 2026",
+            targetPlatform: "Web Cloud Platform (Next.js 16 App Router) + Async Python API (FastAPI)",
+            primaryRole: "Full-Stack Software Engineer & System Architect",
             technologies: {
-              core: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS"],
-              i18n: ["next-intl (Kazakh, Russian, English)"],
-              api: ["REST APIs", "Government Open Data JSON"],
-              perf: ["Vercel Edge Network", "Static Site Generation", "Lighthouse 98+"]
+              core: ["Next.js 16 (App Router)", "React 19", "FastAPI 0.115", "Python 3.12", "TypeScript 5"],
+              frontendUI: ["Tailwind CSS 4", "Framer Motion", "Radix UI", "Lucide React", "next-themes", "i18n (RU/EN)"],
+              backend: ["FastAPI", "Pydantic v2", "Uvicorn", "Requests", "openpyxl", "BeautifulSoup4"],
+              nlpQueue: ["pymorphy2 Lemmatizer", "N-Gram Tokenizer", "RQ (Redis Queue)", "In-Process Thread Queue"]
             },
             colorPalette: [
-              { name: "GovTech Azure", hex: "#0070F3" },
-              { name: "Cyan Horizon", hex: "#00DFD8" },
-              { name: "Slate Deep", hex: "#0B1017" },
-              { name: "Neutral Cloud", hex: "#F3F6F9" }
+              { name: "Signature Violet", hex: "#8B5CF6" },
+              { name: "Coral Gradient", hex: "#F43F5E" },
+              { name: "Emerald Signal", hex: "#22C55E" },
+              { name: "Obsidian Canvas", hex: "#07070C" }
             ],
             status: "PRODUCTION_DEPLOYED"
           },
           overview: {
-            lead: "A high-performance civic transparency portal designed to bridge citizen engagement and public governmental initiatives through accessible public catalogs and multi-language information distribution.",
-            targetAudience: "Citizens, civic researchers, and public organizations seeking transparent information on government projects, open budgeting, and civic initiatives across Kazakhstan.",
-            challenge: "Government portals often suffer from cumbersome navigation, poor mobile responsiveness, slow load speeds, and fragmented multilingual content.",
-            solution: "Engineered the modern web frontend with Next.js and Tailwind CSS from the ground up, delivering flawless trilingual support (Kazakh, Russian, English), server-side rendering for instant page transitions, and strict accessibility compliance (WCAG 2.1 AA).",
-            myRole: "Developed the responsive frontend architecture, designed the design system and reusable UI component library, integrated REST endpoints for public datasets, and optimized SEO & Core Web Vitals."
+            lead: "RoleSieve eliminates guesswork from job applications by transforming raw HeadHunter market data into high-signal skill rankings, n-gram keyword patterns, and clean Excel reports without scraping violations or raw text clutter.",
+            targetAudience: "Software engineers, career consultants, HR market researchers, and tech leads seeking data-driven clarity on actual market requirements and skill frequencies.",
+            challenge: "Job seekers manually parse dozens of vacancy descriptions, guess which skills are in demand, and fall victim to buzzword overload. Traditional scrapers violate platform terms, while raw HTML descriptions contain thousands of noisy tokens (styling, boilerplate, legal notes) that cloud actual hiring criteria.",
+            solution: "Built an asynchronous data pipeline consuming only official dev.hh.ru endpoints. Implemented morphological lemmatization (pymorphy2) to consolidate Russian terms, extracted explicit key_skills fields, built an intelligent deduplication flow, and delivered a high-aesthetic Next.js 16 frontend with live telemetry and streaming Excel (.xlsx) export.",
+            myRole: "Architected and developed the entire ecosystem: FastAPI backend with rate limiting & exponential retry logic, pymorphy2 NLP extraction engine, openpyxl Excel spreadsheet generator, Next.js 16 React 19 UI with fluid animations, and dual-language (RU/EN) internationalization."
           },
           walkthrough: {
             concept: {
-              title: "Democratic Access & Civic Clarity",
-              desc: "Eliminating digital barriers between government initiatives and the public through a clean, blazing-fast, and trustworthy web architecture.",
+              title: "From Market Noise to Evidence-Based Resumes",
+              desc: "Replacing subjective intuition with empirical job market signals extracted directly from active employer postings.",
               highlights: [
-                "Trilingual national localization (Kazakh, Russian, English)",
-                "Sub-second SSR load times on mobile devices",
-                "Accessible mobile-first design with strict WCAG compliance"
+                "Zero scraping: 100% compliant with official HeadHunter public API",
+                "Deep signal extraction: explicit key_skills combined with lemmatized description phrases",
+                "Dual deliverable: real-time browser HUD and styled, audit-ready Excel reports"
               ]
             },
             architecture: {
-              title: "Server-Rendered Multi-Lingual Architecture",
-              desc: "Next.js routing with server-side generation ensuring instant indexing by search engines, localized routing paths, and resilient caching on the Vercel Edge network.",
+              title: "Decoupled Next.js 16 + FastAPI Pipeline",
+              desc: "Modern frontend built with Next.js 16 App Router and Tailwind 4 communicating with an asynchronous FastAPI microservice backed by openpyxl and a hybrid queue (RQ/Redis or in-process threading).",
               highlights: [
-                "Modular component tokens for government portals",
-                "Lightweight SVG iconography and zero-CLS typography",
-                "Strict semantic HTML5 markup for screen readers"
+                "Resilient client respecting Retry-After with exponential backoff on 429/5xx and network dropouts",
+                "In-memory openpyxl workbook generator with conditional formatting and duplicate highlighting",
+                "Streaming HTTP export endpoints with base64url X-Export-Summary telemetry headers"
               ]
             },
             features: [
-              { num: "01", title: "Trilingual Dynamic Localization", desc: "Instant language switching across Kazakh, Russian, and English without layout shift or page refresh.", metric: "3 Languages" },
-              { num: "02", title: "Civic Initiative Catalog", desc: "Interactive filtering and faceted search across dozens of public programs and civic reports.", metric: "<15ms Filter" },
-              { num: "03", title: "Core Web Vitals Optimization", desc: "Engineered for maximum accessibility on low-bandwidth and mobile connections across regions.", metric: "99/100 Perf" }
+              { num: "01", title: "Dual Query Modes", desc: "Manual mode for batch ID/URL lists or Auto Search with granular HH filters (region, experience, schedule, employer, period).", metric: "Manual + Auto" },
+              { num: "02", title: "NLP Lemmatization & Deduplication", desc: "Pymorphy2 morphological engine extracting frequent 1-to-3-grams while discarding Russian stopwords and maintaining strict vacancy order.", metric: "pymorphy2 NLP" },
+              { num: "03", title: "Interactive Telemetry HUD & XLSX", desc: "Live vacancy metrics, skill frequency distribution, data quality coverage ring, and one-click formatted Excel workbook generation.", metric: ".XLSX + HUD" }
             ],
             impact: {
               metrics: [
-                { label: "LIGHTHOUSE", value: "99" },
-                { label: "SEO_SCORE", value: "100" },
-                { label: "LOCALES", value: "3" },
-                { label: "FIRST_PAINT", value: "0.4S" }
+                { label: "HH_API_COMPLIANCE", value: "100%" },
+                { label: "SAMPLE_CAPACITY", value: "100+ JOBS" },
+                { label: "TIME_TO_EXCEL", value: "<30S" },
+                { label: "LOCALES", value: "RU / EN" }
               ]
             }
           }
         },
         {
           num: "03",
+          id: "OPENGOV_KZ_PORTAL",
+          slug: "opengov-kz",
+          title: "OpenGov.kz Platform",
+          tagline: "National civic engagement & open governance portal for public transparency",
+          category: "GovTech Web Platform",
+          isPrivate: false,
+          description: "Engineered the official OpenGov.kz platform frontend for QBS Solutions using React 19, Vite 6, and React Router 7. Implemented a 10-namespace trilingual localization system (Kazakh, Russian, English) via i18next, Mock Service Worker (MSW) REST API layer, modular CSS styling, and responsive civic registers for public transparency.",
+          tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
+          image: "/assets/projects/openGov/open-gov-showcase.jpg",
+          liveUrl: "https://qbs-solutions.vercel.app/",
+          githubUrl: "https://github.com/Daelijek/www-opengov-kz",
+          status: "PRODUCTION_DEPLOYED",
+          gallery: [
+            {
+              id: "01",
+              title: "Hero Section & Civic Portal Gateway",
+              subtitle: "Interactive portal hero with dynamic open data search, national statistics, and direct citizen access points",
+              tag: "HERO GATEWAY",
+              image: "/assets/projects/openGov/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "What is Open Data? Conceptual Overview",
+              subtitle: "Visual guide and educational breakdown explaining open government data principles, transparency, and public utility",
+              tag: "OPEN DATA CONCEPTS",
+              image: "/assets/projects/openGov/what-is-open-data.png"
+            },
+            {
+              id: "03",
+              title: "Strategic Role of OpenGov.kz",
+              subtitle: "The platform's overarching mission: uniting citizens, developers, and public agencies in a unified digital ecosystem",
+              tag: "MISSION & ROLE",
+              image: "/assets/projects/openGov/the-role-of-opengov.png"
+            },
+            {
+              id: "04",
+              title: "Open Data Ecosystem in Kazakhstan",
+              subtitle: "National adoption metrics, dataset volume growth, API consumption stats, and public sector integration metrics",
+              tag: "NATIONAL ECOSYSTEM",
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+            },
+            {
+              id: "05",
+              title: "Key Platforms & Regulatory Legislation",
+              subtitle: "Interactive catalog of legal acts, digital standards, and regulatory frameworks governing open state governance",
+              tag: "LEGISLATION & STANDARDS",
+              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+            },
+            {
+              id: "06",
+              title: "Successful Real-World Civic Use Cases",
+              subtitle: "Showcase of high-impact civic applications, analytical research tools, and community services built on open data",
+              tag: "USE CASES",
+              image: "/assets/projects/openGov/successfull-use-cases.png"
+            },
+            {
+              id: "07",
+              title: "Civic Initiatives & Government Projects Catalog",
+              subtitle: "Faceted catalog of active and completed national initiatives with status filters, milestones, and budget disclosures",
+              tag: "PROJECTS CATALOG",
+              image: "/assets/projects/openGov/projects.png"
+            },
+            {
+              id: "08",
+              title: "OpenGov Newsroom & Public Disclosures",
+              subtitle: "Centralized press releases, government announcements, transparency reports, and platform upgrade logs",
+              tag: "NEWS PORTAL",
+              image: "/assets/projects/openGov/news.png"
+            },
+            {
+              id: "09",
+              title: "Latest News Stream & Editorial Highlights",
+              subtitle: "Curated front-page editorial feed featuring breaking civic updates, upcoming public hearings, and spotlight stories",
+              tag: "LATEST FEED",
+              image: "/assets/projects/openGov/latest-news.png"
+            },
+            {
+              id: "10",
+              title: "Comprehensive Article & Policy Detail View",
+              subtitle: "Long-form reading experience with semantic typography, social sharing, downloadable attachments, and related stories",
+              tag: "DETAIL VIEW",
+              image: "/assets/projects/openGov/news-detail.png"
+            }
+          ],
+          dossier: {
+            projectType: "GovTech Open Data & Civic Transparency Web Portal",
+            entryYear: "2025",
+            targetPlatform: "Modern Web SPA (React 19 + Vite + React Router 7)",
+            primaryRole: "Frontend Lead Engineer",
+            technologies: {
+              core: ["React 19", "Vite 6", "React Router 7", "JavaScript (ESM)"],
+              i18n: ["i18next 25", "react-i18next 15", "10 Namespaces (KZ / RU / EN)"],
+              styling: ["CSS Modules", "Modern Flexbox & Grid", "Inter Typography"],
+              api: ["Mock Service Worker (MSW 2)", "REST APIs", "Government Datasets JSON"],
+              deploy: ["Vercel Edge Platform", "Continuous Deployment (Git CD)"]
+            },
+            colorPalette: [
+              { name: "GovTech Azure", hex: "#1A56DB" },
+              { name: "Deep Cobalt", hex: "#1E40AF" },
+              { name: "Slate Neutral", hex: "#4B5563" },
+              { name: "Cloud White", hex: "#FFFFFF" }
+            ],
+            status: "PRODUCTION_DEPLOYED"
+          },
+          overview: {
+            lead: "A modern, high-performance GovTech portal built for QBS Solutions to showcase public sector digitization, national open data indicators, and civic participation across Kazakhstan.",
+            targetAudience: "Citizens, civic researchers, data analysts, and public organizations exploring open government datasets, state programs, civic initiatives, and legislative transparency.",
+            challenge: "Delivering an intuitive, blazing-fast portal interface that cleanly organizes vast government datasets, multilingual terminology across 10 distinct domains, and mockable REST integration for seamless offline-first development.",
+            solution: "Architected a lean React 19 SPA powered by Vite 6 and React Router 7. Configured i18next with dedicated JSON namespaces per route, isolated CSS Modules to prevent style collisions, and integrated Mock Service Worker (MSW) to emulate backend APIs during development and demonstration.",
+            myRole: "Led frontend architecture and development: structured component hierarchies, implemented 3-language internationalization, engineered MSW mock API infrastructure, crafted responsive CSS Modules layouts, and configured Vercel production deployment."
+          },
+          walkthrough: {
+            concept: {
+              title: "Open Data Access & Public Transparency",
+              desc: "Bridging the gap between state data repositories and the public through transparent catalogs, civic initiatives, and verifiable news dispatches.",
+              highlights: [
+                "Trilingual localization (Kazakh, Russian, English) across 10 namespaces",
+                "Zero-bundle overhead SPA with lightning-fast Vite HMR and build times",
+                "Comprehensive civic registers: projects, news, members, and details"
+              ]
+            },
+            architecture: {
+              title: "Component-Driven SPA & Mock Service Layer",
+              desc: "Modern React 19 component architecture paired with React Router 7, decoupled styling via CSS Modules, and Mock Service Worker (MSW) interception for reliable API simulation.",
+              highlights: [
+                "MSW network-level request interception for offline-ready mock data",
+                "Strict CSS Modules scoping ensuring zero style leakage",
+                "Clean namespace partitioning: header, mainPage, news, projects, members"
+              ]
+            },
+            features: [
+              { num: "01", title: "10-Namespace Reactive i18n", desc: "Instant seamless language toggling across Kazakh, Russian, and English without reload, powered by i18next and react-i18next.", metric: "10 Namespaces" },
+              { num: "02", title: "Integrated MSW Mock Service", desc: "Local mock service worker intercepting REST calls, allowing full testing of news and projects catalogs without backend dependency.", metric: "MSW v2 Mocking" },
+              { num: "03", title: "Civic Initiatives & Members Registry", desc: "Dedicated routing with deep detail views for public projects, ministry announcements, and working group members.", metric: "6 Core Routes" }
+            ],
+            impact: {
+              metrics: [
+                { label: "REACT_VERSION", value: "19.0" },
+                { label: "BUNDLER", value: "VITE 6" },
+                { label: "LOCALES", value: "3 (KZ/RU/EN)" },
+                { label: "NAMESPACES", value: "10 I18N" }
+              ]
+            }
+          }
+        },
+        {
+          num: "04",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Berik Zhunusbek Digital Gallery",
@@ -617,12 +857,20 @@ export const portfolioContent = {
           desc: "Smart financial tracking app with AI receipt processing and analytics."
         },
         {
+          id: "rolesieve",
+          title: "RoleSieve Analytics",
+          category: "Next.js 16 // React 19 // FastAPI // NLP",
+          tag: "AI & CAREER INTELLIGENCE",
+          status: "PRODUCTION",
+          desc: "HeadHunter job posting intelligence engine converting live requirements into actionable resume plans."
+        },
+        {
           id: "opengov",
           title: "OpenGov.kz Platform",
-          category: "Next.js // React // GovTech",
-          tag: "WEB & MOBILE UI",
+          category: "React 19 // Vite // i18n // GovTech",
+          tag: "GOVTECH SPA",
           status: "ENTERPRISE",
-          desc: "Modern public administration web portal with high-load data streaming."
+          desc: "Trilingual open governance portal with MSW API layer, civic initiative registers, and real-time open data."
         },
         {
           id: "berikweb",
@@ -1122,80 +1370,320 @@ export const portfolioContent = {
         },
         {
           num: "02",
-          id: "OPENGOV_KZ_PORTAL",
-          slug: "opengov-kz",
-          title: "Платформа OpenGov.kz",
-          tagline: "Национальный портал гражданского участия и открытого государственного управления",
-          category: "GovTech Web-платформа",
-          isPrivate: false,
-          description: "Разработка с нуля фронтенда официальной платформы OpenGov.kz на Next.js и React. Реализована мультиязычность (i18n), каталоги новостей, проекты для граждан и высокая производительность SSR.",
-          tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
-          image: "/assets/openGov.png",
-          liveUrl: "https://qbs-solutions.vercel.app/",
-          githubUrl: "https://github.com/Daelijek/www-opengov-kz",
-          status: "PRODUCTION_DEPLOYED",
+          id: "ROLESIEVE",
+          slug: "rolesieve",
+          title: "RoleSieve — Анализ вакансий HH для улучшения резюме",
+          tagline: "Аналитическая платформа HeadHunter, превращающая реальные требования работодателей в доказательный план усиления резюме и чистый Excel-отчёт",
+          category: "Full-Stack & NLP // Карьерная аналитика",
+          isPrivate: true,
+          description: "Full-Stack сервис для анализа открытых вакансий HeadHunter через официальный API. Извлекает подтвержденные теги key_skills и частотные n-граммы описаний с лемматизацией (pymorphy2), формируя интерактивный дашборд покрытия навыков и чистый Excel (.xlsx) отчёт с подсветкой повторов.",
+          tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
+          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          liveUrl: "https://role-sieve-mu.vercel.app/",
+          githubUrl: null,
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Главный экран и параметры поиска",
+              subtitle: "Стартовый интерфейс с выбором режима сбора вакансий и настройкой запроса",
+              tag: "ГЛАВНЫЙ ЭКРАН",
+              image: "/assets/projects/rolesieve/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Два режима анализа вакансий",
+              subtitle: "Точечный сбор по ссылкам и ID или автоматический парсинг по фильтрам HeadHunter",
+              tag: "РЕЖИМЫ СБОРА",
+              image: "/assets/projects/rolesieve/two-modes-section.png"
+            },
+            {
+              id: "03",
+              title: "Архитектура и пайплайн обработки",
+              subtitle: "Трехэтапный конвейер: сбор через API dev.hh.ru, NLP-лемматизация и генерация отчетов",
+              tag: "ПРИНЦИП РАБОТЫ",
+              image: "/assets/projects/rolesieve/how-it-works-section.png"
+            },
+            {
+              id: "04",
+              title: "Дашборд навыков и чистый Excel",
+              subtitle: "Визуальная аналитика частотности ключевых навыков и стилизованный экспорт в .XLSX",
+              tag: "АРТЕФАКТЫ",
+              image: "/assets/projects/rolesieve/what-you-get-section.png"
+            },
+            {
+              id: "05",
+              title: "Метрики и производительность платформы",
+              subtitle: "Показатели скорости сбора, точности извлечения n-грамм и устойчивости к лимитам API",
+              tag: "МЕТРИКИ",
+              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+            },
+            {
+              id: "06",
+              title: "Интерактивный дашборд результатов",
+              subtitle: "Сводные показатели завершенного прогона с графиками покрытия и картой компетенций",
+              tag: "РЕЗУЛЬТАТЫ",
+              image: "/assets/projects/rolesieve/run-results-section.png"
+            },
+            {
+              id: "07",
+              title: "Рейтинг ключевых навыков и технологий",
+              subtitle: "Таблица извлеченных key_skills с процентом упоминаемости в исследуемой выборке",
+              tag: "НАВЫКИ",
+              image: "/assets/projects/rolesieve/run-results-list.png"
+            },
+            {
+              id: "08",
+              title: "Нейросетевая аналитика профиля",
+              subtitle: "Оценка семантического соответствия стека кандидата и детекция пробелов в резюме",
+              tag: "НЕЙРО-АНАЛИЗ",
+              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+            },
+            {
+              id: "09",
+              title: "Интерактивный блок запуска анализа",
+              subtitle: "Форма моментального запуска с валидацией ссылок и индикатором очереди задач",
+              tag: "ЗАПУСК АНАЛИЗА",
+              image: "/assets/projects/rolesieve/try-it-now-section.png"
+            },
+            {
+              id: "10",
+              title: "Сценарии применения и кейсы",
+              subtitle: "Практические сценарии использования платформы соискателями и карьерными консультантами",
+              tag: "СЦЕНАРИИ",
+              image: "/assets/projects/rolesieve/success-stories-section.png"
+            },
+            {
+              id: "11",
+              title: "Документация и быстрый старт",
+              subtitle: "Интерактивное руководство по настройке параметров сбора и формату выгрузок",
+              tag: "ДОКУМЕНТАЦИЯ",
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+            },
+            {
+              id: "12",
+              title: "Контакты и обратная связь",
+              subtitle: "Каналы связи, техническая поддержка и ссылки на сообщество проекта",
+              tag: "КОНТАКТЫ",
+              image: "/assets/projects/rolesieve/contacts-page.png"
+            },
+            {
+              id: "13",
+              title: "Сквозная структура лендинга",
+              subtitle: "Полная панорама архитектуры экранов и информационных блоков продуктовой страницы",
+              tag: "ПОЛНЫЙ ОБЗОР",
+              image: "/assets/projects/rolesieve/all-landing-page.png"
+            }
+          ],
           dossier: {
-            projectType: "Государственный портал открытых данных и прозрачности",
-            entryYear: "2024",
-            targetPlatform: "Веб-платформа (Next.js SSR & SSG)",
-            primaryRole: "Frontend Lead Инженер",
+            projectType: "Full-Stack система аналитики рынка труда и оптимизации резюме",
+            entryYear: "2025 - 2026",
+            targetPlatform: "Веб-платформа (Next.js 16 App Router) + Асинхронный Python API (FastAPI)",
+            primaryRole: "Full-Stack инженер и архитектор системы",
             technologies: {
-              core: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS"],
-              i18n: ["next-intl (Казахский, Русский, Английский)"],
-              api: ["REST APIs", "Государственные открытые датасеты JSON"],
-              perf: ["Vercel Edge Network", "Static Site Generation", "Lighthouse 98+"]
+              core: ["Next.js 16 (App Router)", "React 19", "FastAPI 0.115", "Python 3.12", "TypeScript 5"],
+              frontendUI: ["Tailwind CSS 4", "Framer Motion", "Radix UI", "Lucide React", "next-themes", "i18n (RU/EN)"],
+              backend: ["FastAPI", "Pydantic v2", "Uvicorn", "Requests", "openpyxl", "BeautifulSoup4"],
+              nlpQueue: ["Лемматизатор pymorphy2", "Токенизатор N-грамм", "RQ (Redis Queue)", "Фоновый In-Process Thread"]
             },
             colorPalette: [
-              { name: "GovTech Лазурный", hex: "#0070F3" },
-              { name: "Циан Горизонт", hex: "#00DFD8" },
-              { name: "Темный Слейт", hex: "#0B1017" },
-              { name: "Облачный Белый", hex: "#F3F6F9" }
+              { name: "Фирменный Violet", hex: "#8B5CF6" },
+              { name: "Коралловый Акцент", hex: "#F43F5E" },
+              { name: "Изумрудный Сигнал", hex: "#22C55E" },
+              { name: "Обсидиановый Холст", hex: "#07070C" }
             ],
-            status: "PRODUCTION_РАЗВЕРНУТ"
+            status: "PRODUCTION_DEPLOYED"
           },
           overview: {
-            lead: "Высокопроизводительный портал открытого правительства, призванный объединить гражданские инициативы и государственные проекты через открытые каталоги и мультиязычную подачу информации.",
-            targetAudience: "Граждане, исследователи и общественные объединения Казахстана, отслеживающие реализацию государственных программ, открытый бюджет и общественные инициативы.",
-            challenge: "Государственные ресурсы нередко страдают от громоздкой навигации, плохой мобильной адаптации, долгой загрузки и неполной локализации контента.",
-            solution: "С нуля спроектировал современный фронтенд на Next.js и Tailwind CSS с безупречной трехъязычной локализацией (казахский, русский, английский), мгновенным SSR-рендерингом и соответствием стандартам доступности WCAG 2.1 AA.",
-            myRole: "Разработал архитектуру фронтенда, создал дизайн-систему и UI-компоненты, интегрировал REST API открытых данных и вывел показатели Core Web Vitals в зеленую зону."
+            lead: "RoleSieve закрывает разрыв между субъективными догадками соискателей и реальным рынком труда, извлекая доказательную выборку ключевых навыков и терминов из вакансий HeadHunter.",
+            targetAudience: "IT-специалисты, карьерные консультанты, HR-исследователи рынка и тимлиды, которым нужны объективные данные по спросу на навыки.",
+            challenge: "Соискатели тратят часы на ручной просмотр вакансий, выписывая требования в блокнот и гадая, что действительно в тренде. Скрапинг блокируется антифрод-системами, а полотна HTML-текстов забиты шаблонными фразами и юридической информацией.",
+            solution: "Спроектирован микросервисный пайплайн, работающий исключительно с официальным dev.hh.ru API. Внедрена лемматизация русского языка на pymorphy2 для объединения словоформ, автоматическая дедупликация вакансий, дашборд покрытия key_skills и генерация чистого отчёта в Excel с условным форматированием.",
+            myRole: "Полная разработка архитектуры: бэкенд на FastAPI с ретраями 429/5xx и таймаутами, NLP-пайплайн извлечения n-грамм, сборщик Excel-файлов на openpyxl, высокоэстетичный интерфейс на Next.js 16 / React 19 с плавной анимацией и двуязычной локализацией."
           },
           walkthrough: {
             concept: {
-              title: "Доступность и открытость для каждого",
-              desc: "Устранение цифровых барьеров между государственными данными и жителями страны через чистый, быстрый и доступный интерфейс.",
+              title: "От рыночного шума к доказательному резюме",
+              desc: "Замена догадок проверяемой аналитикой спроса, собранной напрямую из базы актуальных вакансий.",
               highlights: [
-                "Полная государственная трехъязычная локализация",
-                "Мгновенный SSR-отклик даже на бюджетных смартфонах",
-                "Mobile-first дизайн со строгим соблюдением доступности WCAG"
+                "Без парсинга верстки: 100% официальный публичный HeadHunter API",
+                "Глубокое извлечение сигналов: явные key_skills + лемматизированные фразы",
+                "Два готовых артефакта: наглядный UI-дашборд и готовая Excel-таблица"
               ]
             },
             architecture: {
-              title: "Мультиязычная серверная архитектура",
-              desc: "Маршрутизация Next.js со статической генерацией обеспечивает быструю индексацию поисковыми роботами и надежное кэширование на edge-серверах.",
+              title: "Декупленная архитектура Next.js 16 + FastAPI",
+              desc: "Фронтенд на Next.js 16 App Router с Tailwind 4 взаимодействует с асинхронным FastAPI через REST API с поддержкой очередей задач (RQ/Redis или фоновые треды).",
               highlights: [
-                "Модульная система дизайн-токенов для госпорталов",
-                "Легкая векторная графика и нулевой сдвиг макета (CLS)",
-                "Семантическая верстка HTML5 для скринридеров"
+                "Клиент с поддержкой Retry-After и экспоненциальным backoff при 429/5xx",
+                "Потоковая отдача .xlsx файлов и заголовка X-Export-Summary в base64url",
+                "Асинхронные прогоны через job_id с прогрессом и статусами выполнения"
               ]
             },
             features: [
-              { num: "01", title: "Трехъязычная динамическая локализация", desc: "Мгновенное переключение между казахским, русским и английским языками без сброса состояния.", metric: "3 Языка" },
-              { num: "02", title: "Каталог гражданских инициатив", desc: "Интерактивная фильтрация и быстрый поиск по десяткам проектов и отчетов.", metric: "<15мс Поиск" },
-              { num: "03", title: "Оптимизация Core Web Vitals", desc: "Максимальная скорость работы даже при нестабильном мобильном интернете в регионах.", metric: "99/100 Perf" }
+              { num: "01", title: "Два режима выборки", desc: "Manual — точечный ввод ссылок и ID; Auto — поиск по профессии с фильтрами по городам, опыту, формату и периоду.", metric: "Manual + Auto" },
+              { num: "02", title: "NLP-лемматизация и фильтрация", desc: "Пакетная нормализация фраз на pymorphy2, очистка от стоп-слов и отсечение дублей с сохранением исходного порядка.", metric: "pymorphy2 NLP" },
+              { num: "03", title: "Интерактивный дашборд и Excel", desc: "Рейтинг топ-20 навыков, облако фраз, кольцо покрытия key_skills, статистика ошибок и стилизованный XLSX-отчёт.", metric: ".XLSX + HUD" }
             ],
             impact: {
               metrics: [
-                { label: "LIGHTHOUSE", value: "99" },
-                { label: "SEO_SCORE", value: "100" },
-                { label: "ЯЗЫКОВ", value: "3" },
-                { label: "FIRST_PAINT", value: "0.4С" }
+                { label: "HH_API_СТАНДАРТ", value: "100% ЧИСТО" },
+                { label: "ОБЪЁМ_ВЫБОРКИ", value: "100+ ВАКАНСИЙ" },
+                { label: "ВРЕМЯ_ГЕНЕРАЦИИ", value: "<30 СЕК" },
+                { label: "ЯЗЫКИ", value: "RU / EN" }
               ]
             }
           }
         },
         {
           num: "03",
+          id: "OPENGOV_KZ_PORTAL",
+          slug: "opengov-kz",
+          title: "Платформа OpenGov.kz",
+          tagline: "Национальный портал гражданского участия и открытого государственного управления",
+          category: "GovTech Web-платформа",
+          isPrivate: false,
+          description: "Разработка фронтенда официальной платформы OpenGov.kz для QBS Solutions на React 19, Vite 6 и React Router 7. Реализована масштабируемая мультиязычность (10 неймспейсов на казахском, русском и английском) на i18next, слой мокирования данных на Mock Service Worker (MSW), модульные стили CSS и адаптивные каталоги открытых данных.",
+          tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
+          image: "/assets/projects/openGov/open-gov-showcase.jpg",
+          liveUrl: "https://qbs-solutions.vercel.app/",
+          githubUrl: "https://github.com/Daelijek/www-opengov-kz",
+          status: "PRODUCTION_DEPLOYED",
+          gallery: [
+            {
+              id: "01",
+              title: "Главный экран и портал открытых данных",
+              subtitle: "Интерактивный главный экран с глобальным поиском по открытым данным, ключевыми показателями и точками входа",
+              tag: "ГЛАВНЫЙ ЭКРАН",
+              image: "/assets/projects/openGov/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Концепция открытых данных: цели и принципы",
+              subtitle: "Информационный блок с понятным объяснением сути открытых государственных данных, прозрачности и общественной пользы",
+              tag: "КОНЦЕПЦИЯ ДАННЫХ",
+              image: "/assets/projects/openGov/what-is-open-data.png"
+            },
+            {
+              id: "03",
+              title: "Роль и стратегическая миссия OpenGov.kz",
+              subtitle: "Ключевая задача платформы: объединение граждан, разработчиков и госорганов в единой доверенной цифровой экосистеме",
+              tag: "МИССИЯ И РОЛЬ",
+              image: "/assets/projects/openGov/the-role-of-opengov.png"
+            },
+            {
+              id: "04",
+              title: "Экосистема открытых данных в Казахстане",
+              subtitle: "Динамика внедрения, статистика наборов данных, рост API-запросов и интеграция с государственными ведомствами",
+              tag: "ЭКОСИСТЕМА РК",
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+            },
+            {
+              id: "05",
+              title: "Законодательная база и ключевые платформы",
+              subtitle: "Интерактивный справочник нормативно-правовых актов, цифровых стандартов и законов об открытом правительстве",
+              tag: "ЗАКОНОДАТЕЛЬСТВО",
+              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+            },
+            {
+              id: "06",
+              title: "Кейсы успешного применения и польза",
+              subtitle: "Примеры реальных гражданских сервисов, аналитических исследований и продуктов, созданных на базе открытых данных",
+              tag: "УСПЕШНЫЕ КЕЙСЫ",
+              image: "/assets/projects/openGov/successfull-use-cases.png"
+            },
+            {
+              id: "07",
+              title: "Каталог проектов и гражданских инициатив",
+              subtitle: "Полнофункциональный каталог государственных программ и инициатив с фильтрацией по статусам и этапам реализации",
+              tag: "КАТАЛОГ ПРОЕКТОВ",
+              image: "/assets/projects/openGov/projects.png"
+            },
+            {
+              id: "08",
+              title: "Портал новостей и официальных сообщений",
+              subtitle: "Единый новостной центр с публикацией пресс-релизов, открытых отчетов и обновлений цифровой инфраструктуры",
+              tag: "НОВОСТНОЙ ХАБ",
+              image: "/assets/projects/openGov/news.png"
+            },
+            {
+              id: "09",
+              title: "Лента актуальных новостей и событий",
+              subtitle: "Витрина свежих публикаций, предстоящих общественных слушаний и важных решений для граждан",
+              tag: "ЛЕНТА НОВОСТЕЙ",
+              image: "/assets/projects/openGov/latest-news.png"
+            },
+            {
+              id: "10",
+              title: "Детальная страница публикации и статьи",
+              subtitle: "Удобный интерфейс чтения с чистой типографикой, скачиваемыми приложениями, шерингом и сопутствующими материалами",
+              tag: "ДЕТАЛЬНАЯ СТАТЬЯ",
+              image: "/assets/projects/openGov/news-detail.png"
+            }
+          ],
+          dossier: {
+            projectType: "Государственный портал открытых данных и прозрачности",
+            entryYear: "2025",
+            targetPlatform: "Веб-платформа SPA (React 19 + Vite + React Router 7)",
+            primaryRole: "Frontend Lead Инженер",
+            technologies: {
+              core: ["React 19", "Vite 6", "React Router 7", "JavaScript (ESM)"],
+              i18n: ["i18next 25", "react-i18next 15", "10 Неймспейсов (KZ / RU / EN)"],
+              styling: ["CSS Modules", "Современный Flexbox & Grid", "Шрифт Inter"],
+              api: ["Mock Service Worker (MSW 2)", "REST APIs", "Государственные открытые датасеты JSON"],
+              deploy: ["Vercel Edge Platform", "Непрерывный деплой (Git CD)"]
+            },
+            colorPalette: [
+              { name: "GovTech Лазурный", hex: "#1A56DB" },
+              { name: "Глубокий Кобальт", hex: "#1E40AF" },
+              { name: "Слейт Нейтральный", hex: "#4B5563" },
+              { name: "Белый Чистый", hex: "#FFFFFF" }
+            ],
+            status: "PRODUCTION_РАЗВЕРНУТ"
+          },
+          overview: {
+            lead: "Высокопроизводительный GovTech-портал, созданный для QBS Solutions с целью демонстрации проектов цифровизации госсектора, показателей открытых данных и гражданского участия в Казахстане.",
+            targetAudience: "Граждане, аналитики данных, исследователи и общественные организации, изучающие открытые государственные реестры, госпрограммы, гражданские инициативы и нормативные акты.",
+            challenge: "Создание интуитивно понятного, быстрого интерфейса с надежной структуризацией государственных массивов данных, согласованной трехъязычной терминологией по 10 направлениям и мокированием REST API для автономной разработки.",
+            solution: "Спроектировал быстродействующее SPA на React 19 под управлением Vite 6 и React Router 7. Настроил i18next с отдельными JSON-неймспейсами под каждую страницу, применил модульный CSS для изолированной стилизации и интегрировал Mock Service Worker (MSW) для имитации серверных эндпоинтов.",
+            myRole: "Ведущий фронтенд-разработчик: спроектировал компонентную архитектуру, настроил трехъязычную локализацию на i18next, разработал инфраструктуру моков MSW, сверстал адаптивные интерфейсы на CSS Modules и настроил непрерывный деплой на Vercel."
+          },
+          walkthrough: {
+            concept: {
+              title: "Открытые данные и государственная прозрачность",
+              desc: "Устранение барьеров между государственными реестрами и обществом через открытые каталоги проектов, новости и ведомственные инициативы.",
+              highlights: [
+                "Полная трехъязычная локализация (KZ, RU, EN) с 10 неймспейсами i18n",
+                "Мгновенная сборка и горячая перезагрузка благодаря связке React 19 + Vite 6",
+                "Единые каталоги гражданских проектов, новостей и участников экосистемы"
+              ]
+            },
+            architecture: {
+              title: "Компонентная SPA-архитектура и слой MSW",
+              desc: "Современная модульная архитектура на React 19 и React Router 7, изолированные стили CSS Modules и сетевой перехват запросов Mock Service Worker (MSW).",
+              highlights: [
+                "Сетевой перехват запросов MSW для независимой демонстрации данных",
+                "Изолированная область видимости CSS Modules без конфликта стилей",
+                "Четкое разделение локалей: header, mainPage, news, projects, members"
+              ]
+            },
+            features: [
+              { num: "01", title: "Реактивный i18n с 10 неймспейсами", desc: "Мгновенное переключение языка между казахским, русским и английским без перезагрузки на базе i18next и react-i18next.", metric: "10 Неймспейсов" },
+              { num: "02", title: "Интегрированный слой MSW", desc: "Mock Service Worker для перехвата сетевых REST-запросов и автономной работы каталогов новостей и проектов.", metric: "MSW v2 Мокирование" },
+              { num: "03", title: "Реестры проектов и участников", desc: "Отдельные маршруты и детальные экраны для государственных программ, новостей и участников рабочих групп.", metric: "6 Основных Роутов" }
+            ],
+            impact: {
+              metrics: [
+                { label: "ВЕРСИЯ_REACT", value: "19.0" },
+                { label: "БАНДЛЕР", value: "VITE 6" },
+                { label: "ЯЗЫКОВ", value: "3 (KZ/RU/EN)" },
+                { label: "НЕЙМСПЕЙСОВ", value: "10 I18N" }
+              ]
+            }
+          }
+        },
+        {
+          num: "04",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Галерея Берика Жунусбека",
@@ -1293,12 +1781,20 @@ export const portfolioContent = {
           desc: "Умный финансовый трекер с AI-распознаванием чеков и аналитикой трат."
         },
         {
+          id: "rolesieve",
+          title: "RoleSieve Аналитика",
+          category: "Next.js 16 // React 19 // FastAPI // NLP",
+          tag: "AI & КАРЬЕРНАЯ АНАЛИТИКА",
+          status: "ПРОДАКШН",
+          desc: "Платформа анализа вакансий HeadHunter, превращающая рыночные требования в план усиления резюме."
+        },
+        {
           id: "opengov",
           title: "OpenGov.kz Platform",
-          category: "Next.js // React // GovTech",
-          tag: "WEB & MOBILE UI",
+          category: "React 19 // Vite // i18n // GovTech",
+          tag: "GOVTECH SPA",
           status: "ENTERPRISE",
-          desc: "Государственный веб-портал с высоконагруженным потоком открытых данных."
+          desc: "Трехъязычный портал открытого правительства с 10 неймспейсами i18n, слоем MSW и каталогами открытых данных."
         },
         {
           id: "berikweb",
@@ -1798,21 +2294,320 @@ export const portfolioContent = {
         },
         {
           num: "02",
+          id: "ROLESIEVE",
+          slug: "rolesieve",
+          title: "RoleSieve — Түйіндемені жақсартуға арналған HH бос орындарын талдау",
+          tagline: "Жұмыс берушілердің нақты талаптарын түйіндемені күшейтудің нақты жоспары мен таза Excel есебіне айналдыратын HeadHunter талдау платформасы",
+          category: "Full-Stack & NLP // Мансап аналитикасы",
+          isPrivate: true,
+          description: "HeadHunter ресми API арқылы ашық бос орындарды талдайтын Full-Stack сервисі. Pymorphy2 лемматизациясы арқылы тексерілген key_skills тегтері мен жиі қолданылатын n-граммаларды бөліп алады, дағдыларды қамту дашбордын және қайталануларды белгілейтін таза Excel (.xlsx) есебін ұсынады.",
+          tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
+          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          liveUrl: "https://role-sieve-mu.vercel.app/",
+          githubUrl: null,
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Басты бет және іздеу параметрлері",
+              subtitle: "Бос орындарды жинау режимін таңдау және сұраныс параметрлерін баптау экраны",
+              tag: "БАСТЫ БЕТ",
+              image: "/assets/projects/rolesieve/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Екі түрлі талдау режимі",
+              subtitle: "Сілтемелер мен ID бойынша нүктелік жинау немесе HeadHunter сүзгілерімен автоматты іздеу",
+              tag: "ЖИНАУ РЕЖИМДЕРІ",
+              image: "/assets/projects/rolesieve/two-modes-section.png"
+            },
+            {
+              id: "03",
+              title: "Архитектура және өңдеу конвейері",
+              subtitle: "Үш кезеңді жүйе: dev.hh.ru API деректер жинау, pymorphy2 лемматизациясы және есеп жасау",
+              tag: "ЖҰМЫС ҚАҒИДАСЫ",
+              image: "/assets/projects/rolesieve/how-it-works-section.png"
+            },
+            {
+              id: "04",
+              title: "Дағдылар дашборды және таза Excel",
+              subtitle: "Негізгі дағдылар жиілігінің визуалды аналитикасы және .XLSX пішіміндегі стильді есеп",
+              tag: "НӘТИЖЕЛЕР",
+              image: "/assets/projects/rolesieve/what-you-get-section.png"
+            },
+            {
+              id: "05",
+              title: "Платформа метрикалары мен өнімділігі",
+              subtitle: "Жинау жылдамдығы, n-граммаларды анықтау дәлдігі және API шектеулеріне төзімділік",
+              tag: "МЕТРИКАЛАР",
+              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+            },
+            {
+              id: "06",
+              title: "Нәтижелердің интерактивті дашборды",
+              subtitle: "Дағдылар қамтылуы графиктері бар аяқталған талдаудың жиынтық көрсеткіштері",
+              tag: "ДАШБОРД",
+              image: "/assets/projects/rolesieve/run-results-section.png"
+            },
+            {
+              id: "07",
+              title: "Негізгі дағдылар мен технологиялар рейтингі",
+              subtitle: "Талданған бос орындардағы key_skills кездесу пайызы көрсетілген толық кесте",
+              tag: "ДАҒДЫЛАР",
+              image: "/assets/projects/rolesieve/run-results-list.png"
+            },
+            {
+              id: "08",
+              title: "Профильді нейрожелілік талдау",
+              subtitle: "Үміткер дағдыларының сәйкестігін бағалау және түйіндемедегі олқылықтарды анықтау",
+              tag: "НЕЙРО-ТАЛДАУ",
+              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+            },
+            {
+              id: "09",
+              title: "Талдауды жылдам бастау блогы",
+              subtitle: "Сілтемелерді тексеру және тапсырмалар кезегі индикаторы бар жылдам іске қосу формасы",
+              tag: "ІСКЕ ҚОСУ",
+              image: "/assets/projects/rolesieve/try-it-now-section.png"
+            },
+            {
+              id: "10",
+              title: "Қолдану сценарийлері мен кейстер",
+              subtitle: "Ізденушілер мен мансап кеңесшілері үшін платформаны тиімді пайдалану жолдары",
+              tag: "СЦЕНАРИЙЛЕР",
+              image: "/assets/projects/rolesieve/success-stories-section.png"
+            },
+            {
+              id: "11",
+              title: "Құжаттама және жылдам бастау",
+              subtitle: "Жинау параметрлерін баптау және экспортталған есептер пішімі бойынша нұсқаулық",
+              tag: "ҚҰЖАТТАМА",
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+            },
+            {
+              id: "12",
+              title: "Байланыс және кері байланыс",
+              subtitle: "Байланыс арналары, техникалық қолдау және жоба қауымдастығының сілтемелері",
+              tag: "БАЙЛАНЫС",
+              image: "/assets/projects/rolesieve/contacts-page.png"
+            },
+            {
+              id: "13",
+              title: "Лендингтің толық құрылымы",
+              subtitle: "Өнімдік парақшаның барлық экрандары мен ақпараттық блоктарының толық панорамасы",
+              tag: "ТОЛЫҚ ШОЛУ",
+              image: "/assets/projects/rolesieve/all-landing-page.png"
+            }
+          ],
+          dossier: {
+            projectType: "Еңбек нарығын талдау және түйіндемені оңтайландыру жүйесі",
+            entryYear: "2025 - 2026",
+            targetPlatform: "Веб-платформа (Next.js 16 App Router) + Асинхронды Python API (FastAPI)",
+            primaryRole: "Full-Stack бағдарламалық инженер және жүйелік архитектор",
+            technologies: {
+              core: ["Next.js 16 (App Router)", "React 19", "FastAPI 0.115", "Python 3.12", "TypeScript 5"],
+              frontendUI: ["Tailwind CSS 4", "Framer Motion", "Radix UI", "Lucide React", "next-themes", "i18n (RU/EN)"],
+              backend: ["FastAPI", "Pydantic v2", "Uvicorn", "Requests", "openpyxl", "BeautifulSoup4"],
+              nlpQueue: ["pymorphy2 Лемматизаторы", "N-Gram токенизаторы", "RQ (Redis Queue)", "In-Process Thread"]
+            },
+            colorPalette: [
+              { name: "Фирмалық Violet", hex: "#8B5CF6" },
+              { name: "Маржан Акцент", hex: "#F43F5E" },
+              { name: "Изумруд Сигнал", hex: "#22C55E" },
+              { name: "Обсидиан Кенеп", hex: "#07070C" }
+            ],
+            status: "PRODUCTION_DEPLOYED"
+          },
+          overview: {
+            lead: "RoleSieve HeadHunter ашық деректерінен негізгі дағдылар мен талаптарды жинақтап, түйіндемені нақты дәлелдерге сүйене отырып жетілдіруге мүмкіндік береді.",
+            targetAudience: "IT мамандары, мансап кеңесшілері және еңбек нарығын зерттеушілер.",
+            challenge: "Үміткерлер бос орындарды қолмен қарап, көп уақыт жоғалтады және қандай технологиялардың сұранысқа ие екенін болжауға мәжбүр болады.",
+            solution: "Dev.hh.ru ресми API-мен жұмыс істейтін асинхронды деректер жүйесі жасалды. Pymorphy2 арқылы сөз формаларын біріздендіру, дағдылар қамтылуын визуалдау және Excel-ге экспорттау жүзеге асырылды.",
+            myRole: "Экожүйенің толық архитектурасы мен әзірленуі: FastAPI бэкенді, NLP өңдеу модулі, openpyxl есеп генераторы және Next.js 16 / React 19 негізіндегі веб-интерфейс."
+          },
+          walkthrough: {
+            concept: {
+              title: "Нарық шуылынан дәлелді түйіндемеге дейін",
+              desc: "Болжамдарды HeadHunter бос орындарының нақты деректерімен алмастыру.",
+              highlights: [
+                "Парсингсіз: 100% ресми HeadHunter ашық API",
+                "Терең сигнал талдауы: key_skills және жиілік фраз",
+                "Екі дайын нәтиже: интерактивті дашборд және Excel файлы"
+              ]
+            },
+            architecture: {
+              title: "Бөлінген Next.js 16 + FastAPI архитектурасы",
+              desc: "Next.js 16 App Router пен асинхронды FastAPI микросервисінің өзара тиімді әрекеттесуі.",
+              highlights: [
+                "429/5xx қателеріне қарсы экспоненциалды қайталау алгоритмі",
+                "X-Export-Summary деректері бар жылдам .xlsx ағынды экспорты",
+                "Тапсырмалар кезегімен (RQ/Redis) ұзақ прогондарды қолдау"
+              ]
+            },
+            features: [
+              { num: "01", title: "Екі түрлі жинау режимі", desc: "Сілтемелер мен ID бойынша нүктелік жинау немесе кеңейтілген сүзгілері бар автоматты іздеу.", metric: "Manual + Auto" },
+              { num: "02", title: "NLP-лемматизация", desc: "Pymorphy2 көмегімен сөздерді қалыпқа келтіру және қажетсіз стоп-сөздерді сүзу.", metric: "pymorphy2 NLP" },
+              { num: "03", title: "Интерактивті дашборд және Excel", desc: "Үздік 20 дағды рейтингі, сапа көрсеткіштері және стильдендірілген XLSX есебі.", metric: ".XLSX + HUD" }
+            ],
+            impact: {
+              metrics: [
+                { label: "HH_API_СӘЙКЕСТІК", value: "100%" },
+                { label: "ТАЛДАУ_КӨЛЕМІ", value: "100+ ВАКАНСИЯ" },
+                { label: "ГЕНЕРАЦИЯ_УАҚЫТЫ", value: "<30 СЕК" },
+                { label: "ТІЛДЕР", value: "RU / EN" }
+              ]
+            }
+          }
+        },
+        {
+          num: "03",
           id: "OPENGOV_KZ_PORTAL",
           slug: "opengov-kz",
           title: "OpenGov.kz Платформасы",
           tagline: "Ашықтық пен азаматтық белсенділікке арналған ұлттық мемлекеттік портал",
           category: "GovTech Web-платформасы",
           isPrivate: false,
-          description: "OpenGov.kz ресми платформасының фронтендін Next.js және React-те нөлден әзірлеу. Ашықтық үшін толық көптілділік (i18n), жаңалықтар мен азаматтық бастамалар каталогтары жасалды.",
-          tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
-          image: "/assets/openGov.png",
+          description: "QBS Solutions үшін OpenGov.kz ресми платформасының фронтендін React 19, Vite 6 және React Router 7 негізінде әзірлеу. i18next арқылы 10 кеңістіктен тұратын үштілді жергіліктендіру (қазақша, орысша, ағылшынша), Mock Service Worker (MSW) API қабаты, модульдік CSS стильдері және мемлекеттік ашық деректер каталогтары жүзеге асырылды.",
+          tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
+          image: "/assets/projects/openGov/open-gov-showcase.jpg",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
-          status: "PRODUCTION_DEPLOYED"
+          status: "PRODUCTION_DEPLOYED",
+          gallery: [
+            {
+              id: "01",
+              title: "Басты бет және ашық деректер порталы",
+              subtitle: "Ашық деректер бойынша іздеу жүйесі, ұлттық көрсеткіштер және негізгі кіру нүктелері бар интерактивті басты бет",
+              tag: "БАСТЫ БЕТ",
+              image: "/assets/projects/openGov/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Ашық деректер дегеніміз не? Тұжырымдама",
+              subtitle: "Ашық мемлекеттік деректердің мәнін, ашықтық қағидаттарын және қоғамдық пайдасын түсіндіретін ақпараттық блок",
+              tag: "ДЕРЕКТЕР ТҰЖЫРЫМДАМАСЫ",
+              image: "/assets/projects/openGov/what-is-open-data.png"
+            },
+            {
+              id: "03",
+              title: "OpenGov.kz рөлі мен стратегиялық миссиясы",
+              subtitle: "Платформаның басты мақсаты: азаматтарды, әзірлеушілерді және мемлекеттік органдарды біртұтас цифрлық экожүйеге біріктіру",
+              tag: "МИССИЯ ЖӘНЕ РӨЛ",
+              image: "/assets/projects/openGov/the-role-of-opengov.png"
+            },
+            {
+              id: "04",
+              title: "Қазақстандағы ашық деректер экожүйесі",
+              subtitle: "Деректер жиынтығының көлемі, API қолданылуы және мемлекеттік органдармен интеграция көрсеткіштері",
+              tag: "ҚР ЭКОЖҮЙЕСІ",
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+            },
+            {
+              id: "05",
+              title: "Негізгі платформалар мен заңнамалық база",
+              subtitle: "Ашық мемлекеттік басқаруды реттейтін нормативтік-құқықтық актілер, стандарттар мен заңдар каталогы",
+              tag: "ЗАҢНАМА ЖӘНЕ СТАНДАРТТАР",
+              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+            },
+            {
+              id: "06",
+              title: "Табысты қолдану кейстері мен пайдасы",
+              subtitle: "Ашық деректер негізінде жасалған нақты азаматтық сервистер, зерттеу құралдары мен қоғамдық жобалар",
+              tag: "ТАБЫСТЫ КЕЙСТЕР",
+              image: "/assets/projects/openGov/successfull-use-cases.png"
+            },
+            {
+              id: "07",
+              title: "Азаматтық бастамалар мен жобалар каталогы",
+              subtitle: "Мемлекеттік бағдарламалар мен қоғамдық бастамалардың сүзгілері бар толыққанды каталогы",
+              tag: "ЖОБАЛАР КАТАЛОГЫ",
+              image: "/assets/projects/openGov/projects.png"
+            },
+            {
+              id: "08",
+              title: "Жаңалықтар мен ресми хабарламалар порталы",
+              subtitle: "Баспасөз релиздері, мемлекеттік есептер мен цифрлық жаңартулар жарияланатын бірыңғай жаңалықтар хабы",
+              tag: "ЖАҢАЛЫҚТАР ХАБЫ",
+              image: "/assets/projects/openGov/news.png"
+            },
+            {
+              id: "09",
+              title: "Өзекті жаңалықтар легі мен оқиғалар",
+              subtitle: "Ең соңғы жарияланымдар, алдағы қоғамдық тыңдаулар мен маңызды жаңалықтар топтамасы",
+              tag: "ЖАҢАЛЫҚТАР ЛЕГІ",
+              image: "/assets/projects/openGov/latest-news.png"
+            },
+            {
+              id: "10",
+              title: "Мақаланың және ресми жарияланымның толық парақшасы",
+              subtitle: "Ыңғайлы оқу интерфейсі, таза типографика, құжаттарды жүктеу және байланысты материалдар",
+              tag: "ТОЛЫҚ МАҚАЛА",
+              image: "/assets/projects/openGov/news-detail.png"
+            }
+          ],
+          dossier: {
+            projectType: "Ашық мемлекеттік деректер мен ашықтық порталы",
+            entryYear: "2025",
+            targetPlatform: "Веб-платформасы SPA (React 19 + Vite + React Router 7)",
+            primaryRole: "Frontend Lead Инженер",
+            technologies: {
+              core: ["React 19", "Vite 6", "React Router 7", "JavaScript (ESM)"],
+              i18n: ["i18next 25", "react-i18next 15", "10 Кеңістік (KZ / RU / EN)"],
+              styling: ["CSS Modules", "Заманауи Flexbox & Grid", "Inter Қарпі"],
+              api: ["Mock Service Worker (MSW 2)", "REST APIs", "Мемлекеттік ашық деректер JSON"],
+              deploy: ["Vercel Edge Platform", "Үздіксіз деплой (Git CD)"]
+            },
+            colorPalette: [
+              { name: "GovTech Көгілдір", hex: "#1A56DB" },
+              { name: "Терең Кобальт", hex: "#1E40AF" },
+              { name: "Слейт Бейтарап", hex: "#4B5563" },
+              { name: "Таза Ақ", hex: "#FFFFFF" }
+            ],
+            status: "PRODUCTION_ОРНАТЫЛДЫ"
+          },
+          overview: {
+            lead: "Қазақстандағы мемлекеттік секторды цифрландыру жобаларын, ашық деректер көрсеткіштерін және азаматтық белсенділікті көрсету үшін QBS Solutions аясында әзірленген жоғары өнімді GovTech порталы.",
+            targetAudience: "Ашық мемлекеттік деректер жиынтығын, мемлекеттік бағдарламаларды, азаматтық бастамалар мен нормативтік актілерді зерттейтін азаматтар, сарапшылар, әзірлеушілер және қоғамдық ұйымдар.",
+            challenge: "Ауқымды мемлекеттік деректер жиынын жүйелейтін, 10 бағыт бойынша үштілді терминологияны үйлестіретін және автономды әзірлеуге арналған REST API моктау қабаты бар интуитивті әрі жылдам интерфейс жасау.",
+            solution: "Vite 6 және React Router 7 басқаруындағы React 19 негізінде жылдам SPA сәулетін құрдым. Әр парақша үшін бөлек JSON кеңістіктері бар i18next-ті баптадым, стильдер қақтығысын болдырмайтын CSS Modules қолдандым және серверлік API-ді модельдейтін Mock Service Worker (MSW) біріктірдім.",
+            myRole: "Жетекші фронтенд-әзірлеуші: компоненттер архитектурасын құрдым, i18next көмегімен үштілді локализацияны енгіздім, MSW мок инфрақұрылымын жасадым, CSS Modules арқылы бейімделгіш интерфейстер жасап, Vercel-де өндірістік деплойды баптадым."
+          },
+          walkthrough: {
+            concept: {
+              title: "Ашық деректер және мемлекеттік айқындық",
+              desc: "Ашық жобалар каталогтары, жаңалықтар мен ведомстволық бастамалар арқылы мемлекеттік тізілімдер мен қоғам арасындағы кедергілерді жою.",
+              highlights: [
+                "10 i18n кеңістігі бар толық үштілді локализация (KZ, RU, EN)",
+                "React 19 + Vite 6 арқасында найзағайдай жылдам жүктелу және құрастыру",
+                "Азаматтық жобалар, жаңалықтар және қатысушылардың бірыңғай каталогтары"
+              ]
+            },
+            architecture: {
+              title: "Компоненттік SPA-сәулет және MSW қабаты",
+              desc: "React 19 және React Router 7 негізіндегі модульдік сәулет, оқшауланған CSS Modules стильдері және Mock Service Worker (MSW) арқылы желілік сұраныстарды моктау.",
+              highlights: [
+                "Деректерді автономды көрсетуге арналған MSW желілік перехваты",
+                "Стильдер қақтығысын болдырмайтын таза CSS Modules оқшаулауы",
+                "Локальдардың нақты құрылымы: header, mainPage, news, projects, members"
+              ]
+            },
+            features: [
+              { num: "01", title: "10 кеңістікті реактивті i18n", desc: "i18next және react-i18next арқылы бетті қайта жүктемей қазақ, орыс және ағылшын тілдеріне жылдам ауысу.", metric: "10 Кеңістік" },
+              { num: "02", title: "Кіріктірілген MSW мок қабаты", desc: "REST сұраныстарын желі деңгейінде өңдейтін және каталогтарды автономды көрсететін Mock Service Worker.", metric: "MSW v2 Моктары" },
+              { num: "03", title: "Жобалар мен қатысушылар тізілімі", desc: "Мемлекеттік бағдарламалар, жаңалықтар мен жұмыс топтарының қатысушыларына арналған дербес маршруттар мен парақшалар.", metric: "6 Негізгі Бағыт" }
+            ],
+            impact: {
+              metrics: [
+                { label: "REACT_НҰСҚАСЫ", value: "19.0" },
+                { label: "БАНДЛЕР", value: "VITE 6" },
+                { label: "ТІЛДЕР", value: "3 (KZ/RU/EN)" },
+                { label: "КЕҢІСТІКТЕР", value: "10 I18N" }
+              ]
+            }
+          }
         },
         {
-          num: "03",
+          num: "04",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Берік Жүнісбек галереясы",

@@ -35,7 +35,15 @@ import { FaGithub } from 'react-icons/fa6';
  * - Complete drag & selection prevention across images, cards, and text
  * - Click-to-preview lightbox modal
  */
-function InfiniteGalleryRibbon({ items, lang, playClick, playHover, onOpenModal, isModalOpen }) {
+function InfiniteGalleryRibbon({
+  items,
+  lang,
+  playClick,
+  playHover,
+  onOpenModal,
+  isModalOpen,
+  isMobileGallery = true,
+}) {
   const [isHovered, setIsHovered] = useState(false);
   const isHoveredRef = useRef(false);
   isHoveredRef.current = isHovered || isModalOpen;
@@ -133,63 +141,144 @@ function InfiniteGalleryRibbon({ items, lang, playClick, playHover, onOpenModal,
 
   const handleNudge = (direction) => {
     playClick?.();
-    const amount = direction === 'left' ? -320 : 320;
+    const amount = direction === 'left' ? (isMobileGallery ? -320 : -480) : (isMobileGallery ? 320 : 480);
     nudgeDeltaRef.current += amount;
   };
 
-  const renderCard = (item, keyIndex) => (
-    <div
-      key={keyIndex}
-      onClick={() => {
-        playClick?.();
-        onOpenModal?.(item);
-      }}
-      onMouseEnter={playHover}
-      draggable={false}
-      onDragStart={(e) => e.preventDefault()}
-      style={{ userSelect: 'none', WebkitUserSelect: 'none', WebkitUserDrag: 'none' }}
-      className="w-[230px] sm:w-[260px] md:w-[280px] shrink-0 group/card cursor-pointer select-none"
-    >
-      {/* Device Mockup Shell */}
-      <div className="relative rounded-[2.2rem] p-2.5 bg-[#090D14] border border-white/10 group-hover/card:border-[var(--accent-color)]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)] group-hover/card:shadow-[0_20px_50px_var(--card-hover-glow)] group-hover/card:-translate-y-2 select-none">
-        {/* Top Dynamic Island / Bezel */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-3.5 bg-black/80 rounded-full z-20 pointer-events-none border border-white/5 select-none" />
+  const renderCard = (item, keyIndex) => {
+    const isFullPage = Boolean(item.image?.includes('all-landing-page'));
 
-        {/* Screen Image Frame */}
-        <div className="relative aspect-[9/19.5] w-full rounded-[1.7rem] overflow-hidden bg-black select-none">
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            draggable={false}
-            onDragStart={(e) => e.preventDefault()}
-            className="object-cover object-top group-hover/card:scale-105 transition-transform duration-500 pointer-events-none select-none"
-            sizes="(max-width: 640px) 230px, 280px"
-            style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
-          />
-          <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100 pointer-events-none select-none">
-            <span className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg select-none">
-              <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
-              <span>{lang === 'ru' ? 'Открыть' : 'Preview'}</span>
-            </span>
+    if (isMobileGallery) {
+      return (
+        <div
+          key={keyIndex}
+          onClick={() => {
+            playClick?.();
+            onOpenModal?.(item);
+          }}
+          onMouseEnter={playHover}
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
+          style={{ userSelect: 'none', WebkitUserSelect: 'none', WebkitUserDrag: 'none' }}
+          className="w-[230px] sm:w-[260px] md:w-[280px] shrink-0 group/card cursor-pointer select-none"
+        >
+          {/* Device Mockup Shell */}
+          <div className="relative rounded-[2.2rem] p-2.5 bg-[#090D14] border border-white/10 group-hover/card:border-[var(--accent-color)]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)] group-hover/card:shadow-[0_20px_50px_var(--card-hover-glow)] group-hover/card:-translate-y-2 select-none">
+            {/* Top Dynamic Island / Bezel */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-3.5 bg-black/80 rounded-full z-20 pointer-events-none border border-white/5 select-none" />
+
+            {/* Screen Image Frame */}
+            <div className="relative aspect-[9/19.5] w-full rounded-[1.7rem] overflow-hidden bg-black select-none">
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                className="object-cover object-top group-hover/card:scale-105 transition-transform duration-500 pointer-events-none select-none"
+                sizes="(max-width: 640px) 230px, 280px"
+                style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100 pointer-events-none select-none">
+                <span className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg select-none">
+                  <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+                  <span>{lang === 'ru' ? 'Открыть' : lang === 'kk' ? 'Ашу' : 'Preview'}</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Card Caption Info */}
+            <div className="p-3 pt-3.5 space-y-1 select-none">
+              <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider block uppercase select-none">
+                {item.tag || `SCREEN`}
+              </span>
+              <h3 className="text-xs sm:text-sm font-bold text-white font-display group-hover/card:text-[var(--accent-color)] transition-colors truncate select-none">
+                {item.title}
+              </h3>
+              <p className="text-[11px] text-white/50 font-sans line-clamp-1 select-none">
+                {item.subtitle}
+              </p>
+            </div>
           </div>
         </div>
+      );
+    }
 
-        {/* Card Caption Info */}
-        <div className="p-3 pt-3.5 space-y-1 select-none">
-          <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider block uppercase select-none">
-            {item.tag || `SCREEN`}
-          </span>
-          <h3 className="text-xs sm:text-sm font-bold text-white font-display group-hover/card:text-[var(--accent-color)] transition-colors truncate select-none">
-            {item.title}
-          </h3>
-          <p className="text-[11px] text-white/50 font-sans line-clamp-1 select-none">
-            {item.subtitle}
-          </p>
+    // Web / Desktop Platform Mockup Frame (Handles varying section sizes cleanly)
+    return (
+      <div
+        key={keyIndex}
+        onClick={() => {
+          playClick?.();
+          onOpenModal?.(item);
+        }}
+        onMouseEnter={playHover}
+        draggable={false}
+        onDragStart={(e) => e.preventDefault()}
+        style={{ userSelect: 'none', WebkitUserSelect: 'none', WebkitUserDrag: 'none' }}
+        className="w-[340px] sm:w-[420px] md:w-[480px] shrink-0 group/card cursor-pointer select-none"
+      >
+        <div className="relative rounded-2xl sm:rounded-3xl p-3 sm:p-3.5 bg-[#070B12]/95 border border-white/10 group-hover/card:border-[var(--accent-color)]/50 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)] group-hover/card:shadow-[0_20px_50px_var(--card-hover-glow)] group-hover/card:-translate-y-2 select-none flex flex-col justify-between">
+          {/* Minimal Browser Header Bar */}
+          <div className="flex items-center justify-between pb-2.5 px-1 border-b border-white/[0.06] mb-2.5 select-none">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+            </div>
+            <span className="text-[10px] font-mono text-white/40 tracking-wider truncate max-w-[180px]">
+              app // {item.tag?.toLowerCase()}
+            </span>
+            <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-[var(--accent-color)] border border-white/5 font-semibold">
+              WEB HUD
+            </span>
+          </div>
+
+          {/* Screen Image Frame: perfectly framed for web sections */}
+          <div className="relative h-[200px] sm:h-[235px] md:h-[255px] w-full rounded-xl overflow-hidden bg-[#03060B] border border-white/[0.06] select-none flex items-center justify-center">
+            <Image
+              src={item.image}
+              alt={item.title}
+              fill
+              draggable={false}
+              onDragStart={(e) => e.preventDefault()}
+              className={`${
+                isFullPage
+                  ? 'object-cover object-top'
+                  : 'object-contain object-center p-1.5'
+              } group-hover/card:scale-[1.02] transition-transform duration-500 pointer-events-none select-none`}
+              sizes="(max-width: 640px) 340px, 480px"
+              style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
+            />
+            {isFullPage && (
+              <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-white/15 text-[9px] font-mono text-white/80 font-bold uppercase pointer-events-none">
+                {lang === 'ru' ? 'Полный скролл' : lang === 'kk' ? 'Толық скролл' : 'Full Page'}
+              </div>
+            )}
+            <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100 pointer-events-none select-none">
+              <span className="px-3.5 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg select-none">
+                <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+                <span>{lang === 'ru' ? 'Открыть' : lang === 'kk' ? 'Ашу' : 'Preview'}</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Card Caption Info */}
+          <div className="p-2 pt-3 space-y-1 select-none">
+            <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider block uppercase select-none">
+              {item.tag || `MODULE`}
+            </span>
+            <h3 className="text-xs sm:text-sm font-bold text-white font-display group-hover/card:text-[var(--accent-color)] transition-colors truncate select-none">
+              {item.title}
+            </h3>
+            <p className="text-[11px] text-white/50 font-sans line-clamp-1 select-none">
+              {item.subtitle}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="space-y-6 select-none" style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
@@ -203,11 +292,17 @@ function InfiniteGalleryRibbon({ items, lang, playClick, playHover, onOpenModal,
             </span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-tight">
-            {lang === 'ru'
-              ? 'Лента интерфейса приложения'
-              : lang === 'kk'
-              ? 'Қосымшаның интерфейс лентасы'
-              : 'Interactive Mobile Ribbon'}
+            {isMobileGallery
+              ? (lang === 'ru'
+                  ? 'Лента интерфейса приложения'
+                  : lang === 'kk'
+                  ? 'Қосымшаның интерфейс лентасы'
+                  : 'Interactive Mobile Ribbon')
+              : (lang === 'ru'
+                  ? 'Интерфейсы и модули платформы'
+                  : lang === 'kk'
+                  ? 'Платформаның модульдері мен интерфейстері'
+                  : 'Platform Interfaces & Modules')}
           </h2>
           <p className="text-xs sm:text-sm text-white/60 font-sans max-w-xl">
             {lang === 'ru'
@@ -388,6 +483,18 @@ export default function ProjectDetailContent({ slug: propSlug }) {
     }
     return all[currentIndex + 1];
   }, [project, projectsData]);
+
+  // Determine whether current project gallery uses mobile phone mockup or desktop window mockup
+  const isMobileProject = useMemo(() => {
+    if (project.slug === 'finance-management-app') return true;
+    const platform = (project.dossier?.targetPlatform || '').toLowerCase();
+    const category = (project.category || '').toLowerCase();
+    return (
+      (platform.includes('ios') || platform.includes('android') || category.includes('mobile')) &&
+      !category.includes('web') &&
+      !platform.includes('web')
+    );
+  }, [project]);
 
   // Floating Cursor Preview for Next Project Footer
   const [isNextHovered, setIsNextHovered] = useState(false);
@@ -684,6 +791,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
               playHover={playHover}
               onOpenModal={setActiveModalScreen}
               isModalOpen={Boolean(activeModalScreen)}
+              isMobileGallery={isMobileProject}
             />
           </Motion.section>
         )}
@@ -1061,53 +1169,100 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-2xl"
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 lg:p-6 bg-black/92 backdrop-blur-2xl"
             onClick={() => setActiveModalScreen(null)}
           >
             <Motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: 'spring', damping: 28, stiffness: 350 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-sm w-full bg-[#080C12] border border-white/15 rounded-[2.5rem] p-3 sm:p-4 shadow-[0_25px_80px_rgba(0,0,0,0.9)] flex flex-col space-y-3"
+              className={`relative ${
+                isMobileProject
+                  ? 'max-w-md sm:max-w-lg w-[90%]'
+                  : 'w-[90%] max-w-[1920px]'
+              } max-h-[94vh] rounded-3xl p-3.5 sm:p-5 lg:p-6 bg-[#070B12]/98 border border-white/15 shadow-[0_30px_100px_rgba(0,0,0,0.95)] flex flex-col space-y-3.5`}
             >
               {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setActiveModalScreen(null)}
-                className="absolute -top-3 -right-3 z-30 p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-all hover:scale-110 active:scale-95"
+                className="absolute -top-3 -right-3 z-30 p-2 sm:p-2.5 rounded-full bg-black/80 hover:bg-white/20 border border-white/25 text-white transition-all hover:scale-110 active:scale-95 shadow-xl backdrop-blur-md"
                 aria-label="Close modal"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
+              {/* Desktop window top bar if not mobile */}
+              {!isMobileProject && (
+                <div className="flex items-center justify-between pb-2.5 px-2 border-b border-white/[0.08] select-none text-xs font-mono text-white/50">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                  </div>
+                  <div className="flex items-center gap-2 truncate max-w-[280px] sm:max-w-xl text-white/80">
+                    <span className="font-bold text-white truncate">{activeModalScreen.title}</span>
+                    <span className="text-white/30 hidden sm:inline">&bull;</span>
+                    <span className="text-xs text-white/50 hidden sm:inline truncate">{activeModalScreen.subtitle}</span>
+                  </div>
+                  <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--accent-color)] font-bold px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10 shrink-0">
+                    {activeModalScreen.tag}
+                  </span>
+                </div>
+              )}
+
               {/* High-res Screen */}
-              <div className="relative aspect-[9/19.5] w-full rounded-[1.8rem] overflow-hidden bg-black shadow-inner select-none">
-                <Image
-                  src={activeModalScreen.image}
-                  alt={activeModalScreen.title}
-                  fill
-                  priority
-                  draggable={false}
-                  onDragStart={(e) => e.preventDefault()}
-                  className="object-cover object-top select-none pointer-events-none"
-                  sizes="400px"
-                  style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
-                />
-              </div>
+              {isMobileProject ? (
+                <div className="relative aspect-[9/19.5] w-full max-h-[72vh] rounded-[2rem] overflow-hidden bg-black shadow-inner select-none mx-auto">
+                  <Image
+                    src={activeModalScreen.image}
+                    alt={activeModalScreen.title}
+                    fill
+                    priority
+                    draggable={false}
+                    onDragStart={(e) => e.preventDefault()}
+                    className="object-cover object-top select-none pointer-events-none"
+                    sizes="500px"
+                    style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
+                  />
+                </div>
+              ) : activeModalScreen.image?.includes('all-landing-page') ? (
+                <div className="relative w-full h-[72vh] sm:h-[76vh] md:h-[80vh] overflow-y-auto rounded-2xl bg-[#03060B] border border-white/10 select-none custom-scrollbar">
+                  <Image
+                    src={activeModalScreen.image}
+                    alt={activeModalScreen.title}
+                    width={2560}
+                    height={15023}
+                    priority
+                    className="w-full h-auto block select-none pointer-events-auto"
+                  />
+                </div>
+              ) : (
+                <div className="relative w-full h-[68vh] sm:h-[75vh] md:h-[80vh] rounded-2xl overflow-hidden bg-[#03060B] flex items-center justify-center border border-white/10 select-none shadow-inner">
+                  <Image
+                    src={activeModalScreen.image}
+                    alt={activeModalScreen.title}
+                    fill
+                    priority
+                    draggable={false}
+                    onDragStart={(e) => e.preventDefault()}
+                    className="object-contain object-center select-none"
+                    sizes="(max-width: 1920px) 90vw, 1920px"
+                  />
+                </div>
+              )}
 
               {/* Caption */}
-              <div className="px-2 pt-1 pb-2 text-center space-y-1">
-                <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase">
-                  {activeModalScreen.tag}
+              <div className="px-2 pt-1 pb-1 flex items-center justify-between text-xs font-mono text-white/50 select-none">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-white/60">HIGH_RES_PREVIEW // 100% SCALE</span>
+                </div>
+                <span className="text-[11px] text-white/40 hidden sm:inline">
+                  ESC or click outside to dismiss
                 </span>
-                <h4 className="text-base font-bold text-white font-display">
-                  {activeModalScreen.title}
-                </h4>
-                <p className="text-xs text-white/60 font-sans">
-                  {activeModalScreen.subtitle}
-                </p>
               </div>
             </Motion.div>
           </Motion.div>

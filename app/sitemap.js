@@ -16,7 +16,13 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/projects/finance-ai-manager`,
+      url: `${baseUrl}/projects/finance-management-app`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/projects/rolesieve`,
       lastModified,
       changeFrequency: 'weekly',
       priority: 0.85,
