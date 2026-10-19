@@ -619,8 +619,8 @@ export const portfolioContent = {
           tagline: "National civic engagement & open governance portal for public transparency",
           category: "GovTech Web Platform",
           isPrivate: false,
-          description: "Engineered the official OpenGov.kz platform frontend from scratch with Next.js and React. Deployed full multi-language localization (i18n), news catalogs, civic participation portals, and blazing-fast server-rendered performance for citizen-government transparency.",
-          tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
+          description: "Engineered the official OpenGov.kz platform frontend for QBS Solutions using React 19, Vite 6, and React Router 7. Implemented a 10-namespace trilingual localization system (Kazakh, Russian, English) via i18next, Mock Service Worker (MSW) REST API layer, modular CSS styling, and responsive civic registers for public transparency.",
+          tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
           image: "/assets/projects/openGov/open-gov-showcase.jpg",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
@@ -698,61 +698,62 @@ export const portfolioContent = {
             }
           ],
           dossier: {
-            projectType: "Public GovTech Transparency Portal",
-            entryYear: "2024",
-            targetPlatform: "Web Platform (Next.js SSR & SSG)",
+            projectType: "GovTech Open Data & Civic Transparency Web Portal",
+            entryYear: "2025",
+            targetPlatform: "Modern Web SPA (React 19 + Vite + React Router 7)",
             primaryRole: "Frontend Lead Engineer",
             technologies: {
-              core: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS"],
-              i18n: ["next-intl (Kazakh, Russian, English)"],
-              api: ["REST APIs", "Government Open Data JSON"],
-              perf: ["Vercel Edge Network", "Static Site Generation", "Lighthouse 98+"]
+              core: ["React 19", "Vite 6", "React Router 7", "JavaScript (ESM)"],
+              i18n: ["i18next 25", "react-i18next 15", "10 Namespaces (KZ / RU / EN)"],
+              styling: ["CSS Modules", "Modern Flexbox & Grid", "Inter Typography"],
+              api: ["Mock Service Worker (MSW 2)", "REST APIs", "Government Datasets JSON"],
+              deploy: ["Vercel Edge Platform", "Continuous Deployment (Git CD)"]
             },
             colorPalette: [
-              { name: "GovTech Azure", hex: "#0070F3" },
-              { name: "Cyan Horizon", hex: "#00DFD8" },
-              { name: "Slate Deep", hex: "#0B1017" },
-              { name: "Neutral Cloud", hex: "#F3F6F9" }
+              { name: "GovTech Azure", hex: "#1A56DB" },
+              { name: "Deep Cobalt", hex: "#1E40AF" },
+              { name: "Slate Neutral", hex: "#4B5563" },
+              { name: "Cloud White", hex: "#FFFFFF" }
             ],
             status: "PRODUCTION_DEPLOYED"
           },
           overview: {
-            lead: "A high-performance civic transparency portal designed to bridge citizen engagement and public governmental initiatives through accessible public catalogs and multi-language information distribution.",
-            targetAudience: "Citizens, civic researchers, and public organizations seeking transparent information on government projects, open budgeting, and civic initiatives across Kazakhstan.",
-            challenge: "Government portals often suffer from cumbersome navigation, poor mobile responsiveness, slow load speeds, and fragmented multilingual content.",
-            solution: "Engineered the modern web frontend with Next.js and Tailwind CSS from the ground up, delivering flawless trilingual support (Kazakh, Russian, English), server-side rendering for instant page transitions, and strict accessibility compliance (WCAG 2.1 AA).",
-            myRole: "Developed the responsive frontend architecture, designed the design system and reusable UI component library, integrated REST endpoints for public datasets, and optimized SEO & Core Web Vitals."
+            lead: "A modern, high-performance GovTech portal built for QBS Solutions to showcase public sector digitization, national open data indicators, and civic participation across Kazakhstan.",
+            targetAudience: "Citizens, civic researchers, data analysts, and public organizations exploring open government datasets, state programs, civic initiatives, and legislative transparency.",
+            challenge: "Delivering an intuitive, blazing-fast portal interface that cleanly organizes vast government datasets, multilingual terminology across 10 distinct domains, and mockable REST integration for seamless offline-first development.",
+            solution: "Architected a lean React 19 SPA powered by Vite 6 and React Router 7. Configured i18next with dedicated JSON namespaces per route, isolated CSS Modules to prevent style collisions, and integrated Mock Service Worker (MSW) to emulate backend APIs during development and demonstration.",
+            myRole: "Led frontend architecture and development: structured component hierarchies, implemented 3-language internationalization, engineered MSW mock API infrastructure, crafted responsive CSS Modules layouts, and configured Vercel production deployment."
           },
           walkthrough: {
             concept: {
-              title: "Democratic Access & Civic Clarity",
-              desc: "Eliminating digital barriers between government initiatives and the public through a clean, blazing-fast, and trustworthy web architecture.",
+              title: "Open Data Access & Public Transparency",
+              desc: "Bridging the gap between state data repositories and the public through transparent catalogs, civic initiatives, and verifiable news dispatches.",
               highlights: [
-                "Trilingual national localization (Kazakh, Russian, English)",
-                "Sub-second SSR load times on mobile devices",
-                "Accessible mobile-first design with strict WCAG compliance"
+                "Trilingual localization (Kazakh, Russian, English) across 10 namespaces",
+                "Zero-bundle overhead SPA with lightning-fast Vite HMR and build times",
+                "Comprehensive civic registers: projects, news, members, and details"
               ]
             },
             architecture: {
-              title: "Server-Rendered Multi-Lingual Architecture",
-              desc: "Next.js routing with server-side generation ensuring instant indexing by search engines, localized routing paths, and resilient caching on the Vercel Edge network.",
+              title: "Component-Driven SPA & Mock Service Layer",
+              desc: "Modern React 19 component architecture paired with React Router 7, decoupled styling via CSS Modules, and Mock Service Worker (MSW) interception for reliable API simulation.",
               highlights: [
-                "Modular component tokens for government portals",
-                "Lightweight SVG iconography and zero-CLS typography",
-                "Strict semantic HTML5 markup for screen readers"
+                "MSW network-level request interception for offline-ready mock data",
+                "Strict CSS Modules scoping ensuring zero style leakage",
+                "Clean namespace partitioning: header, mainPage, news, projects, members"
               ]
             },
             features: [
-              { num: "01", title: "Trilingual Dynamic Localization", desc: "Instant language switching across Kazakh, Russian, and English without layout shift or page refresh.", metric: "3 Languages" },
-              { num: "02", title: "Civic Initiative Catalog", desc: "Interactive filtering and faceted search across dozens of public programs and civic reports.", metric: "<15ms Filter" },
-              { num: "03", title: "Core Web Vitals Optimization", desc: "Engineered for maximum accessibility on low-bandwidth and mobile connections across regions.", metric: "99/100 Perf" }
+              { num: "01", title: "10-Namespace Reactive i18n", desc: "Instant seamless language toggling across Kazakh, Russian, and English without reload, powered by i18next and react-i18next.", metric: "10 Namespaces" },
+              { num: "02", title: "Integrated MSW Mock Service", desc: "Local mock service worker intercepting REST calls, allowing full testing of news and projects catalogs without backend dependency.", metric: "MSW v2 Mocking" },
+              { num: "03", title: "Civic Initiatives & Members Registry", desc: "Dedicated routing with deep detail views for public projects, ministry announcements, and working group members.", metric: "6 Core Routes" }
             ],
             impact: {
               metrics: [
-                { label: "LIGHTHOUSE", value: "99" },
-                { label: "SEO_SCORE", value: "100" },
-                { label: "LOCALES", value: "3" },
-                { label: "FIRST_PAINT", value: "0.4S" }
+                { label: "REACT_VERSION", value: "19.0" },
+                { label: "BUNDLER", value: "VITE 6" },
+                { label: "LOCALES", value: "3 (KZ/RU/EN)" },
+                { label: "NAMESPACES", value: "10 I18N" }
               ]
             }
           }
@@ -866,10 +867,10 @@ export const portfolioContent = {
         {
           id: "opengov",
           title: "OpenGov.kz Platform",
-          category: "Next.js // React // GovTech",
-          tag: "WEB & MOBILE UI",
+          category: "React 19 // Vite // i18n // GovTech",
+          tag: "GOVTECH SPA",
           status: "ENTERPRISE",
-          desc: "Modern public administration web portal with high-load data streaming."
+          desc: "Trilingual open governance portal with MSW API layer, civic initiative registers, and real-time open data."
         },
         {
           id: "berikweb",
@@ -1542,8 +1543,8 @@ export const portfolioContent = {
           tagline: "Национальный портал гражданского участия и открытого государственного управления",
           category: "GovTech Web-платформа",
           isPrivate: false,
-          description: "Разработка с нуля фронтенда официальной платформы OpenGov.kz на Next.js и React. Реализована мультиязычность (i18n), каталоги новостей, проекты для граждан и высокая производительность SSR.",
-          tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
+          description: "Разработка фронтенда официальной платформы OpenGov.kz для QBS Solutions на React 19, Vite 6 и React Router 7. Реализована масштабируемая мультиязычность (10 неймспейсов на казахском, русском и английском) на i18next, слой мокирования данных на Mock Service Worker (MSW), модульные стили CSS и адаптивные каталоги открытых данных.",
+          tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
           image: "/assets/projects/openGov/open-gov-showcase.jpg",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
@@ -1622,60 +1623,61 @@ export const portfolioContent = {
           ],
           dossier: {
             projectType: "Государственный портал открытых данных и прозрачности",
-            entryYear: "2024",
-            targetPlatform: "Веб-платформа (Next.js SSR & SSG)",
+            entryYear: "2025",
+            targetPlatform: "Веб-платформа SPA (React 19 + Vite + React Router 7)",
             primaryRole: "Frontend Lead Инженер",
             technologies: {
-              core: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS"],
-              i18n: ["next-intl (Казахский, Русский, Английский)"],
-              api: ["REST APIs", "Государственные открытые датасеты JSON"],
-              perf: ["Vercel Edge Network", "Static Site Generation", "Lighthouse 98+"]
+              core: ["React 19", "Vite 6", "React Router 7", "JavaScript (ESM)"],
+              i18n: ["i18next 25", "react-i18next 15", "10 Неймспейсов (KZ / RU / EN)"],
+              styling: ["CSS Modules", "Современный Flexbox & Grid", "Шрифт Inter"],
+              api: ["Mock Service Worker (MSW 2)", "REST APIs", "Государственные открытые датасеты JSON"],
+              deploy: ["Vercel Edge Platform", "Непрерывный деплой (Git CD)"]
             },
             colorPalette: [
-              { name: "GovTech Лазурный", hex: "#0070F3" },
-              { name: "Циан Горизонт", hex: "#00DFD8" },
-              { name: "Темный Слейт", hex: "#0B1017" },
-              { name: "Облачный Белый", hex: "#F3F6F9" }
+              { name: "GovTech Лазурный", hex: "#1A56DB" },
+              { name: "Глубокий Кобальт", hex: "#1E40AF" },
+              { name: "Слейт Нейтральный", hex: "#4B5563" },
+              { name: "Белый Чистый", hex: "#FFFFFF" }
             ],
             status: "PRODUCTION_РАЗВЕРНУТ"
           },
           overview: {
-            lead: "Высокопроизводительный портал открытого правительства, призванный объединить гражданские инициативы и государственные проекты через открытые каталоги и мультиязычную подачу информации.",
-            targetAudience: "Граждане, исследователи и общественные объединения Казахстана, отслеживающие реализацию государственных программ, открытый бюджет и общественные инициативы.",
-            challenge: "Государственные ресурсы нередко страдают от громоздкой навигации, плохой мобильной адаптации, долгой загрузки и неполной локализации контента.",
-            solution: "С нуля спроектировал современный фронтенд на Next.js и Tailwind CSS с безупречной трехъязычной локализацией (казахский, русский, английский), мгновенным SSR-рендерингом и соответствием стандартам доступности WCAG 2.1 AA.",
-            myRole: "Разработал архитектуру фронтенда, создал дизайн-систему и UI-компоненты, интегрировал REST API открытых данных и вывел показатели Core Web Vitals в зеленую зону."
+            lead: "Высокопроизводительный GovTech-портал, созданный для QBS Solutions с целью демонстрации проектов цифровизации госсектора, показателей открытых данных и гражданского участия в Казахстане.",
+            targetAudience: "Граждане, аналитики данных, исследователи и общественные организации, изучающие открытые государственные реестры, госпрограммы, гражданские инициативы и нормативные акты.",
+            challenge: "Создание интуитивно понятного, быстрого интерфейса с надежной структуризацией государственных массивов данных, согласованной трехъязычной терминологией по 10 направлениям и мокированием REST API для автономной разработки.",
+            solution: "Спроектировал быстродействующее SPA на React 19 под управлением Vite 6 и React Router 7. Настроил i18next с отдельными JSON-неймспейсами под каждую страницу, применил модульный CSS для изолированной стилизации и интегрировал Mock Service Worker (MSW) для имитации серверных эндпоинтов.",
+            myRole: "Ведущий фронтенд-разработчик: спроектировал компонентную архитектуру, настроил трехъязычную локализацию на i18next, разработал инфраструктуру моков MSW, сверстал адаптивные интерфейсы на CSS Modules и настроил непрерывный деплой на Vercel."
           },
           walkthrough: {
             concept: {
-              title: "Доступность и открытость для каждого",
-              desc: "Устранение цифровых барьеров между государственными данными и жителями страны через чистый, быстрый и доступный интерфейс.",
+              title: "Открытые данные и государственная прозрачность",
+              desc: "Устранение барьеров между государственными реестрами и обществом через открытые каталоги проектов, новости и ведомственные инициативы.",
               highlights: [
-                "Полная государственная трехъязычная локализация",
-                "Мгновенный SSR-отклик даже на бюджетных смартфонах",
-                "Mobile-first дизайн со строгим соблюдением доступности WCAG"
+                "Полная трехъязычная локализация (KZ, RU, EN) с 10 неймспейсами i18n",
+                "Мгновенная сборка и горячая перезагрузка благодаря связке React 19 + Vite 6",
+                "Единые каталоги гражданских проектов, новостей и участников экосистемы"
               ]
             },
             architecture: {
-              title: "Мультиязычная серверная архитектура",
-              desc: "Маршрутизация Next.js со статической генерацией обеспечивает быструю индексацию поисковыми роботами и надежное кэширование на edge-серверах.",
+              title: "Компонентная SPA-архитектура и слой MSW",
+              desc: "Современная модульная архитектура на React 19 и React Router 7, изолированные стили CSS Modules и сетевой перехват запросов Mock Service Worker (MSW).",
               highlights: [
-                "Модульная система дизайн-токенов для госпорталов",
-                "Легкая векторная графика и нулевой сдвиг макета (CLS)",
-                "Семантическая верстка HTML5 для скринридеров"
+                "Сетевой перехват запросов MSW для независимой демонстрации данных",
+                "Изолированная область видимости CSS Modules без конфликта стилей",
+                "Четкое разделение локалей: header, mainPage, news, projects, members"
               ]
             },
             features: [
-              { num: "01", title: "Трехъязычная динамическая локализация", desc: "Мгновенное переключение между казахским, русским и английским языками без сброса состояния.", metric: "3 Языка" },
-              { num: "02", title: "Каталог гражданских инициатив", desc: "Интерактивная фильтрация и быстрый поиск по десяткам проектов и отчетов.", metric: "<15мс Поиск" },
-              { num: "03", title: "Оптимизация Core Web Vitals", desc: "Максимальная скорость работы даже при нестабильном мобильном интернете в регионах.", metric: "99/100 Perf" }
+              { num: "01", title: "Реактивный i18n с 10 неймспейсами", desc: "Мгновенное переключение языка между казахским, русским и английским без перезагрузки на базе i18next и react-i18next.", metric: "10 Неймспейсов" },
+              { num: "02", title: "Интегрированный слой MSW", desc: "Mock Service Worker для перехвата сетевых REST-запросов и автономной работы каталогов новостей и проектов.", metric: "MSW v2 Мокирование" },
+              { num: "03", title: "Реестры проектов и участников", desc: "Отдельные маршруты и детальные экраны для государственных программ, новостей и участников рабочих групп.", metric: "6 Основных Роутов" }
             ],
             impact: {
               metrics: [
-                { label: "LIGHTHOUSE", value: "99" },
-                { label: "SEO_SCORE", value: "100" },
-                { label: "ЯЗЫКОВ", value: "3" },
-                { label: "FIRST_PAINT", value: "0.4С" }
+                { label: "ВЕРСИЯ_REACT", value: "19.0" },
+                { label: "БАНДЛЕР", value: "VITE 6" },
+                { label: "ЯЗЫКОВ", value: "3 (KZ/RU/EN)" },
+                { label: "НЕЙМСПЕЙСОВ", value: "10 I18N" }
               ]
             }
           }
@@ -1789,10 +1791,10 @@ export const portfolioContent = {
         {
           id: "opengov",
           title: "OpenGov.kz Platform",
-          category: "Next.js // React // GovTech",
-          tag: "WEB & MOBILE UI",
+          category: "React 19 // Vite // i18n // GovTech",
+          tag: "GOVTECH SPA",
           status: "ENTERPRISE",
-          desc: "Государственный веб-портал с высоконагруженным потоком открытых данных."
+          desc: "Трехъязычный портал открытого правительства с 10 неймспейсами i18n, слоем MSW и каталогами открытых данных."
         },
         {
           id: "berikweb",
@@ -2465,8 +2467,8 @@ export const portfolioContent = {
           tagline: "Ашықтық пен азаматтық белсенділікке арналған ұлттық мемлекеттік портал",
           category: "GovTech Web-платформасы",
           isPrivate: false,
-          description: "OpenGov.kz ресми платформасының фронтендін Next.js және React-те нөлден әзірлеу. Ашықтық үшін толық көптілділік (i18n), жаңалықтар мен азаматтық бастамалар каталогтары жасалды.",
-          tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
+          description: "QBS Solutions үшін OpenGov.kz ресми платформасының фронтендін React 19, Vite 6 және React Router 7 негізінде әзірлеу. i18next арқылы 10 кеңістіктен тұратын үштілді жергіліктендіру (қазақша, орысша, ағылшынша), Mock Service Worker (MSW) API қабаты, модульдік CSS стильдері және мемлекеттік ашық деректер каталогтары жүзеге асырылды.",
+          tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
           image: "/assets/projects/openGov/open-gov-showcase.jpg",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
@@ -2545,60 +2547,61 @@ export const portfolioContent = {
           ],
           dossier: {
             projectType: "Ашық мемлекеттік деректер мен ашықтық порталы",
-            entryYear: "2024",
-            targetPlatform: "Веб-платформа (Next.js SSR & SSG)",
+            entryYear: "2025",
+            targetPlatform: "Веб-платформасы SPA (React 19 + Vite + React Router 7)",
             primaryRole: "Frontend Lead Инженер",
             technologies: {
-              core: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS"],
-              i18n: ["next-intl (Қазақша, Орысша, Ағылшынша)"],
-              api: ["REST APIs", "Мемлекеттік ашық деректер JSON"],
-              perf: ["Vercel Edge Network", "Static Site Generation", "Lighthouse 98+"]
+              core: ["React 19", "Vite 6", "React Router 7", "JavaScript (ESM)"],
+              i18n: ["i18next 25", "react-i18next 15", "10 Кеңістік (KZ / RU / EN)"],
+              styling: ["CSS Modules", "Заманауи Flexbox & Grid", "Inter Қарпі"],
+              api: ["Mock Service Worker (MSW 2)", "REST APIs", "Мемлекеттік ашық деректер JSON"],
+              deploy: ["Vercel Edge Platform", "Үздіксіз деплой (Git CD)"]
             },
             colorPalette: [
-              { name: "GovTech Көгілдір", hex: "#0070F3" },
-              { name: "Циан Көкжиек", hex: "#00DFD8" },
-              { name: "Қою Слейт", hex: "#0B1017" },
-              { name: "Бұлтты Ақ", hex: "#F3F6F9" }
+              { name: "GovTech Көгілдір", hex: "#1A56DB" },
+              { name: "Терең Кобальт", hex: "#1E40AF" },
+              { name: "Слейт Бейтарап", hex: "#4B5563" },
+              { name: "Таза Ақ", hex: "#FFFFFF" }
             ],
             status: "PRODUCTION_ОРНАТЫЛДЫ"
           },
           overview: {
-            lead: "Азаматтық бастамалар мен мемлекеттік жобаларды ашық каталогтар және үш тілде ақпарат беру арқылы байланыстыратын жоғары өнімді ашық үкімет порталы.",
-            targetAudience: "Қазақстан азаматтары, зерттеушілер және мемлекеттік бағдарламалардың орындалуын, ашық бюджетті қадағалайтын қоғамдық бірлестіктер.",
-            challenge: "Мемлекеттік ресурстар жиі күрделі навигациядан, мобильді бейімделудің нашарлығынан, баяу жүктелуден және толық емес локализациядан зардап шегеді.",
-            solution: "Next.js және Tailwind CSS негізінде мінсіз үштілділігі бар (қазақ, орыс, ағылшын), жылдам SSR-рендерингі және WCAG 2.1 AA қолжетімділік стандарттары бар заманауи фронтенд нөлден жасалды.",
-            myRole: "Фронтенд сәулетін жасадым, дизайн-жүйе мен UI-компоненттер кітапханасын әзірледім, ашық деректердің REST API-лерін біріктірдім және Core Web Vitals көрсеткіштерін жоғары деңгейге шығардым."
+            lead: "Қазақстандағы мемлекеттік секторды цифрландыру жобаларын, ашық деректер көрсеткіштерін және азаматтық белсенділікті көрсету үшін QBS Solutions аясында әзірленген жоғары өнімді GovTech порталы.",
+            targetAudience: "Ашық мемлекеттік деректер жиынтығын, мемлекеттік бағдарламаларды, азаматтық бастамалар мен нормативтік актілерді зерттейтін азаматтар, сарапшылар, әзірлеушілер және қоғамдық ұйымдар.",
+            challenge: "Ауқымды мемлекеттік деректер жиынын жүйелейтін, 10 бағыт бойынша үштілді терминологияны үйлестіретін және автономды әзірлеуге арналған REST API моктау қабаты бар интуитивті әрі жылдам интерфейс жасау.",
+            solution: "Vite 6 және React Router 7 басқаруындағы React 19 негізінде жылдам SPA сәулетін құрдым. Әр парақша үшін бөлек JSON кеңістіктері бар i18next-ті баптадым, стильдер қақтығысын болдырмайтын CSS Modules қолдандым және серверлік API-ді модельдейтін Mock Service Worker (MSW) біріктірдім.",
+            myRole: "Жетекші фронтенд-әзірлеуші: компоненттер архитектурасын құрдым, i18next көмегімен үштілді локализацияны енгіздім, MSW мок инфрақұрылымын жасадым, CSS Modules арқылы бейімделгіш интерфейстер жасап, Vercel-де өндірістік деплойды баптадым."
           },
           walkthrough: {
             concept: {
-              title: "Әрбір азамат үшін ашықтық пен қолжетімділік",
-              desc: "Таза, жылдам әрі сенімді веб-интерфейс арқылы мемлекеттік бастамалар мен халық арасындағы цифрлық кедергілерді жою.",
+              title: "Ашық деректер және мемлекеттік айқындық",
+              desc: "Ашық жобалар каталогтары, жаңалықтар мен ведомстволық бастамалар арқылы мемлекеттік тізілімдер мен қоғам арасындағы кедергілерді жою.",
               highlights: [
-                "Мемлекеттік толық үштілді жергіліктендіру (қазақ, орыс, ағылшын)",
-                "Смартфондарда тіпті секундтан аз SSR-жүктелу жылдамдығы",
-                "WCAG стандарттарына сәйкес келетін Mobile-first дизайны"
+                "10 i18n кеңістігі бар толық үштілді локализация (KZ, RU, EN)",
+                "React 19 + Vite 6 арқасында найзағайдай жылдам жүктелу және құрастыру",
+                "Азаматтық жобалар, жаңалықтар және қатысушылардың бірыңғай каталогтары"
               ]
             },
             architecture: {
-              title: "Көптілді серверлік веб-сәулет",
-              desc: "Статикалық генерациясы бар Next.js бағыттауышы іздеу жүйелерімен жылдам индекстеуді және сенімді кэштеуді қамтамасыз етеді.",
+              title: "Компоненттік SPA-сәулет және MSW қабаты",
+              desc: "React 19 және React Router 7 негізіндегі модульдік сәулет, оқшауланған CSS Modules стильдері және Mock Service Worker (MSW) арқылы желілік сұраныстарды моктау.",
               highlights: [
-                "Мемлекеттік порталдарға арналған модульдік дизайн-токендер",
-                "Жеңіл векторлық графика және нөлдік макет ауытқуы (CLS)",
-                "Экран оқу құралдары үшін қатаң семантикалық HTML5 құрылымы"
+                "Деректерді автономды көрсетуге арналған MSW желілік перехваты",
+                "Стильдер қақтығысын болдырмайтын таза CSS Modules оқшаулауы",
+                "Локальдардың нақты құрылымы: header, mainPage, news, projects, members"
               ]
             },
             features: [
-              { num: "01", title: "Динамикалық үштілді локализация", desc: "Қазақ, орыс және ағылшын тілдері арасында бетті қайта жүктемей жылдам ауысу.", metric: "3 Тіл" },
-              { num: "02", title: "Азаматтық бастамалар каталогы", desc: "Оншақты мемлекеттік бағдарламалар мен есептер бойынша интерактивті сүзгілеу және жылдам іздеу.", metric: "<15мс Іздеу" },
-              { num: "03", title: "Core Web Vitals оңтайландыруы", desc: "Өңірлердегі мобильді байланыс жылдамдығы төмен болған жағдайда да мінсіз жұмыс істеу.", metric: "99/100 Perf" }
+              { num: "01", title: "10 кеңістікті реактивті i18n", desc: "i18next және react-i18next арқылы бетті қайта жүктемей қазақ, орыс және ағылшын тілдеріне жылдам ауысу.", metric: "10 Кеңістік" },
+              { num: "02", title: "Кіріктірілген MSW мок қабаты", desc: "REST сұраныстарын желі деңгейінде өңдейтін және каталогтарды автономды көрсететін Mock Service Worker.", metric: "MSW v2 Моктары" },
+              { num: "03", title: "Жобалар мен қатысушылар тізілімі", desc: "Мемлекеттік бағдарламалар, жаңалықтар мен жұмыс топтарының қатысушыларына арналған дербес маршруттар мен парақшалар.", metric: "6 Негізгі Бағыт" }
             ],
             impact: {
               metrics: [
-                { label: "LIGHTHOUSE", value: "99" },
-                { label: "SEO_SCORE", value: "100" },
-                { label: "ТІЛДЕР", value: "3" },
-                { label: "ЖҮКТЕЛУ", value: "0.4С" }
+                { label: "REACT_НҰСҚАСЫ", value: "19.0" },
+                { label: "БАНДЛЕР", value: "VITE 6" },
+                { label: "ТІЛДЕР", value: "3 (KZ/RU/EN)" },
+                { label: "КЕҢІСТІКТЕР", value: "10 I18N" }
               ]
             }
           }
