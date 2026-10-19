@@ -621,10 +621,82 @@ export const portfolioContent = {
           isPrivate: false,
           description: "Engineered the official OpenGov.kz platform frontend from scratch with Next.js and React. Deployed full multi-language localization (i18n), news catalogs, civic participation portals, and blazing-fast server-rendered performance for citizen-government transparency.",
           tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
-          image: "/assets/openGov.png",
+          image: "/assets/projects/openGov/open-gov-showcase.jpg",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
           status: "PRODUCTION_DEPLOYED",
+          gallery: [
+            {
+              id: "01",
+              title: "Hero Section & Civic Portal Gateway",
+              subtitle: "Interactive portal hero with dynamic open data search, national statistics, and direct citizen access points",
+              tag: "HERO GATEWAY",
+              image: "/assets/projects/openGov/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "What is Open Data? Conceptual Overview",
+              subtitle: "Visual guide and educational breakdown explaining open government data principles, transparency, and public utility",
+              tag: "OPEN DATA CONCEPTS",
+              image: "/assets/projects/openGov/what-is-open-data.png"
+            },
+            {
+              id: "03",
+              title: "Strategic Role of OpenGov.kz",
+              subtitle: "The platform's overarching mission: uniting citizens, developers, and public agencies in a unified digital ecosystem",
+              tag: "MISSION & ROLE",
+              image: "/assets/projects/openGov/the-role-of-opengov.png"
+            },
+            {
+              id: "04",
+              title: "Open Data Ecosystem in Kazakhstan",
+              subtitle: "National adoption metrics, dataset volume growth, API consumption stats, and public sector integration metrics",
+              tag: "NATIONAL ECOSYSTEM",
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+            },
+            {
+              id: "05",
+              title: "Key Platforms & Regulatory Legislation",
+              subtitle: "Interactive catalog of legal acts, digital standards, and regulatory frameworks governing open state governance",
+              tag: "LEGISLATION & STANDARDS",
+              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+            },
+            {
+              id: "06",
+              title: "Successful Real-World Civic Use Cases",
+              subtitle: "Showcase of high-impact civic applications, analytical research tools, and community services built on open data",
+              tag: "USE CASES",
+              image: "/assets/projects/openGov/successfull-use-cases.png"
+            },
+            {
+              id: "07",
+              title: "Civic Initiatives & Government Projects Catalog",
+              subtitle: "Faceted catalog of active and completed national initiatives with status filters, milestones, and budget disclosures",
+              tag: "PROJECTS CATALOG",
+              image: "/assets/projects/openGov/projects.png"
+            },
+            {
+              id: "08",
+              title: "OpenGov Newsroom & Public Disclosures",
+              subtitle: "Centralized press releases, government announcements, transparency reports, and platform upgrade logs",
+              tag: "NEWS PORTAL",
+              image: "/assets/projects/openGov/news.png"
+            },
+            {
+              id: "09",
+              title: "Latest News Stream & Editorial Highlights",
+              subtitle: "Curated front-page editorial feed featuring breaking civic updates, upcoming public hearings, and spotlight stories",
+              tag: "LATEST FEED",
+              image: "/assets/projects/openGov/latest-news.png"
+            },
+            {
+              id: "10",
+              title: "Comprehensive Article & Policy Detail View",
+              subtitle: "Long-form reading experience with semantic typography, social sharing, downloadable attachments, and related stories",
+              tag: "DETAIL VIEW",
+              image: "/assets/projects/openGov/news-detail.png"
+            }
+          ],
           dossier: {
             projectType: "Public GovTech Transparency Portal",
             entryYear: "2024",
@@ -1472,10 +1544,82 @@ export const portfolioContent = {
           isPrivate: false,
           description: "Разработка с нуля фронтенда официальной платформы OpenGov.kz на Next.js и React. Реализована мультиязычность (i18n), каталоги новостей, проекты для граждан и высокая производительность SSR.",
           tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
-          image: "/assets/openGov.png",
+          image: "/assets/projects/openGov/open-gov-showcase.jpg",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
           status: "PRODUCTION_DEPLOYED",
+          gallery: [
+            {
+              id: "01",
+              title: "Главный экран и портал открытых данных",
+              subtitle: "Интерактивный главный экран с глобальным поиском по открытым данным, ключевыми показателями и точками входа",
+              tag: "ГЛАВНЫЙ ЭКРАН",
+              image: "/assets/projects/openGov/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Концепция открытых данных: цели и принципы",
+              subtitle: "Информационный блок с понятным объяснением сути открытых государственных данных, прозрачности и общественной пользы",
+              tag: "КОНЦЕПЦИЯ ДАННЫХ",
+              image: "/assets/projects/openGov/what-is-open-data.png"
+            },
+            {
+              id: "03",
+              title: "Роль и стратегическая миссия OpenGov.kz",
+              subtitle: "Ключевая задача платформы: объединение граждан, разработчиков и госорганов в единой доверенной цифровой экосистеме",
+              tag: "МИССИЯ И РОЛЬ",
+              image: "/assets/projects/openGov/the-role-of-opengov.png"
+            },
+            {
+              id: "04",
+              title: "Экосистема открытых данных в Казахстане",
+              subtitle: "Динамика внедрения, статистика наборов данных, рост API-запросов и интеграция с государственными ведомствами",
+              tag: "ЭКОСИСТЕМА РК",
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+            },
+            {
+              id: "05",
+              title: "Законодательная база и ключевые платформы",
+              subtitle: "Интерактивный справочник нормативно-правовых актов, цифровых стандартов и законов об открытом правительстве",
+              tag: "ЗАКОНОДАТЕЛЬСТВО",
+              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+            },
+            {
+              id: "06",
+              title: "Кейсы успешного применения и польза",
+              subtitle: "Примеры реальных гражданских сервисов, аналитических исследований и продуктов, созданных на базе открытых данных",
+              tag: "УСПЕШНЫЕ КЕЙСЫ",
+              image: "/assets/projects/openGov/successfull-use-cases.png"
+            },
+            {
+              id: "07",
+              title: "Каталог проектов и гражданских инициатив",
+              subtitle: "Полнофункциональный каталог государственных программ и инициатив с фильтрацией по статусам и этапам реализации",
+              tag: "КАТАЛОГ ПРОЕКТОВ",
+              image: "/assets/projects/openGov/projects.png"
+            },
+            {
+              id: "08",
+              title: "Портал новостей и официальных сообщений",
+              subtitle: "Единый новостной центр с публикацией пресс-релизов, открытых отчетов и обновлений цифровой инфраструктуры",
+              tag: "НОВОСТНОЙ ХАБ",
+              image: "/assets/projects/openGov/news.png"
+            },
+            {
+              id: "09",
+              title: "Лента актуальных новостей и событий",
+              subtitle: "Витрина свежих публикаций, предстоящих общественных слушаний и важных решений для граждан",
+              tag: "ЛЕНТА НОВОСТЕЙ",
+              image: "/assets/projects/openGov/latest-news.png"
+            },
+            {
+              id: "10",
+              title: "Детальная страница публикации и статьи",
+              subtitle: "Удобный интерфейс чтения с чистой типографикой, скачиваемыми приложениями, шерингом и сопутствующими материалами",
+              tag: "ДЕТАЛЬНАЯ СТАТЬЯ",
+              image: "/assets/projects/openGov/news-detail.png"
+            }
+          ],
           dossier: {
             projectType: "Государственный портал открытых данных и прозрачности",
             entryYear: "2024",
@@ -2323,10 +2467,141 @@ export const portfolioContent = {
           isPrivate: false,
           description: "OpenGov.kz ресми платформасының фронтендін Next.js және React-те нөлден әзірлеу. Ашықтық үшін толық көптілділік (i18n), жаңалықтар мен азаматтық бастамалар каталогтары жасалды.",
           tags: ["Next.js", "React", "i18n", "Responsive UI", "REST APIs"],
-          image: "/assets/openGov.png",
+          image: "/assets/projects/openGov/open-gov-showcase.jpg",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
-          status: "PRODUCTION_DEPLOYED"
+          status: "PRODUCTION_DEPLOYED",
+          gallery: [
+            {
+              id: "01",
+              title: "Басты бет және ашық деректер порталы",
+              subtitle: "Ашық деректер бойынша іздеу жүйесі, ұлттық көрсеткіштер және негізгі кіру нүктелері бар интерактивті басты бет",
+              tag: "БАСТЫ БЕТ",
+              image: "/assets/projects/openGov/hero-section.png"
+            },
+            {
+              id: "02",
+              title: "Ашық деректер дегеніміз не? Тұжырымдама",
+              subtitle: "Ашық мемлекеттік деректердің мәнін, ашықтық қағидаттарын және қоғамдық пайдасын түсіндіретін ақпараттық блок",
+              tag: "ДЕРЕКТЕР ТҰЖЫРЫМДАМАСЫ",
+              image: "/assets/projects/openGov/what-is-open-data.png"
+            },
+            {
+              id: "03",
+              title: "OpenGov.kz рөлі мен стратегиялық миссиясы",
+              subtitle: "Платформаның басты мақсаты: азаматтарды, әзірлеушілерді және мемлекеттік органдарды біртұтас цифрлық экожүйеге біріктіру",
+              tag: "МИССИЯ ЖӘНЕ РӨЛ",
+              image: "/assets/projects/openGov/the-role-of-opengov.png"
+            },
+            {
+              id: "04",
+              title: "Қазақстандағы ашық деректер экожүйесі",
+              subtitle: "Деректер жиынтығының көлемі, API қолданылуы және мемлекеттік органдармен интеграция көрсеткіштері",
+              tag: "ҚР ЭКОЖҮЙЕСІ",
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+            },
+            {
+              id: "05",
+              title: "Негізгі платформалар мен заңнамалық база",
+              subtitle: "Ашық мемлекеттік басқаруды реттейтін нормативтік-құқықтық актілер, стандарттар мен заңдар каталогы",
+              tag: "ЗАҢНАМА ЖӘНЕ СТАНДАРТТАР",
+              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+            },
+            {
+              id: "06",
+              title: "Табысты қолдану кейстері мен пайдасы",
+              subtitle: "Ашық деректер негізінде жасалған нақты азаматтық сервистер, зерттеу құралдары мен қоғамдық жобалар",
+              tag: "ТАБЫСТЫ КЕЙСТЕР",
+              image: "/assets/projects/openGov/successfull-use-cases.png"
+            },
+            {
+              id: "07",
+              title: "Азаматтық бастамалар мен жобалар каталогы",
+              subtitle: "Мемлекеттік бағдарламалар мен қоғамдық бастамалардың сүзгілері бар толыққанды каталогы",
+              tag: "ЖОБАЛАР КАТАЛОГЫ",
+              image: "/assets/projects/openGov/projects.png"
+            },
+            {
+              id: "08",
+              title: "Жаңалықтар мен ресми хабарламалар порталы",
+              subtitle: "Баспасөз релиздері, мемлекеттік есептер мен цифрлық жаңартулар жарияланатын бірыңғай жаңалықтар хабы",
+              tag: "ЖАҢАЛЫҚТАР ХАБЫ",
+              image: "/assets/projects/openGov/news.png"
+            },
+            {
+              id: "09",
+              title: "Өзекті жаңалықтар легі мен оқиғалар",
+              subtitle: "Ең соңғы жарияланымдар, алдағы қоғамдық тыңдаулар мен маңызды жаңалықтар топтамасы",
+              tag: "ЖАҢАЛЫҚТАР ЛЕГІ",
+              image: "/assets/projects/openGov/latest-news.png"
+            },
+            {
+              id: "10",
+              title: "Мақаланың және ресми жарияланымның толық парақшасы",
+              subtitle: "Ыңғайлы оқу интерфейсі, таза типографика, құжаттарды жүктеу және байланысты материалдар",
+              tag: "ТОЛЫҚ МАҚАЛА",
+              image: "/assets/projects/openGov/news-detail.png"
+            }
+          ],
+          dossier: {
+            projectType: "Ашық мемлекеттік деректер мен ашықтық порталы",
+            entryYear: "2024",
+            targetPlatform: "Веб-платформа (Next.js SSR & SSG)",
+            primaryRole: "Frontend Lead Инженер",
+            technologies: {
+              core: ["Next.js 14", "React 18", "TypeScript", "Tailwind CSS"],
+              i18n: ["next-intl (Қазақша, Орысша, Ағылшынша)"],
+              api: ["REST APIs", "Мемлекеттік ашық деректер JSON"],
+              perf: ["Vercel Edge Network", "Static Site Generation", "Lighthouse 98+"]
+            },
+            colorPalette: [
+              { name: "GovTech Көгілдір", hex: "#0070F3" },
+              { name: "Циан Көкжиек", hex: "#00DFD8" },
+              { name: "Қою Слейт", hex: "#0B1017" },
+              { name: "Бұлтты Ақ", hex: "#F3F6F9" }
+            ],
+            status: "PRODUCTION_ОРНАТЫЛДЫ"
+          },
+          overview: {
+            lead: "Азаматтық бастамалар мен мемлекеттік жобаларды ашық каталогтар және үш тілде ақпарат беру арқылы байланыстыратын жоғары өнімді ашық үкімет порталы.",
+            targetAudience: "Қазақстан азаматтары, зерттеушілер және мемлекеттік бағдарламалардың орындалуын, ашық бюджетті қадағалайтын қоғамдық бірлестіктер.",
+            challenge: "Мемлекеттік ресурстар жиі күрделі навигациядан, мобильді бейімделудің нашарлығынан, баяу жүктелуден және толық емес локализациядан зардап шегеді.",
+            solution: "Next.js және Tailwind CSS негізінде мінсіз үштілділігі бар (қазақ, орыс, ағылшын), жылдам SSR-рендерингі және WCAG 2.1 AA қолжетімділік стандарттары бар заманауи фронтенд нөлден жасалды.",
+            myRole: "Фронтенд сәулетін жасадым, дизайн-жүйе мен UI-компоненттер кітапханасын әзірледім, ашық деректердің REST API-лерін біріктірдім және Core Web Vitals көрсеткіштерін жоғары деңгейге шығардым."
+          },
+          walkthrough: {
+            concept: {
+              title: "Әрбір азамат үшін ашықтық пен қолжетімділік",
+              desc: "Таза, жылдам әрі сенімді веб-интерфейс арқылы мемлекеттік бастамалар мен халық арасындағы цифрлық кедергілерді жою.",
+              highlights: [
+                "Мемлекеттік толық үштілді жергіліктендіру (қазақ, орыс, ағылшын)",
+                "Смартфондарда тіпті секундтан аз SSR-жүктелу жылдамдығы",
+                "WCAG стандарттарына сәйкес келетін Mobile-first дизайны"
+              ]
+            },
+            architecture: {
+              title: "Көптілді серверлік веб-сәулет",
+              desc: "Статикалық генерациясы бар Next.js бағыттауышы іздеу жүйелерімен жылдам индекстеуді және сенімді кэштеуді қамтамасыз етеді.",
+              highlights: [
+                "Мемлекеттік порталдарға арналған модульдік дизайн-токендер",
+                "Жеңіл векторлық графика және нөлдік макет ауытқуы (CLS)",
+                "Экран оқу құралдары үшін қатаң семантикалық HTML5 құрылымы"
+              ]
+            },
+            features: [
+              { num: "01", title: "Динамикалық үштілді локализация", desc: "Қазақ, орыс және ағылшын тілдері арасында бетті қайта жүктемей жылдам ауысу.", metric: "3 Тіл" },
+              { num: "02", title: "Азаматтық бастамалар каталогы", desc: "Оншақты мемлекеттік бағдарламалар мен есептер бойынша интерактивті сүзгілеу және жылдам іздеу.", metric: "<15мс Іздеу" },
+              { num: "03", title: "Core Web Vitals оңтайландыруы", desc: "Өңірлердегі мобильді байланыс жылдамдығы төмен болған жағдайда да мінсіз жұмыс істеу.", metric: "99/100 Perf" }
+            ],
+            impact: {
+              metrics: [
+                { label: "LIGHTHOUSE", value: "99" },
+                { label: "SEO_SCORE", value: "100" },
+                { label: "ТІЛДЕР", value: "3" },
+                { label: "ЖҮКТЕЛУ", value: "0.4С" }
+              ]
+            }
+          }
         },
         {
           num: "04",
