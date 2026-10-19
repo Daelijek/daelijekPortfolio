@@ -21,12 +21,7 @@ export default function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.85,
     },
-    {
-      url: `${baseUrl}/projects/beyimtech-ai-platform`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
+
     {
       url: `${baseUrl}/projects/opengov-kz`,
       lastModified,

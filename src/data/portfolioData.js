@@ -314,154 +314,138 @@ export const portfolioContent = {
       featured: [
         {
           num: "01",
-          id: "FINANCE_MANAGEMENT_AI",
+          id: "FINANCE_MANAGEMENT_APP",
           slug: "finance-management-app",
-          title: "Finance Management Application",
-          tagline: "Autonomous personal finance ecosystem with real-time AI spending analytics",
-          category: "Full-Stack Mobile App & AI",
+          title: "FinTrack — Personal Finance Management",
+          tagline: "Cross-platform mobile application and asynchronous REST API for personal budget tracking, multi-account analytics, and financial control",
+          category: "Mobile & Backend // FinTech",
           isPrivate: false,
-          description: "Intelligent cross-platform personal finance ecosystem built with React Native (Expo) and a high-performance FastAPI/PostgreSQL backend. Features an integrated OpenAI assistant that analyzes spending patterns in real-time, interactive budget trackers, and automated limit alerts.",
-          tags: ["React Native", "Expo", "FastAPI", "OpenAI API", "PostgreSQL"],
+          description: "Full-stack personal finance application built with React Native (Expo) and FastAPI/PostgreSQL. Provides multi-account balance management, drag-and-drop category budgeting, visual expense analytics, multi-currency support (USD, EUR, KZT, RUB, GBP), and secure JWT/OAuth authentication.",
+          tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "ACTIVE_REPOSITORY",
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Home & Balance Overview",
+              subtitle: "Total balance card with monthly delta and recent transaction logs",
+              tag: "DASHBOARD",
+              image: "/assets/projects/fintrack/screen-01-home.jpg"
+            },
+            {
+              id: "02",
+              title: "Transactions & Category Distribution",
+              subtitle: "Categorized expense ring with instant category filtering",
+              tag: "TRANSACTIONS",
+              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+            },
+            {
+              id: "03",
+              title: "Budget Planning & Limits",
+              subtitle: "Real-time budget consumption bars with overspending warnings",
+              tag: "BUDGETS",
+              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+            },
+            {
+              id: "04",
+              title: "Monthly Analytics & Trends",
+              subtitle: "Interactive SVG spline charts tracking spending velocity",
+              tag: "ANALYTICS",
+              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+            },
+            {
+              id: "05",
+              title: "Financial Reports & Savings Rate",
+              subtitle: "Income vs expenses comparison with net balance indicators",
+              tag: "REPORTS",
+              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+            },
+            {
+              id: "06",
+              title: "Report Export Engine",
+              subtitle: "One-tap PDF and CSV generation with configurable period filters",
+              tag: "EXPORTS",
+              image: "/assets/projects/fintrack/screen-06-export.jpg"
+            },
+            {
+              id: "07",
+              title: "Profile & Account Management",
+              subtitle: "Multi-currency switcher, credit telemetry, and security settings",
+              tag: "PROFILE",
+              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+            },
+            {
+              id: "08",
+              title: "Conversational Financial Assistant",
+              subtitle: "Natural language query interface for spending and budget queries",
+              tag: "ASSISTANT",
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+            }
+          ],
           dossier: {
-            projectType: "AI-Powered FinTech Mobile Ecosystem",
+            projectType: "Full-Stack Personal Finance & Budget Management System",
             entryYear: "2024 - 2025",
-            targetPlatform: "Cross-Platform Mobile (iOS & Android) + Cloud API",
-            primaryRole: "Lead Mobile & Backend Software Engineer",
+            targetPlatform: "iOS & Android (React Native) + Async Cloud REST API (FastAPI)",
+            primaryRole: "Full-Stack Software Engineer & Mobile Developer",
             technologies: {
-              core: ["React Native", "Expo SDK", "TypeScript", "FastAPI (Python)"],
-              backend: ["Python 3.11", "PostgreSQL", "SQLAlchemy", "AsyncIO"],
-              aiCloud: ["OpenAI GPT API", "Vector Prompting", "Docker Containers"],
-              tools: ["NativeWind (Tailwind)", "Axios", "Zustand State Engine"]
+              core: ["React Native 0.79", "Expo 53", "FastAPI 0.115", "PostgreSQL", "Python 3.11"],
+              frontendUI: ["React Navigation 7", "React Native Paper", "React Native Chart Kit", "Draggable FlatList", "AsyncStorage", "i18next"],
+              backend: ["SQLAlchemy 2.0 ORM", "Alembic Migrations", "Pydantic v2", "Uvicorn"],
+              security: ["JWT Authentication", "bcrypt Hashing", "Google OAuth", "fastapi-mail Verification"]
             },
             colorPalette: [
-              { name: "Emerald Cyber", hex: "#00FF9F" },
-              { name: "Midnight Onyx", hex: "#090E11" },
-              { name: "Terminal Slate", hex: "#1A262C" },
-              { name: "Alert Crimson", hex: "#FF0055" }
+              { name: "Primary Blue", hex: "#2563EB" },
+              { name: "Sky Accent", hex: "#3B82F6" },
+              { name: "Income Emerald", hex: "#10B981" },
+              { name: "Expense Red", hex: "#EF4444" }
             ],
-            status: "ACTIVE_PRODUCTION_BUILD"
+            status: "DEPLOYED"
           },
           overview: {
-            lead: "An intelligent personal wealth and budgeting ecosystem engineered to help modern users automate expenditure monitoring, categorize cash flow in real-time, and make data-driven financial decisions via an integrated OpenAI assistant.",
-            targetAudience: "Designed for tech-savvy individuals, freelance contractors, and young professionals requiring real-time visibility into complex multi-currency finances without manual spreadsheet overhead.",
-            challenge: "Personal budgeting apps frequently suffer from tedious manual entry hurdles, vague categorization rules, and delayed bank sync latency that discourages consistent habit formation.",
-            solution: "Architected an end-to-end mobile client powered by React Native and Expo with instantaneous local caching, backed by an ultra-low latency FastAPI microservice. Built a conversational OpenAI financial advisor capable of scanning transaction history, answering budget questions in plain language, and forecasting upcoming monthly deficits.",
-            myRole: "Engineered the cross-platform UI/UX in React Native, authored the FastAPI REST APIs with PostgreSQL persistence, implemented OpenAI token-optimized prompts, and created real-time financial telemetry widgets."
+            lead: "A comprehensive personal finance ecosystem engineered to deliver seamless mobile budget tracking, multi-account balance aggregation, and visual spending analytics with an asynchronous, robust backend.",
+            targetAudience: "Individuals, freelancers, and families seeking organized multi-currency money management, budget discipline, and transparent expense insights across bank accounts and cash flows.",
+            challenge: "Traditional financial trackers often lack flexible multi-currency support, suffer from cumbersome transaction logging, offer static category structures without customization, and fail to provide responsive mobile performance across devices.",
+            solution: "Architected a decoupled architecture: an intuitive React Native mobile application paired with a high-throughput FastAPI REST API and PostgreSQL. Features dynamic category customization with drag-and-drop reordering, interactive SVG charts, multi-account tracking (savings, checking, credit), and secure JWT authentication with email verification.",
+            myRole: "Designed the relational database schema and API architecture, implemented the full FastAPI backend with SQLAlchemy 2.0 and Alembic migrations, developed the cross-platform React Native client with React Navigation 7 and Chart Kit, and implemented multi-language localization (KZ, RU, EN)."
           },
           walkthrough: {
             concept: {
-              title: "The Vision & Core Architecture",
-              desc: "The mission was to deliver zero-friction financial telemetry. Every tap reflects instant state updates with sub-50ms render latency and military-grade SSL data security.",
+              title: "Product Architecture & User Flow",
+              desc: "Engineered around high-speed transaction logging, flexible budget limits, and instant financial clarity across all active accounts and currencies.",
               highlights: [
-                "Real-time financial telemetry dashboard with interactive meters",
-                "Zero-latency optimistic UI updates backed by local storage",
-                "Contextual OpenAI financial analysis engine for plain-language queries"
+                "Unified financial overview with aggregate balance, savings, and credit health",
+                "Multi-currency support: dynamic conversion and preferences for USD, EUR, KZT, RUB, and GBP",
+                "Complete internationalization with on-the-fly language switching across Kazakh, Russian, and English"
               ]
             },
             architecture: {
-              title: "Dual-Engine Mobile & Backend Synergy",
-              desc: "Leveraging Expo SDK with React Native for native 60fps gesture handling, backed by Python FastAPI's asynchronous event loop and PostgreSQL relational queries.",
+              title: "Decoupled Client-Server Engine",
+              desc: "React Native frontend with Material Design components and Chart Kit analytics communicating with an asynchronous FastAPI microservice backed by PostgreSQL and SQLAlchemy 2.0.",
               highlights: [
-                "AsyncIO connection pooling for maximum API throughput",
-                "Encrypted credential storage via Expo SecureStore",
-                "Prompt engineering with dynamic spending context injection"
+                "High-concurrency async endpoints with Pydantic v2 validation and sub-50ms response latency",
+                "Local persistent caching via AsyncStorage for offline accessibility and fluid mobile UX",
+                "Secure auth cycle: JWT access/refresh tokens, bcrypt password hashing, Google OAuth, and email verification"
               ]
             },
             features: [
-              { num: "01", title: "Autonomous AI Financial Advisor", desc: "Interactive conversational agent that provides actionable breakdowns of spending velocity and anomalous charges.", metric: "<1.2s AI Response" },
-              { num: "02", title: "Dynamic Budget Limit Enforcer", desc: "Interactive threshold meters that pulse and alert users before category limits are breached.", metric: "100% Client-Side Sync" },
-              { num: "03", title: "Multi-Category Telemetry Charts", desc: "High-density data visualization charts tracking daily burn rates and investment savings ratios.", metric: "60 FPS Render" }
+              { num: "01", title: "Budget & Category Customization", desc: "Granular expense and income budget limits with custom icon assignment, HEX color palettes, and drag-and-drop category reordering.", metric: "Flexible Limits" },
+              { num: "02", title: "Multi-Account & Cash Tracking", desc: "Seamless management of checking accounts, savings deposits, and credit cards with payment method tagging (cash/card) and receipt attachments.", metric: "Multi-Account" },
+              { num: "03", title: "Visual Analytics & Dynamics", desc: "Interactive SVG line and donut charts illustrating category breakdowns, monthly spending velocity, and real-time threshold progress bars.", metric: "Real-Time Telemetry" }
             ],
             impact: {
               metrics: [
-                { label: "API_LATENCY", value: "38MS" },
-                { label: "AI_ACCURACY", value: "97.4%" },
-                { label: "TEST_COVERAGE", value: "91%" },
-                { label: "SYSTEM_UPTIME", value: "99.9%" }
+                { label: "API_LATENCY", value: "<50MS" },
+                { label: "CURRENCIES", value: "5 CODES" },
+                { label: "LOCALES", value: "KZ/RU/EN" },
+                { label: "SECURITY", value: "JWT+BCRYPT" }
               ]
             }
           }
         },
         {
           num: "02",
-          id: "BEYIMTECH_AI_ECOSYSTEM",
-          slug: "beyimtech-ai-platform",
-          title: "BeyimTech AI Platform",
-          tagline: "Adaptive AI learning ecosystem deployed across 20+ schools in Kazakhstan",
-          category: "Flutter // Riverpod // EdTech // AI",
-          isPrivate: false,
-          description: "Adaptive AI learning system deployed across 20+ schools in Kazakhstan with live telemetry, analytics, and custom educational content pipelines.",
-          tags: ["Flutter", "Riverpod", "Next.js", "AI Integration", "App Store"],
-          image: "/assets/beyim.png",
-          liveUrl: "https://beyim.ai",
-          githubUrl: "https://beyim.ai",
-          status: "ASTANA_HUB_RELEASE",
-          dossier: {
-            projectType: "Adaptive AI EdTech Mobile & Web Ecosystem",
-            entryYear: "2023 - 2024",
-            targetPlatform: "iOS, Android (Flutter) & Web Admin Dashboard",
-            primaryRole: "Lead Mobile Developer & AI Integrator",
-            technologies: {
-              core: ["Flutter", "Dart", "Riverpod State Mgmt", "Next.js"],
-              backend: ["REST APIs", "WebSocket Stream", "PostgreSQL"],
-              aiCloud: ["Adaptive Recommendation Engine", "Content Pipelines"],
-              tools: ["App Store Connect", "Google Play Console", "CI/CD"]
-            },
-            colorPalette: [
-              { name: "EdTech Violet", hex: "#7952FC" },
-              { name: "Cyan Spark", hex: "#00E5FF" },
-              { name: "Deep Navy", hex: "#0A0E1A" },
-              { name: "Cloud White", hex: "#FFFFFF" }
-            ],
-            status: "ASTANA_HUB_RELEASE"
-          },
-          overview: {
-            lead: "An intelligent adaptive learning platform built to personalize secondary education through AI diagnostics, dynamic task assignment, and real-time student progress telemetrics.",
-            targetAudience: "School students, educators, and school administrators across Kazakhstan requiring real-time diagnostic insights into academic performance.",
-            challenge: "Traditional educational apps lack adaptive difficulty scaling and suffer from fragmented student engagement across diverse devices and low-bandwidth school networks.",
-            solution: "Architected a high-performance cross-platform Flutter application using Riverpod for robust state management, integrated adaptive recommendation algorithms, and deployed seamless offline caching with local SQLite databases.",
-            myRole: "Led mobile client engineering from scratch in Flutter, built complex custom animations, integrated AI content evaluation endpoints, and orchestrated multi-store deployments."
-          },
-          walkthrough: {
-            concept: {
-              title: "Adaptive Learning for Every Student",
-              desc: "Personalized educational paths powered by real-time mastery tracking and engaging, gamified interface feedback.",
-              highlights: [
-                "Deployed and validated across 20+ pilot schools in Kazakhstan",
-                "Real-time diagnostic mastery graphs with sub-second feedback",
-                "Robust offline mode for low-connectivity classrooms"
-              ]
-            },
-            architecture: {
-              title: "Clean Flutter Architecture with Riverpod",
-              desc: "Separation of presentation, domain, and data layers with reactive state propagation and deterministic caching.",
-              highlights: [
-                "Riverpod providers for granular widget rebuild optimization",
-                "Secure token handling and role-based access for students and teachers",
-                "Optimized vector asset rendering for 60fps mobile transitions"
-              ]
-            },
-            features: [
-              { num: "01", title: "Adaptive Diagnostic Engine", desc: "Dynamic question complexity scaling based on student response accuracy and latency.", metric: "20+ Schools" },
-              { num: "02", title: "Teacher Telemetry Hub", desc: "Aggregated classroom analytics revealing learning gaps in real time.", metric: "Real-Time Sync" },
-              { num: "03", title: "Cross-Platform Consistency", desc: "Single Dart codebase delivering pixel-perfect parity on iOS and Android.", metric: "60 FPS Native" }
-            ],
-            impact: {
-              metrics: [
-                { label: "SCHOOLS", value: "20+" },
-                { label: "ENGAGEMENT", value: "+65%" },
-                { label: "CRASH_FREE", value: "99.8%" },
-                { label: "STORES", value: "iOS / Android" }
-              ]
-            }
-          }
-        },
-        {
-          num: "03",
           id: "OPENGOV_KZ_PORTAL",
           slug: "opengov-kz",
           title: "OpenGov.kz Platform",
@@ -535,7 +519,7 @@ export const portfolioContent = {
           }
         },
         {
-          num: "04",
+          num: "03",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Berik Zhunusbek Digital Gallery",
@@ -631,14 +615,6 @@ export const portfolioContent = {
           tag: "MOBILE & AI",
           status: "PRODUCTION",
           desc: "Smart financial tracking app with AI receipt processing and analytics."
-        },
-        {
-          id: "beyimtech",
-          title: "BeyimTech AI Platform",
-          category: "Flutter // Riverpod // EdTech // AI",
-          tag: "BEYIM.AI ECOSYSTEM",
-          status: "ASTANA HUB RELEASE",
-          desc: "Adaptive AI learning system deployed for 20+ schools with live telemetrics and analytics."
         },
         {
           id: "opengov",
@@ -1014,154 +990,138 @@ export const portfolioContent = {
       featured: [
         {
           num: "01",
-          id: "FINANCE_MANAGEMENT_AI",
+          id: "FINANCE_MANAGEMENT_APP",
           slug: "finance-management-app",
-          title: "Finance Management Application",
-          tagline: "Автономная кроссплатформенная экосистема учета личных финансов с AI-аналитикой трат",
-          category: "Full-Stack Мобильное приложение & AI",
+          title: "FinTrack — Управление персональными финансами",
+          tagline: "Кроссплатформенное мобильное приложение и асинхронный REST API для учета бюджета, аналитики счетов и контроля расходов",
+          category: "Мобильное приложение & Бэкенд / FinTech",
           isPrivate: false,
-          description: "Интеллектуальная кроссплатформенная экосистема для учета финансов на React Native (Expo) с бэкендом на FastAPI/PostgreSQL. Включает интегрированного AI-ассистента на базе OpenAI для анализа трат, интерактивные лимиты и графики бюджета.",
-          tags: ["React Native", "Expo", "FastAPI", "OpenAI API", "PostgreSQL"],
+          description: "Full-Stack экосистема для учета личных финансов, разработанная на React Native (Expo) и FastAPI/PostgreSQL. Включает агрегацию банковских счетов, гибкое бюджетирование с drag-and-drop сортировкой категорий, наглядную аналитику расходов, мультивалютность (KZT, USD, EUR, RUB, GBP) и безопасную авторизацию.",
+          tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "ACTIVE_REPOSITORY",
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Главный экран и баланс",
+              subtitle: "Карта общего баланса с помесячной дельтой и лентой операций",
+              tag: "ДАШБОРД",
+              image: "/assets/projects/fintrack/screen-01-home.jpg"
+            },
+            {
+              id: "02",
+              title: "Транзакции и распределение трат",
+              subtitle: "Кольцевая диаграмма расходов с быстрой фильтрацией по категориям",
+              tag: "ТРАНЗАКЦИИ",
+              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+            },
+            {
+              id: "03",
+              title: "Планирование и лимиты бюджетов",
+              subtitle: "Шкалы расхода бюджета в реальном времени с алертами перерасхода",
+              tag: "БЮДЖЕТ",
+              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+            },
+            {
+              id: "04",
+              title: "Месячная аналитика и графики",
+              subtitle: "Интерактивные сплайн-диаграммы динамики ежедневных расходов",
+              tag: "АНАЛИТИКА",
+              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+            },
+            {
+              id: "05",
+              title: "Финансовые отчеты и сальдо",
+              subtitle: "Сравнение доходов и расходов с показателем нормы сбережений",
+              tag: "ОТЧЕТЫ",
+              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+            },
+            {
+              id: "06",
+              title: "Экспорт финансовых отчетов",
+              subtitle: "Генерация отчетов в PDF и CSV с выбором отчетного периода",
+              tag: "ЭКСПОРТ",
+              image: "/assets/projects/fintrack/screen-06-export.jpg"
+            },
+            {
+              id: "07",
+              title: "Профиль и управление счетами",
+              subtitle: "Мультивалютный переключатель, кредитная телеметрия и настройки",
+              tag: "ПРОФИЛЬ",
+              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+            },
+            {
+              id: "08",
+              title: "Финансовый ассистент",
+              subtitle: "Диалоговый интерфейс запросов по балансам и советам по бюджету",
+              tag: "АССИСТЕНТ",
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+            }
+          ],
           dossier: {
-            projectType: "FinTech мобильная экосистема с искусственным интеллектом",
+            projectType: "Full-Stack мобильная система персональных финансов и бюджетирования",
             entryYear: "2024 - 2025",
-            targetPlatform: "Кроссплатформа (iOS & Android) + Cloud REST API",
-            primaryRole: "Lead Mobile & Backend Инженер",
+            targetPlatform: "iOS & Android (React Native) + Асинхронный Cloud REST API (FastAPI)",
+            primaryRole: "Full-Stack инженер & мобильный разработчик",
             technologies: {
-              core: ["React Native", "Expo SDK", "TypeScript", "FastAPI (Python)"],
-              backend: ["Python 3.11", "PostgreSQL", "SQLAlchemy", "AsyncIO"],
-              aiCloud: ["OpenAI GPT API", "Векторный промптинг", "Docker"],
-              tools: ["NativeWind (Tailwind)", "Axios", "Zustand"]
+              core: ["React Native 0.79", "Expo 53", "FastAPI 0.115", "PostgreSQL", "Python 3.11"],
+              frontendUI: ["React Navigation 7", "React Native Paper", "React Native Chart Kit", "Draggable FlatList", "AsyncStorage", "i18next"],
+              backend: ["SQLAlchemy 2.0 ORM", "Alembic Migrations", "Pydantic v2", "Uvicorn"],
+              security: ["JWT авторизация", "bcrypt хэширование", "Google OAuth", "fastapi-mail"]
             },
             colorPalette: [
-              { name: "Изумрудный Cyber", hex: "#00FF9F" },
-              { name: "Глубокий Оникс", hex: "#090E11" },
-              { name: "Терминальный Слейт", hex: "#1A262C" },
-              { name: "Сигнальный Кримсон", hex: "#FF0055" }
+              { name: "Основной синий", hex: "#2563EB" },
+              { name: "Небесный акцент", hex: "#3B82F6" },
+              { name: "Доходный зеленый", hex: "#10B981" },
+              { name: "Расходный красный", hex: "#EF4444" }
             ],
-            status: "АКТИВНЫЙ_PRODUCTION_БИЛД"
+            status: "PRODUCTION"
           },
           overview: {
-            lead: "Интеллектуальная персональная финансовая экосистема, созданная для полной автоматизации трекинга расходов, мгновенной категоризации денежных потоков и принятия финансовых решений с поддержкой встроенного OpenAI-ассистента.",
-            targetAudience: "Разработано для IT-специалистов, фрилансеров и молодых профессионалов, которым нужен наглядный контроль над мультивалютными бюджетами без ручной рутины в таблицах.",
-            challenge: "Большинство приложений для учета финансов отталкивают сложным ручным вводом, невнятной категоризацией и задержками синхронизации, из-за чего пользователи быстро забрасывают учет.",
-            solution: "Спроектировал мобильный клиент на React Native и Expo с мгновенным локальным кэшированием и асинхронный микросервис на FastAPI. Внедрил диалогового финансового советника на базе OpenAI, который анализирует структуру трат, отвечает на естественном языке и прогнозирует кассовые разрывы.",
-            myRole: "Спроектировал UI/UX на React Native, разработал REST API на FastAPI с персистентностью в PostgreSQL, оптимизировал промпты OpenAI и создал компоненты финансовой телеметрии в реальном времени."
+            lead: "Полнофункциональное мобильное приложение для персонального финансового учета, объединяющее управление несколькими счетами, гибкое планирование бюджетов и наглядную аналитику трат с высокопроизводительным асинхронным бэкендом.",
+            targetAudience: "Пользователи, фрилансеры и семьи, которым необходим прозрачный контроль мультивалютных финансов, дисциплина в бюджетах и быстрый учет операций наличными и картами.",
+            challenge: "Большинство существующих сервисов либо перегружены лишними подписками, либо не поддерживают мультивалютность (KZT/USD/EUR), не позволяют гибко настраивать свои категории расходов и медленно работают при слабом мобильном интернете.",
+            solution: "Спроектировал модульную архитектуру: кроссплатформенный клиент на React Native и асинхронный бэкенд на FastAPI с базой PostgreSQL. Реализовал кастомизацию категорий с drag-and-drop сортировкой, интерактивные SVG-графики расходов, поддержку мультивалютности, учет счетов (дебет, кредит, накопления) и безопасную аутентификацию с подтверждением почты.",
+            myRole: "Спроектировал реляционную схему данных и API, написал весь бэкенд на FastAPI с SQLAlchemy 2.0 и миграциями Alembic, разработал мобильное приложение на React Native с навигацией React Navigation 7, графиками Chart Kit и мультиязычностью (KZ, RU, EN)."
           },
           walkthrough: {
             concept: {
-              title: "Концепция и архитектурное ядро",
-              desc: "Главная цель — нулевое трение при фиксации финансовых операций. Каждый тап обновляет состояние с задержкой рендера менее 50 мс и сквозным SSL-шифрованием.",
+              title: "Архитектура продукта и пользовательский опыт",
+              desc: "Фокус на моментальной фиксации операций, прозрачном контроле лимитов по категориям и наглядном отображении общего финансового состояния.",
               highlights: [
-                "Дашборд финансовой телеметрии с интерактивными шкалами",
-                "Оптимистичные UI-апдейты без задержки сети",
-                "Контекстный анализ трат языковой моделью OpenAI"
+                "Сводная панель баланса: агрегация банковских счетов, накоплений и кредитных показателей",
+                "Мультивалютность: поддержка и переключение между KZT, USD, EUR, RUB и GBP",
+                "Полная интернационализация: мгновенное переключение языка между казахским, русским и английским"
               ]
             },
             architecture: {
-              title: "Синергия мобильного клиента и FastAPI",
-              desc: "Expo SDK и React Native обеспечивают нативную скорость 60 FPS для жестов и анимаций, а асинхронный event loop FastAPI мгновенно обрабатывает реляционные запросы PostgreSQL.",
+              title: "Асинхронный клиент-серверный стек",
+              desc: "React Native с компонентами Material Design и графиками Chart Kit, взаимодействующий с асинхронным микросервисом на FastAPI, PostgreSQL и SQLAlchemy 2.0.",
               highlights: [
-                "Пул соединений AsyncIO для максимальной пропускной способности",
-                "Защищенное хранилище токенов через Expo SecureStore",
-                "Промпт-инжиниринг с динамическим внедрением финансовых срезов"
+                "Высокая пропускная способность асинхронных эндпоинтов с валидацией Pydantic v2 и задержкой менее 50 мс",
+                "Локальное кэширование на AsyncStorage для быстродействия и плавной работы мобильного интерфейса",
+                "Надежный контур безопасности: токены JWT (access/refresh), хэширование bcrypt, Google OAuth и email-верификация"
               ]
             },
             features: [
-              { num: "01", title: "Автономный AI-советник", desc: "Диалоговый агент, формирующий детальные срезы динамики трат и предупреждающий об аномалиях.", metric: "<1.2с Ответ AI" },
-              { num: "02", title: "Контроль бюджетных лимитов", desc: "Пульсирующие индикаторы категорий, предупреждающие о перерасходе до совершения транзакции.", metric: "100% Клиентский Синхрон" },
-              { num: "03", title: "Графики финансовой телеметрии", desc: "Информативные визуализации burn rate и динамики накоплений.", metric: "60 FPS Рендер" }
+              { num: "01", title: "Кастомизация бюджетов и категорий", desc: "Установка лимитов по категориям с выбором иконок, HEX-палитры цветов и сортировкой drag-and-drop для максимального удобства.", metric: "Гибкие лимиты" },
+              { num: "02", title: "Мультисчета и детализация операций", desc: "Учет дебетовых, сберегательных и кредитных счетов, выбор способа оплаты (карта/наличные), прикрепление фото чеков и заметок.", metric: "Мультисчета" },
+              { num: "03", title: "Интерактивная аналитика и графики", desc: "Визуализация структуры расходов на SVG-диаграммах, отслеживание динамики по дням и прогресс-бары расхода бюджета.", metric: "Аналитика" }
             ],
             impact: {
               metrics: [
-                { label: "API_LATENCY", value: "38MS" },
-                { label: "AI_ACCURACY", value: "97.4%" },
-                { label: "TEST_COVERAGE", value: "91%" },
-                { label: "SYSTEM_UPTIME", value: "99.9%" }
+                { label: "ОТКЛИК_API", value: "<50МС" },
+                { label: "ВАЛЮТЫ", value: "5 КОДОВ" },
+                { label: "ЯЗЫКИ", value: "KZ/RU/EN" },
+                { label: "БЕЗОПАСНОСТЬ", value: "JWT+BCRYPT" }
               ]
             }
           }
         },
         {
           num: "02",
-          id: "BEYIMTECH_AI_ECOSYSTEM",
-          slug: "beyimtech-ai-platform",
-          title: "BeyimTech AI Platform",
-          tagline: "Адаптивная образовательная AI-экосистема, внедренная в 20+ школах Казахстана",
-          category: "Flutter // Riverpod // EdTech // AI",
-          isPrivate: false,
-          description: "Адаптивная образовательная AI-система, внедренная в 20+ школах Казахстана с телеметрией в реальном времени, аналитикой и генерацией контента.",
-          tags: ["Flutter", "Riverpod", "Next.js", "AI Integration", "App Store"],
-          image: "/assets/beyim.png",
-          liveUrl: "https://beyim.ai",
-          githubUrl: "https://beyim.ai",
-          status: "ASTANA_HUB_RELEASE",
-          dossier: {
-            projectType: "Адаптивная AI EdTech мобильная и веб-платформа",
-            entryYear: "2023 - 2024",
-            targetPlatform: "iOS, Android (Flutter) & Панель администратора на Web",
-            primaryRole: "Lead Mobile Разработчик & AI Интегратор",
-            technologies: {
-              core: ["Flutter", "Dart", "Riverpod State Mgmt", "Next.js"],
-              backend: ["REST APIs", "WebSocket Stream", "PostgreSQL"],
-              aiCloud: ["Адаптивный рекомендательный движок", "Конвейеры контента"],
-              tools: ["App Store Connect", "Google Play Console", "CI/CD"]
-            },
-            colorPalette: [
-              { name: "EdTech Фиолетовый", hex: "#7952FC" },
-              { name: "Неоновый Циан", hex: "#00E5FF" },
-              { name: "Глубокий Нэви", hex: "#0A0E1A" },
-              { name: "Облачный Белый", hex: "#FFFFFF" }
-            ],
-            status: "ASTANA_HUB_RELEASE"
-          },
-          overview: {
-            lead: "Интеллектуальная адаптивная образовательная платформа, созданная для персонализации школьного обучения с помощью AI-диагностики, динамического назначения заданий и отслеживания прогресса учеников в реальном времени.",
-            targetAudience: "Школьники, преподаватели и администраторы учебных заведений по всему Казахстану, которым необходима объективная диагностика успеваемости.",
-            challenge: "Традиционные образовательные платформы лишены гибкой адаптации сложности и страдают от неравномерной вовлеченности школьников на разных устройствах и при нестабильном интернете.",
-            solution: "Спроектировал высокопроизводительное кроссплатформенное приложение на Flutter с использованием Riverpod для реактивного управления состоянием, алгоритмами адаптивной сложности и надежным офлайн-кэшированием на базе SQLite.",
-            myRole: "С нуля разработал клиентское мобильное приложение на Flutter, внедрил сложные кастомные анимации, подключил AI-сервисы оценки знаний и организовал релизы в App Store и Google Play."
-          },
-          walkthrough: {
-            concept: {
-              title: "Адаптивное обучение для каждого ученика",
-              desc: "Персонализированные образовательные траектории, основанные на непрерывной оценке уровня понимания материала.",
-              highlights: [
-                "Успешное пилотное внедрение в 20+ школах Казахстана",
-                "Диагностические графики усвоения тем с обратной связью менее 1 сек",
-                "Отказоустойчивый офлайн-режим для сельских классов"
-              ]
-            },
-            architecture: {
-              title: "Чистая архитектура Flutter на Riverpod",
-              desc: "Четкое разделение UI, бизнес-логики и слоев данных с реактивным обновлением состояния.",
-              highlights: [
-                "Провайдеры Riverpod для точечной оптимизации рендеринга виджетов",
-                "Безопасная работа с токенами и ролевой доступ (ученик / учитель)",
-                "Оптимизация векторных ассетов для 60 FPS анимаций на слабых телефонах"
-              ]
-            },
-            features: [
-              { num: "01", title: "Адаптивный диагностический движок", desc: "Динамическая подстройка сложности задач под точность и время ответов ученика.", metric: "20+ Школ" },
-              { num: "02", title: "Телеметрический хаб преподавателя", desc: "Сводная аналитика по классу, мгновенно подсвечивающая пробелы в знаниях.", metric: "Real-Time Sync" },
-              { num: "03", title: "Кроссплатформенная стабильность", desc: "Единая кодовая база на Dart с идеальным совпадением логики на iOS и Android.", metric: "60 FPS Native" }
-            ],
-            impact: {
-              metrics: [
-                { label: "ШКОЛ", value: "20+" },
-                { label: "ВОВЛЕЧЕННОСТЬ", value: "+65%" },
-                { label: "CRASH_FREE", value: "99.8%" },
-                { label: "РЕЛИЗЫ", value: "iOS / Android" }
-              ]
-            }
-          }
-        },
-        {
-          num: "03",
           id: "OPENGOV_KZ_PORTAL",
           slug: "opengov-kz",
           title: "Платформа OpenGov.kz",
@@ -1235,7 +1195,7 @@ export const portfolioContent = {
           }
         },
         {
-          num: "04",
+          num: "03",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Галерея Берика Жунусбека",
@@ -1331,14 +1291,6 @@ export const portfolioContent = {
           tag: "MOBILE & AI",
           status: "PRODUCTION",
           desc: "Умный финансовый трекер с AI-распознаванием чеков и аналитикой трат."
-        },
-        {
-          id: "beyimtech",
-          title: "BeyimTech AI Platform",
-          category: "Flutter // Riverpod // EdTech // AI",
-          tag: "BEYIM.AI ECOSYSTEM",
-          status: "ASTANA HUB RELEASE",
-          desc: "Адаптивная AI-система обучения для 20+ школ с телеметрией и аналитикой."
         },
         {
           id: "opengov",
@@ -1714,36 +1666,138 @@ export const portfolioContent = {
       featured: [
         {
           num: "01",
-          id: "FINANCE_MANAGEMENT_AI",
+          id: "FINANCE_MANAGEMENT_APP",
           slug: "finance-management-app",
-          title: "Finance Management Application",
-          tagline: "Шығындарды нақты уақытта талдайтын AI-көмекшісі бар дербес қаржы экожүйесі",
-          category: "Full-Stack Мобильді қосымша & AI",
+          title: "FinTrack — Жеке қаржыны басқару",
+          tagline: "Бюджетті есепке алу, шоттар аналитикасы және шығындарды бақылауға арналған кроссплатформалық мобильді қосымша және асинхронды REST API",
+          category: "Мобильді қосымша және Бэкенд / FinTech",
           isPrivate: false,
-          description: "React Native (Expo) және FastAPI/PostgreSQL негізінде жасалған дербес қаржыны басқару экожүйесі. Шығындарды нақты уақытта талдайтын кірістірілген OpenAI көмекшісі, интерактивті бюджет пен автоматты ескертулер бар.",
-          tags: ["React Native", "Expo", "FastAPI", "OpenAI API", "PostgreSQL"],
+          description: "React Native (Expo) және FastAPI/PostgreSQL негізінде әзірленген жеке қаржыны басқаруға арналған Full-Stack экожүйесі. Банктік шоттарды біріктіру, санаттарды drag-and-drop арқылы реттеу, шығындар аналитикасы, мультивалюта (KZT, USD, EUR, RUB, GBP) және қауіпсіз JWT аутентификациясы қарастырылған.",
+          tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
           image: "/assets/Finance.png",
           liveUrl: "https://github.com/Daelijek/FinanceManagementApp",
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
-          status: "ACTIVE_REPOSITORY"
+          status: "PRODUCTION",
+          gallery: [
+            {
+              id: "01",
+              title: "Басты экран және жалпы баланс",
+              subtitle: "Айлық динамикасы мен соңғы операциялар тізімі бар баланс картасы",
+              tag: "БАСТЫ БЕТ",
+              image: "/assets/projects/fintrack/screen-01-home.jpg"
+            },
+            {
+              id: "02",
+              title: "Транзакциялар және санаттар",
+              subtitle: "Санаттар бойынша жылдам сүзгісі бар шығындардың дөңгелек диаграммасы",
+              tag: "ОПЕРАЦИЯЛАР",
+              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+            },
+            {
+              id: "03",
+              title: "Бюджетті жоспарлау және лимиттер",
+              subtitle: "Артық шығынды ескерту жүйесі бар бюджеттің орындалу шкаласы",
+              tag: "БЮДЖЕТ",
+              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+            },
+            {
+              id: "04",
+              title: "Айлық аналитика және графиктік есеп",
+              subtitle: "Күнделікті шығындар серпінін көрсететін интерактивті сплайн-диаграммалар",
+              tag: "АНАЛИТИКА",
+              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+            },
+            {
+              id: "05",
+              title: "Қаржылық есептер және сальдо",
+              subtitle: "Кірістер мен шығыстарды салыстыру және жинақтау пайызы",
+              tag: "ЕСЕПТЕР",
+              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+            },
+            {
+              id: "06",
+              title: "Қаржылық есептерді экспорттау",
+              subtitle: "Таңдалған кезеңге арналған PDF және CSV форматындағы есептер",
+              tag: "ЭКСПОРТ",
+              image: "/assets/projects/fintrack/screen-06-export.jpg"
+            },
+            {
+              id: "07",
+              title: "Профиль және шоттарды басқару",
+              subtitle: "Мультивалюталық ауыстырғыш, несие телеметриясы және баптаулар",
+              tag: "ПРОФИЛЬ",
+              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+            },
+            {
+              id: "08",
+              title: "Қаржылық көмекші",
+              subtitle: "Бюджет және шығыстар бойынша табиғи тілдегі кеңесші интерфейсі",
+              tag: "КӨМЕКШІ",
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+            }
+          ],
+          dossier: {
+            projectType: "Жеке қаржы мен бюджетті басқаруға арналған Full-Stack жүйесі",
+            entryYear: "2024 - 2025",
+            targetPlatform: "iOS & Android (React Native) + Асинхронды Cloud REST API (FastAPI)",
+            primaryRole: "Full-Stack инженер және мобильді әзірлеуші",
+            technologies: {
+              core: ["React Native 0.79", "Expo 53", "FastAPI 0.115", "PostgreSQL", "Python 3.11"],
+              frontendUI: ["React Navigation 7", "React Native Paper", "React Native Chart Kit", "Draggable FlatList", "AsyncStorage", "i18next"],
+              backend: ["SQLAlchemy 2.0 ORM", "Alembic Migrations", "Pydantic v2", "Uvicorn"],
+              security: ["JWT аутентификация", "bcrypt хэштеу", "Google OAuth", "fastapi-mail"]
+            },
+            colorPalette: [
+              { name: "Негізгі көк", hex: "#2563EB" },
+              { name: "Аспан көк", hex: "#3B82F6" },
+              { name: "Кіріс жасылы", hex: "#10B981" },
+              { name: "Шығыс қызылы", hex: "#EF4444" }
+            ],
+            status: "PRODUCTION"
+          },
+          overview: {
+            lead: "Бірнеше шотты басқаруды, икемді бюджеттеуді және шығындар аналитикасын жылдам асинхронды бэкендпен үйлестіретін толыққанды мобильді қаржылық қосымша.",
+            targetAudience: "Мультивалюталық қаржысын ашық бақылап, бюджеттік тәртіп орнатқысы келетін және қолма-қол ақша мен карта операцияларын жеңіл тіркеуді қалайтын қолданушылар мен фрилансерлер.",
+            challenge: "Қолданыстағы қосымшалар көбінесе KZT/USD/EUR сияқты жергілікті мультивалюталық режимді қолдамайды, санаттарды икемді реттеуге мүмкіндік бермейді және интернет баяу болғанда қатып қалады.",
+            solution: "Модульдік архитектура жасалды: React Native клиенті және PostgreSQL дерекқоры бар асинхронды FastAPI бэкенді. Drag-and-drop арқылы санаттарды реттеу, интерактивті SVG-графиктер, шоттарды есепке алу (дебет, несие, жинақ) және email растауы бар қауіпсіз авторизация енгізілді.",
+            myRole: "Реляциялық деректер сұлбасы мен API архитектурасын жобалау, FastAPI және SQLAlchemy 2.0-де Alembic миграцияларымен толық бэкенд жазу, React Native-те React Navigation 7 және Chart Kit қолданып мобильді клиент әзірлеу, 3 тілдік локализацияны (KZ, RU, EN) қосу."
+          },
+          walkthrough: {
+            concept: {
+              title: "Өнім архитектурасы және пайдаланушы тәжірибесі",
+              desc: "Операцияларды жылдам енгізуге, санаттар бойынша лимиттерді қадағалауға және жалпы қаржылық жағдайды нақты көрсетуге бағытталған.",
+              highlights: [
+                "Жиынтық баланс панелі: банктік шоттар, жинақтар және несиелік көрсеткіштер агрегациясы",
+                "Мультивалюталық қолдау: KZT, USD, EUR, RUB және GBP арасында жылдам ауысу",
+                "Толық интернационализация: қазақ, орыс және ағылшын тілдерін қосымша ішінде ауыстыру"
+              ]
+            },
+            architecture: {
+              title: "Асинхронды клиент-серверлік стек",
+              desc: "Material Design компоненттері мен Chart Kit графиктері бар React Native клиенті FastAPI, PostgreSQL және SQLAlchemy 2.0 микросервисімен байланысқан.",
+              highlights: [
+                "Pydantic v2 валидациясы мен 50 мс-тан төмен кідірісі бар жоғары өнімді асинхронды эндпоинттер",
+                "Мобильді интерфейстің үздіксіз жұмысы үшін AsyncStorage арқылы жергілікті кештеу",
+                "Сенімді қауіпсіздік шеңбері: JWT токендері (access/refresh), bcrypt хэштеу, Google OAuth және email растау"
+              ]
+            },
+            features: [
+              { num: "01", title: "Бюджет пен санаттарды баптау", desc: "Санаттар бойынша шекті сомаларды белгілеу, белгішелер мен түс палитрасын таңдау, drag-and-drop арқылы реттеу.", metric: "Икемді лимиттер" },
+              { num: "02", title: "Мультишоттар және операциялар", desc: "Дебеттік, жинақ және несиелік шоттарды басқару, төлем түрін таңдау (карта/қолма-қол), түбіртектер суреті мен жазбаларды қосу.", metric: "Мультишоттар" },
+              { num: "03", title: "Интерактивті аналитика және графиктер", desc: "SVG-диаграммалар арқылы шығындар құрылымын бақылау, күнделікті динамика және бюджеттің жұмсалу шкалалары.", metric: "Аналитика" }
+            ],
+            impact: {
+              metrics: [
+                { label: "API_ЖЫЛДАМДЫҒЫ", value: "<50МС" },
+                { label: "ВАЛЮТАЛАР", value: "5 КОД" },
+                { label: "ТІЛДЕР", value: "KZ/RU/EN" },
+                { label: "ҚАУІПСІЗДІК", value: "JWT+BCRYPT" }
+              ]
+            }
+          }
         },
         {
           num: "02",
-          id: "BEYIMTECH_AI_ECOSYSTEM",
-          slug: "beyimtech-ai-platform",
-          title: "BeyimTech AI Platform",
-          tagline: "Қазақстандағы 20+ мектепке енгізілген бейімделгіш AI оқыту экожүйесі",
-          category: "Flutter // Riverpod // EdTech // AI",
-          isPrivate: false,
-          description: "Қазақстандағы 20+ мектепке енгізілген, нақты уақыттағы телеметриясы, аналитикасы мен білім беру контенті бар бейімделгіш AI оқыту жүйесі.",
-          tags: ["Flutter", "Riverpod", "Next.js", "AI Integration", "App Store"],
-          image: "/assets/beyim.png",
-          liveUrl: "https://beyim.ai",
-          githubUrl: "https://beyim.ai",
-          status: "ASTANA_HUB_RELEASE"
-        },
-        {
-          num: "03",
           id: "OPENGOV_KZ_PORTAL",
           slug: "opengov-kz",
           title: "OpenGov.kz Платформасы",
@@ -1758,7 +1812,7 @@ export const portfolioContent = {
           status: "PRODUCTION_DEPLOYED"
         },
         {
-          num: "04",
+          num: "03",
           id: "BERIK_ZHUNUSBEK_WEB",
           slug: "berik-zhunusbek",
           title: "Берік Жүнісбек галереясы",

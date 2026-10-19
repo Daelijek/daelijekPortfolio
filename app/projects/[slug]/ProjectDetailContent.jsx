@@ -1,23 +1,296 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useThemeAudio } from '../../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../../src/data/portfolioData';
 import {
   ExternalLink,
   ArrowLeft,
   ArrowRight,
-  Monitor,
-  Smartphone,
-  Layers,
+  ShieldCheck,
   Cpu,
-  Zap
+  Zap,
+  Sparkles,
+  CheckCircle2,
+  Layers,
+  Users,
+  UserCheck,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Maximize2
 } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
+
+/**
+ * Infinite Interactive Gallery Ribbon
+ * - Infinite seamless auto-scrolling with GPU translate3d compositing
+ * - Physically smoothed deceleration on hover and smooth acceleration on resume
+ * - Nudge arrows with smooth velocity interpolation
+ * - No horizontal scrollbar / line (overflow: hidden)
+ * - Complete drag & selection prevention across images, cards, and text
+ * - Click-to-preview lightbox modal
+ */
+function InfiniteGalleryRibbon({ items, lang, playClick, playHover, onOpenModal, isModalOpen }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const isHoveredRef = useRef(false);
+  isHoveredRef.current = isHovered || isModalOpen;
+
+  const tapeRef = useRef(null);
+  const set1Ref = useRef(null);
+  const offsetRef = useRef(0);
+  const currentSpeedRef = useRef(0.65); // base slow speed in px/frame (~39px/s)
+  const nudgeDeltaRef = useRef(0);
+  const setWidthRef = useRef(0);
+  const rafIdRef = useRef(null);
+
+  // Ensure base set has at least 6 items for ultra-smooth seamless looping on wide displays
+  const normalizedItems = useMemo(() => {
+    if (!items || items.length === 0) return [];
+    let list = items;
+    while (list.length < 6) {
+      list = [...list, ...items];
+    }
+    return list;
+  }, [items]);
+
+  useEffect(() => {
+    const baseSpeed = 0.65;
+    let lastTime = performance.now();
+
+    const measureWidth = () => {
+      if (set1Ref.current && tapeRef.current) {
+        const rect = set1Ref.current.getBoundingClientRect();
+        const style = window.getComputedStyle(tapeRef.current);
+        const gap = parseFloat(style.columnGap || style.gap || '24') || 24;
+        if (rect.width > 0) {
+          setWidthRef.current = rect.width + gap;
+        }
+      }
+    };
+
+    measureWidth();
+    const timer = setTimeout(measureWidth, 150);
+    const ro = new ResizeObserver(() => measureWidth());
+    if (set1Ref.current) ro.observe(set1Ref.current);
+
+    const animate = (time) => {
+      const dt = Math.min((time - lastTime) / (1000 / 60), 3);
+      lastTime = time;
+
+      // When hovered or modal is open: target speed is 0; otherwise baseSpeed
+      const targetSpeed = isHoveredRef.current ? 0 : baseSpeed;
+
+      // Smooth momentum lerp:
+      // Hover stop: 0.07 gives a silky-smooth ~400ms deceleration curve
+      // Resume: 0.045 gives a gentle smooth acceleration
+      const lerpFactor = isHoveredRef.current ? 0.07 : 0.045;
+      currentSpeedRef.current += (targetSpeed - currentSpeedRef.current) * (lerpFactor * dt);
+
+      if (isHoveredRef.current && Math.abs(currentSpeedRef.current) < 0.005) {
+        currentSpeedRef.current = 0;
+      }
+
+      // Handle manual arrow nudge with smooth easing
+      if (Math.abs(nudgeDeltaRef.current) > 0.2) {
+        const nudgeStep = nudgeDeltaRef.current * (0.08 * dt);
+        offsetRef.current += nudgeStep;
+        nudgeDeltaRef.current -= nudgeStep;
+      }
+
+      // Increment continuous position
+      offsetRef.current += currentSpeedRef.current * dt;
+
+      // Seamless infinite modulo loop
+      const setW = setWidthRef.current;
+      if (setW > 0) {
+        if (offsetRef.current >= setW) {
+          offsetRef.current = offsetRef.current % setW;
+        } else if (offsetRef.current < 0) {
+          offsetRef.current = (offsetRef.current % setW) + setW;
+        }
+      }
+
+      if (tapeRef.current) {
+        tapeRef.current.style.transform = `translate3d(-${offsetRef.current}px, 0, 0)`;
+      }
+
+      rafIdRef.current = requestAnimationFrame(animate);
+    };
+
+    rafIdRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      clearTimeout(timer);
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      ro.disconnect();
+    };
+  }, []);
+
+  const handleNudge = (direction) => {
+    playClick?.();
+    const amount = direction === 'left' ? -320 : 320;
+    nudgeDeltaRef.current += amount;
+  };
+
+  const renderCard = (item, keyIndex) => (
+    <div
+      key={keyIndex}
+      onClick={() => {
+        playClick?.();
+        onOpenModal?.(item);
+      }}
+      onMouseEnter={playHover}
+      draggable={false}
+      onDragStart={(e) => e.preventDefault()}
+      style={{ userSelect: 'none', WebkitUserSelect: 'none', WebkitUserDrag: 'none' }}
+      className="w-[230px] sm:w-[260px] md:w-[280px] shrink-0 group/card cursor-pointer select-none"
+    >
+      {/* Device Mockup Shell */}
+      <div className="relative rounded-[2.2rem] p-2.5 bg-[#090D14] border border-white/10 group-hover/card:border-[var(--accent-color)]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.7)] group-hover/card:shadow-[0_20px_50px_var(--card-hover-glow)] group-hover/card:-translate-y-2 select-none">
+        {/* Top Dynamic Island / Bezel */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-3.5 bg-black/80 rounded-full z-20 pointer-events-none border border-white/5 select-none" />
+
+        {/* Screen Image Frame */}
+        <div className="relative aspect-[9/19.5] w-full rounded-[1.7rem] overflow-hidden bg-black select-none">
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
+            className="object-cover object-top group-hover/card:scale-105 transition-transform duration-500 pointer-events-none select-none"
+            sizes="(max-width: 640px) 230px, 280px"
+            style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
+          />
+          <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100 pointer-events-none select-none">
+            <span className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg select-none">
+              <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+              <span>{lang === 'ru' ? 'Открыть' : 'Preview'}</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Card Caption Info */}
+        <div className="p-3 pt-3.5 space-y-1 select-none">
+          <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider block uppercase select-none">
+            {item.tag || `SCREEN`}
+          </span>
+          <h3 className="text-xs sm:text-sm font-bold text-white font-display group-hover/card:text-[var(--accent-color)] transition-colors truncate select-none">
+            {item.title}
+          </h3>
+          <p className="text-[11px] text-white/50 font-sans line-clamp-1 select-none">
+            {item.subtitle}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="space-y-6 select-none" style={{ userSelect: 'none', WebkitUserSelect: 'none' }}>
+      {/* Header & Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5 select-none">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] shadow-[0_0_8px_var(--accent-color)]" />
+            <span className="text-xs font-mono font-bold text-[var(--accent-color)] uppercase tracking-wider">
+              // INTERFACE_GALLERY_TAPE
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-tight">
+            {lang === 'ru'
+              ? 'Лента интерфейса приложения'
+              : lang === 'kk'
+              ? 'Қосымшаның интерфейс лентасы'
+              : 'Interactive Mobile Ribbon'}
+          </h2>
+          <p className="text-xs sm:text-sm text-white/60 font-sans max-w-xl">
+            {lang === 'ru'
+              ? 'Бесконечная интерактивная лента: наведите для плавной остановки или нажмите для детального просмотра.'
+              : lang === 'kk'
+              ? 'Шексіз интерактивті лента: бірқалыпты тоқтату үшін меңзерді апарыңыз немесе толық көру үшін басыңыз.'
+              : 'Infinite interactive tape: hover to smoothly pause or click any card to inspect UI details.'}
+          </p>
+        </div>
+
+        {/* Nudge Arrow Controls */}
+        <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+          <button
+            type="button"
+            onClick={() => handleNudge('left')}
+            onMouseEnter={playHover}
+            className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/70 hover:text-white transition-all active:scale-95"
+            aria-label="Previous screen"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNudge('right')}
+            onMouseEnter={playHover}
+            className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/70 hover:text-white transition-all active:scale-95"
+            aria-label="Next screen"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Infinite Ribbon Track with Gradient Fade Masks & ZERO Scrollbar Line */}
+      <div
+        className="relative overflow-hidden py-3 select-none"
+        onMouseEnter={() => {
+          setIsHovered(true);
+          isHoveredRef.current = true;
+        }}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          isHoveredRef.current = false;
+        }}
+        onTouchStart={() => {
+          setIsHovered(true);
+          isHoveredRef.current = true;
+        }}
+        onTouchEnd={() => {
+          setIsHovered(false);
+          isHoveredRef.current = false;
+        }}
+        style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+      >
+        {/* Left & Right Subtle Fade Masks */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-r from-[#040608] via-[#040608]/85 to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-20 bg-gradient-to-l from-[#040608] via-[#040608]/85 to-transparent z-10" />
+
+        {/* Continuous Moving Tape Container */}
+        <div
+          ref={tapeRef}
+          className="flex gap-5 sm:gap-6 will-change-transform select-none"
+          style={{ width: 'max-content' }}
+        >
+          {/* Set 1 (measured for seamless modulo width) */}
+          <div ref={set1Ref} className="flex gap-5 sm:gap-6 shrink-0">
+            {normalizedItems.map((item, idx) => renderCard(item, `set1-${idx}-${item.id || idx}`))}
+          </div>
+
+          {/* Set 2 (seamless continuation) */}
+          <div className="flex gap-5 sm:gap-6 shrink-0" aria-hidden="true">
+            {normalizedItems.map((item, idx) => renderCard(item, `set2-${idx}-${item.id || idx}`))}
+          </div>
+
+          {/* Set 3 (buffer for ultra-wide displays) */}
+          <div className="flex gap-5 sm:gap-6 shrink-0" aria-hidden="true">
+            {normalizedItems.map((item, idx) => renderCard(item, `set3-${idx}-${item.id || idx}`))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ProjectDetailContent({ slug: propSlug }) {
   const params = useParams();
@@ -28,12 +301,15 @@ export default function ProjectDetailContent({ slug: propSlug }) {
 
   // Find project by slug
   const project = useMemo(() => {
-    const featuredMatch = projectsData.featured.find((p) => p.slug === slug || p.id.toLowerCase() === slug);
+    const featuredMatch = projectsData.featured.find(
+      (p) => p.slug === slug || p.id.toLowerCase() === slug
+    );
     if (featuredMatch) return featuredMatch;
 
-    const otherMatch = projectsData.otherProjects.find((p) => p.slug === slug || p.id.toLowerCase() === slug);
+    const otherMatch = projectsData.otherProjects.find(
+      (p) => p.slug === slug || p.id.toLowerCase() === slug
+    );
     if (otherMatch) {
-      // Create fallback dossier structure for secondary projects
       return {
         num: otherMatch.id,
         id: otherMatch.id,
@@ -47,7 +323,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         image: '/assets/Finance.png',
         liveUrl: otherMatch.url,
         githubUrl: otherMatch.url,
-        status: 'ARCHIVE_SPECIMEN',
+        status: 'ARCHIVE_DEPLOYED',
         dossier: {
           projectType: 'System Utility & Experiment',
           entryYear: '2023 - 2024',
@@ -64,14 +340,14 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             { name: 'Dark Void', hex: '#060A10' },
             { name: 'Slate Gray', hex: '#8E9CA8' }
           ],
-          status: 'ARCHIVE_DEPLOYED'
+          status: 'DEPLOYED'
         },
         overview: {
           lead: otherMatch.desc,
-          targetAudience: 'Engineers, researchers, and system administrators seeking automated workflow utilities.',
-          challenge: 'Streamlining repetitive processes with low-latency and lightweight execution overhead.',
-          solution: 'Engineered a resilient standalone codebase adhering to clean code principles and distributed computing.',
-          myRole: 'Architected and built the full application lifecycle, documentation, and repository pipeline.'
+          targetAudience: 'Engineers & Developers',
+          challenge: 'Repetitive workflows with high execution overhead.',
+          solution: 'Lightweight standalone architecture with minimal dependencies.',
+          myRole: 'Full application development and deployment'
         },
         walkthrough: {
           concept: {
@@ -100,11 +376,10 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       };
     }
 
-    // Default fallback to first featured project
     return projectsData.featured[0];
   }, [slug, projectsData]);
 
-  // Determine Next Project for bottom navigation
+  // Determine Next Project for footer
   const nextProject = useMemo(() => {
     const all = projectsData.featured;
     const currentIndex = all.findIndex((p) => p.slug === project.slug);
@@ -114,890 +389,651 @@ export default function ProjectDetailContent({ slug: propSlug }) {
     return all[currentIndex + 1];
   }, [project, projectsData]);
 
-  // Scroll Progress Tracker
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeTab, setActiveTab] = useState('concept');
-  const [activeDeviceView, setActiveDeviceView] = useState('desktop'); // 'desktop' | 'mobile'
-
-  // Cursor Following Preview for Next Project Footer
+  // Floating Cursor Preview for Next Project Footer
   const [isNextHovered, setIsNextHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const nextSectionRef = useRef(null);
 
-  const handleNextMouseMove = (e) => {
-    if (!nextSectionRef.current) return;
-    const rect = nextSectionRef.current.getBoundingClientRect();
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
+  // Gallery Modal Lightbox State
+  const [activeModalScreen, setActiveModalScreen] = useState(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll <= 0) {
-        setScrollProgress(0);
-        return;
-      }
-      const currentScroll = window.scrollY;
-      const progress = Math.min(100, Math.max(0, Math.round((currentScroll / totalScroll) * 100)));
-      setScrollProgress(progress);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setActiveModalScreen(null);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const updateNextMouseCoords = (e) => {
+    const halfWidth = 150;
+    const clampedX = typeof window !== 'undefined'
+      ? Math.max(halfWidth + 12, Math.min(window.innerWidth - halfWidth - 12, e.clientX))
+      : e.clientX;
+    return {
+      x: clampedX,
+      y: e.clientY,
+    };
+  };
+
+  const handleNextMouseEnter = (e) => {
+    playHover?.();
+    const coords = updateNextMouseCoords(e);
+    setMousePos(coords);
+    setIsNextHovered(true);
+  };
+
+  const handleNextMouseMove = (e) => {
+    const coords = updateNextMouseCoords(e);
+    setMousePos(coords);
+  };
+
+  // Scroll-driven sticky header & animated shrinking project title
+  const { scrollY } = useScroll();
+  const backBtnRef = useRef(null);
+  const [backWidth, setBackWidth] = useState(140);
+
+  useEffect(() => {
+    const measureBackWidth = () => {
+      if (backBtnRef.current) {
+        const w = backBtnRef.current.offsetWidth;
+        setBackWidth(w > 0 ? w + 16 : 140);
+      }
+    };
+    measureBackWidth();
+    window.addEventListener('resize', measureBackWidth);
+    return () => window.removeEventListener('resize', measureBackWidth);
+  }, []);
+
+  // Continuous real-time scroll transforms:
+  // Title moves from below back button into top navbar row and scales down to compact size
+  const titleScale = useTransform(scrollY, [0, 110], [1, 0.38]);
+  const titleY = useTransform(scrollY, [0, 110], [58, 0]);
+  const titleX = useTransform(scrollY, [0, 110], [-backWidth, 0]);
+
+  const backText = lang === 'ru' ? 'Все проекты' : lang === 'kk' ? 'Барлық жобалар' : 'All Projects';
+  const roleLabel = lang === 'ru' ? 'Роль' : lang === 'kk' ? 'Рөлі' : 'Role';
+  const platformLabel = lang === 'ru' ? 'Платформа' : lang === 'kk' ? 'Платформа' : 'Platform';
+  const yearLabel = lang === 'ru' ? 'Год' : lang === 'kk' ? 'Жыл' : 'Year';
+  const challengeTitle = lang === 'ru' ? 'Проблема и контекст' : lang === 'kk' ? 'Мәселе және контекст' : 'The Challenge';
+  const solutionTitle = lang === 'ru' ? 'Инженерное решение' : lang === 'kk' ? 'Инженерлік шешім' : 'The Solution';
+  const audienceLabel = lang === 'ru' ? 'Целевая аудитория' : lang === 'kk' ? 'Мақсатты аудитория' : 'Target Audience';
+  const archTitle = lang === 'ru' ? 'Архитектура и технологический стек' : lang === 'kk' ? 'Сәулет және технологиялық стек' : 'Architecture & Tech Stack';
+  const featuresTitle = lang === 'ru' ? 'Ключевые возможности' : lang === 'kk' ? 'Негізгі мүмкіндіктер' : 'Core Capabilities';
+  const nextCaseText = lang === 'ru' ? 'Следующий кейс' : lang === 'kk' ? 'Келесі жоба' : 'Next Case Study';
+
   return (
-    <div className="min-h-screen text-white font-mono selection:bg-[var(--accent-color)] selection:text-[#040608]">
+    <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0">
       {/* ========================================================================= */}
-      {/* 1. STICKY TOP HUD CONTROLS (Aligned with content section margins)          */}
+      {/* UNIFIED STICKY SCROLL-ANIMATED HEADER (100% Transparent, No Container Box) */}
       {/* ========================================================================= */}
-      <Motion.div
-        initial={{ opacity: 0, y: -14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="sticky top-4 sm:top-6 z-40 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto pointer-events-none mb-4 sm:mb-6"
+      <Motion.header
+        className="sticky top-0 z-40 w-full bg-transparent border-none shadow-none pointer-events-none select-none"
       >
-        <div className="pointer-events-auto flex items-center justify-between gap-3 p-2.5 sm:p-3 rounded-2xl bg-[#040608]/92 backdrop-blur-2xl border border-white/10 shadow-2xl">
-          {/* Breadcrumbs & Back Button */}
-          <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
-            <Link
-              href="/projects"
-              onClick={playClick}
-              onMouseEnter={playHover}
-              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 hover:text-[var(--accent-color)] transition-all group"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-bold tracking-wider uppercase text-[10px] sm:text-[11px]">
-                {lang === 'ru' ? 'ПРОЕКТЫ' : 'PROJECTS'}
+        <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pointer-events-auto">
+          <div className="h-16 sm:h-20 flex items-center justify-between gap-4">
+            {/* Left: Back button + Animated Shrinking Title Target */}
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <Link
+                ref={backBtnRef}
+                href="/projects"
+                onClick={playClick}
+                onMouseEnter={playHover}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/80 hover:text-white transition-all group shrink-0 backdrop-blur-sm"
+              >
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                <span className="font-mono font-semibold uppercase tracking-wider text-xs hidden sm:inline">
+                  {backText}
+                </span>
+              </Link>
+
+              {/* Title: starts as large hero title below back button, shrinks & docks on scroll */}
+              <Motion.div
+                style={{
+                  x: titleX,
+                  y: titleY,
+                  scale: titleScale,
+                  transformOrigin: '0% 50%',
+                }}
+                className="shrink min-w-0 will-change-transform pointer-events-auto"
+              >
+                <h1 className="font-display font-black uppercase tracking-tight text-white text-[clamp(1.5rem,3.2vw,3.5rem)] whitespace-nowrap drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] max-w-full">
+                  {project.title}
+                </h1>
+              </Motion.div>
+            </div>
+
+            {/* Right: Actions */}
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 font-mono text-xs">
+              <span className="px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/25 font-bold text-[11px] hidden sm:inline">
+                {project.num}
               </span>
-            </Link>
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95 shadow-md"
+                >
+                  <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.githubUrl && !project.isPrivate && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white/80 hover:text-white text-xs font-bold transition-all backdrop-blur-sm"
+                >
+                  <FaGithub className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{lang === 'ru' ? 'Код' : 'Code'}</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </Motion.header>
 
-            <span className="hidden sm:inline text-white/30 text-xs">/</span>
-            <span className="hidden sm:inline text-white/70 text-xs font-mono truncate max-w-[150px] lg:max-w-[320px]">
-              {project.title}
+      {/* ========================================================================= */}
+      {/* 1. HERO CONTENT CONTAINER (Spacious flow directly below sticky header)    */}
+      {/* ========================================================================= */}
+      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 sm:pt-20">
+        <Motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.1 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-6 mb-12 sm:mb-16"
+        >
+          <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
+            <span className="text-[var(--accent-color)] font-bold uppercase tracking-wider">
+              {project.category}
             </span>
-
-            <span className="px-2 py-0.5 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[10px] text-[var(--accent-color)] font-bold">
-              {project.num}
+            <span className="text-white/30">&bull;</span>
+            <span className="text-white/50">{project.dossier?.entryYear || '2025'}</span>
+            <span className="text-white/30">&bull;</span>
+            <span className="text-emerald-400 font-medium flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              {project.status || 'Production'}
             </span>
           </div>
 
-          {/* Dynamic Scroll Progress HUD */}
-          <div className="hidden md:flex items-center gap-3 flex-1 max-w-[280px] lg:max-w-[400px] px-2">
-            <span className="text-[10px] sm:text-[11px] text-white/40 font-mono tracking-widest w-6 text-right">
-              {String(scrollProgress).padStart(2, '0')}
-            </span>
-            <div className="relative flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="absolute left-[25%] top-0 bottom-0 w-[1px] bg-white/20 z-10" />
-              <div className="absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/20 z-10" />
-              <div className="absolute left-[75%] top-0 bottom-0 w-[1px] bg-white/20 z-10" />
-              <div
-                className="h-full bg-[var(--accent-color)] shadow-[0_0_12px_var(--accent-glow)] transition-all duration-150 ease-out"
-                style={{ width: `${scrollProgress}%` }}
+          <p className="text-base sm:text-xl text-white/70 font-sans leading-relaxed max-w-4xl">
+            {project.tagline || project.description}
+          </p>
+
+          {/* Quick Specs Pill Row */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-xs font-mono text-white/60">
+            <div>
+              <span className="text-white/40">{roleLabel}: </span>
+              <span className="text-white font-medium">{project.dossier?.primaryRole || 'Lead Engineer'}</span>
+            </div>
+            <div>
+              <span className="text-white/40">{platformLabel}: </span>
+              <span className="text-white font-medium">{project.dossier?.targetPlatform || 'Mobile & Web'}</span>
+            </div>
+            <div>
+              <span className="text-white/40">{yearLabel}: </span>
+              <span className="text-white font-medium">{project.dossier?.entryYear || '2025'}</span>
+            </div>
+          </div>
+        </Motion.div>
+
+        {/* ========================================================================= */}
+        {/* 3. SHOWCASE VIEWPORT (Clean, Elegant Browser Frame)                       */}
+        {/* ========================================================================= */}
+        <Motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-14 sm:mb-20"
+        >
+          <div className="rounded-3xl overflow-hidden border border-white/10 bg-[#06090E] shadow-[0_20px_70px_rgba(0,0,0,0.85)]">
+            {/* Minimalist Frame Top Bar */}
+            <div className="px-5 py-3.5 bg-white/[0.02] border-b border-white/[0.06] flex items-center justify-between text-xs font-mono text-white/40">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              </div>
+              <span className="text-[11px] text-white/50 truncate max-w-xs sm:max-w-md font-mono">
+                {project.title.toLowerCase().replace(/\s+/g, '-')}.app
+              </span>
+              <span className="text-[10px] text-white/30 hidden sm:inline">HIGH FIDELITY</span>
+            </div>
+
+            {/* Main Screenshot Display */}
+            <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] bg-[#020407] select-none">
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                priority
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                className="object-cover object-top select-none pointer-events-none"
+                sizes="(max-width: 1500px) 100vw, 1500px"
+                style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
               />
             </div>
-            <span className="text-[10px] sm:text-[11px] text-[var(--accent-color)] font-mono font-bold tracking-widest w-7">
-              100
-            </span>
           </div>
+        </Motion.div>
 
-          {/* Quick CTA Actions */}
-          <div className="flex items-center gap-2 shrink-0">
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
-              >
-                <span>{lang === 'ru' ? 'ДЕМО' : 'LIVE SITE'}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            )}
-
-            {project.isPrivate ? (
-              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/10 text-[10px] text-white/50 font-mono tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 animate-pulse" />
-                <span className="hidden xs:inline">{lang === 'ru' ? 'ПРИВАТНЫЙ' : 'PRIVATE'}</span>
-              </span>
-            ) : project.githubUrl ? (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/80 hover:text-white font-bold text-xs tracking-wider uppercase transition-all"
-              >
-                <FaGithub className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{lang === 'ru' ? 'КОД' : 'CODE'}</span>
-              </a>
-            ) : null}
-          </div>
-        </div>
-      </Motion.div>
-
-      {/* ========================================================================= */}
-      {/* 2. PROJECT HERO & IMPACT METRICS (Full-Width, Proportional Typography)    */}
-      {/* ========================================================================= */}
-      <Motion.section
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.15 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="pt-6 sm:pt-10 pb-10 sm:pb-14 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8 sm:space-y-10"
-      >
-        <div className="space-y-3 sm:space-y-4">
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs font-mono">
-            <span className="px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[var(--accent-color)] font-bold">
-              // {project.category}
-            </span>
-            <span className="text-white/40">
-              [ENTRY_ID: {project.id}]
-            </span>
-            <span className="text-white/40">
-              [YEAR: {project.dossier?.entryYear || '2025'}]
-            </span>
-            <span className="text-emerald-400 font-bold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              {project.status || 'DEPLOYED'}
-            </span>
-          </div>
-
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--heading-tint)] font-display tracking-tight leading-tight">
-            {project.title}
-          </h1>
-
-          {project.tagline && (
-            <p className="text-sm sm:text-base lg:text-lg text-[var(--accent-color)] font-mono leading-relaxed max-w-5xl">
-              &gt; {project.tagline}
-            </p>
-          )}
-        </div>
-
-        {/* Quick Metrics Bar (Wide 4-column cards with refined typography and staggered reveal) */}
+        {/* ========================================================================= */}
+        {/* 4. KEY IMPACT METRICS STRIP (Horizontal Flow, Clean & Spacious)           */}
+        {/* ========================================================================= */}
         {project.walkthrough?.impact?.metrics && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 pt-2">
-            {project.walkthrough.impact.metrics.map((m, idx) => (
-              <Motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: 0.06 + idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="p-4 sm:p-6 rounded-2xl bg-[#06090D]/80 border border-white/10 hover:border-[var(--accent-border)] transition-colors text-center space-y-1 shadow-lg"
-              >
-                <span className="block text-xl sm:text-2xl lg:text-3xl font-black text-[var(--accent-color)] font-display leading-tight">
-                  {m.value}
-                </span>
-                <span className="block text-[10px] sm:text-xs text-white/50 font-mono tracking-widest uppercase">
-                  {m.label}
-                </span>
-              </Motion.div>
-            ))}
-          </div>
-        )}
-      </Motion.section>
-
-      {/* ========================================================================= */}
-      {/* 3. HERO PRODUCT SHOWCASE VIEWPORT (Wide, cinema-scale artwork)             */}
-      {/* ========================================================================= */}
-      <Motion.section
-        initial={{ opacity: 0, y: 36 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.15 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="py-6 sm:py-10 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto"
-      >
-        <div className="cyber-panel rounded-3xl overflow-hidden border border-white/15 bg-[#020406] shadow-2xl relative">
-          {/* Top Preview Header - Clean, professional, no fake buttons */}
-          <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/10 bg-black/60 backdrop-blur-md">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-bold font-mono tracking-wider uppercase text-white/90">
-                PRODUCT_SHOWCASE // PRODUCTION_BUILD
-              </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <span className="text-[11px] text-white/50 font-mono hidden sm:inline">
-                {project.dossier?.targetPlatform || 'Web & Mobile'}
-              </span>
-              <span className="text-[10px] sm:text-xs px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[var(--accent-color)] font-bold font-mono">
-                [VERIFIED_STABLE]
-              </span>
-            </div>
-          </div>
-
-          {/* Main Visual Display - Stretches widely across container */}
-          <div className="relative min-h-[380px] sm:min-h-[520px] lg:min-h-[640px] w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#030608] via-[#050B10] to-[#020406] p-4 sm:p-8 lg:p-12 xl:p-16">
-            <div className="relative w-full max-w-6xl xl:max-w-7xl">
-              <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/20 shadow-[0_0_70px_rgba(0,0,0,0.9)] group">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover object-top filter brightness-[0.95] group-hover:brightness-100 transition-all duration-700"
-                  priority
-                />
-
-                {/* Cyber Corner brackets */}
-                <div className="absolute top-3.5 left-3.5 w-5 h-5 border-t-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute top-3.5 right-3.5 w-5 h-5 border-t-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute bottom-3.5 left-3.5 w-5 h-5 border-b-2 border-l-2 border-[var(--accent-color)] pointer-events-none" />
-                <div className="absolute bottom-3.5 right-3.5 w-5 h-5 border-b-2 border-r-2 border-[var(--accent-color)] pointer-events-none" />
-
-                {/* On-screen HUD Telemetry readout badge */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/10 text-xs font-mono">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-pulse" />
-                    <span className="text-white/90 font-bold">{project.title}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-[10px] sm:text-xs text-white/50">
-                    <span className="hidden sm:inline">ARCHITECTURE: PRODUCTION</span>
-                    <span className="text-[var(--accent-color)] font-bold">[ONLINE]</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Motion.section>
-
-      {/* ========================================================================= */}
-      {/* 4. SYSTEM DOSSIER & SPECIFICATIONS BENTO GRID (Equal Height & Cohesion)    */}
-      {/* ========================================================================= */}
-      <Motion.section
-        initial={{ opacity: 0, y: 36 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.15 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="py-12 sm:py-16 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto"
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
-          {/* Left Column: Mission & Narrative (7 cols) - Stretches to equal height */}
           <Motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-16 sm:mb-24 p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] overflow-hidden"
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 divide-y md:divide-y-0 md:divide-x divide-white/[0.08]">
+              {project.walkthrough.impact.metrics.map((m, idx) => {
+                const isLong = (m.value || '').length > 7;
+                return (
+                  <div
+                    key={idx}
+                    className={`min-w-0 flex flex-col justify-center space-y-1.5 ${
+                      idx > 0 ? 'pt-5 md:pt-0 md:pl-6 lg:pl-8' : ''
+                    }`}
+                  >
+                    <span
+                      title={m.value}
+                      className={`block font-black text-[var(--accent-color)] font-display tracking-tight leading-tight truncate ${
+                        isLong
+                          ? 'text-2xl sm:text-3xl lg:text-3xl xl:text-4xl'
+                          : 'text-3xl sm:text-4xl lg:text-4xl xl:text-5xl'
+                      }`}
+                    >
+                      {m.value}
+                    </span>
+                    <span className="block text-xs font-mono uppercase tracking-wider text-white/50 truncate">
+                      {m.label}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </Motion.div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* HORIZONTAL INTERFACE SCREEN REEL / RIBBON                                  */}
+        {/* ========================================================================= */}
+        {project.gallery && project.gallery.length > 0 && (
+          <Motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 flex flex-col h-full"
+            className="mb-16 sm:mb-24 space-y-6"
           >
-            <div className="cyber-panel p-6 sm:p-8 lg:p-10 rounded-3xl border border-white/10 flex flex-col justify-between h-full bg-[#04070A]/85 backdrop-blur-md shadow-xl">
-              <div>
-                <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-5">
-                  <h2 className="text-xs font-bold text-white/50 tracking-widest uppercase font-mono">
-                    [ 01 // MISSION STATEMENT & ARCHITECTURE ]
-                  </h2>
-                  <span className="text-[10px] text-[var(--accent-color)] font-mono font-bold">OVERVIEW</span>
-                </div>
+            <InfiniteGalleryRibbon
+              items={project.gallery}
+              lang={lang}
+              playClick={playClick}
+              playHover={playHover}
+              onOpenModal={setActiveModalScreen}
+              isModalOpen={Boolean(activeModalScreen)}
+            />
+          </Motion.section>
+        )}
 
-                <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)] font-sans">
-                  {project.overview?.lead || project.description}
+        {/* ========================================================================= */}
+        {/* 5. THE NARRATIVE: CHALLENGE & SOLUTION (2 Clear, Readable Columns)        */}
+        {/* ========================================================================= */}
+        <Motion.section
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-16 sm:mb-24 space-y-8"
+        >
+          {/* Section Introduction */}
+          <div className="space-y-3">
+            <span className="text-xs font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase">
+              // CASE_STUDY_OVERVIEW
+            </span>
+            <p className="text-lg sm:text-2xl text-white font-display font-bold leading-relaxed max-w-4xl">
+              {project.overview?.lead || project.description}
+            </p>
+          </div>
+
+          {/* Two-Column Problem vs Solution */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+            {/* The Challenge Column */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] space-y-4">
+              <div className="flex items-center gap-2.5 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <span>{challengeTitle}</span>
+              </div>
+              <p className="text-sm sm:text-base text-white/75 leading-relaxed font-sans">
+                {project.overview?.challenge ||
+                  'Managing fragmented financial workflows with slow mobile interactions and lack of automated insights.'}
+              </p>
+              {project.walkthrough?.concept?.highlights && (
+                <ul className="space-y-2.5 pt-4 border-t border-white/[0.06] text-xs sm:text-sm text-white/70 font-sans">
+                  {project.walkthrough.concept.highlights.map((h, hIdx) => (
+                    <li key={hIdx} className="flex items-start gap-2.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 mt-1.5 shrink-0" />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* The Solution Column */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-[var(--accent-color)]/30 space-y-4 relative overflow-hidden">
+              <div className="flex items-center gap-2.5 text-[var(--accent-color)] font-mono text-xs font-bold uppercase tracking-wider">
+                <span className="w-2 h-2 rounded-full bg-[var(--accent-color)]" />
+                <span>{solutionTitle}</span>
+              </div>
+              <p className="text-sm sm:text-base text-white/85 leading-relaxed font-sans">
+                {project.overview?.solution ||
+                  'Engineered a high-performance React Native & FastAPI system with local encryption, modular API, and AI advisory.'}
+              </p>
+              {project.walkthrough?.architecture?.highlights && (
+                <ul className="space-y-2.5 pt-4 border-t border-white/[0.06] text-xs sm:text-sm text-white/80 font-sans">
+                  {project.walkthrough.architecture.highlights.map((h, hIdx) => (
+                    <li key={hIdx} className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-0.5" />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+
+          {/* Scope & Audience Context */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-2">
+            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-start gap-3.5">
+              <Users className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-1" />
+              <div className="space-y-1">
+                <span className="block text-xs font-mono font-bold text-white/50 uppercase tracking-wider">
+                  {audienceLabel}
+                </span>
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
+                  {project.overview?.targetAudience || 'Modern users seeking organized finance'}
                 </p>
+              </div>
+            </div>
 
-                {/* Performance & Architecture Telemetry Strip */}
-                {project.walkthrough?.impact?.metrics && (
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3.5 px-4 my-6 rounded-2xl bg-white/[0.02] border border-white/5">
-                    {project.walkthrough.impact.metrics.map((m, idx) => (
-                      <div key={idx} className="flex flex-col">
-                        <span className="text-[10px] text-white/40 font-mono tracking-wider truncate">{m.label}</span>
-                        <span className="text-sm sm:text-base font-bold text-[var(--accent-color)] font-display tracking-wide mt-0.5">
-                          {m.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-start gap-3.5">
+              <UserCheck className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-1" />
+              <div className="space-y-1">
+                <span className="block text-xs font-mono font-bold text-white/50 uppercase tracking-wider">
+                  {roleLabel}
+                </span>
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
+                  {project.overview?.myRole || project.dossier?.primaryRole || 'Lead Frontend & Mobile Engineer'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </Motion.section>
+
+        {/* ========================================================================= */}
+        {/* 6. ARCHITECTURE & TECH STACK (Structured, Transparent Presentation)        */}
+        {/* ========================================================================= */}
+        <Motion.section
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-16 sm:mb-24 space-y-6"
+        >
+          <div className="border-b border-white/[0.08] pb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <Cpu className="w-4 h-4 text-[var(--accent-color)]" />
+              <h2 className="text-lg sm:text-xl font-bold text-white font-display uppercase tracking-wide">
+                {archTitle}
+              </h2>
+            </div>
+            <span className="text-xs text-white/40 font-mono hidden sm:inline">
+              PRODUCTION STACK
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+            {/* Tech Tags & Categorized Stack (8 cols) */}
+            <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] space-y-6">
+              <div className="space-y-2">
+                <h3 className="text-sm font-mono font-bold text-[var(--accent-color)] uppercase tracking-wider">
+                  {lang === 'ru' ? 'Технологический стек' : 'Technologies & Libraries'}
+                </h3>
+                <p className="text-xs sm:text-sm text-white/60 font-sans leading-relaxed">
+                  {project.walkthrough?.architecture?.desc ||
+                    'Architected for high throughput, local offline resilience, and enterprise grade security.'}
+                </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-5 mt-4 border-t border-white/5">
-                <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold mb-1">
-                      {lang === 'ru' ? '// ЦЕЛЕВАЯ АУДИТОРИЯ' : '// TARGET_AUDIENCE'}
-                    </span>
-                    <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
-                      {project.overview?.targetAudience || 'Modern users & enterprise clients'}
-                    </p>
-                  </div>
+              {/* All Tech Badges */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {project.tags.map((t, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white/85 font-mono hover:border-[var(--accent-color)]/50 hover:text-white transition-all"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              {/* Security & Reliability Callouts */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-white/[0.06]">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span className="text-xs text-white/80 font-mono">
+                    {project.slug === 'finance-management-app'
+                      ? 'JWT & bcrypt • Session Auth • OAuth2'
+                      : 'AES-256 • TLS 1.3 • Production Ready'}
+                  </span>
                 </div>
-                <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-2 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] text-[var(--accent-color)] font-mono uppercase tracking-wider block font-bold mb-1">
-                      {lang === 'ru' ? '// РОЛЬ И ЗОНА ОТВЕТСТВЕННОСТИ' : '// DIAS_ROLE & SCOPE'}
-                    </span>
-                    <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
-                      {project.overview?.myRole || project.dossier?.primaryRole || 'Lead Frontend & Mobile Engineer'}
-                    </p>
-                  </div>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                  <Zap className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
+                  <span className="text-xs text-white/80 font-mono">
+                    {project.slug === 'finance-management-app'
+                      ? 'FastAPI Async • <50ms P99 Latency'
+                      : 'Sub-100ms API Latency'}
+                  </span>
                 </div>
               </div>
             </div>
-          </Motion.div>
 
-          {/* Right Column: System Dossier Specifications (5 cols - Equal height match) */}
-          <Motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 flex flex-col h-full"
-          >
-            <div className="cyber-panel p-6 sm:p-8 lg:p-10 rounded-3xl border border-[var(--border-subtle)] bg-[#040608]/90 backdrop-blur-xl shadow-2xl flex flex-col justify-between h-full space-y-6">
-              {/* Dossier Header */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div className="flex items-center gap-2.5">
-                  <Cpu className="w-4 h-4 text-[var(--accent-color)]" />
-                  <span className="text-xs font-bold text-white tracking-widest uppercase font-mono">
-                    SYSTEM_DOSSIER // SPEC
-                  </span>
-                </div>
-                <span className="text-[10px] px-2.5 py-1 rounded bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] font-bold font-mono">
-                  {project.dossier?.status || 'VERIFIED'}
+            {/* Design System Palette & Metadata (4 cols) */}
+            <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] flex flex-col justify-between space-y-6">
+              <div className="space-y-3">
+                <span className="text-xs font-mono font-bold text-white/50 uppercase tracking-wider block">
+                  {lang === 'ru' ? 'Цветовая палитра интерфейса' : lang === 'kk' ? 'Интерфейс түс палитрасы' : 'Interface Palette'}
                 </span>
+                <p className="text-xs text-white/60 font-sans leading-relaxed">
+                  {project.slug === 'finance-management-app'
+                    ? (lang === 'ru'
+                        ? 'Фирменные токены интерфейса: бренд-синий (#2563EB), небесный акцент (#3B82F6), доходный изумруд (#10B981) и расходный красный (#EF4444).'
+                        : lang === 'kk'
+                        ? 'Интерфейстің фирмалық токендері: бренд-көк (#2563EB), аспан акценті (#3B82F6), кіріс изумруды (#10B981) және шығыс қызылы (#EF4444).'
+                        : 'Production UI color tokens: primary blue (#2563EB), sky accent (#3B82F6), income emerald (#10B981), and expense crimson (#EF4444).')
+                    : (lang === 'ru'
+                        ? `${project.title}: официальные цветовые токены дизайн-системы интерфейса.`
+                        : lang === 'kk'
+                        ? `${project.title}: интерфейстің ресми дизайн токендері мен түс гаммасы.`
+                        : `${project.title}: official design tokens utilized across the interface.`)}
+                </p>
               </div>
 
-              {/* Dossier Specs List - Completely readable, wrap properly without clipping */}
-              <ul className="space-y-4 text-xs font-mono">
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
-                  <span className="text-white/40 tracking-wider">[ PROJECT_TYPE ]</span>
-                  <span className="sm:text-right text-white font-bold">
-                    {project.dossier?.projectType || project.category}
-                  </span>
-                </li>
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
-                  <span className="text-white/40 tracking-wider">[ ENTRY_YEAR ]</span>
-                  <span className="sm:text-right text-[var(--accent-color)] font-bold">
-                    {project.dossier?.entryYear || '2025'}
-                  </span>
-                </li>
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
-                  <span className="text-white/40 tracking-wider">[ TARGET_PLATFORM ]</span>
-                  <span className="sm:text-right text-white font-bold">
-                    {project.dossier?.targetPlatform || 'Web & Mobile'}
-                  </span>
-                </li>
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-white/5 pb-3">
-                  <span className="text-white/40 tracking-wider">[ PRIMARY_ROLE ]</span>
-                  <span className="sm:text-right text-white font-bold">
-                    {project.dossier?.primaryRole || 'Lead Engineer'}
-                  </span>
-                </li>
-                <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1">
-                  <span className="text-white/40 tracking-wider">[ ACCESS_TYPE ]</span>
-                  <span className="sm:text-right font-bold">
-                    {project.isPrivate ? (
-                      <span className="text-amber-400">PROPRIETARY / PRIVATE</span>
-                    ) : (
-                      <span className="text-[var(--accent-color)]">OPEN_SOURCE</span>
-                    )}
-                  </span>
-                </li>
-              </ul>
-
-              {/* Deployed Technologies */}
-              <div className="space-y-3 pt-3 border-t border-white/10">
-                <span className="text-[10px] text-white/40 tracking-widest uppercase font-mono block">
-                  DEPLOYED_TECHNOLOGIES
-                </span>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {project.tags.map((t, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-xs text-white/90 font-mono hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] transition-colors"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Color Palette Swatches */}
               {project.dossier?.colorPalette && (
-                <div className="space-y-3 pt-3 border-t border-white/10">
-                  <span className="text-[10px] text-white/40 tracking-widest uppercase font-mono block">
-                    PROJECT_COLOR_PALETTE
-                  </span>
-                  <div className="grid grid-cols-4 gap-2.5">
-                    {project.dossier.colorPalette.map((c, idx) => (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
+                  {project.dossier.colorPalette.map((c, idx) => (
+                    <div
+                      key={idx}
+                      className="group flex flex-col items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/30 hover:bg-white/[0.06] transition-all min-w-0"
+                      title={`${c.name}: ${c.hex}`}
+                    >
                       <div
-                        key={idx}
-                        className="group flex flex-col items-center gap-1.5 p-2 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all"
-                      >
-                        <div
-                          className="w-full h-8 rounded-lg border border-white/10 shadow-sm group-hover:scale-105 transition-transform"
-                          style={{ backgroundColor: c.hex }}
-                        />
-                        <span className="text-[10px] text-white/50 font-mono truncate w-full text-center">
+                        className="w-full h-10 rounded-lg border border-white/20 shadow-md group-hover:scale-105 transition-transform"
+                        style={{ backgroundColor: c.hex }}
+                      />
+                      <div className="w-full text-center min-w-0">
+                        <span className="block text-[11px] text-white font-mono font-semibold truncate tracking-tight">
                           {c.hex}
                         </span>
+                        <span className="block text-[10px] text-white/50 truncate tracking-tight mt-0.5" title={c.name}>
+                          {c.name}
+                        </span>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
-          </Motion.div>
-        </div>
-      </Motion.section>
-
-      {/* ========================================================================= */}
-      {/* 5. CASE STUDY DEEP DIVE (Chapters: Concept, Architecture, Features)       */}
-      {/* ========================================================================= */}
-      <Motion.section
-        initial={{ opacity: 0, y: 36 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.15 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8 sm:space-y-10"
-      >
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-white/10 pb-6">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-wide">
-              {lang === 'ru' ? 'АРХИТЕКТУРНЫЙ КЕЙС-СТАДИ' : 'ENGINEERING CASE STUDY'}
-            </h2>
-            <p className="text-xs text-white/50 font-mono mt-1">
-              [ CHAPTER_BREAKDOWN // IN-DEPTH TECHNICAL REPORT ]
-            </p>
           </div>
+        </Motion.section>
 
-          {/* Tab Index Navigation */}
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/5 border border-white/10 font-mono text-xs">
-            {['concept', 'architecture', 'features'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => {
-                  playClick();
-                  setActiveTab(tab);
-                }}
-                onMouseEnter={playHover}
-                className={`px-3.5 py-1.5 rounded-lg font-bold tracking-wider uppercase transition-all ${
-                  activeTab === tab
-                    ? 'bg-[var(--accent-color)] text-[#040608] shadow-[0_0_15px_var(--accent-glow)]'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {tab === 'concept'
-                  ? lang === 'ru' ? '01 КОНЦЕПЦИЯ' : '01 CONCEPT'
-                  : tab === 'architecture'
-                  ? lang === 'ru' ? '02 АРХИТЕКТУРА' : '02 ARCHITECTURE'
-                  : lang === 'ru' ? '03 ФИЧИ' : '03 FEATURES'}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* ========================================================================= */}
+        {/* 7. CORE CAPABILITIES (3 High-Impact Feature Cards, Visible at Once)        */}
+        {/* ========================================================================= */}
+        {project.walkthrough?.features && (
+          <Motion.section
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.15 }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-20 sm:mb-28 space-y-8"
+          >
+            <div className="border-b border-white/[0.08] pb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <Sparkles className="w-4 h-4 text-[var(--accent-color)]" />
+                <h2 className="text-lg sm:text-xl font-bold text-white font-display uppercase tracking-wide">
+                  {featuresTitle}
+                </h2>
+              </div>
+              <span className="text-xs text-white/40 font-mono">
+                {project.walkthrough.features.length} MODULES
+              </span>
+            </div>
 
-        {/* Tab Content Display with locked fixed height so lower blocks never jump */}
-        <div className="relative w-full cyber-panel rounded-3xl border border-white/10 bg-[#04070B]/90 backdrop-blur-xl shadow-2xl overflow-hidden p-5 sm:p-6 lg:p-7 min-h-[460px] sm:min-h-[420px] lg:h-[340px] lg:min-h-[340px] lg:max-h-[340px] flex flex-col justify-start">
-          {/* 4 Precision Blueprint Corner Crosshairs (+) */}
-          <div className="absolute top-3 left-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 select-none pointer-events-none z-20">+</div>
-          <div className="absolute top-3 right-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 select-none pointer-events-none z-20">+</div>
-          <div className="absolute bottom-3 left-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 select-none pointer-events-none z-20">+</div>
-          <div className="absolute bottom-3 right-3 font-mono text-[11px] text-[var(--accent-color)] opacity-35 select-none pointer-events-none z-20">+</div>
-
-          <AnimatePresence mode="wait">
-            {activeTab === 'concept' && (
-              <Motion.div
-                key="concept"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="w-full flex flex-col"
-              >
-                {/* Sub-Header Ribbon */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3.5 text-xs font-mono shrink-0">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-pulse" />
-                    <span className="text-[var(--accent-color)] font-bold tracking-wider uppercase">
-                      // 01 // THE_CONCEPT_&_PROBLEM_SPACE
-                    </span>
-                  </div>
-                  <span className="text-white/40 text-[10px] hidden sm:inline">
-                    STATUS: SPEC_ACTIVE
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
-                  {/* Left Column: Narrative & Primary Challenge */}
-                  <div className="lg:col-span-7 flex flex-col space-y-3">
-                    <div className="space-y-1.5">
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-white font-display tracking-tight leading-tight">
-                        {project.walkthrough?.concept?.title || 'Core Product Vision'}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
-                        {project.walkthrough?.concept?.desc || project.description}
-                      </p>
-                    </div>
-
-                    {/* Integrated Problem Space Pod */}
-                    {project.overview?.challenge && (
-                      <div className="p-3 rounded-xl bg-black/50 border border-white/10 relative overflow-hidden space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-bold text-[var(--accent-color)] font-mono uppercase tracking-wider flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)]" />
-                            <span>{lang === 'ru' ? 'ОСНОВНОЙ ВЫЗОВ' : 'THE_PRIMARY_CHALLENGE'}</span>
-                          </span>
-                          <span className="text-[9px] text-white/40 font-mono">PROBLEM_VECTOR</span>
-                        </div>
-                        <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-sans">
-                          {project.overview.challenge}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right Column: Key Milestones */}
-                  <div className="lg:col-span-5 flex flex-col space-y-2">
-                    <div className="flex items-center justify-between text-xs font-mono mb-0.5">
-                      <span className="text-white/50 tracking-widest uppercase">
-                        [ KEY_MILESTONES ]
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 items-stretch">
+              {project.walkthrough.features.map((f, idx) => (
+                <div
+                  key={idx}
+                  className="p-6 sm:p-7 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] hover:border-[var(--accent-color)]/40 transition-all duration-300 flex flex-col justify-between space-y-5 group"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl sm:text-2xl font-black text-[var(--accent-color)] font-display">
+                        {f.num}
                       </span>
-                      <span className="text-[10px] text-[var(--accent-color)] font-bold">
-                        INDEX_03
+                      <span className="px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10 text-[11px] text-white/60 font-mono font-medium">
+                        {f.metric}
                       </span>
                     </div>
-
-                    <div className="flex flex-col space-y-2">
-                      {(project.walkthrough?.concept?.highlights || [
-                        'High accessibility standards',
-                        'Frictionless responsive UX',
-                        'Instant state reactivity'
-                      ]).map((h, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-start gap-2.5 p-2.5 rounded-xl bg-black/40 border border-white/5 hover:border-[var(--accent-border)]/50 transition-all group"
-                        >
-                          <span className="px-2 py-0.5 rounded bg-[var(--accent-bg-subtle)] border border-[var(--accent-border)] text-[var(--accent-color)] font-mono font-bold text-xs shrink-0 mt-0.5">
-                            0{idx + 1}
-                          </span>
-                          <span className="text-xs sm:text-sm text-white/90 font-sans leading-snug group-hover:text-white transition-colors">
-                            {h}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Motion.div>
-            )}
-
-            {activeTab === 'architecture' && (
-              <Motion.div
-                key="architecture"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="w-full flex flex-col"
-              >
-                {/* Sub-Header Ribbon */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3.5 text-xs font-mono shrink-0">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-pulse" />
-                    <span className="text-[var(--accent-color)] font-bold tracking-wider uppercase">
-                      // 02 // ARCHITECTURE_&_EXECUTION
-                    </span>
-                  </div>
-                  <span className="text-white/40 text-[10px] hidden sm:inline">
-                    ENGINEERING_PIPELINE
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
-                  {/* Left Column: Architecture & Execution */}
-                  <div className="lg:col-span-7 flex flex-col space-y-3">
-                    <div className="space-y-1.5">
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-white font-display tracking-tight leading-tight">
-                        {project.walkthrough?.architecture?.title || 'System Implementation'}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
-                        {project.walkthrough?.architecture?.desc || project.overview?.solution}
-                      </p>
-                    </div>
-
-                    {/* Applied Solution Callout */}
-                    {project.overview?.solution && (
-                      <div className="p-3 rounded-xl bg-black/50 border border-white/10 relative overflow-hidden space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-bold text-[var(--accent-color)] font-mono uppercase tracking-wider flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)]" />
-                            <span>{lang === 'ru' ? 'ИНЖЕНЕРНОЕ РЕШЕНИЕ' : 'APPLIED_SOLUTION'}</span>
-                          </span>
-                          <span className="text-[9px] text-white/40 font-mono">ARCHITECTURE_FIX</span>
-                        </div>
-                        <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-sans">
-                          {project.overview.solution}
-                        </p>
-                      </div>
-                    )}
+                    <h3 className="text-base sm:text-lg font-bold text-white font-display group-hover:text-[var(--accent-color)] transition-colors">
+                      {f.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-white/70 font-sans leading-relaxed">
+                      {f.desc}
+                    </p>
                   </div>
 
-                  {/* Right Column: Architectural Pillars */}
-                  <div className="lg:col-span-5 flex flex-col space-y-2">
-                    <div className="flex items-center justify-between text-xs font-mono mb-0.5">
-                      <span className="text-white/50 tracking-widest uppercase">
-                        [ ARCHITECTURAL_PILLARS ]
-                      </span>
-                      <span className="text-[10px] text-[var(--accent-color)] font-bold">
-                        FOUNDATIONS
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col space-y-2">
-                      {(project.walkthrough?.architecture?.highlights || [
-                        'Decoupled domain architecture',
-                        'Optimized network payloads',
-                        'Continuous testing coverage'
-                      ]).map((h, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-start gap-2.5 p-2.5 rounded-xl bg-black/40 border border-white/5 hover:border-[var(--accent-border)]/50 transition-all group"
-                        >
-                          <div className="p-1 rounded-md bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] shrink-0 mt-0.5">
-                            <Layers className="w-3.5 h-3.5" />
-                          </div>
-                          <span className="text-xs sm:text-sm text-white/90 font-sans leading-snug group-hover:text-white transition-colors">
-                            {h}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="pt-3 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-white/40">
+                    <Layers className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+                    <span>PRODUCTION VERIFIED</span>
                   </div>
                 </div>
-              </Motion.div>
-            )}
-
-            {activeTab === 'features' && (
-              <Motion.div
-                key="features"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="w-full flex flex-col"
-              >
-                {/* Sub-Header Ribbon */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3.5 text-xs font-mono shrink-0">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-pulse" />
-                    <span className="text-[var(--accent-color)] font-bold tracking-wider uppercase">
-                      // 03 // CORE_CAPABILITIES_&_IMPACT
-                    </span>
-                  </div>
-                  <span className="text-white/40 text-[10px] hidden sm:inline">
-                    PRODUCTION_BUILD
-                  </span>
-                </div>
-
-                <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 items-stretch">
-                  {(project.walkthrough?.features || [
-                    { num: '01', title: 'Real-Time Sync', desc: 'Instantaneous data propagation across clients.', metric: 'Sub-50ms' },
-                    { num: '02', title: 'Adaptive Interface', desc: 'Responsive UX tailored for every viewport.', metric: 'Universal' },
-                    { num: '03', title: 'Hardened Security', desc: 'Token encryption and strict authorization guards.', metric: 'Zero-Trust' }
-                  ]).map((f, idx) => (
-                    <div
-                      key={idx}
-                      className="p-3 sm:p-3.5 rounded-xl bg-black/40 border border-white/5 hover:border-[var(--accent-border)] transition-all flex flex-col justify-between space-y-2 group"
-                    >
-                      <div className="space-y-1.5 sm:space-y-2">
-                        <div className="flex items-center justify-between text-xs">
-                          <span className="text-xl sm:text-2xl font-black text-[var(--accent-color)] font-display">
-                            {f.num}
-                          </span>
-                          <span className="px-2 py-0.5 rounded bg-white/5 text-[10px] text-white/60 font-mono font-bold">
-                            {f.metric}
-                          </span>
-                        </div>
-                        <h4 className="text-sm sm:text-base font-bold text-white font-display group-hover:text-[var(--accent-color)] transition-colors">
-                          {f.title}
-                        </h4>
-                        <p className="text-xs text-white/70 font-sans leading-relaxed">
-                          {f.desc}
-                        </p>
-                      </div>
-                      <div className="pt-2 border-t border-white/5 flex items-center gap-1.5 text-[10px] text-[var(--accent-color)] font-mono">
-                        <Zap className="w-3 h-3" />
-                        <span>PRODUCTION_OPTIMIZED</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </Motion.section>
+              ))}
+            </div>
+          </Motion.section>
+        )}
+      </div>
 
       {/* ========================================================================= */}
-      {/* 6. RESPONSIVE MULTI-DEVICE VIEWPORTS (Fixed Stable Viewport Stage)         */}
-      {/* ========================================================================= */}
-      <Motion.section
-        initial={{ opacity: 0, y: 36 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.1 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="py-14 sm:py-18 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto space-y-8"
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
-          <div>
-            <h2 className="text-lg sm:text-xl font-bold text-white font-sans uppercase">
-              {lang === 'ru' ? 'Адаптивная верстка и мультивидовая витрина' : 'Responsive Multi-Device Layouts'}
-            </h2>
-            <p className="text-xs text-white/40 font-mono mt-0.5">
-              [ CROSS-DEVICE COMPATIBILITY VIEWPORT INSPECTOR ]
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 p-1 rounded-xl bg-white/5 border border-white/10">
-            <button
-              onClick={() => {
-                playClick();
-                setActiveDeviceView('desktop');
-              }}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
-                activeDeviceView === 'desktop'
-                  ? 'bg-[var(--accent-color)] text-[#040608]'
-                  : 'text-white/60 hover:text-white'
-              }`}
-            >
-              <Monitor className="w-3.5 h-3.5" />
-              <span>DESKTOP (16:9)</span>
-            </button>
-            <button
-              onClick={() => {
-                playClick();
-                setActiveDeviceView('mobile');
-              }}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
-                activeDeviceView === 'mobile'
-                  ? 'bg-[var(--accent-color)] text-[#040608]'
-                  : 'text-white/60 hover:text-white'
-              }`}
-            >
-              <Smartphone className="w-3.5 h-3.5" />
-              <span>MOBILE (9:19.5)</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Viewport Stage Area with fixed stable height - perfectly anchors both Desktop and Mobile mockups */}
-        <div className="h-[620px] sm:h-[680px] lg:h-[720px] w-full flex items-center justify-center relative overflow-hidden py-4">
-          <AnimatePresence mode="wait">
-            {activeDeviceView === 'desktop' ? (
-              <Motion.div
-                key="desktop-view"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="w-full h-full flex items-center justify-center"
-              >
-                {/* Desktop Browser Mockup Frame */}
-                <div className="w-full max-w-4xl xl:max-w-5xl rounded-2xl overflow-hidden border border-white/20 bg-[#0A0D10] shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
-                  {/* Browser chrome top bar */}
-                  <div className="h-10 px-4 bg-[#12161B] border-b border-white/10 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                      <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                    </div>
-                    <div className="px-6 py-1 rounded-md bg-black/50 border border-white/10 text-[11px] text-white/50 font-mono truncate max-w-xs sm:max-w-md">
-                      https://daelijek-portfolio.vercel.app/projects/{project.slug}
-                    </div>
-                    <div className="text-[10px] text-white/30 font-mono">1920 x 1080</div>
-                  </div>
-
-                  {/* Viewport image with 16:9 aspect matching label */}
-                  <div className="relative w-full aspect-[16/9] bg-[#020406]">
-                    <Image
-                      src={project.image}
-                      alt={`${project.title} Desktop View`}
-                      fill
-                      className="object-cover object-top"
-                    />
-                  </div>
-                </div>
-              </Motion.div>
-            ) : (
-              <Motion.div
-                key="mobile-view"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="w-full h-full flex items-center justify-center py-2"
-              >
-                {/* Mobile Device Mockup Frame */}
-                <div className="w-[280px] sm:w-[300px] rounded-[44px] p-3.5 bg-[#1A1F26] border-2 border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative">
-                  {/* Phone Speaker / Dynamic Island notch */}
-                  <div className="absolute top-6 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-full z-20 flex items-center justify-end px-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#0E1318] border border-white/10" />
-                  </div>
-
-                  {/* Screen container */}
-                  <div className="relative w-full aspect-[9/19.5] rounded-[34px] overflow-hidden bg-black border border-white/10">
-                    <Image
-                      src={project.image}
-                      alt={`${project.title} Mobile View`}
-                      fill
-                      className="object-cover object-top"
-                    />
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/40 rounded-full" />
-                  </div>
-                </div>
-              </Motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </Motion.section>
-
-      {/* ========================================================================= */}
-      {/* 7. FULL-WIDTH NEXT PROJECT FOOTER WITH FLOATING CURSOR PREVIEW            */}
+      {/* 8. NEXT PROJECT FOOTER (Generous, Beautiful Continuous Browse)            */}
       {/* ========================================================================= */}
       <Motion.div
         initial={{ opacity: 0, y: 36 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.15 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full"
+        className="w-full mt-10 mb-0"
       >
         <Link
-        href={`/projects/${nextProject.slug || nextProject.id.toLowerCase()}`}
-        onClick={playClick}
-        onMouseEnter={() => {
-          playHover();
-          setIsNextHovered(true);
-        }}
-        onMouseLeave={() => setIsNextHovered(false)}
-        onMouseMove={handleNextMouseMove}
-        ref={nextSectionRef}
-        className="group relative block w-full border-t border-white/15 pt-20 pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 overflow-hidden select-none bg-gradient-to-b from-transparent via-black/40 to-black/80 cursor-pointer"
-      >
-        {/* Floating Cursor Thumbnail Preview (Positioned directly above cursor with smooth spring) */}
-        <AnimatePresence>
-          {isNextHovered && (
-            <Motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                x: mousePos.x,
-                y: mousePos.y - 24,
-                transition: { type: 'spring', damping: 26, stiffness: 260, mass: 0.4 },
-              }}
-              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15 } }}
-              style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 35 }}
-              className="hidden md:block -translate-x-1/2 -translate-y-full pointer-events-none select-none"
-            >
-              <div className="w-64 sm:w-72 aspect-[16/10] rounded-2xl overflow-hidden border-2 border-white/20 bg-[#06090D] shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_25px_var(--accent-glow)] p-1.5 relative">
+          href={`/projects/${nextProject.slug || nextProject.id.toLowerCase()}`}
+          onClick={playClick}
+          onMouseEnter={handleNextMouseEnter}
+          onMouseLeave={() => setIsNextHovered(false)}
+          onMouseMove={handleNextMouseMove}
+          ref={nextSectionRef}
+          className="group relative block w-full border-t border-white/10 pt-16 sm:pt-24 pb-28 sm:pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 select-none bg-gradient-to-b from-transparent via-black/40 to-black/85 cursor-pointer"
+        >
+          <div className="w-[90%] max-w-[1920px] mx-auto">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
+              <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
+                {nextCaseText}
+              </span>
+              <span className="text-xs text-[var(--accent-color)] font-mono font-bold">
+                {nextProject.num}
+              </span>
+            </div>
+
+            <div className="py-2 space-y-3">
+              <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+                <span className="text-2xl sm:text-4xl lg:text-5xl font-black text-[var(--accent-color)] font-display">
+                  {nextProject.num}
+                </span>
+                <h3 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white font-display uppercase tracking-tight group-hover:text-[var(--accent-color)] transition-colors">
+                  {nextProject.title}
+                </h3>
+                <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 text-[var(--accent-color)] opacity-70 group-hover:opacity-100 group-hover:translate-x-3 transition-all inline-block ml-2" />
+              </div>
+              <p className="text-xs sm:text-sm text-white/50 font-mono">
+                {nextProject.category} &bull; {nextProject.tags.join(' &bull; ')}
+              </p>
+            </div>
+
+            {/* Mobile Only: Inline preview card for touch devices */}
+            <div className="block md:hidden mt-6 pt-6 border-t border-white/5">
+              <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-white/15">
+                <Image
+                  src={nextProject.image}
+                  alt={nextProject.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </Link>
+      </Motion.div>
+
+      {/* Floating Cursor Thumbnail Preview for Next Project Footer (Fixed viewport coordinates, zero scroll overflow) */}
+      <AnimatePresence>
+        {isNextHovered && (
+          <Motion.div
+            initial={{ opacity: 0, scale: 0.85, x: mousePos.x, y: mousePos.y }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              x: mousePos.x,
+              y: mousePos.y,
+              transition: { type: 'spring', damping: 28, stiffness: 320, mass: 0.35 },
+            }}
+            exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
+            style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 50 }}
+            className="hidden md:block pointer-events-none select-none"
+          >
+            <div className="-translate-x-1/2 -translate-y-[115%] pointer-events-none">
+              <div className="w-64 sm:w-72 aspect-[16/10] rounded-2xl overflow-hidden border border-white/20 bg-[#06090D] shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_25px_var(--accent-glow)] p-1.5 relative">
                 <div className="relative w-full h-full rounded-xl overflow-hidden bg-black">
                   <Image
                     src={nextProject.image}
@@ -1013,49 +1049,70 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                   </div>
                 </div>
               </div>
+            </div>
+          </Motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Lightbox Zoom Modal for Ribbon Screens */}
+      <AnimatePresence>
+        {activeModalScreen && (
+          <Motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-2xl"
+            onClick={() => setActiveModalScreen(null)}
+          >
+            <Motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-sm w-full bg-[#080C12] border border-white/15 rounded-[2.5rem] p-3 sm:p-4 shadow-[0_25px_80px_rgba(0,0,0,0.9)] flex flex-col space-y-3"
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setActiveModalScreen(null)}
+                className="absolute -top-3 -right-3 z-30 p-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-all hover:scale-110 active:scale-95"
+                aria-label="Close modal"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              {/* High-res Screen */}
+              <div className="relative aspect-[9/19.5] w-full rounded-[1.8rem] overflow-hidden bg-black shadow-inner select-none">
+                <Image
+                  src={activeModalScreen.image}
+                  alt={activeModalScreen.title}
+                  fill
+                  priority
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
+                  className="object-cover object-top select-none pointer-events-none"
+                  sizes="400px"
+                  style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
+                />
+              </div>
+
+              {/* Caption */}
+              <div className="px-2 pt-1 pb-2 text-center space-y-1">
+                <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase">
+                  {activeModalScreen.tag}
+                </span>
+                <h4 className="text-base font-bold text-white font-display">
+                  {activeModalScreen.title}
+                </h4>
+                <p className="text-xs text-white/60 font-sans">
+                  {activeModalScreen.subtitle}
+                </p>
+              </div>
             </Motion.div>
-          )}
-        </AnimatePresence>
-
-        <div className="w-full max-w-[1720px] mx-auto">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
-            <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
-              [ UP_NEXT // CONTINUOUS_BROWSE ]
-            </span>
-            <span className="text-xs text-[var(--accent-color)] font-mono font-bold">
-              // {nextProject.num}
-            </span>
-          </div>
-
-          <div className="py-4 space-y-3">
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="text-2xl sm:text-4xl lg:text-5xl font-black text-[var(--accent-color)] font-display">
-                [{nextProject.num}]
-              </span>
-              <h3 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white font-display uppercase tracking-tight group-hover:text-[var(--accent-color)] transition-colors">
-                {nextProject.title}
-              </h3>
-              <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 text-[var(--accent-color)] opacity-70 group-hover:opacity-100 group-hover:translate-x-3 transition-all inline-block ml-2" />
-            </div>
-            <p className="text-xs sm:text-sm text-white/50 font-mono">
-              // {nextProject.category} · {nextProject.tags.join(' · ')}
-            </p>
-          </div>
-
-          {/* Mobile Only: Inline preview card for touch devices without cursor hover */}
-          <div className="block md:hidden mt-6 pt-6 border-t border-white/5">
-            <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border border-white/15">
-              <Image
-                src={nextProject.image}
-                alt={nextProject.title}
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </Link>
-      </Motion.div>
+          </Motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

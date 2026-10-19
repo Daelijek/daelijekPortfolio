@@ -208,7 +208,6 @@ export default function HomePage() {
       const criticalImages = [
         '/assets/linkedIn_Dias_square.png',
         '/assets/Finance.png',
-        '/assets/beyim.png',
         '/assets/openGov.png',
         '/assets/berikWeb.png',
         '/images/logo.png',
