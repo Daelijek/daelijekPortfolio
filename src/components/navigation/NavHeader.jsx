@@ -333,7 +333,7 @@ export default function NavHeader() {
 
                     {/* 3.1 CV // DOSSIER.PDF Accent Block (Dedicated for HR & Recruiters) */}
                     <a
-                      href="/dias_yermek_cv.pdf"
+                      href="/api/cv"
                       download="Dias_Yermek_CV.pdf"
                       target="_blank"
                       rel="noopener noreferrer"

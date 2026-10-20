@@ -196,42 +196,19 @@ export default function InteractiveTerminal() {
     return () => window.removeEventListener('keydown', handleGlobalKeyDown);
   }, [isOpen]);
 
-  // Robust PDF download handler that works reliably in Chrome & Chromium browsers
-  const handleDownloadCV = useCallback(async () => {
+  // Robust PDF download handler using /api/cv endpoint with Content-Disposition headers for Chrome
+  const handleDownloadCV = useCallback(() => {
     soundFx.playDownload();
-    try {
-      const response = await fetch('/dias_yermek_cv.pdf');
-      if (!response.ok) throw new Error('Network error');
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.style.display = 'none';
-      link.href = blobUrl;
-      link.setAttribute('download', 'Dias_Yermek_CV.pdf');
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(() => {
-        if (link.parentNode) {
-          document.body.removeChild(link);
-        }
-        window.URL.revokeObjectURL(blobUrl);
-      }, 1500);
-    } catch (err) {
-      void err;
-      // Fallback direct link invocation attached to DOM
-      const link = document.createElement('a');
-      link.style.display = 'none';
-      link.href = '/dias_yermek_cv.pdf';
-      link.setAttribute('download', 'Dias_Yermek_CV.pdf');
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(() => {
-        if (link.parentNode) {
-          document.body.removeChild(link);
-        }
-      }, 1500);
-    }
+    const link = document.createElement('a');
+    link.href = '/api/cv';
+    link.setAttribute('download', 'Dias_Yermek_CV.pdf');
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      if (link.parentNode) {
+        document.body.removeChild(link);
+      }
+    }, 1200);
   }, []);
 
   const executeCommand = (cmdText) => {
@@ -659,23 +636,30 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                   }
                   if (line.type === 'cv-download') {
                     return (
-                      <div key={line.id} className="p-3 my-1 rounded-lg bg-[var(--accent-color)]/10 border border-[var(--accent-color)]/30 space-y-2">
-                        <div className="text-[var(--accent-color)] font-medium flex items-center gap-2">
-                          <Download className="w-4 h-4" />
+                      <div key={line.id} className="p-3.5 my-1 rounded-xl bg-[var(--accent-color)]/10 border border-[var(--accent-color)]/30 space-y-2.5">
+                        <div className="text-[var(--accent-color)] font-medium flex items-center gap-2 text-xs sm:text-sm">
+                          <Download className="w-4 h-4 shrink-0" />
                           <span>{line.content}</span>
                         </div>
-                        <div className="text-white/70 text-xs flex items-center gap-2 flex-wrap">
-                          <span>Direct file link:</span>
+                        <div className="text-white/80 text-xs flex items-center gap-2.5 flex-wrap pt-0.5">
                           <a
-                            href="/dias_yermek_cv.pdf"
+                            href="/api/cv"
                             download="Dias_Yermek_CV.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[var(--accent-color)] underline underline-offset-2 hover:text-white font-bold inline-flex items-center gap-1"
+                            className="px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-black font-bold hover:bg-white transition-all inline-flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,255,159,0.3)] active:scale-95 cursor-pointer select-none"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <span>/dias_yermek_cv.pdf</span>
-                            <ExternalLink className="w-2.5 h-2.5 inline" />
+                            <Download className="w-3.5 h-3.5" />
+                            <span>Download PDF (111 KB)</span>
+                          </a>
+                          <a
+                            href="/dias_yermek_cv.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all inline-flex items-center gap-1.5 cursor-pointer select-none"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span>Open in Browser</span>
+                            <ExternalLink className="w-3 h-3 opacity-80" />
                           </a>
                         </div>
                       </div>

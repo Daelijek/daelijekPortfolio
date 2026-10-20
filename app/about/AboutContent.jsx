@@ -346,7 +346,7 @@ export default function AboutContent() {
             {/* Action Buttons: Quick CV Download & Social Links */}
             <div className="mt-4 space-y-2">
               <a
-                href="/dias_yermek_cv.pdf"
+                href="/api/cv"
                 download="Dias_Yermek_CV.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -960,7 +960,7 @@ export default function AboutContent() {
               </Link>
 
               <a
-                href="/dias_yermek_cv.pdf"
+                href="/api/cv"
                 download="Dias_Yermek_CV.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
