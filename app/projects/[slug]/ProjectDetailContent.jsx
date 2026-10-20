@@ -559,6 +559,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   const titleX = useTransform(scrollY, [0, 110], [-backWidth, 0]);
 
   const backText = lang === 'ru' ? 'Все проекты' : lang === 'kk' ? 'Барлық жобалар' : 'All Projects';
+  const mobileBackText = lang === 'ru' ? 'ПРОЕКТЫ' : lang === 'kk' ? 'ЖОБАЛАР' : 'PROJECTS';
   const roleLabel = lang === 'ru' ? 'Роль' : lang === 'kk' ? 'Рөлі' : 'Role';
   const platformLabel = lang === 'ru' ? 'Платформа' : lang === 'kk' ? 'Платформа' : 'Platform';
   const yearLabel = lang === 'ru' ? 'Год' : lang === 'kk' ? 'Жыл' : 'Year';
@@ -570,12 +571,31 @@ export default function ProjectDetailContent({ slug: propSlug }) {
   const nextCaseText = lang === 'ru' ? 'Следующий кейс' : lang === 'kk' ? 'Келесі жоба' : 'Next Case Study';
 
   return (
-    <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0">
+    <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0 overflow-x-clip">
       {/* ========================================================================= */}
-      {/* UNIFIED STICKY SCROLL-ANIMATED HEADER (100% Transparent, No Container Box) */}
+      {/* MOBILE TOP-RIGHT NAVIGATION BUTTON (Matches Screenshot 2, md:hidden)     */}
+      {/* ========================================================================= */}
+      <div className="md:hidden fixed top-8 right-6 z-40 select-none">
+        <Link
+          href="/projects"
+          onClick={playClick}
+          onMouseEnter={playHover}
+          className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#080d14]/85 hover:bg-[#101722] border border-white/20 text-white backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.6)] active:scale-95 transition-all group"
+        >
+          <div className="w-5 h-5 rounded-md bg-white text-black flex items-center justify-center shrink-0 group-hover:-translate-x-0.5 transition-transform">
+            <ArrowLeft className="w-3.5 h-3.5 text-black stroke-[2.5]" />
+          </div>
+          <span className="font-mono font-bold text-xs uppercase tracking-wider text-white">
+            {mobileBackText}
+          </span>
+        </Link>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* UNIFIED STICKY SCROLL-ANIMATED HEADER (Desktop Only, md:block)           */}
       {/* ========================================================================= */}
       <Motion.header
-        className="sticky top-0 z-40 w-full bg-transparent border-none shadow-none pointer-events-none select-none"
+        className="hidden md:block sticky top-0 z-40 w-full bg-transparent border-none shadow-none pointer-events-none select-none"
       >
         <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pointer-events-auto">
           <div className="h-16 sm:h-20 flex items-center justify-between gap-4">
@@ -647,13 +667,51 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       </Motion.header>
 
       {/* ========================================================================= */}
-      {/* 1. HERO CONTENT CONTAINER (Spacious flow directly below sticky header)    */}
+      {/* 1. HERO CONTENT CONTAINER                                                 */}
       {/* ========================================================================= */}
-      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-16 sm:pt-20">
+      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 md:pt-16">
+        {/* Mobile Static Title & Action Badges (md:hidden, wraps naturally) */}
+        <div className="md:hidden space-y-4 mb-8">
+          <h1 className="font-display font-black uppercase tracking-tight text-white text-2xl sm:text-3xl leading-[1.15] break-words">
+            {project.title}
+          </h1>
+
+          {(project.liveUrl || (project.githubUrl && !project.isPrivate)) && (
+            <div className="flex flex-wrap items-center gap-2.5 pt-1 font-mono text-xs">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase shadow-md active:scale-95 transition-transform"
+                >
+                  <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.githubUrl && !project.isPrivate && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] border border-white/15 text-white text-xs font-bold active:scale-95 transition-all"
+                >
+                  <FaGithub className="w-3.5 h-3.5" />
+                  <span>{lang === 'ru' ? 'Код' : 'Code'}</span>
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+
         <Motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.1 }}
+          viewport={{ once: false, amount: 0.05 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-6 mb-12 sm:mb-16"
         >
@@ -697,7 +755,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         <Motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.05 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-14 sm:mb-20"
         >
@@ -739,7 +797,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
+            viewport={{ once: false, amount: 0.05 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="mb-16 sm:mb-24 p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/[0.08] overflow-hidden"
           >
@@ -780,7 +838,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           <Motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
+            viewport={{ once: false, amount: 0.05 }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="mb-16 sm:mb-24 space-y-6"
           >
@@ -802,7 +860,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         <Motion.section
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.05 }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 sm:mb-24 space-y-8"
         >
@@ -897,7 +955,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         <Motion.section
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
+          viewport={{ once: false, amount: 0.05 }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 sm:mb-24 space-y-6"
         >
@@ -1015,7 +1073,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           <Motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
+            viewport={{ once: false, amount: 0.05 }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="mb-20 sm:mb-28 space-y-8"
           >
@@ -1071,7 +1129,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       <Motion.div
         initial={{ opacity: 0, y: 36 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.15 }}
+        viewport={{ once: false, amount: 0.05 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="w-full mt-10 mb-0"
       >
@@ -1082,9 +1140,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           onMouseLeave={() => setIsNextHovered(false)}
           onMouseMove={handleNextMouseMove}
           ref={nextSectionRef}
-          className="group relative block w-full border-t border-white/10 pt-16 sm:pt-24 pb-28 sm:pb-36 px-6 sm:px-10 lg:px-16 xl:px-24 select-none bg-gradient-to-b from-transparent via-black/40 to-black/85 cursor-pointer"
+          className="group relative block w-full border-t border-white/10 pt-16 sm:pt-24 pb-28 sm:pb-36 select-none bg-gradient-to-b from-transparent via-black/40 to-black/85 cursor-pointer"
         >
-          <div className="w-[90%] max-w-[1920px] mx-auto">
+          <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
               <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
                 {nextCaseText}
