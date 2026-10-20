@@ -242,8 +242,8 @@ export default function AboutContent() {
       <motion.div
         initial={{ opacity: 0, y: -16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.3 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: false, amount: 0.05 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4 mb-8 sm:mb-12"
       >
         <div className="flex items-center gap-3">
@@ -266,10 +266,10 @@ export default function AboutContent() {
         {/* ========================================================= */}
         <div className="w-full lg:w-[310px] xl:w-[330px] shrink-0 lg:sticky lg:top-24 space-y-4">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: false, amount: 0.05 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="cyber-panel p-4 sm:p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_40px_var(--card-hover-glow)]"
           >
             {/* Ambient Corner Decors */}
@@ -417,41 +417,41 @@ export default function AboutContent() {
         {/* ========================================================= */}
         <div className="flex-1 min-w-0 space-y-16 sm:space-y-20">
           {/* 1. NARRATIVE BIOGRAPHY & MISSION */}
-          <motion.section
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-6"
-          >
-            <div className="space-y-3">
+          <section className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.05 }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-3"
+            >
               <span className="text-xs text-[var(--accent-color)] font-bold tracking-widest uppercase">
                 // {content.system.role} &bull; {content.system.location}
               </span>
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[var(--heading-tint)] font-display uppercase tracking-wide leading-tight">
                 {about.title}
               </h1>
-            </div>
 
-            <p className="text-sm sm:text-base text-[var(--heading-tint)] font-sans font-medium leading-relaxed">
-              {about.lead}
-            </p>
+              <p className="text-sm sm:text-base text-[var(--heading-tint)] font-sans font-medium leading-relaxed pt-1">
+                {about.lead}
+              </p>
 
-            <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans leading-relaxed">
-              {about.story}
-            </p>
+              <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans leading-relaxed">
+                {about.story}
+              </p>
+            </motion.div>
 
             {/* 2. THE THREE HIGHLIGHT CARDS (100% UNIFORM ALIGNMENT & SIZING) */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
               {highlightCards.map((card, idx) => {
                 const CardIcon = card.Icon;
                 return (
                   <motion.div
                     key={card.id}
-                    initial={{ opacity: 0, y: 18 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.2 }}
-                    transition={{ duration: 0.5, delay: 0.05 + idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: false, amount: 0.05 }}
+                    transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={playHover}
                     className="cyber-panel p-4 sm:p-5 rounded-xl flex flex-col justify-between h-[126px] hover:border-[var(--accent-border)] transition-all group"
                   >
@@ -478,17 +478,17 @@ export default function AboutContent() {
                 );
               })}
             </div>
-          </motion.section>
+          </section>
 
           {/* 3. INTERACTIVE TECHNICAL COMPETENCY MATRIX (MULTI-SELECT & ADAPTIVE LAYOUT) */}
-          <motion.section
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-6"
-          >
-            <div className="border-b border-[var(--border-subtle)] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <section className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.05 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="border-b border-[var(--border-subtle)] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+            >
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
                   {about.sectorsTitle || 'COMPETENCY MATRIX'}
@@ -537,7 +537,7 @@ export default function AboutContent() {
                   );
                 })}
               </div>
-            </div>
+            </motion.div>
 
             {/* ADAPTIVE COMPETENCY LAYOUT */}
             {filteredDomains.length === 1 ? (
@@ -549,8 +549,8 @@ export default function AboutContent() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.15 }}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: false, amount: 0.05 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="cyber-panel p-6 sm:p-8 rounded-2xl space-y-6 border-[var(--accent-border)] shadow-[0_0_35px_var(--card-hover-glow)]"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border-subtle)] gap-3">
@@ -627,8 +627,8 @@ export default function AboutContent() {
                       key={domain.id}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: false, amount: 0.15 }}
-                      transition={{ duration: 0.5, delay: 0.05 + idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                      viewport={{ once: false, amount: 0.05 }}
+                      transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
                       onMouseEnter={playHover}
                       className="cyber-panel p-5 sm:p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-[var(--accent-border)] transition-all group"
                     >
@@ -667,18 +667,17 @@ export default function AboutContent() {
                 })}
               </div>
             )}
-          </motion.section>
+          </section>
 
           {/* 4. CAREER TELEMETRY TIMELINE (SCREEN-CENTERED DYNAMIC SCROLL) */}
-          <motion.section
-            ref={timelineRef}
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.1 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-8"
-          >
-            <div className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between">
+          <section ref={timelineRef} className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.05 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between"
+            >
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
                   {exp.title}
@@ -688,7 +687,7 @@ export default function AboutContent() {
               <span className="text-xs text-[var(--accent-color)] font-bold font-mono">
                 [TRACK: {exp.logs.length.toString().padStart(2, '0')}]
               </span>
-            </div>
+            </motion.div>
 
             {/* Kinetic Timeline: Line anchored to center of screen */}
             <div className="relative">
@@ -706,10 +705,10 @@ export default function AboutContent() {
                 {exp.logs.map((log, idx) => (
                   <motion.div
                     key={log.code || idx}
-                    initial={{ opacity: 0, y: 24, x: -8 }}
+                    initial={{ opacity: 0, y: 20, x: -8 }}
                     whileInView={{ opacity: 1, y: 0, x: 0 }}
-                    viewport={{ once: false, amount: 0.2 }}
-                    transition={{ duration: 0.55, delay: 0.05 + idx * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: false, amount: 0.05 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                     className="relative flex items-start gap-4 sm:gap-6 group"
                   >
                     {/* Center Timeline Node */}
@@ -758,18 +757,18 @@ export default function AboutContent() {
                 ))}
               </div>
             </div>
-          </motion.section>
+          </section>
 
           {/* 5. VERIFIED CREDENTIALS: CERTIFICATIONS & SPOKEN LANGUAGES */}
           {about.credentials && (
-            <motion.section
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.15 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-6"
-            >
-              <div className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between">
+            <section className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.05 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between"
+              >
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
                     {about.credentials.title}
@@ -781,15 +780,15 @@ export default function AboutContent() {
                 <span className="text-xs text-[var(--accent-color)] font-mono font-bold">
                   [ACCREDITED]
                 </span>
-              </div>
+              </motion.div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {/* Certifications Card */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.15 }}
-                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  viewport={{ once: false, amount: 0.05 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                   className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all"
                 >
                   <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
@@ -834,8 +833,8 @@ export default function AboutContent() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.15 }}
-                  transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  viewport={{ once: false, amount: 0.05 }}
+                  transition={{ duration: 0.45, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all"
                 >
                   <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
@@ -875,25 +874,25 @@ export default function AboutContent() {
                   </div>
                 </motion.div>
               </div>
-            </motion.section>
+            </section>
           )}
 
           {/* 6. ENGINEERING MINDSET & PRINCIPLES */}
-          <motion.section
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-6"
-          >
-            <div className="border-b border-[var(--border-subtle)] pb-4">
+          <section className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.05 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="border-b border-[var(--border-subtle)] pb-4"
+            >
               <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
                 {lang === 'kk' ? 'ИНЖЕНЕРЛІК ҰСТАНЫМДАР' : lang === 'ru' ? 'ПРИНЦИПЫ И ИНЖЕНЕРНЫЙ ПОДХОД' : 'ENGINEERING PRINCIPLES & MINDSET'}
               </h2>
               <p className="text-xs text-[var(--text-muted)] mt-0.5">
                 {lang === 'kk' ? 'Өнімдерді қалай жобалаймын және құрастырамын' : lang === 'ru' ? 'Как я подхожу к созданию надежных продуктов' : 'Core standards guiding technical execution'}
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {principles.map((p, idx) => {
@@ -903,8 +902,8 @@ export default function AboutContent() {
                     key={p.num}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.2 }}
-                    transition={{ duration: 0.5, delay: 0.05 + idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: false, amount: 0.05 }}
+                    transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={playHover}
                     className="cyber-panel p-5 rounded-xl flex flex-col justify-between space-y-4 hover:border-[var(--accent-border)] transition-all group"
                   >
@@ -929,14 +928,14 @@ export default function AboutContent() {
                 );
               })}
             </div>
-          </motion.section>
+          </section>
 
           {/* 7. CALL TO ACTION BAR */}
           <motion.section
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: false, amount: 0.05 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             className="cyber-panel p-8 sm:p-10 rounded-2xl text-center space-y-6"
           >
             <div className="space-y-2">
