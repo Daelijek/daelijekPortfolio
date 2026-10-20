@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal as TerminalIcon, X, Maximize2, Minimize2, CornerDownLeft, ExternalLink } from 'lucide-react';
+import { Terminal as TerminalIcon, X, Maximize2, Minimize2, CornerDownLeft, ExternalLink, Download } from 'lucide-react';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { soundFx } from '../../audio/soundEffects';
 import * as amplitude from '@amplitude/unified';
@@ -41,6 +41,14 @@ const EXTENDED_COMPLETIONS = [
   'lang en',
   'lang ru',
   'lang kk'
+];
+
+const SKILLS_DATA = [
+  { sector: 'Frontend Core', tech: 'Next.js 15, React 19, TypeScript, Tailwind 4, HTML5/CSS3' },
+  { sector: 'Mobile Engineering', tech: 'Flutter & Dart, Riverpod, React Native, Expo CLI' },
+  { sector: 'Backend & APIs', tech: 'FastAPI, Python, PostgreSQL, SQLAlchemy 2, REST, WebSockets' },
+  { sector: 'AI & Cloud Tech', tech: 'OpenAI & Anthropic SDKs, Vector Embeddings, LLM Streaming' },
+  { sector: 'Architecture & Dev', tech: 'Modular Clean Arch, Riverpod, Docker, CI/CD, Vite 6' }
 ];
 
 // Helper to render text with clickable URLs, emails, and links
@@ -121,6 +129,34 @@ export default function InteractiveTerminal() {
     }
   }, [outputLines, isOpen]);
 
+  // Isolate scroll and pause Lenis smooth scrolling when terminal is active
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const lenis = window.__lenis;
+    if (isOpen) {
+      if (lenis && typeof lenis.stop === 'function') {
+        lenis.stop();
+      }
+      document.body.style.overflow = 'hidden';
+    } else {
+      if (lenis && typeof lenis.start === 'function') {
+        lenis.start();
+      }
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        const l = window.__lenis;
+        if (l && typeof l.start === 'function') {
+          l.start();
+        }
+        document.body.style.overflow = '';
+      }
+    };
+  }, [isOpen]);
+
   // Focus input when terminal opens
   useEffect(() => {
     if (isOpen) {
@@ -159,6 +195,44 @@ export default function InteractiveTerminal() {
     window.addEventListener('keydown', handleGlobalKeyDown);
     return () => window.removeEventListener('keydown', handleGlobalKeyDown);
   }, [isOpen]);
+
+  // Robust PDF download handler that works reliably in Chrome & Chromium browsers
+  const handleDownloadCV = useCallback(async () => {
+    soundFx.playDownload();
+    try {
+      const response = await fetch('/dias_yermek_cv.pdf');
+      if (!response.ok) throw new Error('Network error');
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.style.display = 'none';
+      link.href = blobUrl;
+      link.setAttribute('download', 'Dias_Yermek_CV.pdf');
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        if (link.parentNode) {
+          document.body.removeChild(link);
+        }
+        window.URL.revokeObjectURL(blobUrl);
+      }, 1500);
+    } catch (err) {
+      void err;
+      // Fallback direct link invocation attached to DOM
+      const link = document.createElement('a');
+      link.style.display = 'none';
+      link.href = '/dias_yermek_cv.pdf';
+      link.setAttribute('download', 'Dias_Yermek_CV.pdf');
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        if (link.parentNode) {
+          document.body.removeChild(link);
+        }
+      }, 1500);
+    }
+  }, []);
 
   const executeCommand = (cmdText) => {
     const rawCmd = (cmdText !== undefined ? cmdText : input).trim();
@@ -253,16 +327,8 @@ export default function InteractiveTerminal() {
     } else if (mainCmd === 'skills' || mainCmd === 'matrix' || mainCmd === 'stack') {
       newLines.push({
         id: `out-${Date.now()}`,
-        type: 'output',
-        content: `┌──────────────────────┬─────────────────────────────────────────────────────────┐
-│ SECTOR               │ TECHNOLOGIES & COMPETENCIES                             │
-├──────────────────────┼─────────────────────────────────────────────────────────┤
-│ Frontend Core        │ Next.js 15, React 19, TypeScript, Tailwind 4, HTML5/CSS3│
-│ Mobile Engineering   │ Flutter & Dart, Riverpod, React Native, Expo CLI        │
-│ Backend & APIs       │ FastAPI, Python, PostgreSQL, SQLAlchemy 2, REST, WebSock│
-│ AI & Cloud Tech      │ OpenAI & Anthropic SDKs, Vector Embeddings, LLM Stream  │
-│ Architecture & Dev   │ Modular Clean Arch, Riverpod, Docker, CI/CD, Vite 6     │
-└──────────────────────┴─────────────────────────────────────────────────────────┘`
+        type: 'skills-table',
+        data: SKILLS_DATA
       });
     } else if (mainCmd === 'projects') {
       newLines.push({
@@ -318,16 +384,12 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
       newLines.push({ id: `out-${Date.now()}`, type: 'success', content: '[SYS] Opening GitHub: https://github.com/Daelijek' });
       if (typeof window !== 'undefined') window.open('https://github.com/Daelijek', '_blank');
     } else if (mainCmd === 'cv' || mainCmd === 'resume') {
-      soundFx.playDownload();
+      handleDownloadCV();
       newLines.push({
         id: `out-${Date.now()}`,
-        type: 'success',
-        content: '[SYS] Initiating dossier download: Dias_Yermek_CV.pdf...'
+        type: 'cv-download',
+        content: '[SYS] Initiating dossier download: Dias_Yermek_CV.pdf (111 KB)...'
       });
-      const link = document.createElement('a');
-      link.href = '/dias_yermek_cv.pdf';
-      link.download = 'Dias_Yermek_CV.pdf';
-      link.click();
     } else if (mainCmd === 'theme') {
       const targetTheme = args[1];
       const validThemes = ['acid', 'cyan', 'amber', 'crimson', 'obsidian'];
@@ -445,7 +507,7 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
             soundFx.playClick();
             setIsOpen((prev) => !prev);
           }}
-          className="group flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl sm:rounded-2xl bg-[#060a0f]/80 hover:bg-[#081018] border border-white/15 hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-white transition-all shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-2xl font-mono text-xs"
+          className="group flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl sm:rounded-2xl bg-[#060a0f]/80 hover:bg-[#081018] border border-white/15 hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-white transition-all shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-2xl font-mono text-xs cursor-pointer"
           title="Toggle Terminal (~ or `)"
           aria-label="Toggle Interactive Terminal"
         >
@@ -461,6 +523,8 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
       <AnimatePresence>
         {isOpen && (
           <div
+            data-lenis-prevent="true"
+            onWheel={(e) => e.stopPropagation()}
             onClick={(e) => {
               // Click outside terminal window closes it cleanly
               if (e.target === e.currentTarget) {
@@ -552,8 +616,12 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
               {/* Terminal Output Body (Clicking anywhere focuses input) */}
               <div
                 ref={terminalBodyRef}
+                data-lenis-prevent="true"
+                onWheel={(e) => {
+                  e.stopPropagation();
+                }}
                 onClick={() => inputRef.current?.focus()}
-                className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-2 text-xs sm:text-sm font-mono scrollbar-thin scrollbar-thumb-white/15 scrollbar-track-transparent leading-relaxed cursor-text"
+                className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-2 text-xs sm:text-sm font-mono scrollbar-thin scrollbar-thumb-white/15 scrollbar-track-transparent leading-relaxed cursor-text overscroll-contain"
               >
                 {outputLines.map((line) => {
                   if (line.type === 'command') {
@@ -569,6 +637,48 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                       <pre key={line.id} className="text-[var(--accent-color)] text-[10px] sm:text-xs overflow-x-auto leading-tight select-none">
                         {line.content}
                       </pre>
+                    );
+                  }
+                  if (line.type === 'skills-table') {
+                    return (
+                      <div key={line.id} className="my-2 border border-[var(--border-subtle)] rounded-lg overflow-hidden bg-black/40">
+                        <div className="grid grid-cols-12 bg-white/[0.04] border-b border-[var(--border-subtle)] px-3 py-1.5 text-[11px] font-bold text-[var(--heading-tint)] tracking-wider">
+                          <span className="col-span-12 sm:col-span-4 uppercase">[SECTOR]</span>
+                          <span className="hidden sm:inline sm:col-span-8 uppercase">[TECHNOLOGIES & COMPETENCIES]</span>
+                        </div>
+                        <div className="divide-y divide-white/[0.06] text-xs">
+                          {line.data.map((row, idx) => (
+                            <div key={idx} className="grid grid-cols-12 px-3 py-2 items-start hover:bg-white/[0.02] transition-colors gap-1 sm:gap-0">
+                              <span className="col-span-12 sm:col-span-4 text-[var(--accent-color)] font-semibold pr-2">{row.sector}</span>
+                              <span className="col-span-12 sm:col-span-8 text-white/80">{row.tech}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+                  if (line.type === 'cv-download') {
+                    return (
+                      <div key={line.id} className="p-3 my-1 rounded-lg bg-[var(--accent-color)]/10 border border-[var(--accent-color)]/30 space-y-2">
+                        <div className="text-[var(--accent-color)] font-medium flex items-center gap-2">
+                          <Download className="w-4 h-4" />
+                          <span>{line.content}</span>
+                        </div>
+                        <div className="text-white/70 text-xs flex items-center gap-2 flex-wrap">
+                          <span>Direct file link:</span>
+                          <a
+                            href="/dias_yermek_cv.pdf"
+                            download="Dias_Yermek_CV.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[var(--accent-color)] underline underline-offset-2 hover:text-white font-bold inline-flex items-center gap-1"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span>/dias_yermek_cv.pdf</span>
+                            <ExternalLink className="w-2.5 h-2.5 inline" />
+                          </a>
+                        </div>
+                      </div>
                     );
                   }
                   if (line.type === 'easter-egg') {
