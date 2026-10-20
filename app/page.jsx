@@ -295,6 +295,7 @@ export default function HomePage() {
       <AnimatePresence>
         {!isBooted && (
           <motion.div
+            id="hud-preloader"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.02 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
