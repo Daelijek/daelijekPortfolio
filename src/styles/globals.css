@@ -341,4 +341,15 @@ p, span, a, button, li, div {
   animation: borderBeamTravel 2.2s linear infinite;
   background: linear-gradient(to left, #ffffff 0%, #229ED9 35%, transparent 100%);
   filter: drop-shadow(0 0 6px #229ED9) drop-shadow(0 0 12px rgba(34, 158, 217, 0.7));
+}
+
+/* Smoothly hide floating terminal trigger when boot preloader is visible */
+body:has(#hud-preloader) .hud-cli-trigger {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(12px) !important;
+}
+
+.hud-cli-trigger {
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }

@@ -9,6 +9,8 @@ import ScrollFadeMask from '../src/components/common/ScrollFadeMask';
 import NavHeader from '../src/components/navigation/NavHeader';
 import SmoothScroll from '../src/components/common/SmoothScroll';
 import { Analytics } from '@vercel/analytics/react';
+import AmplitudeAnalytics from '../src/components/analytics/AmplitudeAnalytics';
+import InteractiveTerminal from '../src/components/terminal/InteractiveTerminal';
 
 const bebasNeue = Bebas_Neue({
   weight: '400',
@@ -149,6 +151,8 @@ export default function RootLayout({ children }) {
             <NavHeader />
             <ScrollFadeMask>{children}</ScrollFadeMask>
             <Analytics />
+            <AmplitudeAnalytics />
+            <InteractiveTerminal />
           </SmoothScroll>
         </ThemeAudioProvider>
       </body>
