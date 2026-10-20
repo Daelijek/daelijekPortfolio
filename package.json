@@ -11,6 +11,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.48.0",
+    "@amplitude/unified": "^1.1.42",
     "@vercel/analytics": "^1.6.1",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
