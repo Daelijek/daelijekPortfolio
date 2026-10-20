@@ -332,56 +332,56 @@ export const portfolioContent = {
               title: "Home & Balance Overview",
               subtitle: "Total balance card with monthly delta and recent transaction logs",
               tag: "DASHBOARD",
-              image: "/assets/projects/fintrack/screen-01-home.jpg"
+              image: "/assets/projects/fintrack/screen-01-home.webp"
             },
             {
               id: "02",
               title: "Transactions & Category Distribution",
               subtitle: "Categorized expense ring with instant category filtering",
               tag: "TRANSACTIONS",
-              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+              image: "/assets/projects/fintrack/screen-02-transactions.webp"
             },
             {
               id: "03",
               title: "Budget Planning & Limits",
               subtitle: "Real-time budget consumption bars with overspending warnings",
               tag: "BUDGETS",
-              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+              image: "/assets/projects/fintrack/screen-03-budget.webp"
             },
             {
               id: "04",
               title: "Monthly Analytics & Trends",
               subtitle: "Interactive SVG spline charts tracking spending velocity",
               tag: "ANALYTICS",
-              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+              image: "/assets/projects/fintrack/screen-04-analytics.webp"
             },
             {
               id: "05",
               title: "Financial Reports & Savings Rate",
               subtitle: "Income vs expenses comparison with net balance indicators",
               tag: "REPORTS",
-              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+              image: "/assets/projects/fintrack/screen-05-reports.webp"
             },
             {
               id: "06",
               title: "Report Export Engine",
               subtitle: "One-tap PDF and CSV generation with configurable period filters",
               tag: "EXPORTS",
-              image: "/assets/projects/fintrack/screen-06-export.jpg"
+              image: "/assets/projects/fintrack/screen-06-export.webp"
             },
             {
               id: "07",
               title: "Profile & Account Management",
               subtitle: "Multi-currency switcher, credit telemetry, and security settings",
               tag: "PROFILE",
-              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+              image: "/assets/projects/fintrack/screen-07-profile.webp"
             },
             {
               id: "08",
               title: "Conversational Financial Assistant",
               subtitle: "Natural language query interface for spending and budget queries",
               tag: "ASSISTANT",
-              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.webp"
             }
           ],
           dossier: {
@@ -454,7 +454,7 @@ export const portfolioContent = {
           isPrivate: true,
           description: "End-to-end analytical platform that connects to official HeadHunter public APIs, ingests job postings across regions and roles, extracts verified key_skills tags and lemmatized n-gram phrases via pymorphy2, and outputs both an interactive real-time telemetry dashboard and clean, deduplicated Excel (.xlsx) workbooks.",
           tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
-          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          image: "/assets/projects/rolesieve/role-sieve-showcase.webp",
           liveUrl: "https://role-sieve-mu.vercel.app/",
           githubUrl: null,
           status: "PRODUCTION",
@@ -464,84 +464,84 @@ export const portfolioContent = {
               title: "Hero Section & Search Parameters",
               subtitle: "Launchpad interface with mode selection and query parameter configuration",
               tag: "HERO INTERFACE",
-              image: "/assets/projects/rolesieve/hero-section.png"
+              image: "/assets/projects/rolesieve/hero-section.webp"
             },
             {
               id: "02",
               title: "Two Distinct Ingestion Modes",
               subtitle: "Targeted URL/ID harvesting or automated multi-parameter HeadHunter query scanning",
               tag: "INGESTION MODES",
-              image: "/assets/projects/rolesieve/two-modes-section.png"
+              image: "/assets/projects/rolesieve/two-modes-section.webp"
             },
             {
               id: "03",
               title: "Processing Architecture & NLP Pipeline",
               subtitle: "Three-stage pipeline: official API collection, pymorphy2 lemmatization, and report generation",
               tag: "PIPELINE ARCHITECTURE",
-              image: "/assets/projects/rolesieve/how-it-works-section.png"
+              image: "/assets/projects/rolesieve/how-it-works-section.webp"
             },
             {
               id: "04",
               title: "Skill Telemetry & Clean Excel Export",
               subtitle: "Live keyword frequency dashboard and styled, deduplicated .XLSX workbook generation",
               tag: "ARTIFACTS",
-              image: "/assets/projects/rolesieve/what-you-get-section.png"
+              image: "/assets/projects/rolesieve/what-you-get-section.webp"
             },
             {
               id: "05",
               title: "Platform Metrics & High-Load Reliability",
               subtitle: "Telemetry logs on ingestion speed, token accuracy, and zero-drop API rate handling",
               tag: "PLATFORM METRICS",
-              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+              image: "/assets/projects/rolesieve/by-the-numbers-section.webp"
             },
             {
               id: "06",
               title: "Interactive Run Results HUD",
               subtitle: "Aggregated run metrics with skill coverage charts and vacancy intelligence distribution",
               tag: "RESULTS HUD",
-              image: "/assets/projects/rolesieve/run-results-section.png"
+              image: "/assets/projects/rolesieve/run-results-section.webp"
             },
             {
               id: "07",
               title: "Extracted Key Skills Frequency Table",
               subtitle: "Comprehensive list of extracted skills with frequency percentages across job postings",
               tag: "SKILL FREQUENCY",
-              image: "/assets/projects/rolesieve/run-results-list.png"
+              image: "/assets/projects/rolesieve/run-results-list.webp"
             },
             {
               id: "08",
               title: "Neural Skill Gap Analytics",
               subtitle: "Semantic alignment evaluation comparing candidate capabilities against market demand",
               tag: "NEURAL ANALYSIS",
-              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+              image: "/assets/projects/rolesieve/run-results-neural-skill.webp"
             },
             {
               id: "09",
               title: "Instant Analysis Launcher CTA",
               subtitle: "Streamlined search input with URL validation and real-time task queue telemetry",
               tag: "LAUNCHER",
-              image: "/assets/projects/rolesieve/try-it-now-section.png"
+              image: "/assets/projects/rolesieve/try-it-now-section.webp"
             },
             {
               id: "10",
               title: "Use Cases & User Success Scenarios",
               subtitle: "Practical application workflows for software engineers and technical recruiters",
               tag: "SUCCESS SCENARIOS",
-              image: "/assets/projects/rolesieve/success-stories-section.png"
+              image: "/assets/projects/rolesieve/success-stories-section.webp"
             },
             {
               id: "11",
               title: "Documentation & Quick Start Guide",
               subtitle: "Step-by-step developer documentation on ingestion parameters and Excel schema",
               tag: "DOCUMENTATION",
-              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.webp"
             },
             {
               id: "12",
               title: "Support Channels & Contact Port",
               subtitle: "Direct communication links, issue reporting, and engineering discussion hub",
               tag: "CONTACTS",
-              image: "/assets/projects/rolesieve/contacts-page.png"
+              image: "/assets/projects/rolesieve/contacts-page.webp"
             },
             {
               id: "13",
@@ -621,7 +621,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "Engineered the official OpenGov.kz platform frontend for QBS Solutions using React 19, Vite 6, and React Router 7. Implemented a 10-namespace trilingual localization system (Kazakh, Russian, English) via i18next, Mock Service Worker (MSW) REST API layer, modular CSS styling, and responsive civic registers for public transparency.",
           tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
-          image: "/assets/projects/openGov/open-gov-showcase.jpg",
+          image: "/assets/projects/openGov/open-gov-showcase.webp",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
           status: "PRODUCTION_DEPLOYED",
@@ -631,70 +631,70 @@ export const portfolioContent = {
               title: "Hero Section & Civic Portal Gateway",
               subtitle: "Interactive portal hero with dynamic open data search, national statistics, and direct citizen access points",
               tag: "HERO GATEWAY",
-              image: "/assets/projects/openGov/hero-section.png"
+              image: "/assets/projects/openGov/hero-section.webp"
             },
             {
               id: "02",
               title: "What is Open Data? Conceptual Overview",
               subtitle: "Visual guide and educational breakdown explaining open government data principles, transparency, and public utility",
               tag: "OPEN DATA CONCEPTS",
-              image: "/assets/projects/openGov/what-is-open-data.png"
+              image: "/assets/projects/openGov/what-is-open-data.webp"
             },
             {
               id: "03",
               title: "Strategic Role of OpenGov.kz",
               subtitle: "The platform's overarching mission: uniting citizens, developers, and public agencies in a unified digital ecosystem",
               tag: "MISSION & ROLE",
-              image: "/assets/projects/openGov/the-role-of-opengov.png"
+              image: "/assets/projects/openGov/the-role-of-opengov.webp"
             },
             {
               id: "04",
               title: "Open Data Ecosystem in Kazakhstan",
               subtitle: "National adoption metrics, dataset volume growth, API consumption stats, and public sector integration metrics",
               tag: "NATIONAL ECOSYSTEM",
-              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.webp"
             },
             {
               id: "05",
               title: "Key Platforms & Regulatory Legislation",
               subtitle: "Interactive catalog of legal acts, digital standards, and regulatory frameworks governing open state governance",
               tag: "LEGISLATION & STANDARDS",
-              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+              image: "/assets/projects/openGov/key-platform-and-legislation.webp"
             },
             {
               id: "06",
               title: "Successful Real-World Civic Use Cases",
               subtitle: "Showcase of high-impact civic applications, analytical research tools, and community services built on open data",
               tag: "USE CASES",
-              image: "/assets/projects/openGov/successfull-use-cases.png"
+              image: "/assets/projects/openGov/successfull-use-cases.webp"
             },
             {
               id: "07",
               title: "Civic Initiatives & Government Projects Catalog",
               subtitle: "Faceted catalog of active and completed national initiatives with status filters, milestones, and budget disclosures",
               tag: "PROJECTS CATALOG",
-              image: "/assets/projects/openGov/projects.png"
+              image: "/assets/projects/openGov/projects.webp"
             },
             {
               id: "08",
               title: "OpenGov Newsroom & Public Disclosures",
               subtitle: "Centralized press releases, government announcements, transparency reports, and platform upgrade logs",
               tag: "NEWS PORTAL",
-              image: "/assets/projects/openGov/news.png"
+              image: "/assets/projects/openGov/news.webp"
             },
             {
               id: "09",
               title: "Latest News Stream & Editorial Highlights",
               subtitle: "Curated front-page editorial feed featuring breaking civic updates, upcoming public hearings, and spotlight stories",
               tag: "LATEST FEED",
-              image: "/assets/projects/openGov/latest-news.png"
+              image: "/assets/projects/openGov/latest-news.webp"
             },
             {
               id: "10",
               title: "Comprehensive Article & Policy Detail View",
               subtitle: "Long-form reading experience with semantic typography, social sharing, downloadable attachments, and related stories",
               tag: "DETAIL VIEW",
-              image: "/assets/projects/openGov/news-detail.png"
+              image: "/assets/projects/openGov/news-detail.webp"
             }
           ],
           dossier: {
@@ -1256,56 +1256,56 @@ export const portfolioContent = {
               title: "Главный экран и баланс",
               subtitle: "Карта общего баланса с помесячной дельтой и лентой операций",
               tag: "ДАШБОРД",
-              image: "/assets/projects/fintrack/screen-01-home.jpg"
+              image: "/assets/projects/fintrack/screen-01-home.webp"
             },
             {
               id: "02",
               title: "Транзакции и распределение трат",
               subtitle: "Кольцевая диаграмма расходов с быстрой фильтрацией по категориям",
               tag: "ТРАНЗАКЦИИ",
-              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+              image: "/assets/projects/fintrack/screen-02-transactions.webp"
             },
             {
               id: "03",
               title: "Планирование и лимиты бюджетов",
               subtitle: "Шкалы расхода бюджета в реальном времени с алертами перерасхода",
               tag: "БЮДЖЕТ",
-              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+              image: "/assets/projects/fintrack/screen-03-budget.webp"
             },
             {
               id: "04",
               title: "Месячная аналитика и графики",
               subtitle: "Интерактивные сплайн-диаграммы динамики ежедневных расходов",
               tag: "АНАЛИТИКА",
-              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+              image: "/assets/projects/fintrack/screen-04-analytics.webp"
             },
             {
               id: "05",
               title: "Финансовые отчеты и сальдо",
               subtitle: "Сравнение доходов и расходов с показателем нормы сбережений",
               tag: "ОТЧЕТЫ",
-              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+              image: "/assets/projects/fintrack/screen-05-reports.webp"
             },
             {
               id: "06",
               title: "Экспорт финансовых отчетов",
               subtitle: "Генерация отчетов в PDF и CSV с выбором отчетного периода",
               tag: "ЭКСПОРТ",
-              image: "/assets/projects/fintrack/screen-06-export.jpg"
+              image: "/assets/projects/fintrack/screen-06-export.webp"
             },
             {
               id: "07",
               title: "Профиль и управление счетами",
               subtitle: "Мультивалютный переключатель, кредитная телеметрия и настройки",
               tag: "ПРОФИЛЬ",
-              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+              image: "/assets/projects/fintrack/screen-07-profile.webp"
             },
             {
               id: "08",
               title: "Финансовый ассистент",
               subtitle: "Диалоговый интерфейс запросов по балансам и советам по бюджету",
               tag: "АССИСТЕНТ",
-              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.webp"
             }
           ],
           dossier: {
@@ -1378,7 +1378,7 @@ export const portfolioContent = {
           isPrivate: true,
           description: "Full-Stack сервис для анализа открытых вакансий HeadHunter через официальный API. Извлекает подтвержденные теги key_skills и частотные n-граммы описаний с лемматизацией (pymorphy2), формируя интерактивный дашборд покрытия навыков и чистый Excel (.xlsx) отчёт с подсветкой повторов.",
           tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
-          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          image: "/assets/projects/rolesieve/role-sieve-showcase.webp",
           liveUrl: "https://role-sieve-mu.vercel.app/",
           githubUrl: null,
           status: "PRODUCTION",
@@ -1388,84 +1388,84 @@ export const portfolioContent = {
               title: "Главный экран и параметры поиска",
               subtitle: "Стартовый интерфейс с выбором режима сбора вакансий и настройкой запроса",
               tag: "ГЛАВНЫЙ ЭКРАН",
-              image: "/assets/projects/rolesieve/hero-section.png"
+              image: "/assets/projects/rolesieve/hero-section.webp"
             },
             {
               id: "02",
               title: "Два режима анализа вакансий",
               subtitle: "Точечный сбор по ссылкам и ID или автоматический парсинг по фильтрам HeadHunter",
               tag: "РЕЖИМЫ СБОРА",
-              image: "/assets/projects/rolesieve/two-modes-section.png"
+              image: "/assets/projects/rolesieve/two-modes-section.webp"
             },
             {
               id: "03",
               title: "Архитектура и пайплайн обработки",
               subtitle: "Трехэтапный конвейер: сбор через API dev.hh.ru, NLP-лемматизация и генерация отчетов",
               tag: "ПРИНЦИП РАБОТЫ",
-              image: "/assets/projects/rolesieve/how-it-works-section.png"
+              image: "/assets/projects/rolesieve/how-it-works-section.webp"
             },
             {
               id: "04",
               title: "Дашборд навыков и чистый Excel",
               subtitle: "Визуальная аналитика частотности ключевых навыков и стилизованный экспорт в .XLSX",
               tag: "АРТЕФАКТЫ",
-              image: "/assets/projects/rolesieve/what-you-get-section.png"
+              image: "/assets/projects/rolesieve/what-you-get-section.webp"
             },
             {
               id: "05",
               title: "Метрики и производительность платформы",
               subtitle: "Показатели скорости сбора, точности извлечения n-грамм и устойчивости к лимитам API",
               tag: "МЕТРИКИ",
-              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+              image: "/assets/projects/rolesieve/by-the-numbers-section.webp"
             },
             {
               id: "06",
               title: "Интерактивный дашборд результатов",
               subtitle: "Сводные показатели завершенного прогона с графиками покрытия и картой компетенций",
               tag: "РЕЗУЛЬТАТЫ",
-              image: "/assets/projects/rolesieve/run-results-section.png"
+              image: "/assets/projects/rolesieve/run-results-section.webp"
             },
             {
               id: "07",
               title: "Рейтинг ключевых навыков и технологий",
               subtitle: "Таблица извлеченных key_skills с процентом упоминаемости в исследуемой выборке",
               tag: "НАВЫКИ",
-              image: "/assets/projects/rolesieve/run-results-list.png"
+              image: "/assets/projects/rolesieve/run-results-list.webp"
             },
             {
               id: "08",
               title: "Нейросетевая аналитика профиля",
               subtitle: "Оценка семантического соответствия стека кандидата и детекция пробелов в резюме",
               tag: "НЕЙРО-АНАЛИЗ",
-              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+              image: "/assets/projects/rolesieve/run-results-neural-skill.webp"
             },
             {
               id: "09",
               title: "Интерактивный блок запуска анализа",
               subtitle: "Форма моментального запуска с валидацией ссылок и индикатором очереди задач",
               tag: "ЗАПУСК АНАЛИЗА",
-              image: "/assets/projects/rolesieve/try-it-now-section.png"
+              image: "/assets/projects/rolesieve/try-it-now-section.webp"
             },
             {
               id: "10",
               title: "Сценарии применения и кейсы",
               subtitle: "Практические сценарии использования платформы соискателями и карьерными консультантами",
               tag: "СЦЕНАРИИ",
-              image: "/assets/projects/rolesieve/success-stories-section.png"
+              image: "/assets/projects/rolesieve/success-stories-section.webp"
             },
             {
               id: "11",
               title: "Документация и быстрый старт",
               subtitle: "Интерактивное руководство по настройке параметров сбора и формату выгрузок",
               tag: "ДОКУМЕНТАЦИЯ",
-              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.webp"
             },
             {
               id: "12",
               title: "Контакты и обратная связь",
               subtitle: "Каналы связи, техническая поддержка и ссылки на сообщество проекта",
               tag: "КОНТАКТЫ",
-              image: "/assets/projects/rolesieve/contacts-page.png"
+              image: "/assets/projects/rolesieve/contacts-page.webp"
             },
             {
               id: "13",
@@ -1545,7 +1545,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "Разработка фронтенда официальной платформы OpenGov.kz для QBS Solutions на React 19, Vite 6 и React Router 7. Реализована масштабируемая мультиязычность (10 неймспейсов на казахском, русском и английском) на i18next, слой мокирования данных на Mock Service Worker (MSW), модульные стили CSS и адаптивные каталоги открытых данных.",
           tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
-          image: "/assets/projects/openGov/open-gov-showcase.jpg",
+          image: "/assets/projects/openGov/open-gov-showcase.webp",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
           status: "PRODUCTION_DEPLOYED",
@@ -1555,70 +1555,70 @@ export const portfolioContent = {
               title: "Главный экран и портал открытых данных",
               subtitle: "Интерактивный главный экран с глобальным поиском по открытым данным, ключевыми показателями и точками входа",
               tag: "ГЛАВНЫЙ ЭКРАН",
-              image: "/assets/projects/openGov/hero-section.png"
+              image: "/assets/projects/openGov/hero-section.webp"
             },
             {
               id: "02",
               title: "Концепция открытых данных: цели и принципы",
               subtitle: "Информационный блок с понятным объяснением сути открытых государственных данных, прозрачности и общественной пользы",
               tag: "КОНЦЕПЦИЯ ДАННЫХ",
-              image: "/assets/projects/openGov/what-is-open-data.png"
+              image: "/assets/projects/openGov/what-is-open-data.webp"
             },
             {
               id: "03",
               title: "Роль и стратегическая миссия OpenGov.kz",
               subtitle: "Ключевая задача платформы: объединение граждан, разработчиков и госорганов в единой доверенной цифровой экосистеме",
               tag: "МИССИЯ И РОЛЬ",
-              image: "/assets/projects/openGov/the-role-of-opengov.png"
+              image: "/assets/projects/openGov/the-role-of-opengov.webp"
             },
             {
               id: "04",
               title: "Экосистема открытых данных в Казахстане",
               subtitle: "Динамика внедрения, статистика наборов данных, рост API-запросов и интеграция с государственными ведомствами",
               tag: "ЭКОСИСТЕМА РК",
-              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.webp"
             },
             {
               id: "05",
               title: "Законодательная база и ключевые платформы",
               subtitle: "Интерактивный справочник нормативно-правовых актов, цифровых стандартов и законов об открытом правительстве",
               tag: "ЗАКОНОДАТЕЛЬСТВО",
-              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+              image: "/assets/projects/openGov/key-platform-and-legislation.webp"
             },
             {
               id: "06",
               title: "Кейсы успешного применения и польза",
               subtitle: "Примеры реальных гражданских сервисов, аналитических исследований и продуктов, созданных на базе открытых данных",
               tag: "УСПЕШНЫЕ КЕЙСЫ",
-              image: "/assets/projects/openGov/successfull-use-cases.png"
+              image: "/assets/projects/openGov/successfull-use-cases.webp"
             },
             {
               id: "07",
               title: "Каталог проектов и гражданских инициатив",
               subtitle: "Полнофункциональный каталог государственных программ и инициатив с фильтрацией по статусам и этапам реализации",
               tag: "КАТАЛОГ ПРОЕКТОВ",
-              image: "/assets/projects/openGov/projects.png"
+              image: "/assets/projects/openGov/projects.webp"
             },
             {
               id: "08",
               title: "Портал новостей и официальных сообщений",
               subtitle: "Единый новостной центр с публикацией пресс-релизов, открытых отчетов и обновлений цифровой инфраструктуры",
               tag: "НОВОСТНОЙ ХАБ",
-              image: "/assets/projects/openGov/news.png"
+              image: "/assets/projects/openGov/news.webp"
             },
             {
               id: "09",
               title: "Лента актуальных новостей и событий",
               subtitle: "Витрина свежих публикаций, предстоящих общественных слушаний и важных решений для граждан",
               tag: "ЛЕНТА НОВОСТЕЙ",
-              image: "/assets/projects/openGov/latest-news.png"
+              image: "/assets/projects/openGov/latest-news.webp"
             },
             {
               id: "10",
               title: "Детальная страница публикации и статьи",
               subtitle: "Удобный интерфейс чтения с чистой типографикой, скачиваемыми приложениями, шерингом и сопутствующими материалами",
               tag: "ДЕТАЛЬНАЯ СТАТЬЯ",
-              image: "/assets/projects/openGov/news-detail.png"
+              image: "/assets/projects/openGov/news-detail.webp"
             }
           ],
           dossier: {
@@ -2180,56 +2180,56 @@ export const portfolioContent = {
               title: "Басты экран және жалпы баланс",
               subtitle: "Айлық динамикасы мен соңғы операциялар тізімі бар баланс картасы",
               tag: "БАСТЫ БЕТ",
-              image: "/assets/projects/fintrack/screen-01-home.jpg"
+              image: "/assets/projects/fintrack/screen-01-home.webp"
             },
             {
               id: "02",
               title: "Транзакциялар және санаттар",
               subtitle: "Санаттар бойынша жылдам сүзгісі бар шығындардың дөңгелек диаграммасы",
               tag: "ОПЕРАЦИЯЛАР",
-              image: "/assets/projects/fintrack/screen-02-transactions.jpg"
+              image: "/assets/projects/fintrack/screen-02-transactions.webp"
             },
             {
               id: "03",
               title: "Бюджетті жоспарлау және лимиттер",
               subtitle: "Артық шығынды ескерту жүйесі бар бюджеттің орындалу шкаласы",
               tag: "БЮДЖЕТ",
-              image: "/assets/projects/fintrack/screen-03-budget.jpg"
+              image: "/assets/projects/fintrack/screen-03-budget.webp"
             },
             {
               id: "04",
               title: "Айлық аналитика және графиктік есеп",
               subtitle: "Күнделікті шығындар серпінін көрсететін интерактивті сплайн-диаграммалар",
               tag: "АНАЛИТИКА",
-              image: "/assets/projects/fintrack/screen-04-analytics.jpg"
+              image: "/assets/projects/fintrack/screen-04-analytics.webp"
             },
             {
               id: "05",
               title: "Қаржылық есептер және сальдо",
               subtitle: "Кірістер мен шығыстарды салыстыру және жинақтау пайызы",
               tag: "ЕСЕПТЕР",
-              image: "/assets/projects/fintrack/screen-05-reports.jpg"
+              image: "/assets/projects/fintrack/screen-05-reports.webp"
             },
             {
               id: "06",
               title: "Қаржылық есептерді экспорттау",
               subtitle: "Таңдалған кезеңге арналған PDF және CSV форматындағы есептер",
               tag: "ЭКСПОРТ",
-              image: "/assets/projects/fintrack/screen-06-export.jpg"
+              image: "/assets/projects/fintrack/screen-06-export.webp"
             },
             {
               id: "07",
               title: "Профиль және шоттарды басқару",
               subtitle: "Мультивалюталық ауыстырғыш, несие телеметриясы және баптаулар",
               tag: "ПРОФИЛЬ",
-              image: "/assets/projects/fintrack/screen-07-profile.jpg"
+              image: "/assets/projects/fintrack/screen-07-profile.webp"
             },
             {
               id: "08",
               title: "Қаржылық көмекші",
               subtitle: "Бюджет және шығыстар бойынша табиғи тілдегі кеңесші интерфейсі",
               tag: "КӨМЕКШІ",
-              image: "/assets/projects/fintrack/screen-08-ai-assistant.jpg"
+              image: "/assets/projects/fintrack/screen-08-ai-assistant.webp"
             }
           ],
           dossier: {
@@ -2302,7 +2302,7 @@ export const portfolioContent = {
           isPrivate: true,
           description: "HeadHunter ресми API арқылы ашық бос орындарды талдайтын Full-Stack сервисі. Pymorphy2 лемматизациясы арқылы тексерілген key_skills тегтері мен жиі қолданылатын n-граммаларды бөліп алады, дағдыларды қамту дашбордын және қайталануларды белгілейтін таза Excel (.xlsx) есебін ұсынады.",
           tags: ["Next.js 16", "FastAPI", "React 19", "Python", "Tailwind 4", "NLP", "HeadHunter API"],
-          image: "/assets/projects/rolesieve/role-sieve-showcase.jpg",
+          image: "/assets/projects/rolesieve/role-sieve-showcase.webp",
           liveUrl: "https://role-sieve-mu.vercel.app/",
           githubUrl: null,
           status: "PRODUCTION",
@@ -2312,84 +2312,84 @@ export const portfolioContent = {
               title: "Басты бет және іздеу параметрлері",
               subtitle: "Бос орындарды жинау режимін таңдау және сұраныс параметрлерін баптау экраны",
               tag: "БАСТЫ БЕТ",
-              image: "/assets/projects/rolesieve/hero-section.png"
+              image: "/assets/projects/rolesieve/hero-section.webp"
             },
             {
               id: "02",
               title: "Екі түрлі талдау режимі",
               subtitle: "Сілтемелер мен ID бойынша нүктелік жинау немесе HeadHunter сүзгілерімен автоматты іздеу",
               tag: "ЖИНАУ РЕЖИМДЕРІ",
-              image: "/assets/projects/rolesieve/two-modes-section.png"
+              image: "/assets/projects/rolesieve/two-modes-section.webp"
             },
             {
               id: "03",
               title: "Архитектура және өңдеу конвейері",
               subtitle: "Үш кезеңді жүйе: dev.hh.ru API деректер жинау, pymorphy2 лемматизациясы және есеп жасау",
               tag: "ЖҰМЫС ҚАҒИДАСЫ",
-              image: "/assets/projects/rolesieve/how-it-works-section.png"
+              image: "/assets/projects/rolesieve/how-it-works-section.webp"
             },
             {
               id: "04",
               title: "Дағдылар дашборды және таза Excel",
               subtitle: "Негізгі дағдылар жиілігінің визуалды аналитикасы және .XLSX пішіміндегі стильді есеп",
               tag: "НӘТИЖЕЛЕР",
-              image: "/assets/projects/rolesieve/what-you-get-section.png"
+              image: "/assets/projects/rolesieve/what-you-get-section.webp"
             },
             {
               id: "05",
               title: "Платформа метрикалары мен өнімділігі",
               subtitle: "Жинау жылдамдығы, n-граммаларды анықтау дәлдігі және API шектеулеріне төзімділік",
               tag: "МЕТРИКАЛАР",
-              image: "/assets/projects/rolesieve/by-the-numbers-section.png"
+              image: "/assets/projects/rolesieve/by-the-numbers-section.webp"
             },
             {
               id: "06",
               title: "Нәтижелердің интерактивті дашборды",
               subtitle: "Дағдылар қамтылуы графиктері бар аяқталған талдаудың жиынтық көрсеткіштері",
               tag: "ДАШБОРД",
-              image: "/assets/projects/rolesieve/run-results-section.png"
+              image: "/assets/projects/rolesieve/run-results-section.webp"
             },
             {
               id: "07",
               title: "Негізгі дағдылар мен технологиялар рейтингі",
               subtitle: "Талданған бос орындардағы key_skills кездесу пайызы көрсетілген толық кесте",
               tag: "ДАҒДЫЛАР",
-              image: "/assets/projects/rolesieve/run-results-list.png"
+              image: "/assets/projects/rolesieve/run-results-list.webp"
             },
             {
               id: "08",
               title: "Профильді нейрожелілік талдау",
               subtitle: "Үміткер дағдыларының сәйкестігін бағалау және түйіндемедегі олқылықтарды анықтау",
               tag: "НЕЙРО-ТАЛДАУ",
-              image: "/assets/projects/rolesieve/run-results-neural-skill.png"
+              image: "/assets/projects/rolesieve/run-results-neural-skill.webp"
             },
             {
               id: "09",
               title: "Талдауды жылдам бастау блогы",
               subtitle: "Сілтемелерді тексеру және тапсырмалар кезегі индикаторы бар жылдам іске қосу формасы",
               tag: "ІСКЕ ҚОСУ",
-              image: "/assets/projects/rolesieve/try-it-now-section.png"
+              image: "/assets/projects/rolesieve/try-it-now-section.webp"
             },
             {
               id: "10",
               title: "Қолдану сценарийлері мен кейстер",
               subtitle: "Ізденушілер мен мансап кеңесшілері үшін платформаны тиімді пайдалану жолдары",
               tag: "СЦЕНАРИЙЛЕР",
-              image: "/assets/projects/rolesieve/success-stories-section.png"
+              image: "/assets/projects/rolesieve/success-stories-section.webp"
             },
             {
               id: "11",
               title: "Құжаттама және жылдам бастау",
               subtitle: "Жинау параметрлерін баптау және экспортталған есептер пішімі бойынша нұсқаулық",
               tag: "ҚҰЖАТТАМА",
-              image: "/assets/projects/rolesieve/documentation-quic-start-page.png"
+              image: "/assets/projects/rolesieve/documentation-quic-start-page.webp"
             },
             {
               id: "12",
               title: "Байланыс және кері байланыс",
               subtitle: "Байланыс арналары, техникалық қолдау және жоба қауымдастығының сілтемелері",
               tag: "БАЙЛАНЫС",
-              image: "/assets/projects/rolesieve/contacts-page.png"
+              image: "/assets/projects/rolesieve/contacts-page.webp"
             },
             {
               id: "13",
@@ -2469,7 +2469,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "QBS Solutions үшін OpenGov.kz ресми платформасының фронтендін React 19, Vite 6 және React Router 7 негізінде әзірлеу. i18next арқылы 10 кеңістіктен тұратын үштілді жергіліктендіру (қазақша, орысша, ағылшынша), Mock Service Worker (MSW) API қабаты, модульдік CSS стильдері және мемлекеттік ашық деректер каталогтары жүзеге асырылды.",
           tags: ["React 19", "Vite", "React Router 7", "i18next", "CSS Modules", "MSW"],
-          image: "/assets/projects/openGov/open-gov-showcase.jpg",
+          image: "/assets/projects/openGov/open-gov-showcase.webp",
           liveUrl: "https://qbs-solutions.vercel.app/",
           githubUrl: "https://github.com/Daelijek/www-opengov-kz",
           status: "PRODUCTION_DEPLOYED",
@@ -2479,70 +2479,70 @@ export const portfolioContent = {
               title: "Басты бет және ашық деректер порталы",
               subtitle: "Ашық деректер бойынша іздеу жүйесі, ұлттық көрсеткіштер және негізгі кіру нүктелері бар интерактивті басты бет",
               tag: "БАСТЫ БЕТ",
-              image: "/assets/projects/openGov/hero-section.png"
+              image: "/assets/projects/openGov/hero-section.webp"
             },
             {
               id: "02",
               title: "Ашық деректер дегеніміз не? Тұжырымдама",
               subtitle: "Ашық мемлекеттік деректердің мәнін, ашықтық қағидаттарын және қоғамдық пайдасын түсіндіретін ақпараттық блок",
               tag: "ДЕРЕКТЕР ТҰЖЫРЫМДАМАСЫ",
-              image: "/assets/projects/openGov/what-is-open-data.png"
+              image: "/assets/projects/openGov/what-is-open-data.webp"
             },
             {
               id: "03",
               title: "OpenGov.kz рөлі мен стратегиялық миссиясы",
               subtitle: "Платформаның басты мақсаты: азаматтарды, әзірлеушілерді және мемлекеттік органдарды біртұтас цифрлық экожүйеге біріктіру",
               tag: "МИССИЯ ЖӘНЕ РӨЛ",
-              image: "/assets/projects/openGov/the-role-of-opengov.png"
+              image: "/assets/projects/openGov/the-role-of-opengov.webp"
             },
             {
               id: "04",
               title: "Қазақстандағы ашық деректер экожүйесі",
               subtitle: "Деректер жиынтығының көлемі, API қолданылуы және мемлекеттік органдармен интеграция көрсеткіштері",
               tag: "ҚР ЭКОЖҮЙЕСІ",
-              image: "/assets/projects/openGov/open-data-in-kazakhstan.png"
+              image: "/assets/projects/openGov/open-data-in-kazakhstan.webp"
             },
             {
               id: "05",
               title: "Негізгі платформалар мен заңнамалық база",
               subtitle: "Ашық мемлекеттік басқаруды реттейтін нормативтік-құқықтық актілер, стандарттар мен заңдар каталогы",
               tag: "ЗАҢНАМА ЖӘНЕ СТАНДАРТТАР",
-              image: "/assets/projects/openGov/key-platform-and-legislation.png"
+              image: "/assets/projects/openGov/key-platform-and-legislation.webp"
             },
             {
               id: "06",
               title: "Табысты қолдану кейстері мен пайдасы",
               subtitle: "Ашық деректер негізінде жасалған нақты азаматтық сервистер, зерттеу құралдары мен қоғамдық жобалар",
               tag: "ТАБЫСТЫ КЕЙСТЕР",
-              image: "/assets/projects/openGov/successfull-use-cases.png"
+              image: "/assets/projects/openGov/successfull-use-cases.webp"
             },
             {
               id: "07",
               title: "Азаматтық бастамалар мен жобалар каталогы",
               subtitle: "Мемлекеттік бағдарламалар мен қоғамдық бастамалардың сүзгілері бар толыққанды каталогы",
               tag: "ЖОБАЛАР КАТАЛОГЫ",
-              image: "/assets/projects/openGov/projects.png"
+              image: "/assets/projects/openGov/projects.webp"
             },
             {
               id: "08",
               title: "Жаңалықтар мен ресми хабарламалар порталы",
               subtitle: "Баспасөз релиздері, мемлекеттік есептер мен цифрлық жаңартулар жарияланатын бірыңғай жаңалықтар хабы",
               tag: "ЖАҢАЛЫҚТАР ХАБЫ",
-              image: "/assets/projects/openGov/news.png"
+              image: "/assets/projects/openGov/news.webp"
             },
             {
               id: "09",
               title: "Өзекті жаңалықтар легі мен оқиғалар",
               subtitle: "Ең соңғы жарияланымдар, алдағы қоғамдық тыңдаулар мен маңызды жаңалықтар топтамасы",
               tag: "ЖАҢАЛЫҚТАР ЛЕГІ",
-              image: "/assets/projects/openGov/latest-news.png"
+              image: "/assets/projects/openGov/latest-news.webp"
             },
             {
               id: "10",
               title: "Мақаланың және ресми жарияланымның толық парақшасы",
               subtitle: "Ыңғайлы оқу интерфейсі, таза типографика, құжаттарды жүктеу және байланысты материалдар",
               tag: "ТОЛЫҚ МАҚАЛА",
-              image: "/assets/projects/openGov/news-detail.png"
+              image: "/assets/projects/openGov/news-detail.webp"
             }
           ],
           dossier: {
