@@ -173,9 +173,9 @@ export default function NavHeader() {
         </header>
       )}
 
-      {/* Top Right Header & Breadcrumb (Rendered on subpages) */}
+      {/* Top Right Header & Breadcrumb (Rendered on subpages - Hidden on mobile to avoid overlapping content) */}
       {pathname !== '/' && pageMeta[pathname] && (
-        <div className="fixed top-8 right-8 sm:right-12 z-40 select-none text-right">
+        <div className="hidden sm:block fixed top-8 right-8 sm:right-12 z-40 select-none text-right">
           {/* Breadcrumb */}
           <nav className="flex items-center justify-end gap-1.5 text-[10px] sm:text-xs font-mono tracking-widest text-[var(--text-secondary)] uppercase mb-0.5" aria-label="Breadcrumb">
             <Link href="/" onClick={playClick} onMouseEnter={playHover} className="hover:text-[var(--heading-tint)] transition-colors">

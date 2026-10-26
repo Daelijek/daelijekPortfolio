@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { motion, useScroll } from 'framer-motion';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
 import { soundFx } from '../../src/audio/soundEffects';
@@ -58,6 +58,8 @@ export default function AboutContent() {
     });
     return () => unsubscribe();
   }, [pageScrollProgress]);
+
+
 
   const handleDownloadCv = () => {
     if (playDownload) playDownload();
@@ -236,15 +238,15 @@ export default function AboutContent() {
   return (
     <div
       ref={containerRef}
-      className="min-h-screen pt-24 sm:pt-32 lg:pt-36 pb-32 px-6 sm:px-10 lg:px-16 xl:px-24 max-w-[1720px] mx-auto font-mono selection:bg-[var(--accent-color)] selection:text-[#040608]"
+      className="min-h-screen pt-28 sm:pt-32 lg:pt-36 pb-36 px-5 sm:px-8 lg:px-14 xl:px-20 max-w-[1720px] mx-auto font-mono selection:bg-[var(--accent-color)] selection:text-[#040608] overflow-x-clip"
     >
-      {/* Top Header System Tag */}
+      {/* 1. TOP HEADER SYSTEM TELEMETRY TAG */}
       <motion.div
         initial={{ opacity: 0, y: -16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.05 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-4 mb-8 sm:mb-12"
+        className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-10 sm:mb-14"
       >
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping" />
@@ -252,65 +254,69 @@ export default function AboutContent() {
             {about.tag || '// SECTOR_00 · BIOGRAPHY & TELEMETRY'}
           </span>
         </div>
-        <div className="text-xs text-[var(--text-muted)] hidden sm:flex items-center gap-2">
+        <div className="text-xs text-white/40 hidden sm:flex items-center gap-2">
           <span>PORTFOLIO // 2026</span>
           <span className="text-[var(--accent-color)]">&bull;</span>
           <span>DIAS YERMEK</span>
         </div>
       </motion.div>
 
-      {/* Main Two-Column Master Layout (Compact Left Sidebar + Expansive Fluid Right Stream) */}
-      <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12 xl:gap-16">
+      {/* 2. MAIN TWO-COLUMN MASTER LAYOUT */}
+      <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-14 xl:gap-20">
         {/* ========================================================= */}
-        {/* LEFT COLUMN: DEDICATED STICKY PROFILE POD (COMPACT & SLEEK) */}
+        {/* LEFT COLUMN: PURE EDITORIAL PROFILE DOSSIER (ZERO BOXES)   */}
         {/* ========================================================= */}
-        <div className="w-full lg:w-[310px] xl:w-[330px] shrink-0 lg:sticky lg:top-24 space-y-4">
+        <div className="w-full lg:w-[320px] xl:w-[340px] shrink-0 lg:sticky lg:top-28 space-y-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.05 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="cyber-panel p-4 sm:p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_40px_var(--card-hover-glow)]"
+            className="space-y-6"
           >
-            {/* Ambient Corner Decors */}
-            <div className="absolute top-2 left-2 text-[9px] text-[var(--accent-color)] font-mono opacity-60">
-              [SYS_ID // 0x01]
-            </div>
-            <div className="absolute top-2 right-2 flex items-center gap-1.5 text-[9px] text-[var(--text-muted)] font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>ONLINE</span>
-            </div>
-
-            {/* Photo Container with Controlled Height */}
-            <div className="relative w-full aspect-[4/4.3] max-h-[330px] rounded-xl overflow-hidden mt-3 border border-[var(--border-bright)] bg-black/60 shadow-inner">
+            {/* Minimalist Photo Container with Architectural Vignette */}
+            <div className="relative w-full aspect-[4/4.3] max-h-[340px] rounded-2xl overflow-hidden border border-white/10 bg-[#04070C] shadow-2xl group">
               <img
                 src="/assets/linkedIn_Dias_square.png"
                 alt="Dias Yermek"
                 className="w-full h-full object-cover grayscale brightness-95 contrast-105 group-hover:scale-[1.03] group-hover:grayscale-0 transition-all duration-700"
               />
 
-              {/* Theme Hue Overlay */}
-              <div className="absolute inset-0 bg-[var(--accent-color)] opacity-[0.06] mix-blend-color pointer-events-none" />
+              {/* Theme Hue Tint */}
+              <div className="absolute inset-0 bg-[var(--accent-color)] opacity-[0.05] mix-blend-color pointer-events-none" />
+
+              {/* Photo Telemetry Overlays */}
+              <div className="absolute top-3 left-3 text-[9px] font-mono text-white/60 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+                [SYS_ID // 0x01]
+              </div>
+              <div className="absolute top-3 right-3 flex items-center gap-1.5 text-[9px] font-mono text-emerald-400 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>ONLINE</span>
+              </div>
 
               {/* Bottom Photo Stamp Overlay */}
-              <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end justify-between text-xs pointer-events-none">
+              <div className="absolute inset-x-0 bottom-0 p-3.5 bg-gradient-to-t from-black/95 via-black/50 to-transparent flex items-end justify-between text-xs pointer-events-none">
                 <div>
-                  <span className="text-[11px] font-bold text-white block leading-tight">DIAS YERMEK</span>
-                  <span className="text-[9.5px] text-[var(--accent-color)] font-mono block">Astana, KZ · UTC+5</span>
+                  <span className="text-xs font-bold text-white block leading-tight tracking-wider">
+                    DIAS YERMEK
+                  </span>
+                  <span className="text-[10px] text-[var(--accent-color)] font-mono block">
+                    Astana, KZ · UTC+5
+                  </span>
                 </div>
-                <span className="text-[9px] px-2 py-0.5 rounded bg-black/70 border border-white/20 text-white/70 font-mono">
+                <span className="text-[9.5px] px-2 py-0.5 rounded bg-black/80 border border-white/20 text-white/80 font-mono">
                   {scrollPercent}% SCROLL
                 </span>
               </div>
             </div>
 
-            {/* Scroll Telemetry Progress Bar */}
-            <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] space-y-1.5">
-              <div className="flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono">
-                <span>SCROLL_DEPTH</span>
+            {/* Scroll Telemetry Hairline Progress */}
+            <div className="space-y-1.5 pt-1">
+              <div className="flex items-center justify-between text-[10.5px] text-white/40 font-mono">
+                <span>SCROLL_TELEMETRY</span>
                 <span className="text-[var(--accent-color)] font-bold">{scrollPercent}%</span>
               </div>
-              <div className="w-full h-1.5 rounded-full bg-black/50 border border-[var(--border-subtle)] overflow-hidden">
+              <div className="w-full h-1 rounded-full bg-white/[0.06] overflow-hidden">
                 <div
                   style={{ width: `${scrollPercent}%` }}
                   className="h-full bg-[var(--accent-color)] shadow-[0_0_10px_var(--accent-glow)] transition-[width] duration-150"
@@ -318,22 +324,25 @@ export default function AboutContent() {
               </div>
             </div>
 
-            {/* Identity Specs List */}
-            <div className="mt-3.5 space-y-2 text-[11px] font-mono">
-              <div className="flex items-center justify-between p-2 rounded bg-black/40 border border-[var(--border-subtle)]">
-                <span className="text-[var(--text-muted)]">STATUS</span>
-                <span className="text-emerald-400 font-bold">OPEN FOR OFFERS</span>
+            {/* Typographic Technical Specification (Clean Horizontal Hairlines, No Boxes) */}
+            <div className="divide-y divide-white/[0.08] border-y border-white/[0.08] text-xs font-mono">
+              <div className="flex items-center justify-between py-2.5">
+                <span className="text-white/40 tracking-wider">STATUS</span>
+                <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  OPEN FOR OFFERS
+                </span>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-black/40 border border-[var(--border-subtle)]">
-                <span className="text-[var(--text-muted)]">EXPERIENCE</span>
-                <span className="text-[var(--heading-tint)] font-bold">3+ YEARS PROD</span>
+              <div className="flex items-center justify-between py-2.5">
+                <span className="text-white/40 tracking-wider">EXPERIENCE</span>
+                <span className="text-white font-bold">3+ YEARS PROD</span>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-black/40 border border-[var(--border-subtle)]">
-                <span className="text-[var(--text-muted)]">DEGREE</span>
-                <span className="text-[var(--heading-tint)] font-bold">B.S. SOFTWARE ENG</span>
+              <div className="flex items-center justify-between py-2.5">
+                <span className="text-white/40 tracking-wider">DEGREE</span>
+                <span className="text-white font-bold">B.S. SOFTWARE ENG</span>
               </div>
-              <div className="flex items-center justify-between p-2 rounded bg-black/40 border border-[var(--border-subtle)]">
-                <span className="text-[var(--text-muted)]">PHONE</span>
+              <div className="flex items-center justify-between py-2.5">
+                <span className="text-white/40 tracking-wider">PHONE</span>
                 <a
                   href={`tel:${content.contact?.phoneRaw || '+77088350549'}`}
                   className="text-[var(--accent-color)] font-bold hover:underline"
@@ -343,8 +352,8 @@ export default function AboutContent() {
               </div>
             </div>
 
-            {/* Action Buttons: Quick CV Download & Social Links */}
-            <div className="mt-4 space-y-2">
+            {/* Actions: Clean CV Download & Brand Social Icons */}
+            <div className="space-y-3 pt-1">
               <a
                 href="/api/cv"
                 download="Dias_Yermek_CV.pdf"
@@ -352,58 +361,54 @@ export default function AboutContent() {
                 rel="noopener noreferrer"
                 onClick={handleDownloadCv}
                 onMouseEnter={playHover}
-                className="w-full flex items-center justify-center gap-2 p-3 rounded-xl bg-[var(--accent-color)] text-[#020504] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_25px_var(--accent-glow)] transition-all active:scale-95 group"
+                className="w-full flex items-center justify-center gap-2 p-3.5 rounded-xl bg-[var(--accent-color)] text-[#020504] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_25px_var(--accent-glow)] transition-all active:scale-95 group"
               >
                 <FileDown className="w-4 h-4" />
                 <span>{cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}</span>
               </a>
 
-              {/* Social Channels Pill Row with Authentic Brand Colors on Hover */}
-              <div className="grid grid-cols-4 gap-1.5 pt-1">
-                {/* Telegram: #229ED9 */}
+              {/* Social Channels Pill Row with Authentic Brand Colors */}
+              <div className="grid grid-cols-4 gap-2">
                 <a
                   href={content.contact.telegram}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
                   title="Telegram"
-                  className="flex items-center justify-center p-2.5 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[#229ED9] hover:border-[#229ED9] hover:bg-[#229ED9]/10 hover:shadow-[0_0_15px_rgba(34,158,217,0.35)] transition-all"
+                  className="flex items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/10 text-white/60 hover:text-[#229ED9] hover:border-[#229ED9] hover:bg-[#229ED9]/10 hover:shadow-[0_0_15px_rgba(34,158,217,0.35)] transition-all"
                 >
                   <FaTelegram className="w-4 h-4" />
                 </a>
 
-                {/* GitHub: #FFFFFF */}
                 <a
                   href={content.contact.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
                   title="GitHub"
-                  className="flex items-center justify-center p-2.5 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-white hover:border-white/80 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all"
+                  className="flex items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/10 text-white/60 hover:text-white hover:border-white/80 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all"
                 >
                   <FaGithub className="w-4 h-4" />
                 </a>
 
-                {/* LinkedIn: #0A66C2 */}
                 <a
                   href={content.contact.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
                   title="LinkedIn"
-                  className="flex items-center justify-center p-2.5 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[#0A66C2] hover:border-[#0A66C2] hover:bg-[#0A66C2]/10 hover:shadow-[0_0_15px_rgba(10,102,194,0.35)] transition-all"
+                  className="flex items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/10 text-white/60 hover:text-[#0A66C2] hover:border-[#0A66C2] hover:bg-[#0A66C2]/10 hover:shadow-[0_0_15px_rgba(10,102,194,0.35)] transition-all"
                 >
                   <FaLinkedin className="w-4 h-4" />
                 </a>
 
-                {/* LeetCode: #FFA116 */}
                 <a
                   href={content.contact.leetcode || 'https://leetcode.com/u/Daelijek/'}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={playHover}
                   title="LeetCode"
-                  className="flex items-center justify-center p-2.5 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[#FFA116] hover:border-[#FFA116] hover:bg-[#FFA116]/10 hover:shadow-[0_0_15px_rgba(255,161,22,0.35)] transition-all"
+                  className="flex items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/10 text-white/60 hover:text-[#FFA116] hover:border-[#FFA116] hover:bg-[#FFA116]/10 hover:shadow-[0_0_15px_rgba(255,161,22,0.35)] transition-all"
                 >
                   <SiLeetcode className="w-4 h-4" />
                 </a>
@@ -413,100 +418,108 @@ export default function AboutContent() {
         </div>
 
         {/* ========================================================= */}
-        {/* RIGHT COLUMN: MAIN CONTENT STREAM                         */}
+        {/* RIGHT COLUMN: EXPANSIVE EDITORIAL STREAM (ZERO BOX CARDS)  */}
         {/* ========================================================= */}
-        <div className="flex-1 min-w-0 space-y-16 sm:space-y-20">
+        <div className="flex-1 min-w-0 space-y-20 sm:space-y-24">
           {/* 1. NARRATIVE BIOGRAPHY & MISSION */}
-          <section className="space-y-6">
+          <section className="space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.05 }}
               transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-3"
+              className="space-y-4"
             >
               <span className="text-xs text-[var(--accent-color)] font-bold tracking-widest uppercase">
                 // {content.system.role} &bull; {content.system.location}
               </span>
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[var(--heading-tint)] font-display uppercase tracking-wide leading-tight">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display uppercase tracking-tight leading-tight break-words">
                 {about.title}
               </h1>
 
-              <p className="text-sm sm:text-base text-[var(--heading-tint)] font-sans font-medium leading-relaxed pt-1">
+              <p className="text-base sm:text-lg text-white font-sans font-medium leading-relaxed pt-1">
                 {about.lead}
               </p>
 
-              <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans leading-relaxed">
+              <p className="text-sm sm:text-base text-white/60 font-sans leading-relaxed max-w-4xl">
                 {about.story}
               </p>
             </motion.div>
 
-            {/* 2. THE THREE HIGHLIGHT CARDS (100% UNIFORM ALIGNMENT & SIZING) */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+            {/* 2. THE THREE HIGHLIGHTS AS AN EDITORIAL STAT STREAM (NO BOXES) */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.05 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08] border-y border-white/[0.08] py-6 sm:py-8 my-6"
+            >
               {highlightCards.map((card, idx) => {
                 const CardIcon = card.Icon;
                 return (
-                  <motion.div
+                  <div
                     key={card.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.05 }}
-                    transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={playHover}
-                    className="cyber-panel p-4 sm:p-5 rounded-xl flex flex-col justify-between h-[126px] hover:border-[var(--accent-border)] transition-all group"
+                    className={`space-y-3 group ${
+                      idx === 0 ? 'sm:pr-6 lg:pr-8' : idx === 1 ? 'py-5 sm:py-0 sm:px-6 lg:px-8' : 'pt-5 sm:pt-0 sm:pl-6 lg:pl-8'
+                    }`}
                   >
-                    {/* Top Row: Icon + Cyber Badge */}
                     <div className="flex items-center justify-between">
-                      <div className="p-2 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--accent-color)] group-hover:scale-105 transition-transform">
+                      <div className="flex items-center gap-2 text-[var(--accent-color)]">
                         <CardIcon className="w-4 h-4" />
+                        <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-white/50">
+                          {card.tag}
+                        </span>
                       </div>
-                      <span className="text-[9px] font-mono text-[var(--accent-color)] tracking-wider px-2 py-0.5 rounded bg-black/40 border border-[var(--border-subtle)]">
-                        {card.tag}
+                      <span className="text-[10px] font-mono text-[var(--accent-color)] font-bold">
+                        0{idx + 1}
                       </span>
                     </div>
 
-                    {/* Bottom Info: Guaranteed strictly identical text baseline across all 3 cards */}
-                    <div className="space-y-0.5 mt-auto">
-                      <div className="text-xs sm:text-[13px] font-bold text-[var(--heading-tint)] font-mono leading-tight truncate">
+                    <div className="space-y-1">
+                      <div className="text-base sm:text-lg font-bold text-white font-mono group-hover:text-[var(--accent-color)] transition-colors leading-tight">
                         {card.title}
                       </div>
-                      <div className="text-[10.5px] sm:text-[11px] text-[var(--text-muted)] font-mono leading-snug truncate">
+                      <div className="text-xs text-white/50 font-sans leading-relaxed">
                         {card.subtitle}
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
-            </div>
+            </motion.div>
           </section>
 
-          {/* 3. INTERACTIVE TECHNICAL COMPETENCY MATRIX (MULTI-SELECT & ADAPTIVE LAYOUT) */}
-          <section className="space-y-6">
+          {/* 3. INTERACTIVE TECHNICAL COMPETENCY MATRIX (EDITORIAL LEDGER) */}
+          <section className="space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.05 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="border-b border-[var(--border-subtle)] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+              className="border-b border-white/[0.08] pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4"
             >
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
+                <span className="text-xs font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase block mb-1">
+                  // TECHNICAL_CAPABILITIES
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-tight">
                   {about.sectorsTitle || 'COMPETENCY MATRIX'}
                 </h2>
-                <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                <p className="text-xs sm:text-sm text-white/50 mt-1 font-sans">
                   {about.sectorsSubtitle || 'Categorized technical capabilities & tooling'}
                 </p>
               </div>
 
               {/* Multi-Select Category Filter Pills */}
-              <div className="flex items-center gap-1.5 flex-wrap">
+              <div className="flex items-center gap-1.5 flex-wrap self-start sm:self-auto">
                 <button
                   onClick={() => handleToggleCategory('all')}
                   onMouseEnter={playHover}
-                  className={`px-3 py-1.5 rounded-lg text-[10.5px] font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-1.5 cursor-pointer ${
                     selectedCategories.length === 4
                       ? 'bg-[var(--accent-color)] text-[#020504] shadow-[0_0_15px_var(--accent-glow)]'
-                      : 'bg-black/50 text-[var(--text-muted)] hover:text-white border border-[var(--border-subtle)]'
+                      : 'bg-white/[0.04] text-white/60 hover:text-white border border-white/10'
                   }`}
                 >
                   <span>{lang === 'kk' ? 'БАРЛЫҒЫ' : lang === 'ru' ? 'ВСЕ' : 'ALL'}</span>
@@ -525,10 +538,10 @@ export default function AboutContent() {
                       key={tab.id}
                       onClick={() => handleToggleCategory(tab.id)}
                       onMouseEnter={playHover}
-                      className={`px-2.5 py-1.5 rounded-lg text-[10.5px] font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-1.5 ${
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-1.5 cursor-pointer ${
                         isSelected
-                          ? 'bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] border border-[var(--accent-border)] shadow-[0_0_12px_var(--accent-glow)]'
-                          : 'bg-black/40 text-[var(--text-muted)] hover:text-white border border-[var(--border-subtle)]'
+                          ? 'bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/40 shadow-[0_0_12px_var(--accent-glow)]'
+                          : 'bg-white/[0.04] text-white/50 hover:text-white border border-white/10'
                       }`}
                     >
                       <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-[var(--accent-color)]' : 'bg-white/30'}`} />
@@ -539,150 +552,118 @@ export default function AboutContent() {
               </div>
             </motion.div>
 
-            {/* ADAPTIVE COMPETENCY LAYOUT */}
-            {filteredDomains.length === 1 ? (
-              /* Case 1: Deep-Dive Full-Width Inspection View (When exactly 1 is chosen) */
-              (() => {
-                const domain = filteredDomains[0];
-                const DomainIcon = domain.icon;
-                return (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.05 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="cyber-panel p-6 sm:p-8 rounded-2xl space-y-6 border-[var(--accent-border)] shadow-[0_0_35px_var(--card-hover-glow)]"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[var(--border-subtle)] gap-3">
-                      <div className="flex items-center gap-3.5">
-                        <div className="p-2.5 rounded-xl bg-[var(--accent-bg-subtle)] text-[var(--accent-color)] border border-[var(--border-subtle)]">
-                          <DomainIcon className="w-6 h-6" />
-                        </div>
-                        <div>
-                          <h3 className="text-base sm:text-lg font-bold text-[var(--heading-tint)] font-mono">
-                            {domain.title}
-                          </h3>
-                          <span className="text-[10px] text-[var(--accent-color)] font-mono tracking-widest uppercase">
-                            // DOMAIN_FOCUS · {domain.metric}
+            {/* HIGH-END ARCHITECTURAL CARDS GRID WITH FLUID LAYOUT & EXIT ANIMATIONS */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6">
+              <AnimatePresence>
+                {filteredDomains.map((domain, idx) => {
+                  const DomainIcon = domain.icon;
+                  return (
+                    <motion.div
+                      layout="position"
+                      key={domain.id}
+                      initial={{ opacity: 0, scale: 0.94, y: 16 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{
+                        opacity: 0,
+                        scale: 0.92,
+                        y: -8,
+                        transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] },
+                      }}
+                      transition={{
+                        layout: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+                        opacity: { duration: 0.25 },
+                        scale: { duration: 0.25 },
+                        y: { duration: 0.25 },
+                      }}
+                      onMouseEnter={playHover}
+                      className="relative rounded-2xl p-6 sm:p-7 bg-[#0b0f14]/80 border border-white/[0.08] hover:border-[var(--accent-color)]/50 transition-colors duration-300 group flex flex-col justify-between hover:shadow-[0_0_35px_rgba(0,0,0,0.6)] backdrop-blur-md overflow-hidden"
+                    >
+                      {/* Subtle Ambient Radial Highlight on Hover */}
+                      <div className="absolute -top-24 -right-24 w-48 h-48 bg-[var(--accent-color)]/5 rounded-full blur-3xl pointer-events-none group-hover:bg-[var(--accent-color)]/15 transition-all duration-500" />
+
+                      <div className="relative z-10 space-y-5">
+                        {/* Top Row: Icon, Index & Metric Badge */}
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2.5 rounded-xl bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/20 shadow-[0_0_15px_var(--accent-glow)]">
+                              <DomainIcon className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <span className="text-[10px] font-mono text-[var(--accent-color)] font-bold tracking-wider uppercase block">
+                                0{idx + 1} // DOMAIN
+                              </span>
+                              <h3 className="text-base sm:text-lg font-bold text-white font-mono group-hover:text-[var(--accent-color)] transition-colors">
+                                {domain.title}
+                              </h3>
+                            </div>
+                          </div>
+
+                          <span className="shrink-0 text-[10px] font-mono text-[var(--accent-color)] px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/10 font-bold">
+                            {domain.metric}
                           </span>
                         </div>
-                      </div>
-                      <span className="text-xs font-mono text-[var(--accent-color)] px-3 py-1 rounded-full bg-black/60 border border-[var(--border-subtle)] self-start sm:self-auto">
-                        {domain.skills.length} TECHNOLOGIES LOADED
-                      </span>
-                    </div>
 
-                    <p className="text-xs sm:text-sm text-[var(--heading-tint)] font-sans leading-relaxed">
-                      {domain.desc}
-                    </p>
+                        {/* Description */}
+                        <p className="text-xs sm:text-sm text-white/60 font-sans leading-relaxed">
+                          {domain.desc}
+                        </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                      <div className="space-y-3">
-                        <span className="text-[10.5px] font-mono text-[var(--text-muted)] tracking-wider uppercase block">
-                          CORE_TECHNOLOGY_STACK
-                        </span>
-                        <div className="flex flex-wrap gap-2">
-                          {domain.skills.map((skill, sIdx) => (
-                            <span
-                              key={sIdx}
-                              onMouseEnter={playHover}
-                              className="px-3 py-1.5 rounded-lg bg-black/60 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] text-xs text-[var(--text-primary)] transition-all font-mono"
-                            >
-                              {skill}
-                            </span>
-                          ))}
+                        {/* Technology Stack Chips */}
+                        <div className="space-y-2">
+                          <span className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-wider block">
+                            // TECH_STACK
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {domain.skills.map((skill, sIdx) => (
+                              <span
+                                key={sIdx}
+                                className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs text-white/80 font-mono group-hover:border-white/20 transition-colors"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
 
-                      <div className="space-y-3 p-4 rounded-xl bg-black/40 border border-[var(--border-subtle)]">
-                        <span className="text-[10.5px] font-mono text-[var(--accent-color)] tracking-wider uppercase block">
-                          PRODUCTION_FOOTPRINT
+                      {/* Deliverables / Production Proof at bottom of card */}
+                      <div className="relative z-10 pt-4 mt-5 border-t border-white/[0.06] space-y-2">
+                        <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] uppercase tracking-wider block">
+                          // KEY_DELIVERABLES
                         </span>
-                        <ul className="space-y-2 text-xs text-[var(--text-secondary)] font-sans">
+                        <ul className="space-y-1.5 text-xs text-white/70 font-sans">
                           {domain.deliverables.map((item, dIdx) => (
-                            <li key={dIdx} className="flex items-start gap-2">
-                              <ChevronRight className="w-3.5 h-3.5 text-[var(--accent-color)] shrink-0 mt-0.5" />
+                            <li key={dIdx} className="flex items-start gap-2 leading-relaxed">
+                              <span className="text-[var(--accent-color)] font-mono shrink-0 font-bold">&bull;</span>
                               <span>{item}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
-                    </div>
-                  </motion.div>
-                );
-              })()
-            ) : (
-              /* Case 2: Multi-Item Grid (2, 3 or 4 cards displayed in balanced columns) */
-              <div
-                className={`grid gap-4 xl:gap-5 ${
-                  filteredDomains.length === 3
-                    ? 'grid-cols-1 md:grid-cols-3'
-                    : 'grid-cols-1 md:grid-cols-2'
-                }`}
-              >
-                {filteredDomains.map((domain, idx) => {
-                  const DomainIcon = domain.icon;
-                  return (
-                    <motion.div
-                      key={domain.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: false, amount: 0.05 }}
-                      transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                      onMouseEnter={playHover}
-                      className="cyber-panel p-5 sm:p-6 rounded-2xl flex flex-col justify-between space-y-4 hover:border-[var(--accent-border)] transition-all group"
-                    >
-                      <div className="space-y-2.5">
-                        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
-                          <div className="flex items-center gap-2.5">
-                            <div className="p-1.5 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
-                              <DomainIcon className="w-4 h-4" />
-                            </div>
-                            <h3 className="text-xs sm:text-sm font-bold text-[var(--heading-tint)] font-mono">
-                              {domain.title}
-                            </h3>
-                          </div>
-                          <span className="text-[10px] font-mono text-[var(--accent-color)] tracking-wider px-2 py-0.5 rounded bg-black/50 border border-[var(--border-subtle)]">
-                            {domain.metric}
-                          </span>
-                        </div>
-                        <p className="text-xs text-[var(--text-muted)] font-sans leading-relaxed">
-                          {domain.desc}
-                        </p>
-                      </div>
-
-                      {/* Skill Tags Grid */}
-                      <div className="flex flex-wrap gap-1.5 pt-1">
-                        {domain.skills.map((skill, sIdx) => (
-                          <span
-                            key={sIdx}
-                            className="px-2 py-1 rounded bg-black/60 border border-[var(--border-subtle)] text-[10.5px] text-[var(--text-primary)] hover:border-[var(--accent-border)] hover:text-[var(--accent-color)] transition-colors cursor-default font-mono"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
                     </motion.div>
                   );
                 })}
-              </div>
-            )}
+              </AnimatePresence>
+            </div>
           </section>
 
-          {/* 4. CAREER TELEMETRY TIMELINE (SCREEN-CENTERED DYNAMIC SCROLL) */}
+          {/* 4. CAREER TELEMETRY TIMELINE (SCREEN-CENTERED DYNAMIC SCROLL, NO CARDS) */}
           <section ref={timelineRef} className="space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.05 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between"
+              className="border-b border-white/[0.08] pb-4 flex items-center justify-between"
             >
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
+                <span className="text-xs font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase block mb-1">
+                  // CAREER_PATH
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-tight">
                   {exp.title}
                 </h2>
-                <p className="text-xs text-[var(--text-muted)] mt-0.5">{exp.subtitle}</p>
+                <p className="text-xs text-white/50 mt-1 font-sans">{exp.subtitle}</p>
               </div>
               <span className="text-xs text-[var(--accent-color)] font-bold font-mono">
                 [TRACK: {exp.logs.length.toString().padStart(2, '0')}]
@@ -691,17 +672,17 @@ export default function AboutContent() {
 
             {/* Kinetic Timeline: Line anchored to center of screen */}
             <div className="relative">
-              {/* 1. Inactive Background Guide Rail */}
+              {/* Inactive Background Rail */}
               <div className="absolute left-[15px] sm:left-[19px] top-6 bottom-8 w-[2px] bg-white/10 rounded-full pointer-events-none" />
 
-              {/* 2. Scroll-Driven Glowing Neon Active Line (Triggered strictly at 50% viewport center) */}
+              {/* Scroll-Driven Glowing Neon Active Line */}
               <motion.div
                 style={{ scaleY: timelineScrollProgress, originY: 0 }}
                 className="absolute left-[15px] sm:left-[19px] top-6 bottom-8 w-[2px] bg-gradient-to-b from-[var(--accent-color)] via-emerald-400 to-[var(--accent-color)] rounded-full shadow-[0_0_15px_var(--accent-color)] origin-top pointer-events-none"
               />
 
-              {/* 3. Timeline Items with Guaranteed Sub-Pixel Symmetry */}
-              <div className="space-y-6 sm:space-y-8">
+              {/* Timeline Items (Clean Editorial Lines, No Card Boxes) */}
+              <div className="space-y-8 sm:space-y-12">
                 {exp.logs.map((log, idx) => (
                   <motion.div
                     key={log.code || idx}
@@ -712,33 +693,33 @@ export default function AboutContent() {
                     className="relative flex items-start gap-4 sm:gap-6 group"
                   >
                     {/* Center Timeline Node */}
-                    <div className="relative z-10 shrink-0 w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center mt-3">
+                    <div className="relative z-10 shrink-0 w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center mt-2">
                       <div className="w-4 sm:w-4.5 h-4 sm:h-4.5 rounded-full bg-[#020504] border-2 border-[var(--accent-color)] shadow-[0_0_10px_var(--accent-glow)] group-hover:scale-125 group-hover:border-white transition-all flex items-center justify-center">
                         <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] group-hover:bg-white transition-colors" />
                       </div>
                     </div>
 
-                    {/* Content Cyber Panel */}
-                    <div className="flex-1 min-w-0 cyber-panel p-5 sm:p-7 rounded-2xl space-y-3.5 group-hover:border-[var(--accent-border)] transition-all shadow-md">
+                    {/* Content Block (Clean Border Bottom, Open Canvas) */}
+                    <div className="flex-1 min-w-0 pb-6 sm:pb-8 border-b border-white/[0.08] space-y-3.5">
                       {/* Header: Company, Role & Period */}
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[var(--border-subtle)] pb-3.5 gap-2">
+                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
                         <div className="space-y-1">
-                          <div className="flex items-center gap-2.5 flex-wrap">
-                            <h3 className="text-base sm:text-lg font-bold text-[var(--heading-tint)] font-display tracking-wide">
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <h3 className="text-lg sm:text-2xl font-black text-white font-display tracking-tight group-hover:text-[var(--accent-color)] transition-colors">
                               {log.company}
                             </h3>
                             {log.badge && (
-                              <span className="px-2.5 py-0.5 rounded text-[10px] bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--accent-color)] font-mono font-bold tracking-wider">
+                              <span className="px-2.5 py-0.5 rounded text-[10px] bg-[var(--accent-color)]/10 border border-[var(--accent-color)]/30 text-[var(--accent-color)] font-mono font-bold tracking-wider">
                                 {log.badge}
                               </span>
                             )}
                           </div>
-                          <div className="text-xs text-[var(--text-secondary)] font-mono font-medium">
+                          <div className="text-xs sm:text-sm text-white/70 font-mono">
                             {log.role}
                           </div>
                         </div>
 
-                        <div className="text-[11px] font-mono text-[var(--accent-color)] font-bold shrink-0 px-2.5 py-1 rounded bg-black/40 border border-[var(--border-subtle)]">
+                        <div className="text-xs font-mono text-[var(--accent-color)] font-bold shrink-0">
                           {log.period}
                         </div>
                       </div>
@@ -746,8 +727,8 @@ export default function AboutContent() {
                       {/* Bullet Points with Markers */}
                       <ul className="space-y-2 pt-1 font-sans">
                         {log.points.map((pt, pIdx) => (
-                          <li key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-[13px] text-[var(--text-secondary)] leading-relaxed">
-                            <ChevronRight className="w-3.5 h-3.5 text-[var(--accent-color)] shrink-0 mt-1" />
+                          <li key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/70 leading-relaxed">
+                            <span className="text-[var(--accent-color)] font-mono mt-0.5">&bull;</span>
                             <span>{pt}</span>
                           </li>
                         ))}
@@ -759,21 +740,24 @@ export default function AboutContent() {
             </div>
           </section>
 
-          {/* 5. VERIFIED CREDENTIALS: CERTIFICATIONS & SPOKEN LANGUAGES */}
+          {/* 5. VERIFIED CREDENTIALS: CERTIFICATIONS & SPOKEN LANGUAGES (TWO TYPOGRAPHIC COLUMNS) */}
           {about.credentials && (
-            <section className="space-y-6">
+            <section className="space-y-8">
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, amount: 0.05 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="border-b border-[var(--border-subtle)] pb-4 flex items-center justify-between"
+                className="border-b border-white/[0.08] pb-4 flex items-center justify-between"
               >
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
+                  <span className="text-xs font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase block mb-1">
+                    // CREDENTIALS_VERIFIED
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-tight">
                     {about.credentials.title}
                   </h2>
-                  <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                  <p className="text-xs text-white/50 mt-1 font-sans">
                     {about.credentials.subtitle}
                   </p>
                 </div>
@@ -782,119 +766,150 @@ export default function AboutContent() {
                 </span>
               </motion.div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {/* Certifications Card */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                {/* Certifications Card Pod */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: false, amount: 0.05 }}
                   transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all"
+                  className="rounded-2xl p-6 sm:p-7 bg-[#0b0f14]/80 border border-white/[0.08] hover:border-[var(--accent-color)]/40 transition-all duration-300 backdrop-blur-md space-y-5 flex flex-col justify-between group relative overflow-hidden"
                 >
-                  <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
-                    <div className="flex items-center gap-2.5">
-                      <div className="p-2 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
-                        <Award className="w-4 h-4" />
+                  <div className="absolute -top-24 -right-24 w-44 h-44 bg-[var(--accent-color)]/5 rounded-full blur-3xl pointer-events-none group-hover:bg-[var(--accent-color)]/10 transition-all" />
+
+                  <div className="relative z-10 space-y-5">
+                    {/* Card Header */}
+                    <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-2 rounded-lg bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/20">
+                          <Award className="w-4 h-4" />
+                        </div>
+                        <span className="font-bold text-white uppercase tracking-wider text-sm font-mono">
+                          {about.credentials.certTitle || 'CERTIFICATIONS'}
+                        </span>
                       </div>
-                      <h3 className="text-sm font-bold text-[var(--heading-tint)] font-mono">
-                        {about.credentials.certTitle || 'CERTIFICATIONS'}
-                      </h3>
+                      <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 border border-[var(--accent-color)]/30">
+                        {about.credentials.certifications.length} VERIFIED
+                      </span>
                     </div>
-                    <span className="text-[10px] font-mono text-[var(--accent-color)] px-2 py-0.5 rounded bg-black/40 border border-[var(--border-subtle)]">
-                      {about.credentials.certifications.length} CERTS
-                    </span>
+
+                    {/* Sub-cards */}
+                    <div className="space-y-3">
+                      {about.credentials.certifications.map((cert, cIdx) => (
+                        <div
+                          key={cIdx}
+                          onMouseEnter={playHover}
+                          className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[var(--accent-color)]/30 hover:bg-white/[0.05] transition-all space-y-2 group/sub"
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <h4 className="text-xs sm:text-sm font-bold text-white font-mono group-hover/sub:text-[var(--accent-color)] transition-colors">
+                              {cert.title}
+                            </h4>
+                            <span className="text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-950/50 border border-emerald-500/30 shrink-0 font-bold">
+                              {cert.status}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs text-white/50 font-mono">
+                            <span>{cert.issuer}</span>
+                            <span className="text-[10px] text-[var(--accent-color)] font-bold">{cert.badge}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="space-y-3">
-                    {about.credentials.certifications.map((cert, cIdx) => (
-                      <div
-                        key={cIdx}
-                        onMouseEnter={playHover}
-                        className="p-3.5 rounded-xl bg-black/40 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] transition-all space-y-1.5"
-                      >
-                        <div className="flex items-start justify-between gap-2">
-                          <h4 className="text-xs sm:text-[13px] font-bold text-[var(--heading-tint)] font-mono">
-                            {cert.title}
-                          </h4>
-                          <span className="text-[9.5px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-950/40 border border-emerald-500/20 shrink-0">
-                            {cert.status}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between text-xs text-[var(--text-muted)] font-mono">
-                          <span>{cert.issuer}</span>
-                          <span className="text-[10px] text-[var(--accent-color)]">{cert.badge}</span>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="relative z-10 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-white/40">
+                    <span>// CISCO & AWS VERIFICATION</span>
+                    <span className="text-emerald-400 flex items-center gap-1 font-bold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      AUTHENTICATED
+                    </span>
                   </div>
                 </motion.div>
 
-                {/* Spoken Languages Card */}
+                {/* Spoken Languages Card Pod */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: false, amount: 0.05 }}
                   transition={{ duration: 0.45, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-                  className="cyber-panel p-5 sm:p-6 rounded-2xl space-y-4 hover:border-[var(--accent-border)] transition-all"
+                  className="rounded-2xl p-6 sm:p-7 bg-[#0b0f14]/80 border border-white/[0.08] hover:border-[var(--accent-color)]/40 transition-all duration-300 backdrop-blur-md space-y-5 flex flex-col justify-between group relative overflow-hidden"
                 >
-                  <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-3">
-                    <div className="flex items-center gap-2.5">
-                      <div className="p-2 rounded-lg bg-[var(--accent-bg-subtle)] text-[var(--accent-color)]">
-                        <Languages className="w-4 h-4" />
+                  <div className="absolute -top-24 -right-24 w-44 h-44 bg-[var(--accent-color)]/5 rounded-full blur-3xl pointer-events-none group-hover:bg-[var(--accent-color)]/10 transition-all" />
+
+                  <div className="relative z-10 space-y-5">
+                    {/* Card Header */}
+                    <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-2 rounded-lg bg-[var(--accent-color)]/10 text-[var(--accent-color)] border border-[var(--accent-color)]/20">
+                          <Languages className="w-4 h-4" />
+                        </div>
+                        <span className="font-bold text-white uppercase tracking-wider text-sm font-mono">
+                          {about.credentials.langTitle || 'LANGUAGES'}
+                        </span>
                       </div>
-                      <h3 className="text-sm font-bold text-[var(--heading-tint)] font-mono">
-                        {about.credentials.langTitle || 'LANGUAGES'}
-                      </h3>
+                      <span className="text-[10px] font-mono font-bold text-[var(--accent-color)] px-2.5 py-0.5 rounded-full bg-[var(--accent-color)]/10 border border-[var(--accent-color)]/30">
+                        3 PROFICIENCIES
+                      </span>
                     </div>
-                    <span className="text-[10px] font-mono text-[var(--accent-color)] px-2 py-0.5 rounded bg-black/40 border border-[var(--border-subtle)]">
-                      3 PROFICIENCIES
-                    </span>
+
+                    {/* Sub-cards */}
+                    <div className="space-y-3">
+                      {about.credentials.languages.map((langItem, lIdx) => (
+                        <div
+                          key={lIdx}
+                          onMouseEnter={playHover}
+                          className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[var(--accent-color)]/30 hover:bg-white/[0.05] transition-all space-y-1.5 group/sub"
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-xs sm:text-sm font-bold text-white font-mono group-hover/sub:text-[var(--accent-color)] transition-colors flex items-center gap-2">
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.06] text-white/70 font-mono">
+                                {langItem.name === 'English' ? 'EN' : langItem.name === 'Kazakh' ? 'KZ' : 'RU'}
+                              </span>
+                              {langItem.name}
+                            </span>
+                            <span className="text-xs font-mono font-bold text-[var(--accent-color)]">
+                              {langItem.level}
+                            </span>
+                          </div>
+                          <p className="text-xs text-white/50 font-sans leading-relaxed">
+                            {langItem.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="space-y-3">
-                    {about.credentials.languages.map((langItem, lIdx) => (
-                      <div
-                        key={lIdx}
-                        onMouseEnter={playHover}
-                        className="p-3.5 rounded-xl bg-black/40 border border-[var(--border-subtle)] hover:border-[var(--accent-border)] transition-all space-y-1"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs sm:text-[13px] font-bold text-[var(--heading-tint)] font-mono">
-                            {langItem.name}
-                          </span>
-                          <span className="text-[10.5px] font-mono font-bold text-[var(--accent-color)] px-2 py-0.5 rounded bg-black/60 border border-[var(--border-subtle)]">
-                            {langItem.level}
-                          </span>
-                        </div>
-                        <p className="text-[11.5px] text-[var(--text-secondary)] font-sans">
-                          {langItem.desc}
-                        </p>
-                      </div>
-                    ))}
+                  <div className="relative z-10 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-white/40">
+                    <span>// MULTILINGUAL WORKFLOW</span>
+                    <span className="text-white/60">TRILINGUAL FLUENCY</span>
                   </div>
                 </motion.div>
               </div>
             </section>
           )}
 
-          {/* 6. ENGINEERING MINDSET & PRINCIPLES */}
-          <section className="space-y-6">
+          {/* 6. ENGINEERING MINDSET & PRINCIPLES (BRUTALIST NUMBERED MANIFESTO) */}
+          <section className="space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.05 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="border-b border-[var(--border-subtle)] pb-4"
+              className="border-b border-white/[0.08] pb-4"
             >
-              <h2 className="text-xl sm:text-2xl font-bold text-[var(--heading-tint)] font-display uppercase tracking-wide">
+              <span className="text-xs font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase block mb-1">
+                // CORE_STANDARDS
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-tight">
                 {lang === 'kk' ? 'ИНЖЕНЕРЛІК ҰСТАНЫМДАР' : lang === 'ru' ? 'ПРИНЦИПЫ И ИНЖЕНЕРНЫЙ ПОДХОД' : 'ENGINEERING PRINCIPLES & MINDSET'}
               </h2>
-              <p className="text-xs text-[var(--text-muted)] mt-0.5">
+              <p className="text-xs sm:text-sm text-white/50 mt-1 font-sans">
                 {lang === 'kk' ? 'Өнімдерді қалай жобалаймын және құрастырамын' : lang === 'ru' ? 'Как я подхожу к созданию надежных продуктов' : 'Core standards guiding technical execution'}
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/[0.08] border-y border-white/[0.08] py-8">
               {principles.map((p, idx) => {
                 const PrincipleIcon = p.icon;
                 return (
@@ -905,22 +920,24 @@ export default function AboutContent() {
                     viewport={{ once: false, amount: 0.05 }}
                     transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
                     onMouseEnter={playHover}
-                    className="cyber-panel p-5 rounded-xl flex flex-col justify-between space-y-4 hover:border-[var(--accent-border)] transition-all group"
+                    className={`space-y-4 group ${
+                      idx === 0 ? 'md:pr-8' : idx === 1 ? 'py-6 md:py-0 md:px-8' : 'pt-6 md:pt-0 md:pl-8'
+                    }`}
                   >
                     <div className="flex items-center justify-between">
-                      <div className="p-2 rounded-lg bg-[var(--accent-bg-subtle)] border border-[var(--border-subtle)] text-[var(--accent-color)]">
+                      <span className="text-3xl font-black font-display text-[var(--accent-color)]">
+                        {p.num}
+                      </span>
+                      <div className="p-2 rounded-lg bg-[var(--accent-color)]/10 text-[var(--accent-color)]">
                         <PrincipleIcon className="w-4 h-4" />
                       </div>
-                      <span className="text-[11px] font-mono font-bold text-[var(--accent-color)]">
-                        [{p.num}]
-                      </span>
                     </div>
 
-                    <div className="space-y-1.5">
-                      <h3 className="text-xs sm:text-sm font-bold text-[var(--heading-tint)] font-mono leading-tight">
+                    <div className="space-y-2">
+                      <h3 className="text-sm sm:text-base font-bold text-white font-mono group-hover:text-[var(--accent-color)] transition-colors leading-tight">
                         {p.title}
                       </h3>
-                      <p className="text-xs text-[var(--text-muted)] font-sans leading-relaxed">
+                      <p className="text-xs sm:text-sm text-white/55 font-sans leading-relaxed">
                         {p.desc}
                       </p>
                     </div>
@@ -930,32 +947,35 @@ export default function AboutContent() {
             </div>
           </section>
 
-          {/* 7. CALL TO ACTION BAR */}
+          {/* 7. CALL TO ACTION FINALE (OPEN CANVAS, ZERO CONTAINER BOX) */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.05 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="cyber-panel p-8 sm:p-10 rounded-2xl text-center space-y-6"
+            className="border-t border-white/[0.08] pt-14 sm:pt-20 text-center space-y-6"
           >
-            <div className="space-y-2">
-              <h2 className="text-2xl sm:text-3xl font-black text-[var(--heading-tint)] font-display uppercase tracking-wider">
+            <div className="space-y-3">
+              <span className="text-xs font-mono font-bold text-[var(--accent-color)] tracking-widest uppercase block">
+                // TRANSMISSION_DISPATCH
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black text-white font-display uppercase tracking-tight max-w-2xl mx-auto leading-tight">
                 {content.system.ctaSecondary}
               </h2>
-              <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-lg mx-auto font-sans leading-relaxed">
+              <p className="text-xs sm:text-sm text-white/60 max-w-lg mx-auto font-sans leading-relaxed">
                 {content.system.heroInfoLog}
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Link
                 href="/contact"
                 onClick={playClick}
                 onMouseEnter={playHover}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-widest uppercase hover:shadow-[0_0_30px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-widest uppercase hover:shadow-[0_0_35px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-lg"
               >
                 <span>{content.system.ctaSecondary}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </Link>
 
               <a
@@ -965,7 +985,7 @@ export default function AboutContent() {
                 rel="noopener noreferrer"
                 onClick={handleDownloadCv}
                 onMouseEnter={playHover}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-black/60 border border-[var(--border-bright)] hover:border-[var(--accent-border)] text-[var(--heading-tint)] font-bold text-xs tracking-wider uppercase transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-white/[0.04] border border-white/15 hover:border-[var(--accent-color)]/60 text-white font-bold text-xs tracking-wider uppercase transition-all cursor-pointer"
               >
                 <FileDown className="w-4 h-4 text-[var(--accent-color)]" />
                 <span>{cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}</span>
