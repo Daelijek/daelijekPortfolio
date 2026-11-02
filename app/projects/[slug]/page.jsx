@@ -6,8 +6,8 @@ import { portfolioContent } from '../../../src/data/portfolioData';
 function getProject(rawSlug) {
   const slug = (rawSlug || '').toLowerCase();
   const allFeatured = portfolioContent.en.projects.featured;
-  const allOther = portfolioContent.en.projects.otherProjects;
 
+  // Only featured projects have case studies; archive repositories link to GitHub directly.
   const featured = allFeatured.find(
     (p) =>
       (p.slug && p.slug.toLowerCase() === slug) ||
@@ -15,16 +15,7 @@ function getProject(rawSlug) {
       (slug === 'finance-ai-manager' && p.slug === 'finance-management-app') ||
       (slug === 'role-sieve' && p.slug === 'rolesieve')
   );
-  if (featured) return featured;
-
-  const other = allOther.find(
-    (p) =>
-      (p.slug && p.slug.toLowerCase() === slug) ||
-      (p.id && p.id.toLowerCase() === slug)
-  );
-  if (other) return other;
-
-  return null;
+  return featured || null;
 }
 
 // 1. Static Generation for all project slugs
@@ -32,16 +23,10 @@ export async function generateStaticParams() {
   const featuredSlugs = portfolioContent.en.projects.featured.map(
     (p) => p.slug || p.id.toLowerCase()
   );
-  const otherSlugs = portfolioContent.en.projects.otherProjects.map(
-    (p) => p.slug || p.id.toLowerCase()
-  );
-
   // Include popular direct aliases
   const aliasSlugs = ['finance-ai-manager', 'role-sieve'];
 
-  const allSlugs = Array.from(
-    new Set([...featuredSlugs, ...otherSlugs, ...aliasSlugs])
-  );
+  const allSlugs = Array.from(new Set([...featuredSlugs, ...aliasSlugs]));
 
   return allSlugs.map((slug) => ({ slug }));
 }

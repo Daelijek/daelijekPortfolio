@@ -109,14 +109,14 @@ export default function AboutContent() {
       tag: lang === 'kk' ? 'АҒЫМДАҒЫ' : lang === 'ru' ? 'ТЕКУЩАЯ' : 'CURRENT ROLE',
       Icon: Building2,
       title: 'BeyimTech · Astana Hub',
-      subtitle: 'Middle Frontend & Mobile Lead',
+      subtitle: 'Middle Frontend & Mobile Developer',
     },
     {
       id: 'scale',
       tag: lang === 'kk' ? 'АУҚЫМ' : lang === 'ru' ? 'МАСШТАБ' : 'KEY SCALE',
       Icon: Code2,
       title: 'TrustMe Blockchain SaaS',
-      subtitle: lang === 'kk' ? '1.5M+ Белсенді Қолданушы' : lang === 'ru' ? '1.5M+ Активных Пользователей' : '1.5M+ Production Users',
+      subtitle: lang === 'kk' ? 'Платформада 1.5M+ қолданушы' : lang === 'ru' ? 'Платформа с 1.5M+ пользователей' : 'Platform with 1.5M+ users',
     },
   ];
 
@@ -149,9 +149,9 @@ export default function AboutContent() {
       category: 'web',
       icon: Globe,
       title: lang === 'kk' ? 'Web & Frontend' : lang === 'ru' ? 'Веб и фронтенд архитектура' : 'Modern Web & Frontend',
-      desc: lang === 'kk' ? 'Жоғары өнімді Next.js 15, серверлік рендеринг, дизайн-жүйелер және интерфейс жылдамдығы.' : lang === 'ru' ? 'Высокоскоростной Next.js 15, SSR/SSG, масштабируемые дизайн-системы и плавная графика 60 FPS.' : 'High-speed Next.js 15, SSR/SSG pipelines, modular design systems & fluid animations.',
+      desc: lang === 'kk' ? 'Жоғары өнімді Next.js 16, серверлік рендеринг, дизайн-жүйелер және интерфейс жылдамдығы.' : lang === 'ru' ? 'Высокоскоростной Next.js 16, SSR/SSG, масштабируемые дизайн-системы и плавная графика 60 FPS.' : 'High-speed Next.js 16, SSR/SSG pipelines, modular design systems & fluid animations.',
       skills: [
-        'Next.js 15 (App Router)',
+        'Next.js 16 (App Router)',
         'React 19',
         'TypeScript',
         'Tailwind CSS',
@@ -161,8 +161,8 @@ export default function AboutContent() {
       ],
       metric: '60 FPS / SSR',
       deliverables: [
-        lang === 'kk' ? 'OpenGov.kz мемлекеттік порталы (Next.js, 3 тілдегі толық локализация)' : lang === 'ru' ? 'OpenGov.kz портал госинициатив (Next.js, полная трехъязычная локализация)' : 'OpenGov.kz National Platform (Next.js SSR & WCAG compliant UI)',
-        lang === 'kk' ? 'TrustMe платформасы (1.5M+ қолданушыға арналған смарт-келісімшарттар)' : lang === 'ru' ? 'TrustMe платформа (смарт-контрактный UI для 1.5M+ пользователей)' : 'TrustMe Contract Portal (Reusable UI library for 1.5M+ active users)',
+        lang === 'kk' ? 'OpenGov.kz мемлекеттік порталы (тағылымдамада Next.js, кейін React 19 + Vite; 3 тілдегі локализация)' : lang === 'ru' ? 'OpenGov.kz портал госинициатив (стажировка на Next.js, затем React 19 + Vite; трёхъязычная локализация)' : 'OpenGov.kz Civic Portal (Next.js internship build, later React 19 + Vite; trilingual i18n)',
+        lang === 'kk' ? 'TrustMe (1.5M+ қолданушысы бар платформаға смарт-келісімшарт UI)' : lang === 'ru' ? 'TrustMe (UI смарт-контрактов для платформы с 1.5M+ пользователей)' : 'TrustMe Contract Portal (Reusable UI for a platform with 1.5M+ users)',
         lang === 'kk' ? 'BerikWeb 4K сандық галереясы (High-DPI, 3D өзара әрекеттер)' : lang === 'ru' ? 'BerikWeb 4K галерея (High-DPI арт-витрина, кинетическая верстка)' : 'Berik Zhunusbek Gallery (Kinetic typography & 4K media showcase)',
       ],
     },

@@ -73,8 +73,8 @@
 ### 3. Глубокие архитектурные кейсы (`/projects/[slug]`)
 Для каждого флагманского проекта реализована интерактивная страница-досье:
 - **Finance AI Manager** (React Native, Expo, FastAPI, Python, PostgreSQL).
-- **BeyimTech AI Platform** (Flutter, Riverpod, Dart, AI Engine — деплой в 20+ школах).
-- **OpenGov.kz Portal** (Next.js 15, React, GovTech high-load Open Data streaming).
+- **RoleSieve** (Next.js 16, React 19, Tailwind 4, FastAPI, NLP — аналитика вакансий HeadHunter).
+- **OpenGov.kz Portal** (стажировка в QB Solutions на Next.js; текущая версия — React 19 + Vite, i18next).
 - **BerikWeb 3D Gallery** (HTML5, Vanilla JS, 3D Canvas, Retina Multilanguage).
 - Каждое досье включает стек, целевую аудиторию, вызовы безопасности, метрики производительности и прямые ссылки на production/demo.
 

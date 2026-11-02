@@ -44,7 +44,7 @@ const EXTENDED_COMPLETIONS = [
 ];
 
 const SKILLS_DATA = [
-  { sector: 'Frontend Core', tech: 'Next.js 15, React 19, TypeScript, Tailwind 4, HTML5/CSS3' },
+  { sector: 'Frontend Core', tech: 'Next.js 16, React 19, TypeScript, Tailwind 4, HTML5/CSS3' },
   { sector: 'Mobile Engineering', tech: 'Flutter & Dart, Riverpod, React Native, Expo CLI' },
   { sector: 'Backend & APIs', tech: 'FastAPI, Python, PostgreSQL, SQLAlchemy 2, REST, WebSockets' },
   { sector: 'AI & Cloud Tech', tech: 'OpenAI & Anthropic SDKs, Vector Embeddings, LLM Streaming' },
@@ -266,10 +266,10 @@ export default function InteractiveTerminal() {
         content: `╔═══════════════════════════════════════════════════════════════════╗
 ║ >>> [ ACCESS GRANTED // CONTRACT OFFER PROTOCOL INITIALIZED ] <<< ║
 ╚═══════════════════════════════════════════════════════════════════╝
-  Candidate:   DIAS YERMEK (Middle Frontend & Mobile Engineer)
+  Candidate:   DIAS YERMEK (Middle Frontend & Mobile Developer)
   Status:      AVAILABLE FOR CONTRACT & FULL-TIME OFFERS
   Location:    Astana, Kazakhstan (UTC+5) · Remote / Hybrid / Relocate
-  Stack:       Next.js 15, Flutter, React Native, FastAPI, AI Integrations
+  Stack:       Next.js 16, Flutter, React Native, FastAPI, AI Integrations
 
   DIRECT CONTACT CHANNELS:
   [TELEGRAM]  https://t.me/daelijek_og (@daelijek_og)

@@ -171,7 +171,7 @@ export default function TelemetryHUDPod() {
             {lang === 'kk' ? 'ҚОЛДАНУШЫ' : (lang === 'ru' ? 'ПОЛЬЗОВАТЕЛЕЙ' : 'USERS')}
           </p>
           <p className="text-[8.5px] text-white/40 leading-tight">
-            TrustMe Scale
+            TrustMe platform
           </p>
         </div>
       </div>
@@ -195,7 +195,7 @@ export default function TelemetryHUDPod() {
         <div className="flex flex-wrap gap-x-3.5 gap-y-1 text-xs font-mono text-[var(--accent-color)]">
           <span>&bull; Flutter</span>
           <span>&bull; React Native</span>
-          <span>&bull; Next.js 15</span>
+          <span>&bull; Next.js 16</span>
           <span>&bull; FastAPI</span>
           <span>&bull; PostgreSQL</span>
         </div>
