@@ -10,6 +10,7 @@ import NavHeader from '../src/components/navigation/NavHeader';
 import SmoothScroll from '../src/components/common/SmoothScroll';
 import { Analytics } from '@vercel/analytics/react';
 import AmplitudeAnalytics from '../src/components/analytics/AmplitudeAnalytics';
+import { SITE_URL, SITE_NAME, SITE_TITLE, DEFAULT_OG_IMAGE, absoluteUrl } from '../src/lib/site';
 import InteractiveTerminal from '../src/components/terminal/InteractiveTerminal';
 
 const bebasNeue = Bebas_Neue({
@@ -38,36 +39,28 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+// Icons come from the app/icon.png and app/apple-icon.png file conventions.
 export const metadata = {
-  metadataBase: new URL('https://daelijek-portfolio.vercel.app'),
-  title: 'Dias Yermek | Middle Frontend & Mobile Developer // HUD Portfolio',
+  metadataBase: new URL(SITE_URL),
+  title: `${SITE_TITLE} // HUD Portfolio`,
   description: 'Portfolio of Dias Yermek, a software engineer from Astana specializing in Next.js, Flutter, React Native, and AI integrations.',
   keywords: ['Dias Yermek', 'Frontend Developer', 'Mobile Developer', 'Flutter', 'Next.js', 'React Native', 'Astana IT University', 'Astana Hub'],
   authors: [{ name: 'Dias Yermek', url: 'https://github.com/Daelijek' }],
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'Dias Yermek | Middle Frontend & Mobile Developer',
+    title: SITE_TITLE,
     description: 'High-performance web and mobile products with Next.js, Flutter, React Native, and AI.',
-    url: 'https://daelijek-portfolio.vercel.app',
-    siteName: 'Dias Yermek Portfolio',
-    images: [
-      {
-        url: '/assets/linkedIn_Dias_square.png',
-        width: 1200,
-        height: 630,
-        alt: 'Dias Yermek Preview',
-      },
-    ],
+    url: '/',
+    siteName: SITE_NAME,
+    images: [DEFAULT_OG_IMAGE],
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dias Yermek | Middle Frontend & Mobile Developer',
+    title: SITE_TITLE,
     description: 'High-performance web and mobile products with Next.js, Flutter, React Native, and AI.',
-    images: ['/assets/linkedIn_Dias_square.png'],
-  },
-  icons: {
-    icon: '/favicon.ico',
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 
@@ -80,13 +73,13 @@ const schemaOrgData = {
   '@graph': [
     {
       '@type': 'Person',
-      '@id': 'https://daelijek-portfolio.vercel.app/#person',
+      '@id': `${SITE_URL}/#person`,
       name: 'Dias Yermek',
       alternateName: 'Диас Ермек',
       jobTitle: 'Middle Frontend & Mobile Developer',
       description: 'Software engineer from Astana, Kazakhstan specializing in Next.js, React, Flutter, React Native, and AI integrations.',
-      url: 'https://daelijek-portfolio.vercel.app',
-      image: 'https://daelijek-portfolio.vercel.app/assets/linkedIn_Dias_square.png',
+      url: `${SITE_URL}`,
+      image: absoluteUrl('/assets/linkedIn_Dias_square.webp'),
       sameAs: [
         'https://github.com/Daelijek',
         'https://www.linkedin.com/in/dias-yermek/',
@@ -116,17 +109,17 @@ const schemaOrgData = {
     },
     {
       '@type': 'ProfilePage',
-      '@id': 'https://daelijek-portfolio.vercel.app/#profilepage',
-      url: 'https://daelijek-portfolio.vercel.app',
-      name: 'Dias Yermek | Middle Frontend & Mobile Developer',
+      '@id': `${SITE_URL}/#profilepage`,
+      url: `${SITE_URL}`,
+      name: SITE_TITLE,
       isPartOf: {
         '@type': 'WebSite',
-        '@id': 'https://daelijek-portfolio.vercel.app/#website',
-        url: 'https://daelijek-portfolio.vercel.app',
-        name: 'Dias Yermek Portfolio',
+        '@id': `${SITE_URL}/#website`,
+        url: `${SITE_URL}`,
+        name: SITE_NAME,
       },
       mainEntity: {
-        '@id': 'https://daelijek-portfolio.vercel.app/#person',
+        '@id': `${SITE_URL}/#person`,
       },
     },
   ],

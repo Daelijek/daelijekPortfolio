@@ -1,56 +1,26 @@
+import { portfolioContent } from '../src/data/portfolioData';
+import { absoluteUrl } from '../src/lib/site';
+
+// Built from the same data as the routes, so a new case study is listed automatically.
 export default function sitemap() {
-  const baseUrl = 'https://daelijek-portfolio.vercel.app';
   const lastModified = new Date();
 
-  return [
-    {
-      url: baseUrl,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/projects`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/projects/finance-management-app`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/projects/rolesieve`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-
-    {
-      url: `${baseUrl}/projects/opengov-kz`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/projects/berik-zhunusbek`,
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
+  const pages = [
+    { path: '/', changeFrequency: 'weekly', priority: 1.0 },
+    { path: '/projects', changeFrequency: 'weekly', priority: 0.9 },
+    { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
+    { path: '/contact', changeFrequency: 'monthly', priority: 0.7 },
   ];
+
+  const caseStudies = portfolioContent.en.projects.featured.map((project) => ({
+    path: `/projects/${project.slug}`,
+    changeFrequency: 'monthly',
+    priority: 0.85,
+  }));
+
+  return [...pages, ...caseStudies].map(({ path, ...rest }) => ({
+    url: absoluteUrl(path),
+    lastModified,
+    ...rest,
+  }));
 }

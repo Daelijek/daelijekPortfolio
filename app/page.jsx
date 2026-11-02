@@ -204,41 +204,12 @@ export default function HomePage() {
       targetProgress = 50;
       await new Promise((r) => setTimeout(r, 140));
 
-      // Step 3: Critical Asset & Texture Preload in Parallel
+      // Step 3: Asset stage. Images are no longer preloaded here: the home page does not
+      // show them, and other pages load optimized, right-sized versions via next/image.
+      // Preloading full-size originals used to compete with JS/fonts for bandwidth.
       setStepText(content.system.preloader.cachingAssets);
-      const criticalImages = [
-        '/assets/linkedIn_Dias_square.png',
-        '/assets/Finance.png',
-        '/assets/roleSieve.png',
-        '/assets/openGov.png',
-        '/assets/berikWeb.png',
-        '/images/logo.png',
-      ];
-
-      let loadedCount = 0;
-      const loadPromises = criticalImages.map((src) => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.src = src;
-          img.onload = () => {
-            loadedCount++;
-            if (isMounted) {
-              targetProgress = Math.min(85, 50 + Math.floor((loadedCount / criticalImages.length) * 35));
-            }
-            resolve();
-          };
-          img.onerror = () => {
-            loadedCount++;
-            resolve();
-          };
-        });
-      });
-
-      // Max timeout safeguard 2.0s for slow networks
-      await Promise.race([
-        Promise.all(loadPromises),
-        new Promise((r) => setTimeout(r, 2000)),
-      ]);
+      targetProgress = 85;
+      await new Promise((r) => setTimeout(r, 140));
 
       // Step 4: WebGL & HUD Calibration
       if (isMounted) {

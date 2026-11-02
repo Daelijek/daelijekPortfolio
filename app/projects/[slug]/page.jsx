@@ -1,61 +1,38 @@
 import { notFound } from 'next/navigation';
 import ProjectDetailContent from './ProjectDetailContent';
 import { portfolioContent } from '../../../src/data/portfolioData';
+import { projectOgImage } from '../../../src/lib/site';
 
-// Helper to look up project data by slug or alias
-function getProject(rawSlug) {
-  const slug = (rawSlug || '').toLowerCase();
-  const allFeatured = portfolioContent.en.projects.featured;
+// Only featured projects have case studies; archive repositories link to GitHub directly.
+// Legacy aliases (e.g. /projects/role-sieve) are permanent redirects in next.config.mjs.
+const featuredProjects = portfolioContent.en.projects.featured;
 
-  // Only featured projects have case studies; archive repositories link to GitHub directly.
-  const featured = allFeatured.find(
-    (p) =>
-      (p.slug && p.slug.toLowerCase() === slug) ||
-      (p.id && p.id.toLowerCase() === slug) ||
-      (slug === 'finance-ai-manager' && p.slug === 'finance-management-app') ||
-      (slug === 'role-sieve' && p.slug === 'rolesieve')
-  );
-  return featured || null;
+function getProject(slug) {
+  return featuredProjects.find((p) => p.slug === slug) || null;
 }
 
-// 1. Static Generation for all project slugs
+// Any slug not listed here is a 404 instead of an on-demand render.
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
-  const featuredSlugs = portfolioContent.en.projects.featured.map(
-    (p) => p.slug || p.id.toLowerCase()
-  );
-  // Include popular direct aliases
-  const aliasSlugs = ['finance-ai-manager', 'role-sieve'];
-
-  const allSlugs = Array.from(new Set([...featuredSlugs, ...aliasSlugs]));
-
-  return allSlugs.map((slug) => ({ slug }));
+  return featuredProjects.map((p) => ({ slug: p.slug }));
 }
 
-// 2. Dynamic OpenGraph & Twitter Metadata Generation
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const project = getProject(slug);
+  if (!project) return {};
 
-  if (!project) {
-    return {
-      title: 'Project Dossier // Dias Yermek Portfolio',
-      description: 'Technical case study and architecture breakdown by Dias Yermek.',
-    };
-  }
-
-  const title = `${project.title} | Case Study // Dias Yermek`;
+  const title = `${project.title} // Technical Case Study`;
   const description =
     project.tagline ||
     project.description ||
     `Detailed technical architecture, metrics, and case study for ${project.title}.`;
-
-  const imagePath = project.image || '/assets/linkedIn_Dias_square.png';
-  const imageUrl = imagePath.startsWith('http')
-    ? imagePath
-    : `https://daelijek-portfolio.vercel.app${imagePath}`;
+  const image = projectOgImage(project.slug, project.title);
+  const path = `/projects/${project.slug}`;
 
   return {
-    title,
+    title: `${project.title} | Case Study // Dias Yermek`,
     description,
     keywords: [
       project.title,
@@ -67,38 +44,26 @@ export async function generateMetadata({ params }) {
       'Mobile Development',
       'Frontend Development',
     ],
+    alternates: { canonical: path },
     openGraph: {
-      title: `${project.title} // Technical Case Study`,
+      title,
       description,
-      url: `https://daelijek-portfolio.vercel.app/projects/${slug}`,
-      siteName: 'Dias Yermek Portfolio',
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${project.title} Technical Preview`,
-        },
-      ],
+      url: path,
+      images: [image],
       type: 'article',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${project.title} // Technical Case Study`,
+      title,
       description,
-      images: [imageUrl],
+      images: [image.url],
     },
   };
 }
 
-// 3. Server Component rendering Client Interactive UI
 export default async function ProjectDetailPage({ params }) {
   const { slug } = await params;
-  const project = getProject(slug);
-
-  if (!project) {
-    notFound();
-  }
+  if (!getProject(slug)) notFound();
 
   return <ProjectDetailContent slug={slug} />;
 }

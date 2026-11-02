@@ -1,8 +1,12 @@
 import ProjectsContent from './ProjectsContent';
+import { DEFAULT_OG_IMAGE } from '../../src/lib/site';
+
+const title = 'Projects by Dias Yermek | Production Mobile & Web Builds';
+const description = 'Featured engineering projects built with React Native, Next.js, FastAPI and AI integrations.';
 
 export const metadata = {
-  title: 'Projects by Dias Yermek | Production Mobile & Web Builds // HUD Showcase',
-  description: 'Featured production engineering projects: RoleSieve (Next.js 16 & FastAPI), Finance AI Manager (React Native & FastAPI), OpenGov.kz (React 19, Vite & i18n), and BerikWeb 3D Gallery.',
+  title: `${title} // HUD Showcase`,
+  description: 'Featured production engineering projects: RoleSieve (Next.js 16 & FastAPI), Finance AI Manager (React Native & FastAPI), OpenGov.kz (React 19, Vite & i18n), and the Berik Zhunusbek art gallery.',
   keywords: [
     'Dias Yermek Projects',
     'RoleSieve HeadHunter Analytics',
@@ -14,24 +18,18 @@ export const metadata = {
     'Finance Management AI',
     'Mobile App Developer Kazakhstan'
   ],
+  alternates: { canonical: '/projects' },
   openGraph: {
-    title: 'Projects by Dias Yermek | Production Mobile & Web Builds',
-    description: 'Featured engineering projects built with React Native, Flutter, Next.js, and AI integrations.',
-    url: 'https://daelijek-portfolio.vercel.app/projects',
-    images: [
-      {
-        url: '/assets/Finance.png',
-        width: 1200,
-        height: 630,
-        alt: 'Finance AI Manager Preview',
-      },
-    ],
+    title,
+    description,
+    url: '/projects',
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Projects by Dias Yermek | Production Mobile & Web Builds',
-    description: 'Featured engineering projects built with React Native, Flutter, Next.js, and AI integrations.',
-    images: ['/assets/Finance.png'],
+    title,
+    description,
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 

@@ -1,7 +1,10 @@
 import AboutContent from './AboutContent';
+import { DEFAULT_OG_IMAGE } from '../../src/lib/site';
+
+const title = 'About Dias Yermek | Middle Frontend & Mobile Developer';
 
 export const metadata = {
-  title: 'About Dias Yermek | Middle Frontend & Mobile Developer // Competency Matrix',
+  title: `${title} // Competency Matrix`,
   description: 'Software Engineering background, 8-sector technical competency matrix (Next.js, Flutter, React Native, AI, FastAPI), and production track record at BeyimTech, TrustMe, and OpenGov.',
   keywords: [
     'Dias Yermek',
@@ -15,24 +18,18 @@ export const metadata = {
     'BeyimTech',
     'TrustMe'
   ],
+  alternates: { canonical: '/about' },
   openGraph: {
-    title: 'About Dias Yermek | Middle Frontend & Mobile Developer',
+    title,
     description: 'Software Engineering background, 8-sector technical competency matrix, and production track record across EdTech, GovTech, FinTech & Blockchain.',
-    url: 'https://daelijek-portfolio.vercel.app/about',
-    images: [
-      {
-        url: '/assets/linkedIn_Dias_square.png',
-        width: 1200,
-        height: 630,
-        alt: 'Dias Yermek Profile',
-      },
-    ],
+    url: '/about',
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About Dias Yermek | Middle Frontend & Mobile Developer',
+    title,
     description: 'Software Engineering background, 8-sector technical competency matrix, and production track record.',
-    images: ['/assets/linkedIn_Dias_square.png'],
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 

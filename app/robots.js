@@ -1,9 +1,12 @@
+import { absoluteUrl } from '../src/lib/site';
+
 export default function robots() {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: '/api/',
     },
-    sitemap: 'https://daelijek-portfolio.vercel.app/sitemap.xml',
+    sitemap: absoluteUrl('/sitemap.xml'),
   };
 }
