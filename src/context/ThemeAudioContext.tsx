@@ -5,13 +5,12 @@ import { MotionConfig } from 'framer-motion';
 import { soundFx, type AudioProfile } from '@/audio/soundEffects';
 import { track } from '@/lib/analytics';
 import type { PerfTier } from '@/lib/animationLoop';
+import { isTheme, type Theme } from '@/lib/themes';
 
-export const THEMES = ['acid', 'cyan', 'amber', 'crimson', 'obsidian'] as const;
-export type Theme = (typeof THEMES)[number];
+export { THEMES, type Theme } from '@/lib/themes';
 
 const PERF_TIERS: readonly PerfTier[] = ['high', 'med', 'saver'];
 
-const isTheme = (v: unknown): v is Theme => typeof v === 'string' && (THEMES as readonly string[]).includes(v);
 const isPerfTier = (v: unknown): v is PerfTier => typeof v === 'string' && (PERF_TIERS as readonly string[]).includes(v);
 
 export interface ThemeAudioContextValue {

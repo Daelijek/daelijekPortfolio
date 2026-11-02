@@ -1,4 +1,7 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
+
+const fromRoot = (path: string) => fileURLToPath(new URL(path, import.meta.url));
 
 export default defineConfig({
   test: {
@@ -6,7 +9,10 @@ export default defineConfig({
     environment: 'node',
   },
   resolve: {
-    // `server-only` throws outside React Server Components; tests import server modules directly.
-    alias: { 'server-only': new URL('./tests/unit/stubs/server-only.ts', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1') },
+    alias: {
+      '@': fromRoot('./src'),
+      // `server-only` throws outside React Server Components; tests import server modules directly.
+      'server-only': fromRoot('./tests/unit/stubs/server-only.ts'),
+    },
   },
 });

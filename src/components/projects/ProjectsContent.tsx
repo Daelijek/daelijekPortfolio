@@ -6,9 +6,10 @@ import Image from 'next/image';
 import { motion as Motion } from 'framer-motion';
 import { useThemeAudio } from '@/context/ThemeAudioContext';
 import { useLocalizedPath } from '@/i18n/I18nProvider';
+import type { Dictionary } from '@/content/types';
 import { ExternalLink, ArrowRight, FolderGit2 } from 'lucide-react';
 
-export default function ProjectsContent({ projects }) {
+export default function ProjectsContent({ projects }: { projects: Dictionary['projects'] }) {
   const { playHover, playClick } = useThemeAudio();
   const { href } = useLocalizedPath();
   const t = projects.ui;

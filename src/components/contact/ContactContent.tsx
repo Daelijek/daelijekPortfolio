@@ -10,7 +10,7 @@ import { FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
 
 // Async Clipboard API first; execCommand fallback for browsers/contexts that block it.
-async function copyText(text) {
+async function copyText(text: string): Promise<boolean> {
   try {
     await navigator.clipboard.writeText(text);
     return true;
@@ -64,7 +64,7 @@ export default function ContactContent() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleCopyEmail = async (e) => {
+  const handleCopyEmail = async (e?: React.MouseEvent) => {
     e?.preventDefault?.();
 
     // "Copied" is shown only if copying really worked. If the browser blocks the
