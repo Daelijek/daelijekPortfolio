@@ -9,7 +9,7 @@ export default defineConfig([
     files: ['**/*.{js,jsx,mjs}'],
     extends: [
       js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
+      reactHooks.configs.flat['recommended-latest'],
     ],
     languageOptions: {
       ecmaVersion: 2022,

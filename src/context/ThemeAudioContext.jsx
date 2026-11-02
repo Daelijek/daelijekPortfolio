@@ -36,6 +36,7 @@ export function ThemeAudioProvider({ children }) {
       const savedPerf = localStorage.getItem('daelijek_perf');
 
       if (savedTheme) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is client-only; context is reworked in phases 4–5
         setThemeState(savedTheme);
         document.documentElement.setAttribute('data-theme', savedTheme);
       } else {

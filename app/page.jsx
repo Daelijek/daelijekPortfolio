@@ -164,6 +164,7 @@ export default function HomePage() {
 
     try {
       if (sessionStorage.getItem('daelijek_booted') === 'true') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- sessionStorage is client-only; boot gate is reworked in phase 4
         setIsBooted(true);
         return;
       }
