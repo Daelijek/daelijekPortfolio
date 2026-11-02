@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { MotionConfig } from 'framer-motion';
 import { soundFx } from '../audio/soundEffects';
 import { track } from '../lib/analytics';
 
@@ -18,7 +19,38 @@ const ThemeAudioContext = createContext({
   playHover: () => {},
   playClick: () => {},
   playSwitch: () => {},
+  playDownload: () => {},
 });
+
+// Sound-effect helpers never change, so they are created once.
+const playHover = () => soundFx.playHover();
+const playClick = () => soundFx.playClick();
+const playSwitch = () => soundFx.playSwitch();
+const playDownload = () => soundFx.playDownload();
+
+const saveSetting = (key, value) => {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Storage may be unavailable (private mode, blocked site data)
+  }
+};
+
+/**
+ * Default animation quality for visitors who never picked a tier themselves.
+ * Low-end hardware or Data Saver gets lighter backgrounds (fewer particles, lower fps).
+ * The automatic choice is not stored, so it adapts if the device changes.
+ */
+function detectPerfTier() {
+  const cores = navigator.hardwareConcurrency || 4;
+  const memoryGb = navigator.deviceMemory || 4; // Chromium only; 4 is a neutral default
+  const saveData = Boolean(navigator.connection?.saveData);
+  const smallTouchScreen = window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 768;
+
+  if (saveData || cores <= 2 || memoryGb <= 2) return 'saver';
+  if (cores <= 4 || memoryGb <= 4 || smallTouchScreen) return 'med';
+  return 'high';
+}
 
 export function ThemeAudioProvider({ children }) {
   const [theme, setThemeState] = useState('acid');
@@ -27,8 +59,10 @@ export function ThemeAudioProvider({ children }) {
   const [lang, setLangState] = useState('en');
   const [perfTier, setPerfTierState] = useState('high');
 
+  // Restore saved preferences. localStorage only exists in the browser, so this runs
+  // after hydration (language moves to the URL in phase 5).
+  /* eslint-disable react-hooks/set-state-in-effect -- one-time sync from client-only storage */
   useEffect(() => {
-    // Load saved preferences from localStorage
     try {
       const savedTheme = localStorage.getItem('daelijek_theme');
       const savedSound = localStorage.getItem('daelijek_sound');
@@ -36,13 +70,9 @@ export function ThemeAudioProvider({ children }) {
       const savedLang = localStorage.getItem('daelijek_lang');
       const savedPerf = localStorage.getItem('daelijek_perf');
 
-      if (savedTheme) {
-        // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is client-only; context is reworked in phases 4–5
-        setThemeState(savedTheme);
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      } else {
-        document.documentElement.setAttribute('data-theme', 'acid');
-      }
+      const initialTheme = savedTheme || 'acid';
+      setThemeState(initialTheme);
+      document.documentElement.setAttribute('data-theme', initialTheme);
 
       if (savedSound !== null) {
         const isSound = savedSound === 'true';
@@ -60,90 +90,75 @@ export function ThemeAudioProvider({ children }) {
         setLangState(normalized);
       }
 
-      if (savedPerf) {
-        setPerfTierState(savedPerf);
-      }
+      setPerfTierState(['high', 'med', 'saver'].includes(savedPerf) ? savedPerf : detectPerfTier());
     } catch {
       // Storage access safe ignore
     }
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
-  const setTheme = (newTheme) => {
+  const setTheme = useCallback((newTheme) => {
     setThemeState(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
-    try {
-      localStorage.setItem('daelijek_theme', newTheme);
-    } catch {
-      // Storage access safe ignore
-    }
+    saveSetting('daelijek_theme', newTheme);
     soundFx.playSwitch();
     track('Theme Changed', { theme: newTheme });
-  };
+  }, []);
 
-  const setSoundEnabled = (val) => {
+  const setSoundEnabled = useCallback((val) => {
     setSoundEnabledState(val);
     soundFx.setEnabled(val);
     track('Sound Toggled', { enabled: val });
-    try {
-      localStorage.setItem('daelijek_sound', val ? 'true' : 'false');
-    } catch {
-      // Storage access safe ignore
-    }
+    saveSetting('daelijek_sound', val ? 'true' : 'false');
     if (val) soundFx.playClick();
-  };
+  }, []);
 
-  const setAudioProfile = (profile) => {
+  const setAudioProfile = useCallback((profile) => {
     setAudioProfileState(profile);
     soundFx.setProfile(profile);
-    try {
-      localStorage.setItem('daelijek_audio_profile', profile);
-    } catch {
-      // Storage access safe ignore
-    }
+    saveSetting('daelijek_audio_profile', profile);
     soundFx.playProfileDemo(profile);
-  };
+  }, []);
 
-  const setLang = (newLang) => {
+  const setLang = useCallback((newLang) => {
     setLangState(newLang);
     track('Language Changed', { lang: newLang });
-    try {
-      localStorage.setItem('daelijek_lang', newLang);
-    } catch {
-      // Storage access safe ignore
-    }
+    saveSetting('daelijek_lang', newLang);
     soundFx.playSwitch();
-  };
+  }, []);
 
-  const setPerfTier = (tier) => {
+  const setPerfTier = useCallback((tier) => {
     setPerfTierState(tier);
-    try {
-      localStorage.setItem('daelijek_perf', tier);
-    } catch {
-      // Storage access safe ignore
-    }
+    saveSetting('daelijek_perf', tier);
     soundFx.playSwitch();
-  };
+  }, []);
+
+  // Stable value: consumers re-render only when a setting actually changes.
+  const value = useMemo(
+    () => ({
+      theme,
+      setTheme,
+      soundEnabled,
+      setSoundEnabled,
+      audioProfile,
+      setAudioProfile,
+      lang,
+      setLang,
+      perfTier,
+      setPerfTier,
+      playHover,
+      playClick,
+      playSwitch,
+      playDownload,
+    }),
+    [theme, soundEnabled, audioProfile, lang, perfTier, setTheme, setSoundEnabled, setAudioProfile, setLang, setPerfTier]
+  );
 
   return (
-    <ThemeAudioContext.Provider
-      value={{
-        theme,
-        setTheme,
-        soundEnabled,
-        setSoundEnabled,
-        audioProfile,
-        setAudioProfile,
-        lang,
-        setLang,
-        perfTier,
-        setPerfTier,
-        playHover: () => soundFx.playHover(),
-        playClick: () => soundFx.playClick(),
-        playSwitch: () => soundFx.playSwitch(),
-        playDownload: () => soundFx.playDownload(),
-      }}
-    >
-      {children}
+    <ThemeAudioContext.Provider value={value}>
+      {/* reducedMotion="user": framer-motion drops transform/layout animations when the
+          OS "reduce motion" setting is on (opacity fades are kept). */}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </ThemeAudioContext.Provider>
   );
 }

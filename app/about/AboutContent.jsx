@@ -255,7 +255,7 @@ export default function AboutContent() {
             {about.tag || '// SECTOR_00 · BIOGRAPHY & TELEMETRY'}
           </span>
         </div>
-        <div className="text-xs text-white/40 hidden sm:flex items-center gap-2">
+        <div className="text-xs text-white/55 hidden sm:flex items-center gap-2">
           <span>PORTFOLIO // 2026</span>
           <span className="text-[var(--accent-color)]">&bull;</span>
           <span>DIAS YERMEK</span>
@@ -290,10 +290,10 @@ export default function AboutContent() {
               <div className="absolute inset-0 bg-[var(--accent-color)] opacity-[0.05] mix-blend-color pointer-events-none" />
 
               {/* Photo Telemetry Overlays */}
-              <div className="absolute top-3 left-3 text-[9px] font-mono text-white/60 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+              <div className="absolute top-3 left-3 text-[10px] font-mono text-white/60 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
                 [SYS_ID // 0x01]
               </div>
-              <div className="absolute top-3 right-3 flex items-center gap-1.5 text-[9px] font-mono text-emerald-400 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+              <div className="absolute top-3 right-3 flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span>ONLINE</span>
               </div>
@@ -308,7 +308,7 @@ export default function AboutContent() {
                     Astana, KZ · UTC+5
                   </span>
                 </div>
-                <span className="text-[9.5px] px-2 py-0.5 rounded bg-black/80 border border-white/20 text-white/80 font-mono">
+                <span className="text-[10px] px-2 py-0.5 rounded bg-black/80 border border-white/20 text-white/80 font-mono">
                   {scrollPercent}% SCROLL
                 </span>
               </div>
@@ -316,7 +316,7 @@ export default function AboutContent() {
 
             {/* Scroll Telemetry Hairline Progress */}
             <div className="space-y-1.5 pt-1">
-              <div className="flex items-center justify-between text-[10.5px] text-white/40 font-mono">
+              <div className="flex items-center justify-between text-[10.5px] text-white/55 font-mono">
                 <span>SCROLL_TELEMETRY</span>
                 <span className="text-[var(--accent-color)] font-bold">{scrollPercent}%</span>
               </div>
@@ -331,22 +331,22 @@ export default function AboutContent() {
             {/* Typographic Technical Specification (Clean Horizontal Hairlines, No Boxes) */}
             <div className="divide-y divide-white/[0.08] border-y border-white/[0.08] text-xs font-mono">
               <div className="flex items-center justify-between py-2.5">
-                <span className="text-white/40 tracking-wider">STATUS</span>
+                <span className="text-white/55 tracking-wider">STATUS</span>
                 <span className="text-emerald-400 font-bold flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                   OPEN FOR OFFERS
                 </span>
               </div>
               <div className="flex items-center justify-between py-2.5">
-                <span className="text-white/40 tracking-wider">EXPERIENCE</span>
+                <span className="text-white/55 tracking-wider">EXPERIENCE</span>
                 <span className="text-white font-bold">3+ YEARS PROD</span>
               </div>
               <div className="flex items-center justify-between py-2.5">
-                <span className="text-white/40 tracking-wider">DEGREE</span>
+                <span className="text-white/55 tracking-wider">DEGREE</span>
                 <span className="text-white font-bold">B.S. SOFTWARE ENG</span>
               </div>
               <div className="flex items-center justify-between py-2.5">
-                <span className="text-white/40 tracking-wider">PHONE</span>
+                <span className="text-white/55 tracking-wider">PHONE</span>
                 <a
                   href={`tel:${content.contact?.phoneRaw || '+77088350549'}`}
                   className="text-[var(--accent-color)] font-bold hover:underline"
@@ -614,7 +614,7 @@ export default function AboutContent() {
 
                         {/* Technology Stack Chips */}
                         <div className="space-y-2">
-                          <span className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-wider block">
+                          <span className="text-[10px] font-mono font-bold text-white/55 uppercase tracking-wider block">
                             // TECH_STACK
                           </span>
                           <div className="flex flex-wrap gap-1.5">
@@ -806,9 +806,9 @@ export default function AboutContent() {
                           className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[var(--accent-color)]/30 hover:bg-white/[0.05] transition-all space-y-2 group/sub"
                         >
                           <div className="flex items-start justify-between gap-3">
-                            <h4 className="text-xs sm:text-sm font-bold text-white font-mono group-hover/sub:text-[var(--accent-color)] transition-colors">
+                            <h3 className="text-xs sm:text-sm font-bold text-white font-mono group-hover/sub:text-[var(--accent-color)] transition-colors">
                               {cert.title}
-                            </h4>
+                            </h3>
                             <span className="text-[10px] font-mono text-emerald-400 px-2 py-0.5 rounded bg-emerald-950/50 border border-emerald-500/30 shrink-0 font-bold">
                               {cert.status}
                             </span>
@@ -822,7 +822,7 @@ export default function AboutContent() {
                     </div>
                   </div>
 
-                  <div className="relative z-10 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-white/40">
+                  <div className="relative z-10 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-white/55">
                     <span>// CISCO & AWS VERIFICATION</span>
                     <span className="text-emerald-400 flex items-center gap-1 font-bold">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -884,7 +884,7 @@ export default function AboutContent() {
                     </div>
                   </div>
 
-                  <div className="relative z-10 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-white/40">
+                  <div className="relative z-10 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-white/55">
                     <span>// MULTILINGUAL WORKFLOW</span>
                     <span className="text-white/60">TRILINGUAL FLUENCY</span>
                   </div>

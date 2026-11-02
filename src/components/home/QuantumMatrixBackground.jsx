@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
+import { startAnimationLoop, FPS_BY_TIER } from '../../lib/animationLoop';
 
 export default function QuantumMatrixBackground() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
   const { theme, perfTier } = useThemeAudio();
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,8 +17,8 @@ export default function QuantumMatrixBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId;
     let width = 0;
+    let drawStatic = null; // set once render exists; used to repaint after resize
     let height = 0;
     let time = 0;
 
@@ -44,6 +47,8 @@ export default function QuantumMatrixBackground() {
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
+      // Resizing clears the canvas; redraw the single static frame in reduced-motion mode.
+      if (drawStatic) drawStatic();
     };
 
     resize();
@@ -90,8 +95,11 @@ export default function QuantumMatrixBackground() {
       };
     };
 
-    const render = () => {
-      time += perfTier === 'saver' ? 0.012 : 0.018;
+    // dt: elapsed time in 60 fps frames, so speed no longer depends on the display refresh rate
+    const render = (dt) => {
+      time += (perfTier === 'saver' ? 0.012 : 0.018) * dt;
+      const ease = Math.min(1, 0.08 * dt);
+      const idleEase = Math.min(1, 0.04 * dt);
 
       let mx, my;
       if (isMobileOrTouch) {
@@ -101,13 +109,13 @@ export default function QuantumMatrixBackground() {
       } else {
         // Desktop: follow cursor smoothly if hovered, otherwise float smoothly
         if (mouseRef.current.targetX > -500) {
-          mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
-          mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
+          mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * ease;
+          mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * ease;
         } else {
           const idleX = width * 0.5 + Math.sin(time * 0.85) * (width * 0.28);
           const idleY = height * 0.5 + Math.cos(time * 0.65) * (height * 0.24);
-          mouseRef.current.x += (idleX - mouseRef.current.x) * 0.04;
-          mouseRef.current.y += (idleY - mouseRef.current.y) * 0.04;
+          mouseRef.current.x += (idleX - mouseRef.current.x) * idleEase;
+          mouseRef.current.y += (idleY - mouseRef.current.y) * idleEase;
         }
         mx = mouseRef.current.x;
         my = mouseRef.current.y;
@@ -250,19 +258,24 @@ export default function QuantumMatrixBackground() {
         }
       }
 
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (reducedMotion) drawStatic = () => render(0);
+
+    const stopLoop = startAnimationLoop(render, {
+      element: canvas,
+      fps: FPS_BY_TIER[perfTier] ?? 60,
+      staticFrame: Boolean(reducedMotion),
+    });
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
       resizeObserver.disconnect();
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [theme, perfTier]);
+  }, [theme, perfTier, reducedMotion]);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">

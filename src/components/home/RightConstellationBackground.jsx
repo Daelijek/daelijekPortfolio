@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
+import { startAnimationLoop, FPS_BY_TIER } from '../../lib/animationLoop';
 
 export default function RightConstellationBackground() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
   const { theme, perfTier } = useThemeAudio();
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,8 +17,8 @@ export default function RightConstellationBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId;
     let width = 0;
+    let drawStatic = null; // set once render exists; used to repaint after resize
     let height = 0;
 
     const getColor = () => {
@@ -50,6 +53,7 @@ export default function RightConstellationBackground() {
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
+      if (drawStatic) drawStatic();
     };
 
     resize();
@@ -103,8 +107,10 @@ export default function RightConstellationBackground() {
 
     let time = 0;
 
-    const render = () => {
-      time += 0.02;
+    // dt: elapsed time in 60 fps frames, so speed no longer depends on the display refresh rate
+    const render = (dt) => {
+      time += 0.02 * dt;
+      const ease = Math.min(1, 0.08 * dt);
       ctx.clearRect(0, 0, width, height);
 
       // Autonomous gentle motion on mobile, smooth mouse follow on desktop
@@ -112,8 +118,8 @@ export default function RightConstellationBackground() {
         mouseRef.current.x = (width * 0.5) + Math.cos(time * 0.7) * (width * 0.3);
         mouseRef.current.y = (height * 0.45) + Math.sin(time * 0.9) * (height * 0.25);
       } else {
-        mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
-        mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.08;
+        mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * ease;
+        mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * ease;
       }
 
       const color = getColor();
@@ -123,8 +129,8 @@ export default function RightConstellationBackground() {
       // Update positions
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
 
         // Wrap around boundaries with margin
         if (p.x < -20) p.x = width + 20;
@@ -137,8 +143,8 @@ export default function RightConstellationBackground() {
           const dx = mouse.x - p.x;
           const dy = mouse.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 140) {
-            const force = (1 - dist / 140) * 1.5;
+          if (dist < 140 && dist > 0.01) {
+            const force = (1 - dist / 140) * 1.5 * dt;
             p.x -= (dx / dist) * force;
             p.y -= (dy / dist) * force;
           }
@@ -204,10 +210,15 @@ export default function RightConstellationBackground() {
         }
       }
 
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (reducedMotion) drawStatic = () => render(0);
+
+    const stopLoop = startAnimationLoop(render, {
+      element: canvas,
+      fps: FPS_BY_TIER[perfTier] ?? 60,
+      staticFrame: Boolean(reducedMotion),
+    });
 
     return () => {
       window.removeEventListener('resize', resize);
@@ -218,9 +229,9 @@ export default function RightConstellationBackground() {
         }
       }
       resizeObserver.disconnect();
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
     };
-  }, [theme, perfTier]);
+  }, [theme, perfTier, reducedMotion]);
 
   return (
     <canvas

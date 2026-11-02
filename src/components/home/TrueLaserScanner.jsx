@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { startAnimationLoop } from '../../lib/animationLoop';
 
 export default function TrueLaserScanner() {
   const containerRef = useRef(null);
@@ -8,102 +10,128 @@ export default function TrueLaserScanner() {
   const textContainerRef = useRef(null);
   const illuminatedWrapperRef = useRef(null);
   const prevYRef = useRef(0);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
-    let animId;
-    let startTime = performance.now();
+    const container = containerRef.current;
+    const laser = laserRef.current;
+    const textContainer = textContainerRef.current;
+    const illuminatedWrapper = illuminatedWrapperRef.current;
+    if (!container || !laser || !textContainer || !illuminatedWrapper) return;
+
+    // Reduced motion: no sweeping laser, the headline is simply fully lit.
+    if (reducedMotion) {
+      laser.style.display = 'none';
+      illuminatedWrapper.style.webkitMaskImage = 'none';
+      illuminatedWrapper.style.maskImage = 'none';
+      return () => {
+        laser.style.display = '';
+      };
+    }
+
+    const startTime = performance.now();
     const duration = 12000; // 12s full loop (6s down, 6s up)
 
-    const update = (currentTime) => {
-      const container = containerRef.current;
-      const laser = laserRef.current;
-      const textContainer = textContainerRef.current;
-      const illuminatedWrapper = illuminatedWrapperRef.current;
+    // Layout is measured on resize and every ~30 frames instead of twice per frame:
+    // reading getBoundingClientRect() inside the loop forced a synchronous reflow each frame.
+    const layout = { H: 0, textTop: 0, textHeight: 0 };
+    const measure = () => {
+      const containerRect = container.getBoundingClientRect();
+      const textRect = textContainer.getBoundingClientRect();
+      layout.H = containerRect.height;
+      layout.textTop = textRect.top - containerRect.top;
+      layout.textHeight = textRect.height;
+    };
+    measure();
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(container);
+    resizeObserver.observe(textContainer);
 
-      if (container && laser && textContainer && illuminatedWrapper) {
-        const containerRect = container.getBoundingClientRect();
-        const textRect = textContainer.getBoundingClientRect();
+    let frameCount = 0;
+    const update = (_dt, currentTime) => {
+      // Cheap safety net for position changes ResizeObserver can't see (e.g. entrance transforms).
+      if (++frameCount % 30 === 0) measure();
 
-        const H = containerRect.height;
-        const elapsed = currentTime - startTime;
+      const H = layout.H;
+      const elapsed = currentTime - startTime;
 
-        // Smooth Sine Ping-Pong 0 -> H -> 0
-        const progress = 0.5 - 0.5 * Math.cos(((elapsed % duration) / duration) * 2 * Math.PI);
-        const laserY = progress * H;
+      // Smooth Sine Ping-Pong 0 -> H -> 0
+      const progress = 0.5 - 0.5 * Math.cos(((elapsed % duration) / duration) * 2 * Math.PI);
+      const laserY = progress * H;
 
-        // Determine travel direction
-        const isMovingDown = laserY >= prevYRef.current;
-        prevYRef.current = laserY;
+      // Determine travel direction
+      const isMovingDown = laserY >= prevYRef.current;
+      prevYRef.current = laserY;
 
-        // Move 1px laser line
-        laser.style.transform = `translate3d(0, ${laserY}px, 0)`;
+      // Move 1px laser line
+      laser.style.transform = `translate3d(0, ${laserY}px, 0)`;
 
-        // Calculate exact laser offset relative to the illuminated wrapper
-        const bleed = 60; // 60px bleed buffer
-        const textTop = textRect.top - containerRect.top;
-        const textHeight = textRect.height;
-        const totalHeight = textHeight + bleed * 2;
-        
-        // Exact laser center coordinate relative to the illuminated wrapper top
-        const offset = (laserY - textTop) + bleed;
+      // Calculate exact laser offset relative to the illuminated wrapper
+      const bleed = 60; // 60px bleed buffer
+      const textTop = layout.textTop;
+      const textHeight = layout.textHeight;
+      const totalHeight = textHeight + bleed * 2;
+      
+      // Exact laser center coordinate relative to the illuminated wrapper top
+      const offset = (laserY - textTop) + bleed;
 
-        const tailLength = 80; // 80px smooth phosphor decay trail
-        const leadSharp = 3;   // 3px razor-sharp leading edge
+      const tailLength = 80; // 80px smooth phosphor decay trail
+      const leadSharp = 3;   // 3px razor-sharp leading edge
 
-        // Clamped gradient stops to prevent any browser negative-pixel gradient clipping
-        const clamp = (val) => Math.max(0, Math.min(totalHeight, val));
+      // Clamped gradient stops to prevent any browser negative-pixel gradient clipping
+      const clamp = (val) => Math.max(0, Math.min(totalHeight, val));
 
-        let mask;
-        if (isMovingDown) {
-          // Moving DOWN: Leading edge is AT the laser (sharp below), trailing decay is ABOVE
-          const p0 = clamp(offset - tailLength);
-          const p1 = clamp(offset - tailLength * 0.6);
-          const p2 = clamp(offset - tailLength * 0.25);
-          const pPeakStart = clamp(offset - 1);
-          const pPeakEnd = clamp(offset + 1);
-          const pLead = clamp(offset + leadSharp);
+      let mask;
+      if (isMovingDown) {
+        // Moving DOWN: Leading edge is AT the laser (sharp below), trailing decay is ABOVE
+        const p0 = clamp(offset - tailLength);
+        const p1 = clamp(offset - tailLength * 0.6);
+        const p2 = clamp(offset - tailLength * 0.25);
+        const pPeakStart = clamp(offset - 1);
+        const pPeakEnd = clamp(offset + 1);
+        const pLead = clamp(offset + leadSharp);
 
-          mask = `linear-gradient(to bottom, 
-            transparent 0px, 
-            transparent ${p0}px, 
-            rgba(0,0,0,0.15) ${p1}px, 
-            rgba(0,0,0,0.6) ${p2}px, 
-            black ${pPeakStart}px, 
-            black ${pPeakEnd}px, 
-            transparent ${pLead}px, 
-            transparent ${totalHeight}px
-          )`;
-        } else {
-          // Moving UP: Leading edge is AT the laser (sharp above), trailing decay is BELOW
-          const pLead = clamp(offset - leadSharp);
-          const pPeakStart = clamp(offset - 1);
-          const pPeakEnd = clamp(offset + 1);
-          const p2 = clamp(offset + tailLength * 0.25);
-          const p1 = clamp(offset + tailLength * 0.6);
-          const p0 = clamp(offset + tailLength);
+        mask = `linear-gradient(to bottom, 
+          transparent 0px, 
+          transparent ${p0}px, 
+          rgba(0,0,0,0.15) ${p1}px, 
+          rgba(0,0,0,0.6) ${p2}px, 
+          black ${pPeakStart}px, 
+          black ${pPeakEnd}px, 
+          transparent ${pLead}px, 
+          transparent ${totalHeight}px
+        )`;
+      } else {
+        // Moving UP: Leading edge is AT the laser (sharp above), trailing decay is BELOW
+        const pLead = clamp(offset - leadSharp);
+        const pPeakStart = clamp(offset - 1);
+        const pPeakEnd = clamp(offset + 1);
+        const p2 = clamp(offset + tailLength * 0.25);
+        const p1 = clamp(offset + tailLength * 0.6);
+        const p0 = clamp(offset + tailLength);
 
-          mask = `linear-gradient(to bottom, 
-            transparent 0px, 
-            transparent ${pLead}px, 
-            black ${pPeakStart}px, 
-            black ${pPeakEnd}px, 
-            rgba(0,0,0,0.6) ${p2}px, 
-            rgba(0,0,0,0.15) ${p1}px, 
-            transparent ${p0}px, 
-            transparent ${totalHeight}px
-          )`;
-        }
-
-        illuminatedWrapper.style.webkitMaskImage = mask;
-        illuminatedWrapper.style.maskImage = mask;
+        mask = `linear-gradient(to bottom, 
+          transparent 0px, 
+          transparent ${pLead}px, 
+          black ${pPeakStart}px, 
+          black ${pPeakEnd}px, 
+          rgba(0,0,0,0.6) ${p2}px, 
+          rgba(0,0,0,0.15) ${p1}px, 
+          transparent ${p0}px, 
+          transparent ${totalHeight}px
+        )`;
       }
 
-      animId = requestAnimationFrame(update);
+      illuminatedWrapper.style.webkitMaskImage = mask;
+      illuminatedWrapper.style.maskImage = mask;
     };
 
-    animId = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(animId);
-  }, []);
+    const stopLoop = startAnimationLoop(update, { element: container });
+    return () => {
+      stopLoop();
+      resizeObserver.disconnect();
+    };
+  }, [reducedMotion]);
 
   return (
     <div
@@ -136,26 +164,27 @@ export default function TrueLaserScanner() {
           {/* Top Layer: Glowing Acid Green Text with 60px Bleed Buffer and Clamped Precision Mask */}
           <div
             ref={illuminatedWrapperRef}
+            aria-hidden="true"
             className="absolute -inset-[60px] p-[60px] pointer-events-none select-none"
             style={{
               willChange: 'mask-image, -webkit-mask-image',
             }}
           >
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:portrait:text-5xl md:max-xl:landscape:text-4xl lg:max-xl:landscape:text-5xl xl:text-5xl 2xl:text-7xl font-black uppercase font-display leading-[0.88] tracking-tighter text-[var(--accent-color)] text-glow-strong text-right md:max-xl:landscape:text-left xl:text-left">
+            <div className="text-3xl xs:text-4xl sm:text-5xl md:portrait:text-5xl md:max-xl:landscape:text-4xl lg:max-xl:landscape:text-5xl xl:text-5xl 2xl:text-7xl font-black uppercase font-display leading-[0.88] tracking-tighter text-[var(--accent-color)] text-glow-strong text-right md:max-xl:landscape:text-left xl:text-left">
               <span className="block">CREATIVE</span>
               <span className="block">DEVELOPER</span>
-            </h1>
+            </div>
           </div>
         </div>
 
         {/* Underline Info Log Tag */}
         <div className="space-y-1 xs:space-y-1.5 pt-1 sm:pt-2 max-w-xs sm:max-w-sm md:max-w-md xl:max-w-sm flex flex-col items-end md:max-xl:landscape:items-start xl:items-start text-right md:max-xl:landscape:text-left xl:text-left">
-          <div className="flex items-center gap-1.5 xs:gap-2 text-[9px] xs:text-[10px] sm:text-xs text-[var(--accent-color)] font-bold tracking-widest uppercase">
+          <div className="flex items-center gap-1.5 xs:gap-2 text-[10px] xs:text-[10px] sm:text-xs text-[var(--accent-color)] font-bold tracking-widest uppercase">
             <span className="hidden md:max-xl:landscape:block xl:block w-2 h-[1px] bg-[var(--accent-color)]" />
             <span>[ INFO_LOG ]</span>
             <span className="md:max-xl:landscape:hidden xl:hidden w-2 h-[1px] bg-[var(--accent-color)]" />
           </div>
-          <p className="text-[9.5px] xs:text-[11px] sm:text-xs text-white/70 uppercase tracking-wide leading-relaxed font-mono pr-2.5 md:max-xl:landscape:pr-0 md:max-xl:landscape:pl-3 xl:pr-0 xl:pl-3 border-r-2 md:max-xl:landscape:border-r-0 md:max-xl:landscape:border-l xl:border-r-0 xl:border-l border-[var(--accent-color)]/40 max-w-[230px] xs:max-w-[270px] sm:max-w-[340px] md:max-w-[400px] xl:max-w-none">
+          <p className="text-[10px] xs:text-[11px] sm:text-xs text-white/70 uppercase tracking-wide leading-relaxed font-mono pr-2.5 md:max-xl:landscape:pr-0 md:max-xl:landscape:pl-3 xl:pr-0 xl:pl-3 border-r-2 md:max-xl:landscape:border-r-0 md:max-xl:landscape:border-l xl:border-r-0 xl:border-l border-[var(--accent-color)]/40 max-w-[230px] xs:max-w-[270px] sm:max-w-[340px] md:max-w-[400px] xl:max-w-none">
             SCULPTING TECHNICAL PERFORMANCE INTO IMMERSIVE DIGITAL ART.
           </p>
 

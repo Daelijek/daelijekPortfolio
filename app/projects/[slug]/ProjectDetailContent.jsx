@@ -4,7 +4,9 @@ import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { motion as Motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion as Motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { startAnimationLoop } from '../../../src/lib/animationLoop';
+import { useDialogFocus } from '../../../src/hooks/useDialogFocus';
 import { useThemeAudio } from '../../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../../src/data/portfolioData';
 import {
@@ -78,7 +80,7 @@ function InfiniteGalleryRibbon({
   const currentSpeedRef = useRef(0.65); // base slow speed in px/frame (~39px/s)
   const nudgeDeltaRef = useRef(0);
   const setWidthRef = useRef(0);
-  const rafIdRef = useRef(null);
+  const reducedMotion = useReducedMotion();
 
   // Ensure base set has at least 6 items for ultra-smooth seamless looping on wide displays
   const normalizedItems = useMemo(() => {
@@ -91,8 +93,9 @@ function InfiniteGalleryRibbon({
   }, [items]);
 
   useEffect(() => {
-    const baseSpeed = 0.65;
-    let lastTime = performance.now();
+    // Reduced motion: no auto-scroll; the arrows still move the ribbon.
+    const baseSpeed = reducedMotion ? 0 : 0.65;
+    if (reducedMotion) currentSpeedRef.current = 0;
 
     const measureWidth = () => {
       if (set1Ref.current && tapeRef.current) {
@@ -110,9 +113,9 @@ function InfiniteGalleryRibbon({
     const ro = new ResizeObserver(() => measureWidth());
     if (set1Ref.current) ro.observe(set1Ref.current);
 
-    const animate = (time) => {
-      const dt = Math.min((time - lastTime) / (1000 / 60), 3);
-      lastTime = time;
+    // dt: elapsed time in 60 fps frames (provided by the shared loop driver)
+    const animate = (frameDt) => {
+      const dt = Math.min(frameDt, 3);
 
       // When hovered or modal is open: target speed is 0; otherwise baseSpeed
       const targetSpeed = isHoveredRef.current ? 0 : baseSpeed;
@@ -150,18 +153,17 @@ function InfiniteGalleryRibbon({
       if (tapeRef.current) {
         tapeRef.current.style.transform = `translate3d(-${offsetRef.current}px, 0, 0)`;
       }
-
-      rafIdRef.current = requestAnimationFrame(animate);
     };
 
-    rafIdRef.current = requestAnimationFrame(animate);
+    // Paused while the ribbon is off-screen or the tab is hidden.
+    const stopLoop = startAnimationLoop(animate, { element: tapeRef.current?.parentElement });
 
     return () => {
       clearTimeout(timer);
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      stopLoop();
       ro.disconnect();
     };
-  }, []);
+  }, [reducedMotion]);
 
   const handleNudge = (direction) => {
     playClick?.();
@@ -171,15 +173,31 @@ function InfiniteGalleryRibbon({
 
   const renderCard = (item, keyIndex) => {
     const isFullPage = Boolean(item.image?.includes('all-landing-page'));
+    // Only the first set is reachable by keyboard; sets 2-3 are aria-hidden visual clones
+    // that make the ribbon loop seamlessly.
+    const isClone = !String(keyIndex).startsWith('set1');
+    const openPreview = () => {
+      playClick?.();
+      onOpenModal?.(item);
+    };
+    const cardA11yProps = {
+      role: 'button',
+      tabIndex: isClone ? -1 : 0,
+      // No aria-label: the visible caption (tag, title, "Preview") is the accessible name.
+      onKeyDown: (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openPreview();
+        }
+      },
+    };
 
     if (isMobileGallery) {
       return (
         <div
           key={keyIndex}
-          onClick={() => {
-            playClick?.();
-            onOpenModal?.(item);
-          }}
+          onClick={openPreview}
+          {...cardA11yProps}
           onMouseEnter={playHover}
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
@@ -232,10 +250,8 @@ function InfiniteGalleryRibbon({
     return (
       <div
         key={keyIndex}
-        onClick={() => {
-          playClick?.();
-          onOpenModal?.(item);
-        }}
+        onClick={openPreview}
+        {...cardA11yProps}
         onMouseEnter={playHover}
         draggable={false}
         onDragStart={(e) => e.preventDefault()}
@@ -250,10 +266,10 @@ function InfiniteGalleryRibbon({
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
             </div>
-            <span className="text-[10px] font-mono text-white/40 tracking-wider truncate max-w-[180px]">
+            <span className="text-[10px] font-mono text-white/55 tracking-wider truncate max-w-[180px]">
               app // {item.tag?.toLowerCase()}
             </span>
-            <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-[var(--accent-color)] border border-white/5 font-semibold">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-[var(--accent-color)] border border-white/5 font-semibold">
               WEB HUD
             </span>
           </div>
@@ -275,7 +291,7 @@ function InfiniteGalleryRibbon({
               style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
             />
             {isFullPage && (
-              <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-white/15 text-[9px] font-mono text-white/80 font-bold uppercase pointer-events-none">
+              <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/80 font-bold uppercase pointer-events-none">
                 {lang === 'ru' ? 'Полный скролл' : lang === 'kk' ? 'Толық скролл' : 'Full Page'}
               </div>
             )}
@@ -458,6 +474,8 @@ export default function ProjectDetailContent({ slug: propSlug }) {
 
   // Gallery Modal Lightbox State
   const [activeModalScreen, setActiveModalScreen] = useState(null);
+  const lightboxRef = useRef(null);
+  const trapLightboxFocus = useDialogFocus(Boolean(activeModalScreen), lightboxRef);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -690,15 +708,15 @@ export default function ProjectDetailContent({ slug: propSlug }) {
           {/* Quick Specs Pill Row */}
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-xs font-mono text-white/60">
             <div>
-              <span className="text-white/40">{roleLabel}: </span>
+              <span className="text-white/55">{roleLabel}: </span>
               <span className="text-white font-medium">{project.dossier?.primaryRole || 'Lead Engineer'}</span>
             </div>
             <div>
-              <span className="text-white/40">{platformLabel}: </span>
+              <span className="text-white/55">{platformLabel}: </span>
               <span className="text-white font-medium">{project.dossier?.targetPlatform || 'Mobile & Web'}</span>
             </div>
             <div>
-              <span className="text-white/40">{yearLabel}: </span>
+              <span className="text-white/55">{yearLabel}: </span>
               <span className="text-white font-medium">{project.dossier?.entryYear || '2025'}</span>
             </div>
           </div>
@@ -716,7 +734,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         >
           <div className="rounded-3xl overflow-hidden border border-white/10 bg-[#06090E] shadow-[0_20px_70px_rgba(0,0,0,0.85)]">
             {/* Minimalist Frame Top Bar */}
-            <div className="px-5 py-3.5 bg-white/[0.02] border-b border-white/[0.06] flex items-center justify-between text-xs font-mono text-white/40">
+            <div className="px-5 py-3.5 bg-white/[0.02] border-b border-white/[0.06] flex items-center justify-between text-xs font-mono text-white/55">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
                 <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
@@ -921,7 +939,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 {archTitle}
               </h2>
             </div>
-            <span className="text-xs text-white/40 font-mono hidden sm:inline">
+            <span className="text-xs text-white/55 font-mono hidden sm:inline">
               PRODUCTION STACK
             </span>
           </div>
@@ -1037,7 +1055,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                   {featuresTitle}
                 </h2>
               </div>
-              <span className="text-xs text-white/40 font-mono">
+              <span className="text-xs text-white/55 font-mono">
                 {project.walkthrough.features.length} MODULES
               </span>
             </div>
@@ -1065,7 +1083,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-white/40">
+                  <div className="pt-3 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-white/55">
                     <Layers className="w-3.5 h-3.5 text-[var(--accent-color)]" />
                     <span>PRODUCTION VERIFIED</span>
                   </div>
@@ -1097,7 +1115,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         >
           <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
-              <span className="text-xs text-white/40 font-mono tracking-widest uppercase">
+              <span className="text-xs text-white/55 font-mono tracking-widest uppercase">
                 {nextCaseText}
               </span>
               <span className="text-xs text-[var(--accent-color)] font-mono font-bold">
@@ -1166,7 +1184,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                   <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[11px] font-mono text-white px-2 py-1 bg-black/85 backdrop-blur-md rounded-lg border border-white/15">
                     <span className="font-black text-[var(--accent-color)]">{nextProject.num}</span>
                     <span className="font-bold truncate text-[10px]">{nextProject.title}</span>
-                    <span className="text-[9px] text-white/50 tracking-wider">PREVIEW</span>
+                    <span className="text-[10px] text-white/50 tracking-wider">PREVIEW</span>
                   </div>
                 </div>
               </div>
@@ -1186,6 +1204,11 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             onClick={() => setActiveModalScreen(null)}
           >
             <Motion.div
+              ref={lightboxRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label={activeModalScreen.title}
+              onKeyDown={trapLightboxFocus}
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -1202,9 +1225,9 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 type="button"
                 onClick={() => setActiveModalScreen(null)}
                 className="absolute -top-3 -right-3 z-30 p-2 sm:p-2.5 rounded-full bg-black/80 hover:bg-white/20 border border-white/25 text-white transition-all hover:scale-110 active:scale-95 shadow-xl backdrop-blur-md"
-                aria-label="Close modal"
+                aria-label="Close preview"
               >
-                <X className="w-4 h-4 sm:w-5 sm:h-5" />
+                <X aria-hidden="true" className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
               {/* Desktop window top bar if not mobile */}
@@ -1274,7 +1297,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   <span className="text-white/60">HIGH_RES_PREVIEW // 100% SCALE</span>
                 </div>
-                <span className="text-[11px] text-white/40 hidden sm:inline">
+                <span className="text-[11px] text-white/55 hidden sm:inline">
                   ESC or click outside to dismiss
                 </span>
               </div>

@@ -9,6 +9,30 @@ import { ArrowUpRight, Copy, Check, Phone } from 'lucide-react';
 import { FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
 
+// Async Clipboard API first; execCommand fallback for browsers/contexts that block it.
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    // fall through to the legacy path
+  }
+  try {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const ok = document.execCommand('copy');
+    textarea.remove();
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
 export default function ContactContent() {
   const { lang, playHover, playClick } = useThemeAudio();
   const content = portfolioContent[lang] || portfolioContent.en;
@@ -40,9 +64,16 @@ export default function ContactContent() {
     return () => clearInterval(timer);
   }, []);
 
-  const handleCopyEmail = (e) => {
+  const handleCopyEmail = async (e) => {
     e?.preventDefault?.();
-    navigator.clipboard.writeText(contact.email);
+
+    // "Copied" is shown only if copying really worked. If the browser blocks the
+    // clipboard (permissions, insecure context), fall back to opening the mail client.
+    if (!(await copyText(contact.email))) {
+      window.location.href = `mailto:${contact.email}`;
+      return;
+    }
+
     setCopied(true);
     soundFx.playSwitch();
 
@@ -164,6 +195,11 @@ export default function ContactContent() {
               <ArrowUpRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-color)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </a>
+
+          {/* Announces the copy result to screen readers (the badge inside the button is visual) */}
+          <span className="sr-only" role="status" aria-live="polite">
+            {copied ? t.copied : ''}
+          </span>
 
           {/* 2. EMAIL (Click to Copy) */}
           <button
