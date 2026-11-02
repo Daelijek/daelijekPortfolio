@@ -35,7 +35,7 @@ async function copyText(text) {
 
 export default function ContactContent() {
   const { playHover, playClick } = useThemeAudio();
-  const { locale: lang, common: content } = useI18n();
+  const { common: content } = useI18n();
   const contact = content.contact;
 
   const [copied, setCopied] = useState(false);
@@ -94,40 +94,7 @@ export default function ContactContent() {
     setTimeout(() => setCopied(false), 2200);
   };
 
-  const labels = {
-    en: {
-      tag: '// CONTACT',
-      title: 'GET IN TOUCH',
-      telegramTag: 'OPEN TELEGRAM',
-      emailCopy: 'COPY EMAIL',
-      copied: 'COPIED TO CLIPBOARD',
-      phoneCall: 'CALL',
-      available: 'AVAILABLE FOR WORK',
-      location: 'ASTANA, KZ',
-    },
-    ru: {
-      tag: '// КОНТАКТЫ',
-      title: 'СВЯЗАТЬСЯ СО МНОЙ',
-      telegramTag: 'ОТКРЫТЬ TELEGRAM',
-      emailCopy: 'СКОПИРОВАТЬ EMAIL',
-      copied: 'СКОПИРОВАНО В БУФЕР',
-      phoneCall: 'ПОЗВОНИТЬ',
-      available: 'ОТКРЫТ К ПРЕДЛОЖЕНИЯМ',
-      location: 'АСТАНА, КАЗАХСТАН',
-    },
-    kk: {
-      tag: '// БАЙЛАНЫС',
-      title: 'БАЙЛАНЫСҚА ШЫҒУ',
-      telegramTag: 'TELEGRAM АШУ',
-      emailCopy: 'EMAIL КӨШІРУ',
-      copied: 'БУФЕРГЕ КӨШІРІЛДІ',
-      phoneCall: 'ҚОҢЫРАУ ШАЛУ',
-      available: 'ҰСЫНЫСТАРҒА АШЫҚ',
-      location: 'АСТАНА, ҚАЗАҚСТАН',
-    },
-  };
-
-  const t = labels[lang] || labels.en;
+  const t = content.contact.ui;
 
   const socialLinks = [
     {

@@ -31,9 +31,10 @@ import { SiLeetcode } from 'react-icons/si';
 
 export default function AboutContent({ about }) {
   const { playHover, playClick, playDownload } = useThemeAudio();
-  const { locale: lang, common } = useI18n();
+  const { common } = useI18n();
   const { href } = useLocalizedPath();
   const content = { ...common, about };
+  const t = about.ui;
   const exp = about.experience;
   const [selectedCategories, setSelectedCategories] = useState(['mobile', 'web', 'backend', 'ai']);
   const [cvDownloaded, setCvDownloaded] = useState(false);
@@ -101,24 +102,24 @@ export default function AboutContent({ about }) {
   const highlightCards = [
     {
       id: 'edu',
-      tag: lang === 'kk' ? 'БІЛІМ' : lang === 'ru' ? 'ОБРАЗОВАНИЕ' : 'EDUCATION',
+      tag: t.education,
       Icon: GraduationCap,
       title: 'Astana IT University',
       subtitle: 'B.S. Software Engineering (2025)',
     },
     {
       id: 'current',
-      tag: lang === 'kk' ? 'АҒЫМДАҒЫ' : lang === 'ru' ? 'ТЕКУЩАЯ' : 'CURRENT ROLE',
+      tag: t.currentRole,
       Icon: Building2,
       title: 'BeyimTech · Astana Hub',
       subtitle: 'Middle Frontend & Mobile Developer',
     },
     {
       id: 'scale',
-      tag: lang === 'kk' ? 'АУҚЫМ' : lang === 'ru' ? 'МАСШТАБ' : 'KEY SCALE',
+      tag: t.keyScale,
       Icon: Code2,
       title: 'TrustMe Blockchain SaaS',
-      subtitle: lang === 'kk' ? 'Платформада 1.5M+ қолданушы' : lang === 'ru' ? 'Платформа с 1.5M+ пользователей' : 'Platform with 1.5M+ users',
+      subtitle: t.platformWith15m,
     },
   ];
 
@@ -128,8 +129,8 @@ export default function AboutContent({ about }) {
       id: 'mobile',
       category: 'mobile',
       icon: Smartphone,
-      title: lang === 'kk' ? 'Мобильді әзірлеу' : lang === 'ru' ? 'Мобильная разработка' : 'Mobile Architecture',
-      desc: lang === 'kk' ? 'Flutter & React Native, офлайн-синхрондау, күрделі күйлер және дүкендерге шығару.' : lang === 'ru' ? 'Кросс-платформенные приложения на Flutter и React Native, сложный стейт и релизы в App Store и Google Play.' : 'Production mobile apps on Flutter & React Native with offline sync, complex state management & store deployments.',
+      title: t.mobileArchitecture,
+      desc: t.productionMobileAppsOn,
       skills: [
         'Flutter & Dart',
         'Riverpod',
@@ -141,17 +142,17 @@ export default function AboutContent({ about }) {
       ],
       metric: 'iOS & Android',
       deliverables: [
-        lang === 'kk' ? 'BeyimTech AI қосымшасы (Astana Hub релизі, 20+ мектеп)' : lang === 'ru' ? 'BeyimTech AI мобильное приложение (релиз Astana Hub, 20+ школ)' : 'BeyimTech AI Platform (Production Astana Hub release, 20+ schools)',
-        lang === 'kk' ? 'Stolovka FoodTech (Flutter, электронды тапсырыстар, Firebase)' : lang === 'ru' ? 'Stolovka FoodTech сервис (Flutter, электронное меню, Firebase)' : 'Stolovka FoodTech Service (Flutter, cart engine & live orders)',
-        lang === 'kk' ? 'Finance AI Manager (React Native, Expo, түбіртектерді тану)' : lang === 'ru' ? 'Finance AI Manager (React Native, Expo, распознавание чеков)' : 'Finance AI Manager (React Native & Expo cross-platform client)',
+        t.beyimtechAiPlatformProduction,
+        t.stolovkaFoodtechServiceFlutter,
+        t.financeAiManagerReact,
       ],
     },
     {
       id: 'web',
       category: 'web',
       icon: Globe,
-      title: lang === 'kk' ? 'Web & Frontend' : lang === 'ru' ? 'Веб и фронтенд архитектура' : 'Modern Web & Frontend',
-      desc: lang === 'kk' ? 'Жоғары өнімді Next.js 16, серверлік рендеринг, дизайн-жүйелер және интерфейс жылдамдығы.' : lang === 'ru' ? 'Высокоскоростной Next.js 16, SSR/SSG, масштабируемые дизайн-системы и плавная графика 60 FPS.' : 'High-speed Next.js 16, SSR/SSG pipelines, modular design systems & fluid animations.',
+      title: t.modernWebFrontend,
+      desc: t.highSpeedNextJs,
       skills: [
         'Next.js 16 (App Router)',
         'React 19',
@@ -163,17 +164,17 @@ export default function AboutContent({ about }) {
       ],
       metric: '60 FPS / SSR',
       deliverables: [
-        lang === 'kk' ? 'OpenGov.kz мемлекеттік порталы (тағылымдамада Next.js, кейін React 19 + Vite; 3 тілдегі локализация)' : lang === 'ru' ? 'OpenGov.kz портал госинициатив (стажировка на Next.js, затем React 19 + Vite; трёхъязычная локализация)' : 'OpenGov.kz Civic Portal (Next.js internship build, later React 19 + Vite; trilingual i18n)',
-        lang === 'kk' ? 'TrustMe (1.5M+ қолданушысы бар платформаға смарт-келісімшарт UI)' : lang === 'ru' ? 'TrustMe (UI смарт-контрактов для платформы с 1.5M+ пользователей)' : 'TrustMe Contract Portal (Reusable UI for a platform with 1.5M+ users)',
-        lang === 'kk' ? 'BerikWeb 4K сандық галереясы (High-DPI, 3D өзара әрекеттер)' : lang === 'ru' ? 'BerikWeb 4K галерея (High-DPI арт-витрина, кинетическая верстка)' : 'Berik Zhunusbek Gallery (Kinetic typography & 4K media showcase)',
+        t.opengovKzCivicPortal,
+        t.trustmeContractPortalReusable,
+        t.berikZhunusbekGalleryKinetic,
       ],
     },
     {
       id: 'backend',
       category: 'backend',
       icon: Server,
-      title: lang === 'kk' ? 'Бэкенд және дерекқор' : lang === 'ru' ? 'Бэкенд, базы данных и облако' : 'Backend & Cloud Services',
-      desc: lang === 'kk' ? 'Жылдам API интерфейстері, реляциялық деректер қоры және контейнерленген сервистер.' : lang === 'ru' ? 'Быстрые микросервисы на FastAPI, реляционные базы данных и контейнеризация Docker.' : 'High-throughput APIs with FastAPI, relational database modeling & containerized deployments.',
+      title: t.backendCloudServices,
+      desc: t.highThroughputApisWith,
       skills: [
         'FastAPI (Python)',
         'PostgreSQL',
@@ -185,17 +186,17 @@ export default function AboutContent({ about }) {
       ],
       metric: 'FastAPI & SQL',
       deliverables: [
-        lang === 'kk' ? 'FastAPI асинхронды REST эндпоинттары және PostgreSQL үлгілері' : lang === 'ru' ? 'Асинхронные REST эндпоинты на FastAPI и оптимизированные схемы PostgreSQL' : 'Async REST APIs with FastAPI, Pydantic & PostgreSQL schemas',
-        lang === 'kk' ? 'Supabase нақты уақыттағы синхрондау және қауіпсіз рұқсаттар' : lang === 'ru' ? 'Supabase Real-time синхронизация и строгие политики доступа' : 'Supabase integration with Row-Level Security and JWT auth',
-        lang === 'kk' ? 'Docker контейнерлері және бұлтты сервистердегі микроқызметтер' : lang === 'ru' ? 'Docker контейнеризация и оркестрация независимых микросервисов' : 'Containerized Docker microservices and cloud deployment flows',
+        t.asyncRestApisWith,
+        t.supabaseIntegrationWithRow,
+        t.containerizedDockerMicroservicesAnd,
       ],
     },
     {
       id: 'ai',
       category: 'ai',
       icon: Bot,
-      title: lang === 'kk' ? 'ЖИ және креативті UI' : lang === 'ru' ? 'ИИ и прикладные технологии' : 'AI Systems & Applied Tech',
-      desc: lang === 'kk' ? 'OpenAI интеграциясы, адаптивті чат-боттар, бай мәтіндік редакторлар және аудио синтез.' : lang === 'ru' ? 'Интеграция языковых моделей OpenAI, чат-боты, редакторы Lexical и Web Audio синтез.' : 'OpenAI model integrations, streaming AI chat agents, rich Lexical editors & Web Audio synthesizer.',
+      title: t.aiSystemsAppliedTech,
+      desc: t.openaiModelIntegrationsStreaming,
       skills: [
         'OpenAI API',
         'Real-time AI Chatbots',
@@ -206,9 +207,9 @@ export default function AboutContent({ about }) {
       ],
       metric: 'Applied AI',
       deliverables: [
-        lang === 'kk' ? 'Оқушыларға арналған BeyimTech AI чат-боттары мен интерактивті көмекшілері' : lang === 'ru' ? 'Чат-боты BeyimTech с контекстным обучением и стримингом ответов' : 'Adaptive educational AI chatbots with streaming responses',
-        lang === 'kk' ? 'Lexical бай markdown редакторы (формулалар мен кестелер қолдауы)' : lang === 'ru' ? 'Кастомный редактор Lexical с поддержкой markdown, формул и тегов' : 'Lexical markdown WYSIWYG editor for interactive curriculum',
-        lang === 'kk' ? 'Сайттағы процедуралық Web Audio синтезаторы (сыртқы файлдарсыз)' : lang === 'ru' ? 'Процедурный аудио-синтезатор Web Audio API (звук без внешних файлов)' : 'Procedural Web Audio synthesizer engine (zero external audio files)',
+        t.adaptiveEducationalAiChatbots,
+        t.lexicalMarkdownWysiwygEditor,
+        t.proceduralWebAudioSynthesizer,
       ],
     },
   ];
@@ -220,20 +221,20 @@ export default function AboutContent({ about }) {
     {
       icon: Zap,
       num: '01',
-      title: lang === 'kk' ? 'Жылдамдық пен 60 FPS' : lang === 'ru' ? 'Плавность 60 FPS и скорость' : 'Zero-Lag & 60 FPS Fluidity',
-      desc: lang === 'kk' ? 'Пайдаланушы интерфейсі кідіріссіз жұмыс істеуі тиіс. Жеңіл бандлдар мен сезімтал анимацияларға басымдық беремін.' : lang === 'ru' ? 'Интерфейс обязан откликаться мгновенно. Приоритет легковесным бандлам, плавному скроллу и тактильной микроанимации.' : 'Interfaces must respond instantly. Prioritizing lean bundles, silky scroll ergonomics, and tactile micro-animations.',
+      title: t.zeroLag60Fps,
+      desc: t.interfacesMustRespondInstantly,
     },
     {
       icon: ShieldCheck,
       num: '02',
-      title: lang === 'kk' ? 'Толық өнім жауапкершілігі' : lang === 'ru' ? 'Сквозная разработка под ключ' : 'End-to-End Product Ownership',
-      desc: lang === 'kk' ? 'Figma макетінен бастап архитектураға, App Store тексеруіне және өндірістік қолдауға дейін толық бақылау.' : lang === 'ru' ? 'От первых экранов в Figma до архитектуры, прохождения ревью в App Store / Google Play и продакшн-мониторинга.' : 'From initial Figma specs and database schemas to store approval (App Store/Google Play) and real telemetry.',
+      title: t.endToEndProduct,
+      desc: t.fromInitialFigmaSpecs,
     },
     {
       icon: Terminal,
       num: '03',
-      title: lang === 'kk' ? 'Сенімді және таза код' : lang === 'ru' ? 'Надежная и масштабируемая база' : 'Resilient & Clean Architecture',
-      desc: lang === 'kk' ? 'Қатаң типизация, болжамды күй басқару және қателерді қауіпсіз ұстау өнімнің ұзақ өмір сүруін қамтамасыз етеді.' : lang === 'ru' ? 'Строгая типизация TypeScript, прозрачное управление стейтом и отказоустойчивая обработка сетевых ошибок.' : 'Strict TypeScript typing, modular state machines, and graceful offline fallback handling built for production scale.',
+      title: t.resilientCleanArchitecture,
+      desc: t.strictTypescriptTypingModular,
     },
   ];
 
@@ -527,7 +528,7 @@ export default function AboutContent({ about }) {
                       : 'bg-white/[0.04] text-white/60 hover:text-white border border-white/10'
                   }`}
                 >
-                  <span>{lang === 'kk' ? 'БАРЛЫҒЫ' : lang === 'ru' ? 'ВСЕ' : 'ALL'}</span>
+                  <span>{t.all}</span>
                   {selectedCategories.length === 4 && <Check className="w-3 h-3" />}
                 </button>
 
@@ -907,10 +908,10 @@ export default function AboutContent({ about }) {
                 // CORE_STANDARDS
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-tight">
-                {lang === 'kk' ? 'ИНЖЕНЕРЛІК ҰСТАНЫМДАР' : lang === 'ru' ? 'ПРИНЦИПЫ И ИНЖЕНЕРНЫЙ ПОДХОД' : 'ENGINEERING PRINCIPLES & MINDSET'}
+                {t.engineeringPrinciplesMindset}
               </h2>
               <p className="text-xs sm:text-sm text-white/50 mt-1 font-sans">
-                {lang === 'kk' ? 'Өнімдерді қалай жобалаймын және құрастырамын' : lang === 'ru' ? 'Как я подхожу к созданию надежных продуктов' : 'Core standards guiding technical execution'}
+                {t.coreStandardsGuidingTechnical}
               </p>
             </motion.div>
 

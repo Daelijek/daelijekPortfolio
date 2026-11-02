@@ -123,7 +123,8 @@ function TelemetryWaveCanvas() {
 import { useI18n } from '@/i18n/I18nProvider';
 
 export default function TelemetryHUDPod() {
-  const { locale: lang, common: content } = useI18n();
+  const { common: content } = useI18n();
+  const t = content.system.telemetryUi;
 
   return (
     <div className="w-full max-w-[340px] xl:max-w-[360px] 2xl:max-w-sm space-y-5 2xl:space-y-6 font-mono select-none pointer-events-auto">
@@ -149,7 +150,7 @@ export default function TelemetryHUDPod() {
             15<span className="text-[var(--accent-color)]">+</span>
           </div>
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
-            {lang === 'kk' ? 'ЖОБАЛАР' : (lang === 'ru' ? 'ПРОЕКТОВ' : 'PROJECTS')}
+            {t.projects}
           </p>
           <p className="text-[10px] text-white/55 leading-tight">
             Mobile & Web
@@ -162,7 +163,7 @@ export default function TelemetryHUDPod() {
             3<span className="text-[var(--accent-color)]">+</span>
           </div>
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
-            {lang === 'kk' ? 'ЖЫЛ ТӘЖІРИБЕ' : (lang === 'ru' ? 'ГОДА ОПЫТА' : 'YEARS EXP')}
+            {t.yearsExp}
           </p>
           <p className="text-[10px] text-white/55 leading-tight">
             Production Dev
@@ -175,7 +176,7 @@ export default function TelemetryHUDPod() {
             1.5M<span className="text-[var(--accent-color)]">+</span>
           </div>
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
-            {lang === 'kk' ? 'ҚОЛДАНУШЫ' : (lang === 'ru' ? 'ПОЛЬЗОВАТЕЛЕЙ' : 'USERS')}
+            {t.users}
           </p>
           <p className="text-[10px] text-white/55 leading-tight">
             TrustMe platform

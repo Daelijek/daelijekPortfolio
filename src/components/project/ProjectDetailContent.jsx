@@ -7,7 +7,7 @@ import { motion as Motion, AnimatePresence, useScroll, useTransform, useReducedM
 import { startAnimationLoop } from '@/lib/animationLoop';
 import { useDialogFocus } from '@/hooks/useDialogFocus';
 import { useThemeAudio } from '@/context/ThemeAudioContext';
-import { useI18n, useLocalizedPath } from '@/i18n/I18nProvider';
+import { useLocalizedPath } from '@/i18n/I18nProvider';
 import {
   ExternalLink,
   ArrowLeft,
@@ -59,7 +59,7 @@ const PROJECT_CALLOUTS = {
  */
 function InfiniteGalleryRibbon({
   items,
-  lang,
+  t,
   playClick,
   playHover,
   onOpenModal,
@@ -223,7 +223,7 @@ function InfiniteGalleryRibbon({
               <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100 pointer-events-none select-none">
                 <span className="px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg select-none">
                   <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
-                  <span>{lang === 'ru' ? 'Открыть' : lang === 'kk' ? 'Ашу' : 'Preview'}</span>
+                  <span>{t.preview}</span>
                 </span>
               </div>
             </div>
@@ -291,13 +291,13 @@ function InfiniteGalleryRibbon({
             />
             {isFullPage && (
               <div className="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/80 font-bold uppercase pointer-events-none">
-                {lang === 'ru' ? 'Полный скролл' : lang === 'kk' ? 'Толық скролл' : 'Full Page'}
+                {t.fullPage}
               </div>
             )}
             <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover/card:opacity-100 pointer-events-none select-none">
               <span className="px-3.5 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-lg select-none">
                 <Maximize2 className="w-3.5 h-3.5 text-[var(--accent-color)]" />
-                <span>{lang === 'ru' ? 'Открыть' : lang === 'kk' ? 'Ашу' : 'Preview'}</span>
+                <span>{t.preview}</span>
               </span>
             </div>
           </div>
@@ -332,23 +332,11 @@ function InfiniteGalleryRibbon({
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-white font-display uppercase tracking-tight">
             {isMobileGallery
-              ? (lang === 'ru'
-                  ? 'Лента интерфейса приложения'
-                  : lang === 'kk'
-                  ? 'Қосымшаның интерфейс лентасы'
-                  : 'Interactive Mobile Ribbon')
-              : (lang === 'ru'
-                  ? 'Интерфейсы и модули платформы'
-                  : lang === 'kk'
-                  ? 'Платформаның модульдері мен интерфейстері'
-                  : 'Platform Interfaces & Modules')}
+              ? t.interactiveMobileRibbon
+              : t.platformInterfacesModules}
           </h2>
           <p className="text-xs sm:text-sm text-white/60 font-sans max-w-xl">
-            {lang === 'ru'
-              ? 'Бесконечная интерактивная лента: наведите для плавной остановки или нажмите для детального просмотра.'
-              : lang === 'kk'
-              ? 'Шексіз интерактивті лента: бірқалыпты тоқтату үшін меңзерді апарыңыз немесе толық көру үшін басыңыз.'
-              : 'Infinite interactive tape: hover to smoothly pause or click any card to inspect UI details.'}
+            {t.infiniteInteractiveTapeHover}
           </p>
         </div>
 
@@ -430,9 +418,9 @@ function InfiniteGalleryRibbon({
  * @param project      the case study being shown (resolved on the server)
  * @param nextProject  summary of the following case study for the footer teaser
  */
-export default function ProjectDetailContent({ project, nextProject }) {
+export default function ProjectDetailContent({ project, nextProject, ui }) {
+  const t = ui;
   const { playHover, playClick } = useThemeAudio();
-  const { locale: lang } = useI18n();
   const { href } = useLocalizedPath();
 
   // Determine whether current project gallery uses mobile phone mockup or desktop window mockup
@@ -511,17 +499,17 @@ export default function ProjectDetailContent({ project, nextProject }) {
   const titleY = useTransform(scrollY, [0, 110], [58, 0]);
   const titleX = useTransform(scrollY, [0, 110], [-backWidth, 0]);
 
-  const backText = lang === 'ru' ? 'Все проекты' : lang === 'kk' ? 'Барлық жобалар' : 'All Projects';
-  const mobileBackText = lang === 'ru' ? 'ПРОЕКТЫ' : lang === 'kk' ? 'ЖОБАЛАР' : 'PROJECTS';
-  const roleLabel = lang === 'ru' ? 'Роль' : lang === 'kk' ? 'Рөлі' : 'Role';
-  const platformLabel = lang === 'ru' ? 'Платформа' : lang === 'kk' ? 'Платформа' : 'Platform';
-  const yearLabel = lang === 'ru' ? 'Год' : lang === 'kk' ? 'Жыл' : 'Year';
-  const challengeTitle = lang === 'ru' ? 'Проблема и контекст' : lang === 'kk' ? 'Мәселе және контекст' : 'The Challenge';
-  const solutionTitle = lang === 'ru' ? 'Инженерное решение' : lang === 'kk' ? 'Инженерлік шешім' : 'The Solution';
-  const audienceLabel = lang === 'ru' ? 'Целевая аудитория' : lang === 'kk' ? 'Мақсатты аудитория' : 'Target Audience';
-  const archTitle = lang === 'ru' ? 'Архитектура и технологический стек' : lang === 'kk' ? 'Сәулет және технологиялық стек' : 'Architecture & Tech Stack';
-  const featuresTitle = lang === 'ru' ? 'Ключевые возможности' : lang === 'kk' ? 'Негізгі мүмкіндіктер' : 'Core Capabilities';
-  const nextCaseText = lang === 'ru' ? 'Следующий кейс' : lang === 'kk' ? 'Келесі жоба' : 'Next Case Study';
+  const backText = t.allProjects;
+  const mobileBackText = t.projects;
+  const roleLabel = t.role;
+  const platformLabel = t.platform;
+  const yearLabel = t.year;
+  const challengeTitle = t.theChallenge;
+  const solutionTitle = t.theSolution;
+  const audienceLabel = t.targetAudience;
+  const archTitle = t.architectureTechStack;
+  const featuresTitle = t.coreCapabilities;
+  const nextCaseText = t.nextCaseStudy;
 
   return (
     <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0 overflow-x-clip">
@@ -597,7 +585,7 @@ export default function ProjectDetailContent({ project, nextProject }) {
                   onMouseEnter={playHover}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase hover:shadow-[0_0_20px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95 shadow-md"
                 >
-                  <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
+                  <span>{t.live}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               )}
@@ -611,7 +599,7 @@ export default function ProjectDetailContent({ project, nextProject }) {
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-white/80 hover:text-white text-xs font-bold transition-all backdrop-blur-sm"
                 >
                   <FaGithub className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">{lang === 'ru' ? 'Код' : 'Code'}</span>
+                  <span className="hidden sm:inline">{t.code}</span>
                 </a>
               )}
             </div>
@@ -640,7 +628,7 @@ export default function ProjectDetailContent({ project, nextProject }) {
                   onMouseEnter={playHover}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--accent-color)] text-[#040608] font-bold text-xs tracking-wider uppercase shadow-md active:scale-95 transition-transform"
                 >
-                  <span>{lang === 'ru' ? 'Демо' : 'Live'}</span>
+                  <span>{t.live}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               )}
@@ -654,7 +642,7 @@ export default function ProjectDetailContent({ project, nextProject }) {
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] border border-white/15 text-white text-xs font-bold active:scale-95 transition-all"
                 >
                   <FaGithub className="w-3.5 h-3.5" />
-                  <span>{lang === 'ru' ? 'Код' : 'Code'}</span>
+                  <span>{t.code}</span>
                 </a>
               )}
             </div>
@@ -797,7 +785,7 @@ export default function ProjectDetailContent({ project, nextProject }) {
           >
             <InfiniteGalleryRibbon
               items={project.gallery}
-              lang={lang}
+              t={t}
               playClick={playClick}
               playHover={playHover}
               onOpenModal={setActiveModalScreen}
@@ -929,7 +917,7 @@ export default function ProjectDetailContent({ project, nextProject }) {
             <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] space-y-6">
               <div className="space-y-2">
                 <h3 className="text-sm font-mono font-bold text-[var(--accent-color)] uppercase tracking-wider">
-                  {lang === 'ru' ? 'Технологический стек' : 'Technologies & Libraries'}
+                  {t.technologiesLibraries}
                 </h3>
                 <p className="text-xs sm:text-sm text-white/60 font-sans leading-relaxed">
                   {project.walkthrough?.architecture?.desc ||
@@ -972,20 +960,12 @@ export default function ProjectDetailContent({ project, nextProject }) {
             <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <span className="text-xs font-mono font-bold text-white/50 uppercase tracking-wider block">
-                  {lang === 'ru' ? 'Цветовая палитра интерфейса' : lang === 'kk' ? 'Интерфейс түс палитрасы' : 'Interface Palette'}
+                  {t.interfacePalette}
                 </span>
                 <p className="text-xs text-white/60 font-sans leading-relaxed">
                   {project.slug === 'finance-management-app'
-                    ? (lang === 'ru'
-                        ? 'Фирменные токены интерфейса: бренд-синий (#2563EB), небесный акцент (#3B82F6), доходный изумруд (#10B981) и расходный красный (#EF4444).'
-                        : lang === 'kk'
-                        ? 'Интерфейстің фирмалық токендері: бренд-көк (#2563EB), аспан акценті (#3B82F6), кіріс изумруды (#10B981) және шығыс қызылы (#EF4444).'
-                        : 'Production UI color tokens: primary blue (#2563EB), sky accent (#3B82F6), income emerald (#10B981), and expense crimson (#EF4444).')
-                    : (lang === 'ru'
-                        ? `${project.title}: официальные цветовые токены дизайн-системы интерфейса.`
-                        : lang === 'kk'
-                        ? `${project.title}: интерфейстің ресми дизайн токендері мен түс гаммасы.`
-                        : `${project.title}: official design tokens utilized across the interface.`)}
+                    ? t.productionUiColorTokens
+                    : `${project.title}: ${t.officialDesignTokens}`}
                 </p>
               </div>
 

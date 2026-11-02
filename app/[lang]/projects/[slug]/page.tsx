@@ -55,5 +55,5 @@ export default async function CaseStudyPage({ params }: CaseStudyParams) {
     image: next.image,
   };
 
-  return <ProjectDetailContent project={project} nextProject={nextProject} />;
+  return <ProjectDetailContent project={project} nextProject={nextProject} ui={projects.detailUi} />;
 }

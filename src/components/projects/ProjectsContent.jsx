@@ -5,16 +5,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion as Motion } from 'framer-motion';
 import { useThemeAudio } from '@/context/ThemeAudioContext';
-import { useI18n, useLocalizedPath } from '@/i18n/I18nProvider';
+import { useLocalizedPath } from '@/i18n/I18nProvider';
 import { ExternalLink, ArrowRight, FolderGit2 } from 'lucide-react';
 
 export default function ProjectsContent({ projects }) {
   const { playHover, playClick } = useThemeAudio();
-  const { locale: lang } = useI18n();
   const { href } = useLocalizedPath();
+  const t = projects.ui;
 
-  const viewCaseText = lang === 'ru' ? 'Смотреть кейс' : lang === 'kk' ? 'Кейсті ашу' : 'Explore Case Study';
-  const archiveTitle = lang === 'ru' ? 'Архив проектов и утилиты' : lang === 'kk' ? 'Жобалар архиві және утилиталар' : 'System Archive & Tools';
+  const viewCaseText = t.exploreCaseStudy;
+  const archiveTitle = t.systemArchiveTools;
 
   return (
     <div className="min-h-screen pt-28 sm:pt-32 lg:pt-36 pb-36 px-5 sm:px-10 lg:px-16 xl:px-24 max-w-[1680px] mx-auto font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] overflow-x-clip">
