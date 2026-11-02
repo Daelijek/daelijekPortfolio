@@ -1,6 +1,31 @@
 // English dictionary — the reference shape for every locale (see ../types.ts).
 
 const en = {
+  meta: {
+    siteTitle: "Dias Yermek | Middle Frontend & Mobile Developer",
+    home: {
+      title: "Dias Yermek | Middle Frontend & Mobile Developer // HUD Portfolio",
+      description: "Portfolio of Dias Yermek, a software engineer from Astana specializing in Next.js, Flutter, React Native, and AI integrations.",
+    },
+    about: {
+      title: "About Dias Yermek | Middle Frontend & Mobile Developer",
+      description: "Software Engineering background, technical competency matrix (Next.js, Flutter, React Native, AI, FastAPI) and production track record at BeyimTech, TrustMe and OpenGov.",
+    },
+    projects: {
+      title: "Projects by Dias Yermek | Production Mobile & Web Builds",
+      description: "Featured engineering projects: RoleSieve (Next.js 16 & FastAPI), Finance AI Manager (React Native & FastAPI), OpenGov.kz (React 19, Vite & i18n) and the Berik Zhunusbek art gallery.",
+    },
+    contact: {
+      title: "Contact Dias Yermek | Telegram, Email & LinkedIn",
+      description: "Reach Dias Yermek via Telegram, email, GitHub or LinkedIn. Available for full-time engineering roles and contract work.",
+    },
+    caseStudy: "Case Study",
+    notFound: {
+      title: "Page not found",
+      text: "This page does not exist or has moved.",
+      back: "Back to home",
+    },
+  },
   system: {
     brandTitle: "DIAS YERMEK",
     brandSub: "SYSTEM PORTFOLIO // 2026",

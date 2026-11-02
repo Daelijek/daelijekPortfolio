@@ -12,8 +12,6 @@ const ThemeAudioContext = createContext({
   setSoundEnabled: () => {},
   audioProfile: 'default',
   setAudioProfile: () => {},
-  lang: 'en',
-  setLang: () => {},
   perfTier: 'high',
   setPerfTier: () => {},
   playHover: () => {},
@@ -56,18 +54,16 @@ export function ThemeAudioProvider({ children }) {
   const [theme, setThemeState] = useState('acid');
   const [soundEnabled, setSoundEnabledState] = useState(true);
   const [audioProfile, setAudioProfileState] = useState('default');
-  const [lang, setLangState] = useState('en');
   const [perfTier, setPerfTierState] = useState('high');
 
   // Restore saved preferences. localStorage only exists in the browser, so this runs
-  // after hydration (language moves to the URL in phase 5).
+  // after hydration. (Language is not stored here: it is part of the URL, see src/i18n.)
   /* eslint-disable react-hooks/set-state-in-effect -- one-time sync from client-only storage */
   useEffect(() => {
     try {
       const savedTheme = localStorage.getItem('daelijek_theme');
       const savedSound = localStorage.getItem('daelijek_sound');
       const savedProfile = localStorage.getItem('daelijek_audio_profile');
-      const savedLang = localStorage.getItem('daelijek_lang');
       const savedPerf = localStorage.getItem('daelijek_perf');
 
       const initialTheme = savedTheme || 'acid';
@@ -83,11 +79,6 @@ export function ThemeAudioProvider({ children }) {
       if (savedProfile) {
         setAudioProfileState(savedProfile);
         soundFx.setProfile(savedProfile);
-      }
-
-      if (savedLang) {
-        const normalized = savedLang === 'kz' ? 'kk' : (['en', 'ru', 'kk'].includes(savedLang) ? savedLang : 'en');
-        setLangState(normalized);
       }
 
       setPerfTierState(['high', 'med', 'saver'].includes(savedPerf) ? savedPerf : detectPerfTier());
@@ -120,13 +111,6 @@ export function ThemeAudioProvider({ children }) {
     soundFx.playProfileDemo(profile);
   }, []);
 
-  const setLang = useCallback((newLang) => {
-    setLangState(newLang);
-    track('Language Changed', { lang: newLang });
-    saveSetting('daelijek_lang', newLang);
-    soundFx.playSwitch();
-  }, []);
-
   const setPerfTier = useCallback((tier) => {
     setPerfTierState(tier);
     saveSetting('daelijek_perf', tier);
@@ -142,8 +126,6 @@ export function ThemeAudioProvider({ children }) {
       setSoundEnabled,
       audioProfile,
       setAudioProfile,
-      lang,
-      setLang,
       perfTier,
       setPerfTier,
       playHover,
@@ -151,7 +133,7 @@ export function ThemeAudioProvider({ children }) {
       playSwitch,
       playDownload,
     }),
-    [theme, soundEnabled, audioProfile, lang, perfTier, setTheme, setSoundEnabled, setAudioProfile, setLang, setPerfTier]
+    [theme, soundEnabled, audioProfile, perfTier, setTheme, setSoundEnabled, setAudioProfile, setPerfTier]
   );
 
   return (

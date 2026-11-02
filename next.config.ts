@@ -1,5 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next';
+
+// Legacy case-study aliases -> canonical slugs (they used to render duplicate pages).
+const ALIASES: Record<string, string> = {
+  'finance-ai-manager': 'finance-management-app',
+  'role-sieve': 'rolesieve',
+};
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   devIndicators: false,
   images: {
@@ -9,11 +16,10 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   async redirects() {
-    // Legacy case-study aliases -> canonical slugs (previously rendered duplicate pages).
-    return [
-      { source: '/projects/finance-ai-manager', destination: '/projects/finance-management-app', permanent: true },
-      { source: '/projects/role-sieve', destination: '/projects/rolesieve', permanent: true },
-    ];
+    return Object.entries(ALIASES).flatMap(([alias, slug]) => [
+      { source: `/projects/${alias}`, destination: `/projects/${slug}`, permanent: true },
+      { source: `/:lang(ru|kk)/projects/${alias}`, destination: `/:lang/projects/${slug}`, permanent: true },
+    ]);
   },
   async headers() {
     // /api/cv sets its own download headers; this covers direct links to the static file.

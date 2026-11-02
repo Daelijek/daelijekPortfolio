@@ -3,12 +3,11 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
 import { motion as Motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { startAnimationLoop } from '../../../src/lib/animationLoop';
-import { useDialogFocus } from '../../../src/hooks/useDialogFocus';
-import { useThemeAudio } from '../../../src/context/ThemeAudioContext';
-import { portfolioContent } from '../../../src/data/portfolioData';
+import { startAnimationLoop } from '@/lib/animationLoop';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
+import { useThemeAudio } from '@/context/ThemeAudioContext';
+import { useI18n, useLocalizedPath } from '@/i18n/I18nProvider';
 import {
   ExternalLink,
   ArrowLeft,
@@ -427,33 +426,14 @@ function InfiniteGalleryRibbon({
   );
 }
 
-export default function ProjectDetailContent({ slug: propSlug }) {
-  const params = useParams();
-  const slug = propSlug || params?.slug;
-  const { lang, playHover, playClick } = useThemeAudio();
-  const content = portfolioContent[lang] || portfolioContent.en;
-  const projectsData = content.projects;
-
-  // Find project by slug
-  const project = useMemo(() => {
-    const featuredMatch = projectsData.featured.find(
-      (p) => p.slug === slug || p.id.toLowerCase() === slug
-    );
-    if (featuredMatch) return featuredMatch;
-
-    // Archive repositories have no case study: their cards link straight to GitHub.
-    return projectsData.featured[0];
-  }, [slug, projectsData]);
-
-  // Determine Next Project for footer
-  const nextProject = useMemo(() => {
-    const all = projectsData.featured;
-    const currentIndex = all.findIndex((p) => p.slug === project.slug);
-    if (currentIndex === -1 || currentIndex === all.length - 1) {
-      return all[0];
-    }
-    return all[currentIndex + 1];
-  }, [project, projectsData]);
+/**
+ * @param project      the case study being shown (resolved on the server)
+ * @param nextProject  summary of the following case study for the footer teaser
+ */
+export default function ProjectDetailContent({ project, nextProject }) {
+  const { playHover, playClick } = useThemeAudio();
+  const { locale: lang } = useI18n();
+  const { href } = useLocalizedPath();
 
   // Determine whether current project gallery uses mobile phone mockup or desktop window mockup
   const isMobileProject = useMemo(() => {
@@ -550,7 +530,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
       {/* ========================================================================= */}
       <div className="md:hidden fixed top-8 right-6 z-40 select-none">
         <Link
-          href="/projects"
+          href={href('/projects')}
           onClick={playClick}
           onMouseEnter={playHover}
           className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#080d14]/85 hover:bg-[#101722] border border-white/20 text-white backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.6)] active:scale-95 transition-all group"
@@ -576,7 +556,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
             <div className="flex items-center gap-3 sm:gap-4 min-w-0">
               <Link
                 ref={backBtnRef}
-                href="/projects"
+                href={href('/projects')}
                 onClick={playClick}
                 onMouseEnter={playHover}
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 text-white/80 hover:text-white transition-all group shrink-0 backdrop-blur-sm"
@@ -1105,7 +1085,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
         className="w-full mt-10 mb-0"
       >
         <Link
-          href={`/projects/${nextProject.slug || nextProject.id.toLowerCase()}`}
+          href={href(`/projects/${nextProject.slug}`)}
           onClick={playClick}
           onMouseEnter={handleNextMouseEnter}
           onMouseLeave={() => setIsNextHovered(false)}

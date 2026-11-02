@@ -120,11 +120,10 @@ function TelemetryWaveCanvas() {
   );
 }
 
-import { portfolioContent } from '../../data/portfolioData';
+import { useI18n } from '@/i18n/I18nProvider';
 
 export default function TelemetryHUDPod() {
-  const { lang } = useThemeAudio();
-  const content = portfolioContent[lang] || portfolioContent.en;
+  const { locale: lang, common: content } = useI18n();
 
   return (
     <div className="w-full max-w-[340px] xl:max-w-[360px] 2xl:max-w-sm space-y-5 2xl:space-y-6 font-mono select-none pointer-events-auto">

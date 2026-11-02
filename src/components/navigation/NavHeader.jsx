@@ -2,10 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useThemeAudio } from '../../context/ThemeAudioContext';
-import { portfolioContent } from '../../data/portfolioData';
+import { useThemeAudio } from '@/context/ThemeAudioContext';
+import { useI18n, useLocalizedPath, useSwitchLocale } from '@/i18n/I18nProvider';
 import { Settings, X, ExternalLink, Globe, Volume2, VolumeX, Check, FileDown } from 'lucide-react';
 import { FaLinkedin, FaGithub, FaTelegram } from 'react-icons/fa6';
 
@@ -18,7 +17,10 @@ const themeOptions = [
 ];
 
 export default function NavHeader() {
-  const pathname = usePathname();
+  // `pathname` is the locale-free path ('/about' for /about, /ru/about and /kk/about).
+  const { path: pathname, href } = useLocalizedPath();
+  const { locale: lang, common: content } = useI18n();
+  const switchLocale = useSwitchLocale();
   const {
     theme,
     setTheme,
@@ -26,8 +28,6 @@ export default function NavHeader() {
     setSoundEnabled,
     audioProfile,
     setAudioProfile,
-    lang,
-    setLang,
     perfTier,
     setPerfTier,
     playHover,
@@ -112,8 +112,6 @@ export default function NavHeader() {
     };
   }, []);
 
-  const content = portfolioContent[lang] || portfolioContent.en;
-
   const navLinks = [
     { href: '/', index: '1', label: content.nav.home },
     { href: '/about', index: '2', label: content.nav.about },
@@ -149,7 +147,7 @@ export default function NavHeader() {
           className="fixed top-8 left-8 sm:left-12 z-40 font-mono select-none transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-100 translate-y-0"
         >
           <Link
-            href="/"
+            href={href('/')}
             onMouseEnter={playHover}
             onClick={playClick}
             className="group block"
@@ -178,7 +176,7 @@ export default function NavHeader() {
         <div className="hidden sm:block fixed top-8 right-8 sm:right-12 z-40 select-none text-right">
           {/* Breadcrumb */}
           <nav className="flex items-center justify-end gap-1.5 text-[10px] sm:text-xs font-mono tracking-widest text-[var(--text-secondary)] uppercase mb-0.5" aria-label="Breadcrumb">
-            <Link href="/" onClick={playClick} onMouseEnter={playHover} className="hover:text-[var(--heading-tint)] transition-colors">
+            <Link href={href('/')} onClick={playClick} onMouseEnter={playHover} className="hover:text-[var(--heading-tint)] transition-colors">
               HOME
             </Link>
             <span className="text-white/30">/</span>
@@ -367,7 +365,7 @@ export default function NavHeader() {
                       {otherRoutes.map((item) => (
                         <Link
                           key={item.href}
-                          href={item.href}
+                          href={href(item.href)}
                           onClick={() => {
                             playClick();
                             setIsMenuOpen(false);
@@ -693,7 +691,10 @@ export default function NavHeader() {
               <div className="pt-2.5 border-t border-white/10 flex items-center justify-between gap-2.5 font-mono">
                 <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10">
                   <button
-                    onClick={() => setLang('en')}
+                    onClick={() => {
+                      playClick();
+                      switchLocale('en');
+                    }}
                     onMouseEnter={playHover}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${lang === 'en'
                         ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'
@@ -703,7 +704,10 @@ export default function NavHeader() {
                     EN
                   </button>
                   <button
-                    onClick={() => setLang('ru')}
+                    onClick={() => {
+                      playClick();
+                      switchLocale('ru');
+                    }}
                     onMouseEnter={playHover}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${lang === 'ru'
                         ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'
@@ -713,7 +717,10 @@ export default function NavHeader() {
                     RU
                   </button>
                   <button
-                    onClick={() => setLang('kk')}
+                    onClick={() => {
+                      playClick();
+                      switchLocale('kk');
+                    }}
                     onMouseEnter={playHover}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${lang === 'kk'
                         ? 'bg-[var(--accent-color)] text-[#06080A] shadow-sm font-black'

@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useThemeAudio } from '../../src/context/ThemeAudioContext';
-import { portfolioContent } from '../../src/data/portfolioData';
-import { soundFx } from '../../src/audio/soundEffects';
+import { useThemeAudio } from '@/context/ThemeAudioContext';
+import { useI18n } from '@/i18n/I18nProvider';
+import { soundFx } from '@/audio/soundEffects';
 import { ArrowUpRight, Copy, Check, Phone } from 'lucide-react';
 import { FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
@@ -34,8 +34,8 @@ async function copyText(text) {
 }
 
 export default function ContactContent() {
-  const { lang, playHover, playClick } = useThemeAudio();
-  const content = portfolioContent[lang] || portfolioContent.en;
+  const { playHover, playClick } = useThemeAudio();
+  const { locale: lang, common: content } = useI18n();
   const contact = content.contact;
 
   const [copied, setCopied] = useState(false);

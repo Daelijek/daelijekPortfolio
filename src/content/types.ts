@@ -9,5 +9,5 @@ export type Dictionary = typeof en;
 export type FeaturedProject = Dictionary['projects']['featured'][number];
 export type ArchiveProject = Dictionary['projects']['otherProjects'][number];
 
-/** Strings shared by the layout chrome (navigation, home HUD, terminal). */
-export type CommonDictionary = Pick<Dictionary, 'system' | 'nav'>;
+/** Strings shared by the layout chrome (navigation, home HUD, terminal, contact details, 404). */
+export type CommonDictionary = Pick<Dictionary, 'system' | 'nav' | 'contact' | 'meta'>;

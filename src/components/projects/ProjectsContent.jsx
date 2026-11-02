@@ -4,14 +4,14 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion as Motion } from 'framer-motion';
-import { useThemeAudio } from '../../src/context/ThemeAudioContext';
-import { portfolioContent } from '../../src/data/portfolioData';
+import { useThemeAudio } from '@/context/ThemeAudioContext';
+import { useI18n, useLocalizedPath } from '@/i18n/I18nProvider';
 import { ExternalLink, ArrowRight, FolderGit2 } from 'lucide-react';
 
-export default function ProjectsContent() {
-  const { lang, playHover, playClick } = useThemeAudio();
-  const content = portfolioContent[lang] || portfolioContent.en;
-  const projects = content.projects;
+export default function ProjectsContent({ projects }) {
+  const { playHover, playClick } = useThemeAudio();
+  const { locale: lang } = useI18n();
+  const { href } = useLocalizedPath();
 
   const viewCaseText = lang === 'ru' ? 'Смотреть кейс' : lang === 'kk' ? 'Кейсті ашу' : 'Explore Case Study';
   const archiveTitle = lang === 'ru' ? 'Архив проектов и утилиты' : lang === 'kk' ? 'Жобалар архиві және утилиталар' : 'System Archive & Tools';
@@ -51,7 +51,7 @@ export default function ProjectsContent() {
           <div>
             {/* Mobile inline breadcrumbs */}
             <div className="sm:hidden text-[10px] font-mono text-white/55 tracking-widest uppercase mb-1 flex items-center gap-1.5">
-              <Link href="/" onClick={playClick} className="hover:text-white transition-colors">HOME</Link>
+              <Link href={href('/')} onClick={playClick} className="hover:text-white transition-colors">HOME</Link>
               <span>/</span>
               <span className="text-[var(--accent-color)] font-bold">PROJECTS</span>
             </div>
@@ -85,7 +85,7 @@ export default function ProjectsContent() {
               transition={{ duration: 0.55, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
-                href={`/projects/${slug}`}
+                href={href(`/projects/${slug}`)}
                 onClick={playClick}
                 onMouseEnter={playHover}
                 className="group block py-10 sm:py-14 lg:py-16 hover:bg-white/[0.015] -mx-4 sm:-mx-8 px-4 sm:px-8 rounded-2xl transition-all duration-300 relative"

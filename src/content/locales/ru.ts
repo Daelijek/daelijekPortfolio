@@ -2,6 +2,31 @@ import type { Dictionary } from '../types';
 
 // Russian dictionary. Typed against the English one, so a missing or extra key fails type-checking.
 const ru: Dictionary = {
+  meta: {
+    siteTitle: "Диас Ермек | Middle Frontend & Mobile разработчик",
+    home: {
+      title: "Диас Ермек | Middle Frontend & Mobile разработчик // HUD-портфолио",
+      description: "Портфолио Диаса Ермека — инженера-разработчика из Астаны: Next.js, Flutter, React Native и интеграции ИИ.",
+    },
+    about: {
+      title: "О Диасе Ермеке | Middle Frontend & Mobile разработчик",
+      description: "Образование в Software Engineering, матрица компетенций (Next.js, Flutter, React Native, AI, FastAPI) и опыт в BeyimTech, TrustMe и OpenGov.",
+    },
+    projects: {
+      title: "Проекты Диаса Ермека | Мобильные и веб-продукты",
+      description: "Ключевые проекты: RoleSieve (Next.js 16 и FastAPI), Finance AI Manager (React Native и FastAPI), OpenGov.kz (React 19, Vite и i18n) и галерея Берика Жунусбека.",
+    },
+    contact: {
+      title: "Связаться с Диасом Ермеком | Telegram, email и LinkedIn",
+      description: "Напишите Диасу Ермеку в Telegram, на email, в GitHub или LinkedIn. Открыт к full-time и контрактной работе.",
+    },
+    caseStudy: "Кейс",
+    notFound: {
+      title: "Страница не найдена",
+      text: "Такой страницы нет или она переехала.",
+      back: "На главную",
+    },
+  },
   system: {
     brandTitle: "ДИАС ЕРМЕК",
     brandSub: "СИСТЕМНОЕ ПОРТФОЛИО // 2026",

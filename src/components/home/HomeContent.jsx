@@ -3,15 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { startAnimationLoop } from '../src/lib/animationLoop';
-import { useDialogFocus } from '../src/hooks/useDialogFocus';
-import { useThemeAudio } from '../src/context/ThemeAudioContext';
-import { portfolioContent } from '../src/data/portfolioData';
-import { soundFx } from '../src/audio/soundEffects';
-import TelemetryHUDPod from '../src/components/home/TelemetryHUDPod';
-import QuantumMatrixBackground from '../src/components/home/QuantumMatrixBackground';
-import RightConstellationBackground from '../src/components/home/RightConstellationBackground';
-import TrueLaserScanner from '../src/components/home/TrueLaserScanner';
+import { startAnimationLoop } from '@/lib/animationLoop';
+import { useDialogFocus } from '@/hooks/useDialogFocus';
+import { useThemeAudio } from '@/context/ThemeAudioContext';
+import { useI18n, useLocalizedPath } from '@/i18n/I18nProvider';
+import { soundFx } from '@/audio/soundEffects';
+import TelemetryHUDPod from '@/components/home/TelemetryHUDPod';
+import QuantumMatrixBackground from '@/components/home/QuantumMatrixBackground';
+import RightConstellationBackground from '@/components/home/RightConstellationBackground';
+import TrueLaserScanner from '@/components/home/TrueLaserScanner';
 import { Volume2, VolumeX, ArrowRight } from 'lucide-react';
 
 // Full-height Cyber Terminal Matrix Rain Canvas
@@ -130,8 +130,9 @@ function CyberMatrixRain() {
 }
 
 export default function HomePage() {
-  const { soundEnabled, setSoundEnabled, perfTier, setPerfTier, lang, playHover, playClick } = useThemeAudio();
-  const content = portfolioContent[lang] || portfolioContent.en;
+  const { soundEnabled, setSoundEnabled, perfTier, setPerfTier, playHover, playClick } = useThemeAudio();
+  const { common: content } = useI18n();
+  const { href } = useLocalizedPath();
   const marqueeItems = content.system.marquee;
   const [isBooted, setIsBooted] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -496,7 +497,7 @@ export default function HomePage() {
             {/* Top-Left Brand Stamp */}
             <div className="pointer-events-auto font-mono select-none">
               <Link
-                href="/"
+                href={href('/')}
                 onClick={playClick}
                 onMouseEnter={playHover}
                 className="group inline-flex items-center gap-2.5 xs:gap-3.5 text-left"

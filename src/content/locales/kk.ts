@@ -2,6 +2,31 @@ import type { Dictionary } from '../types';
 
 // Kazakh dictionary. Typed against the English one, so a missing or extra key fails type-checking.
 const kk: Dictionary = {
+  meta: {
+    siteTitle: "Диас Ермек | Middle Frontend & Mobile әзірлеуші",
+    home: {
+      title: "Диас Ермек | Middle Frontend & Mobile әзірлеуші // HUD-портфолио",
+      description: "Астанадағы бағдарламалық инженер Диас Ермектің портфолиосы: Next.js, Flutter, React Native және жасанды интеллект интеграциялары.",
+    },
+    about: {
+      title: "Диас Ермек туралы | Middle Frontend & Mobile әзірлеуші",
+      description: "Software Engineering білімі, құзыреттер матрицасы (Next.js, Flutter, React Native, AI, FastAPI) және BeyimTech, TrustMe, OpenGov-тағы тәжірибе.",
+    },
+    projects: {
+      title: "Диас Ермектің жобалары | Мобильді және веб-өнімдер",
+      description: "Негізгі жобалар: RoleSieve (Next.js 16 және FastAPI), Finance AI Manager (React Native және FastAPI), OpenGov.kz (React 19, Vite және i18n) және Берік Жүнісбек галереясы.",
+    },
+    contact: {
+      title: "Диас Ермекпен байланыс | Telegram, email және LinkedIn",
+      description: "Диас Ермекке Telegram, email, GitHub немесе LinkedIn арқылы жазыңыз. Толық жұмыс күні мен келісімшарттық жұмысқа ашық.",
+    },
+    caseStudy: "Кейс",
+    notFound: {
+      title: "Бет табылмады",
+      text: "Мұндай бет жоқ немесе басқа мекенжайға көшірілген.",
+      back: "Басты бетке",
+    },
+  },
   system: {
     brandTitle: "ДИАС ЕРМЕК",
     brandSub: "ЖҮЙЕЛІК ПОРТФОЛИО // 2026",

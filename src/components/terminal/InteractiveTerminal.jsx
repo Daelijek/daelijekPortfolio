@@ -8,6 +8,7 @@ import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { soundFx } from '../../audio/soundEffects';
 import { track } from '../../lib/analytics';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
+import { useLocalizedPath, useSwitchLocale } from '@/i18n/I18nProvider';
 
 const AVAILABLE_COMMANDS = [
   'help',
@@ -95,7 +96,9 @@ function FormattedTerminalText({ text, className }) {
 
 export default function InteractiveTerminal() {
   const router = useRouter();
-  const { setTheme, soundEnabled, setSoundEnabled, setLang } = useThemeAudio();
+  const { setTheme, soundEnabled, setSoundEnabled } = useThemeAudio();
+  const { href } = useLocalizedPath();
+  const switchLocale = useSwitchLocale();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
@@ -321,13 +324,13 @@ export default function InteractiveTerminal() {
       const target = args[1];
       if (target === 'fintrack' || target === 'finance') {
         newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Routing to FinTrack Case Study...' });
-        setTimeout(() => router.push('/projects/finance-management-app'), 350);
+        setTimeout(() => router.push(href('/projects/finance-management-app')), 350);
       } else if (target === 'opengov' || target === 'open-gov') {
         newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Routing to OpenGov.kz Case Study...' });
-        setTimeout(() => router.push('/projects/opengov-kz'), 350);
+        setTimeout(() => router.push(href('/projects/opengov-kz')), 350);
       } else if (target === 'rolesieve' || target === 'role-sieve') {
         newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Routing to RoleSieve Case Study...' });
-        setTimeout(() => router.push('/projects/rolesieve'), 350);
+        setTimeout(() => router.push(href('/projects/rolesieve')), 350);
       } else {
         newLines.push({ id: nextLineId('out'), type: 'error', content: `Unknown project: "${target || ''}". Available: fintrack, opengov, rolesieve` });
       }
@@ -389,7 +392,7 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
     } else if (mainCmd === 'lang') {
       const targetLang = args[1];
       if (['en', 'ru', 'kk'].includes(targetLang)) {
-        setLang(targetLang);
+        switchLocale(targetLang);
         newLines.push({ id: nextLineId('out'), type: 'success', content: `Localization switched to [${targetLang.toUpperCase()}].` });
       } else {
         newLines.push({ id: nextLineId('out'), type: 'error', content: 'Usage: lang <en | ru | kk>' });

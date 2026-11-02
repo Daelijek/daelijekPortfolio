@@ -4,13 +4,13 @@
  *   default.jpg      — portrait + name + role (site-wide)
  *   <slug>.jpg       — one per featured project (cover + title)
  *
- * Usage: node scripts/generate-og.mjs
+ * Usage: npm run og:generate   (Node >= 22.6: reads the TypeScript dictionary via --experimental-strip-types)
  * Re-run whenever a project cover, title or the portrait changes.
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
-import { portfolioContent } from '../src/data/portfolioData.js';
+import en from '../src/content/locales/en.ts';
 
 const W = 1200;
 const H = 630;
@@ -100,7 +100,7 @@ async function projectImage(project) {
 
 await fs.mkdir(OUT, { recursive: true });
 await defaultImage();
-for (const project of portfolioContent.en.projects.featured) await projectImage(project);
+for (const project of en.projects.featured) await projectImage(project);
 
 for (const f of await fs.readdir(OUT)) {
   const { size } = await fs.stat(path.join(OUT, f));

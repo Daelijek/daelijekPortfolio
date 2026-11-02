@@ -4,9 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
-import { useThemeAudio } from '../../src/context/ThemeAudioContext';
-import { portfolioContent } from '../../src/data/portfolioData';
-import { soundFx } from '../../src/audio/soundEffects';
+import { useThemeAudio } from '@/context/ThemeAudioContext';
+import { useI18n, useLocalizedPath } from '@/i18n/I18nProvider';
+import { soundFx } from '@/audio/soundEffects';
 import {
   GraduationCap,
   Building2,
@@ -29,10 +29,11 @@ import {
 import { FaGithub, FaLinkedin, FaTelegram } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
 
-export default function AboutContent() {
-  const { lang, playHover, playClick, playDownload } = useThemeAudio();
-  const content = portfolioContent[lang] || portfolioContent.en;
-  const about = content.about;
+export default function AboutContent({ about }) {
+  const { playHover, playClick, playDownload } = useThemeAudio();
+  const { locale: lang, common } = useI18n();
+  const { href } = useLocalizedPath();
+  const content = { ...common, about };
   const exp = about.experience;
   const [selectedCategories, setSelectedCategories] = useState(['mobile', 'web', 'backend', 'ai']);
   const [cvDownloaded, setCvDownloaded] = useState(false);
@@ -973,7 +974,7 @@ export default function AboutContent() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Link
-                href="/contact"
+                href={href('/contact')}
                 onClick={playClick}
                 onMouseEnter={playHover}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-[var(--accent-color)] text-[#06080A] font-bold text-xs tracking-widest uppercase hover:shadow-[0_0_35px_var(--accent-glow)] transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-lg"

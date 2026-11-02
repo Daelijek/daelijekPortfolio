@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { usePathname } from 'next/navigation';
+import { useLocalizedPath } from '@/i18n/I18nProvider';
 
 export default function ScrollFadeMask({ children }) {
-  const pathname = usePathname();
+  const { path: pathname } = useLocalizedPath();
 
   // Root HUD landing page and project detail pages have their own layouts and headers
   const isProjectDetail = pathname?.startsWith('/projects/') && pathname !== '/projects';
