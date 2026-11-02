@@ -5,10 +5,10 @@ import { useReducedMotion } from 'framer-motion';
 import { startAnimationLoop } from '../../lib/animationLoop';
 
 export default function TrueLaserScanner() {
-  const containerRef = useRef(null);
-  const laserRef = useRef(null);
-  const textContainerRef = useRef(null);
-  const illuminatedWrapperRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const laserRef = useRef<HTMLDivElement>(null);
+  const textContainerRef = useRef<HTMLDivElement>(null);
+  const illuminatedWrapperRef = useRef<HTMLDivElement>(null);
   const prevYRef = useRef(0);
   const reducedMotion = useReducedMotion();
 
@@ -48,7 +48,7 @@ export default function TrueLaserScanner() {
     resizeObserver.observe(textContainer);
 
     let frameCount = 0;
-    const update = (_dt, currentTime) => {
+    const update = (_dt: number, currentTime: number) => {
       // Cheap safety net for position changes ResizeObserver can't see (e.g. entrance transforms).
       if (++frameCount % 30 === 0) measure();
 
@@ -79,7 +79,7 @@ export default function TrueLaserScanner() {
       const leadSharp = 3;   // 3px razor-sharp leading edge
 
       // Clamped gradient stops to prevent any browser negative-pixel gradient clipping
-      const clamp = (val) => Math.max(0, Math.min(totalHeight, val));
+      const clamp = (val: number) => Math.max(0, Math.min(totalHeight, val));
 
       let mask;
       if (isMovingDown) {

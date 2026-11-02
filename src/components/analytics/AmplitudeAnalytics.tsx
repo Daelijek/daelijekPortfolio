@@ -11,7 +11,7 @@ const SESSION_REPLAY_SAMPLE_RATE = 0.1;
 
 let started = false;
 
-function whenIdle(cb) {
+function whenIdle(cb: () => void) {
   if ('requestIdleCallback' in window) window.requestIdleCallback(cb, { timeout: 4000 });
   else setTimeout(cb, 1500);
 }
@@ -45,7 +45,7 @@ export default function AmplitudeAnalytics() {
   // One delegated listener for CV downloads and contact/outbound links,
   // plus any element marked with data-analytics-event.
   useEffect(() => {
-    const onClick = (e) => {
+    const onClick = (e: MouseEvent) => {
       const el = e.target instanceof Element ? e.target.closest('a[href], [data-analytics-event]') : null;
       if (!el) return;
 

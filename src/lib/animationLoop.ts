@@ -8,20 +8,31 @@
 
 const FRAME_60 = 1000 / 60;
 
+export type PerfTier = 'high' | 'med' | 'saver';
+
 /** Frame-rate cap for decorative animations per performance tier. */
-export const FPS_BY_TIER = { high: 60, med: 45, saver: 30 };
+export const FPS_BY_TIER: Record<PerfTier, number> = { high: 60, med: 45, saver: 30 };
 
 /**
- * @param {(dt: number, now: number) => void} frame
- *   Called once per drawn frame. `dt` is the elapsed time in 60 fps frames
- *   (1 at 60 fps, 2 at 30 fps), clamped to 6 so a stall never causes a jump.
- * @param {object}  [options]
- * @param {Element} [options.element]  Pause while this element is outside the viewport.
- * @param {number}  [options.fps=60]   Maximum frames per second.
- * @param {boolean} [options.staticFrame=false]  Draw one frame and stop (reduced motion).
- * @returns {() => void} stop function — call it from the effect cleanup.
+ * Called once per drawn frame. `dt` is the elapsed time in 60 fps frames
+ * (1 at 60 fps, 2 at 30 fps), clamped to 6 so a stall never causes a jump.
  */
-export function startAnimationLoop(frame, { element, fps = 60, staticFrame = false } = {}) {
+export type FrameCallback = (dt: number, now: number) => void;
+
+export interface AnimationLoopOptions {
+  /** Pause while this element is outside the viewport. */
+  element?: Element | null;
+  /** Maximum frames per second (default 60). */
+  fps?: number;
+  /** Draw one frame and stop (reduced motion). */
+  staticFrame?: boolean;
+}
+
+/** Starts the loop and returns a stop function for the effect cleanup. */
+export function startAnimationLoop(
+  frame: FrameCallback,
+  { element, fps = 60, staticFrame = false }: AnimationLoopOptions = {}
+): () => void {
   if (typeof window === 'undefined') return () => {};
 
   if (staticFrame) {
@@ -30,25 +41,24 @@ export function startAnimationLoop(frame, { element, fps = 60, staticFrame = fal
   }
 
   const minInterval = 1000 / fps;
-  let rafId = null;
-  let lastDrawn = null;
+  let rafId: number | null = null;
+  let lastDrawn: number | null = null;
   let pageVisible = !document.hidden;
   let inViewport = true;
 
-  const tick = (now) => {
+  const tick = (now: number) => {
     rafId = requestAnimationFrame(tick);
 
-    if (lastDrawn !== null) {
-      const elapsed = now - lastDrawn;
-      // Small tolerance: rAF timestamps jitter around the display interval.
-      if (elapsed < minInterval - 2) return;
-      const dt = Math.min(elapsed / FRAME_60, 6);
-      lastDrawn = now;
-      frame(dt, now);
-    } else {
+    if (lastDrawn === null) {
       lastDrawn = now;
       frame(1, now);
+      return;
     }
+    const elapsed = now - lastDrawn;
+    // Small tolerance: rAF timestamps jitter around the display interval.
+    if (elapsed < minInterval - 2) return;
+    lastDrawn = now;
+    frame(Math.min(elapsed / FRAME_60, 6), now);
   };
 
   const start = () => {
@@ -70,7 +80,7 @@ export function startAnimationLoop(frame, { element, fps = 60, staticFrame = fal
   };
   document.addEventListener('visibilitychange', onVisibilityChange);
 
-  let observer = null;
+  let observer: IntersectionObserver | null = null;
   if (element && 'IntersectionObserver' in window) {
     observer = new IntersectionObserver(([entry]) => {
       inViewport = entry.isIntersecting;

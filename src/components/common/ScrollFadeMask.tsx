@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import { useLocalizedPath } from '@/i18n/I18nProvider';
 
-export default function ScrollFadeMask({ children }) {
+export default function ScrollFadeMask({ children }: { children: ReactNode }) {
   const { path: pathname } = useLocalizedPath();
 
   // Root HUD landing page and project detail pages have their own layouts and headers

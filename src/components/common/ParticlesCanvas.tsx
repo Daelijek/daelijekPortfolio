@@ -5,8 +5,20 @@ import { useReducedMotion } from 'framer-motion';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { startAnimationLoop, FPS_BY_TIER } from '../../lib/animationLoop';
 
+/** A node of the animated constellation. */
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  pulseSpeed: number;
+  pulsePhase: number;
+  isHub: boolean;
+}
+
 export default function ParticlesCanvas() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
   const { theme, perfTier } = useThemeAudio();
   const reducedMotion = useReducedMotion();
@@ -17,7 +29,7 @@ export default function ParticlesCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let drawStatic = null; // set once render exists; used to repaint after resize
+    let drawStatic: (() => void) | null = null; // set once render exists; used to repaint after resize
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -36,7 +48,7 @@ export default function ParticlesCanvas() {
     };
     window.addEventListener('resize', handleResize);
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.targetX = e.clientX;
       mouseRef.current.targetY = e.clientY;
     };
@@ -69,7 +81,7 @@ export default function ParticlesCanvas() {
     const baseDensity = perfTier === 'saver' ? 32000 : perfTier === 'med' ? 19000 : 12500;
     const particleCount = Math.min(150, Math.max(35, Math.round(area / baseDensity)));
 
-    const particles = [];
+    const particles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       const isHub = Math.random() > 0.82; // 18% are primary hub nodes
       particles.push({
@@ -87,7 +99,7 @@ export default function ParticlesCanvas() {
     let time = 0;
 
     // dtModifier: elapsed time in 60 fps frames (provided by the shared loop driver)
-    const render = (dtModifier) => {
+    const render = (dtModifier: number) => {
       time += 0.025 * dtModifier;
 
       // On touch / mobile devices, provide autonomous gentle orbital drifting

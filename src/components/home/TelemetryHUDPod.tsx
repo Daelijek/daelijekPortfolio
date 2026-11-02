@@ -8,7 +8,7 @@ import { Activity } from 'lucide-react';
 
 // Dedicated Hardware-Accelerated 60fps Telemetry Oscilloscope Canvas
 function TelemetryWaveCanvas() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme, perfTier } = useThemeAudio();
   const reducedMotion = useReducedMotion();
 
@@ -18,8 +18,8 @@ function TelemetryWaveCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let drawStatic = null;
-    let width = (canvas.width = canvas.parentElement.offsetWidth || 300);
+    let drawStatic: (() => void) | null = null;
+    let width = (canvas.width = canvas.parentElement?.offsetWidth || 300);
     let height = (canvas.height = 36);
 
     const getColor = () => {
@@ -47,7 +47,7 @@ function TelemetryWaveCanvas() {
     };
     window.addEventListener('resize', handleResize);
 
-    const draw = (time) => {
+    const draw = (time: number) => {
       ctx.clearRect(0, 0, width, height);
 
       const t = time * 0.0032;

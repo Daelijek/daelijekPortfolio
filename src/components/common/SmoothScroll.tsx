@@ -1,14 +1,14 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import { useReducedMotion } from 'framer-motion';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 
-export default function SmoothScroll({ children }) {
+export default function SmoothScroll({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const lenisRef = useRef(null);
+  const lenisRef = useRef<Lenis | null>(null);
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {

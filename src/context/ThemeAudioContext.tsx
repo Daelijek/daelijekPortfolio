@@ -1,32 +1,57 @@
 'use client';
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { MotionConfig } from 'framer-motion';
-import { soundFx } from '../audio/soundEffects';
-import { track } from '../lib/analytics';
+import { soundFx, type AudioProfile } from '@/audio/soundEffects';
+import { track } from '@/lib/analytics';
+import type { PerfTier } from '@/lib/animationLoop';
 
-const ThemeAudioContext = createContext({
-  theme: 'acid',
-  setTheme: () => {},
-  soundEnabled: true,
-  setSoundEnabled: () => {},
-  audioProfile: 'default',
-  setAudioProfile: () => {},
-  perfTier: 'high',
-  setPerfTier: () => {},
-  playHover: () => {},
-  playClick: () => {},
-  playSwitch: () => {},
-  playDownload: () => {},
-});
+export const THEMES = ['acid', 'cyan', 'amber', 'crimson', 'obsidian'] as const;
+export type Theme = (typeof THEMES)[number];
+
+const PERF_TIERS: readonly PerfTier[] = ['high', 'med', 'saver'];
+
+const isTheme = (v: unknown): v is Theme => typeof v === 'string' && (THEMES as readonly string[]).includes(v);
+const isPerfTier = (v: unknown): v is PerfTier => typeof v === 'string' && (PERF_TIERS as readonly string[]).includes(v);
+
+export interface ThemeAudioContextValue {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  soundEnabled: boolean;
+  setSoundEnabled: (enabled: boolean) => void;
+  audioProfile: AudioProfile;
+  setAudioProfile: (profile: AudioProfile) => void;
+  perfTier: PerfTier;
+  setPerfTier: (tier: PerfTier) => void;
+  playHover: () => void;
+  playClick: () => void;
+  playSwitch: () => void;
+  playDownload: () => void;
+}
 
 // Sound-effect helpers never change, so they are created once.
 const playHover = () => soundFx.playHover();
 const playClick = () => soundFx.playClick();
 const playSwitch = () => soundFx.playSwitch();
 const playDownload = () => soundFx.playDownload();
+const noop = () => {};
 
-const saveSetting = (key, value) => {
+const ThemeAudioContext = createContext<ThemeAudioContextValue>({
+  theme: 'acid',
+  setTheme: noop,
+  soundEnabled: true,
+  setSoundEnabled: noop,
+  audioProfile: 'default',
+  setAudioProfile: noop,
+  perfTier: 'high',
+  setPerfTier: noop,
+  playHover: noop,
+  playClick: noop,
+  playSwitch: noop,
+  playDownload: noop,
+});
+
+const saveSetting = (key: string, value: string) => {
   try {
     localStorage.setItem(key, value);
   } catch {
@@ -34,15 +59,21 @@ const saveSetting = (key, value) => {
   }
 };
 
+type NavigatorHints = Navigator & {
+  deviceMemory?: number; // Chromium only
+  connection?: { saveData?: boolean };
+};
+
 /**
  * Default animation quality for visitors who never picked a tier themselves.
  * Low-end hardware or Data Saver gets lighter backgrounds (fewer particles, lower fps).
  * The automatic choice is not stored, so it adapts if the device changes.
  */
-function detectPerfTier() {
-  const cores = navigator.hardwareConcurrency || 4;
-  const memoryGb = navigator.deviceMemory || 4; // Chromium only; 4 is a neutral default
-  const saveData = Boolean(navigator.connection?.saveData);
+function detectPerfTier(): PerfTier {
+  const nav = navigator as NavigatorHints;
+  const cores = nav.hardwareConcurrency || 4;
+  const memoryGb = nav.deviceMemory ?? 4; // 4 is a neutral default where the API is missing
+  const saveData = Boolean(nav.connection?.saveData);
   const smallTouchScreen = window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 768;
 
   if (saveData || cores <= 2 || memoryGb <= 2) return 'saver';
@@ -50,11 +81,11 @@ function detectPerfTier() {
   return 'high';
 }
 
-export function ThemeAudioProvider({ children }) {
-  const [theme, setThemeState] = useState('acid');
+export function ThemeAudioProvider({ children }: { children: ReactNode }) {
+  const [theme, setThemeState] = useState<Theme>('acid');
   const [soundEnabled, setSoundEnabledState] = useState(true);
-  const [audioProfile, setAudioProfileState] = useState('default');
-  const [perfTier, setPerfTierState] = useState('high');
+  const [audioProfile, setAudioProfileState] = useState<AudioProfile>('default');
+  const [perfTier, setPerfTierState] = useState<PerfTier>('high');
 
   // Restore saved preferences. localStorage only exists in the browser, so this runs
   // after hydration. (Language is not stored here: it is part of the URL, see src/i18n.)
@@ -66,7 +97,7 @@ export function ThemeAudioProvider({ children }) {
       const savedProfile = localStorage.getItem('daelijek_audio_profile');
       const savedPerf = localStorage.getItem('daelijek_perf');
 
-      const initialTheme = savedTheme || 'acid';
+      const initialTheme = isTheme(savedTheme) ? savedTheme : 'acid';
       setThemeState(initialTheme);
       document.documentElement.setAttribute('data-theme', initialTheme);
 
@@ -76,19 +107,19 @@ export function ThemeAudioProvider({ children }) {
         soundFx.setEnabled(isSound);
       }
 
-      if (savedProfile) {
+      if (savedProfile === 'default' || savedProfile === 'minimal') {
         setAudioProfileState(savedProfile);
         soundFx.setProfile(savedProfile);
       }
 
-      setPerfTierState(['high', 'med', 'saver'].includes(savedPerf) ? savedPerf : detectPerfTier());
+      setPerfTierState(isPerfTier(savedPerf) ? savedPerf : detectPerfTier());
     } catch {
       // Storage access safe ignore
     }
   }, []);
   /* eslint-enable react-hooks/set-state-in-effect */
 
-  const setTheme = useCallback((newTheme) => {
+  const setTheme = useCallback((newTheme: Theme) => {
     setThemeState(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
     saveSetting('daelijek_theme', newTheme);
@@ -96,7 +127,7 @@ export function ThemeAudioProvider({ children }) {
     track('Theme Changed', { theme: newTheme });
   }, []);
 
-  const setSoundEnabled = useCallback((val) => {
+  const setSoundEnabled = useCallback((val: boolean) => {
     setSoundEnabledState(val);
     soundFx.setEnabled(val);
     track('Sound Toggled', { enabled: val });
@@ -104,21 +135,21 @@ export function ThemeAudioProvider({ children }) {
     if (val) soundFx.playClick();
   }, []);
 
-  const setAudioProfile = useCallback((profile) => {
+  const setAudioProfile = useCallback((profile: AudioProfile) => {
     setAudioProfileState(profile);
     soundFx.setProfile(profile);
     saveSetting('daelijek_audio_profile', profile);
     soundFx.playProfileDemo(profile);
   }, []);
 
-  const setPerfTier = useCallback((tier) => {
+  const setPerfTier = useCallback((tier: PerfTier) => {
     setPerfTierState(tier);
     saveSetting('daelijek_perf', tier);
     soundFx.playSwitch();
   }, []);
 
   // Stable value: consumers re-render only when a setting actually changes.
-  const value = useMemo(
+  const value = useMemo<ThemeAudioContextValue>(
     () => ({
       theme,
       setTheme,
@@ -145,6 +176,6 @@ export function ThemeAudioProvider({ children }) {
   );
 }
 
-export function useThemeAudio() {
+export function useThemeAudio(): ThemeAudioContextValue {
   return useContext(ThemeAudioContext);
 }

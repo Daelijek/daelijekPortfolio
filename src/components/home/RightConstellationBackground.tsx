@@ -5,8 +5,20 @@ import { useReducedMotion } from 'framer-motion';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { startAnimationLoop, FPS_BY_TIER } from '../../lib/animationLoop';
 
+/** A node of the animated constellation. */
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  pulseSpeed: number;
+  pulsePhase: number;
+  isHub: boolean;
+}
+
 export default function RightConstellationBackground() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
   const { theme, perfTier } = useThemeAudio();
   const reducedMotion = useReducedMotion();
@@ -18,7 +30,7 @@ export default function RightConstellationBackground() {
     if (!ctx) return;
 
     let width = 0;
-    let drawStatic = null; // set once render exists; used to repaint after resize
+    let drawStatic: (() => void) | null = null; // set once render exists; used to repaint after resize
     let height = 0;
 
     const getColor = () => {
@@ -70,7 +82,7 @@ export default function RightConstellationBackground() {
        (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
        window.innerWidth < 1024);
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.targetX = e.clientX - rect.left;
       mouseRef.current.targetY = e.clientY - rect.top;
@@ -90,7 +102,7 @@ export default function RightConstellationBackground() {
 
     // Initialize particles
     const count = perfTier === 'saver' ? 24 : perfTier === 'med' ? 45 : 70;
-    const particles = [];
+    const particles: Particle[] = [];
 
     for (let i = 0; i < count; i++) {
       particles.push({
@@ -108,7 +120,7 @@ export default function RightConstellationBackground() {
     let time = 0;
 
     // dt: elapsed time in 60 fps frames, so speed no longer depends on the display refresh rate
-    const render = (dt) => {
+    const render = (dt: number) => {
       time += 0.02 * dt;
       const ease = Math.min(1, 0.08 * dt);
       ctx.clearRect(0, 0, width, height);

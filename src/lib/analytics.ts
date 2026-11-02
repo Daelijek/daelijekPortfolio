@@ -3,19 +3,22 @@
 // are queued (capped) and flushed once a client is registered. With no client
 // (e.g. no API key) calls are silently dropped.
 
-const MAX_QUEUE = 50;
-let client = null;
-const queue = [];
+export type EventProps = Record<string, string | number | boolean>;
 
-export function setAnalyticsClient(next) {
-  client = next;
-  while (queue.length) {
-    const [event, props] = queue.shift();
-    client.track(event, props);
-  }
+export interface AnalyticsClient {
+  track(event: string, props?: EventProps): unknown;
 }
 
-export function track(event, props = {}) {
+const MAX_QUEUE = 50;
+let client: AnalyticsClient | null = null;
+const queue: [string, EventProps][] = [];
+
+export function setAnalyticsClient(next: AnalyticsClient): void {
+  client = next;
+  for (const [event, props] of queue.splice(0)) client.track(event, props);
+}
+
+export function track(event: string, props: EventProps = {}): void {
   if (typeof window === 'undefined') return;
   if (client) {
     client.track(event, props);
@@ -24,8 +27,13 @@ export function track(event, props = {}) {
   }
 }
 
+export type LinkClassification =
+  | { event: 'CV Downloaded' }
+  | { event: 'Contact Clicked'; channel: 'email' | 'phone' | 'telegram' | 'linkedin' }
+  | { event: 'Outbound Link Clicked'; target: 'github' };
+
 // Classifies outbound links so contact/CV clicks are tracked from one place.
-export function classifyLink(href = '') {
+export function classifyLink(href = ''): LinkClassification | null {
   if (href === '/api/cv' || href.endsWith('.pdf')) return { event: 'CV Downloaded' };
   if (href.startsWith('mailto:')) return { event: 'Contact Clicked', channel: 'email' };
   if (href.startsWith('tel:')) return { event: 'Contact Clicked', channel: 'phone' };

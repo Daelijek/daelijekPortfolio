@@ -3,8 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
-  const dotRef = useRef(null);
-  const ringRef = useRef(null);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
   const mousePos = useRef({ x: -100, y: -100 });
   const ringPos = useRef({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState(false);
@@ -34,13 +34,13 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!isEnabled) return;
 
-    let animId = null;
-    let lastTime = null;
+    let animId: number | null = null;
+    let lastTime: number | null = null;
     let hasMoved = false;
 
     // Trailing-ring LERP. Runs only while the ring is catching up with the pointer and
     // stops once it settles, so an idle mouse costs zero frames.
-    const renderLoop = (now) => {
+    const renderLoop = (now: number) => {
       const ring = ringRef.current;
       if (!ring) {
         animId = null;
@@ -65,7 +65,7 @@ export default function CustomCursor() {
       ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%)`;
     };
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
 
@@ -90,19 +90,10 @@ export default function CustomCursor() {
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
-    const handleMouseOver = (e) => {
-      const target = e.target;
-      if (
-        target.tagName === 'BUTTON' ||
-        target.tagName === 'A' ||
-        target.closest('button') ||
-        target.closest('a') ||
-        target.dataset?.cursor === 'pointer'
-      ) {
-        setIsHovered(true);
-      } else {
-        setIsHovered(false);
-      }
+    const handleMouseOver = (e: MouseEvent) => {
+      // Element (not HTMLElement): icons inside buttons are SVG elements.
+      const target = e.target instanceof Element ? e.target : null;
+      setIsHovered(Boolean(target?.closest('button, a, [data-cursor="pointer"]')));
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });

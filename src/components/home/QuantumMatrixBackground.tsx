@@ -5,8 +5,19 @@ import { useReducedMotion } from 'framer-motion';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { startAnimationLoop, FPS_BY_TIER } from '../../lib/animationLoop';
 
+/** A projected lattice vertex for the current frame. */
+interface GridPoint {
+  x: number;
+  y: number;
+  z: number;
+  scale: number;
+  depthAlpha: number;
+  isNearCursor: boolean;
+  pulse: number;
+}
+
 export default function QuantumMatrixBackground() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
   const { theme, perfTier } = useThemeAudio();
   const reducedMotion = useReducedMotion();
@@ -18,7 +29,7 @@ export default function QuantumMatrixBackground() {
     if (!ctx) return;
 
     let width = 0;
-    let drawStatic = null; // set once render exists; used to repaint after resize
+    let drawStatic: (() => void) | null = null; // set once render exists; used to repaint after resize
     let height = 0;
     let time = 0;
 
@@ -65,7 +76,7 @@ export default function QuantumMatrixBackground() {
        (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
        window.innerWidth < 1024);
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.targetX = e.clientX - rect.left;
       mouseRef.current.targetY = e.clientY - rect.top;
@@ -85,7 +96,7 @@ export default function QuantumMatrixBackground() {
     const cols = perfTier === 'saver' ? 18 : perfTier === 'med' ? 24 : 30;
     const rows = perfTier === 'saver' ? 24 : perfTier === 'med' ? 32 : 40;
 
-    const project3D = (x, y, z, fov = 450) => {
+    const project3D = (x: number, y: number, z: number, fov = 450) => {
       const scale = fov / (fov + z);
       return {
         x: width * 0.5 + x * scale,
@@ -96,7 +107,7 @@ export default function QuantumMatrixBackground() {
     };
 
     // dt: elapsed time in 60 fps frames, so speed no longer depends on the display refresh rate
-    const render = (dt) => {
+    const render = (dt: number) => {
       time += (perfTier === 'saver' ? 0.012 : 0.018) * dt;
       const ease = Math.min(1, 0.08 * dt);
       const idleEase = Math.min(1, 0.04 * dt);
@@ -145,7 +156,7 @@ export default function QuantumMatrixBackground() {
       const cellH = gridHeight / (rows - 1);
 
       // Compute grid vertices in 3D
-      const grid = [];
+      const grid: GridPoint[][] = [];
 
       for (let r = 0; r < rows; r++) {
         grid[r] = [];
