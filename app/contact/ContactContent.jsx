@@ -8,7 +8,6 @@ import { soundFx } from '../../src/audio/soundEffects';
 import { ArrowUpRight, Copy, Check, Phone } from 'lucide-react';
 import { FaTelegram, FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { SiLeetcode } from 'react-icons/si';
-import confetti from 'canvas-confetti';
 
 export default function ContactContent() {
   const { lang, playHover, playClick } = useThemeAudio();
@@ -47,16 +46,19 @@ export default function ContactContent() {
     setCopied(true);
     soundFx.playSwitch();
 
-    try {
-      confetti({
-        particleCount: 25,
-        spread: 50,
-        origin: { y: 0.5 },
-        colors: ['#00FF9F', '#00F3FF', '#FFFFFF'],
+    // Loaded on demand so the confetti library stays out of the initial page bundle
+    import('canvas-confetti')
+      .then(({ default: confetti }) =>
+        confetti({
+          particleCount: 25,
+          spread: 50,
+          origin: { y: 0.5 },
+          colors: ['#00FF9F', '#00F3FF', '#FFFFFF'],
+        })
+      )
+      .catch(() => {
+        // safe ignore
       });
-    } catch {
-      // safe ignore
-    }
 
     setTimeout(() => setCopied(false), 2200);
   };

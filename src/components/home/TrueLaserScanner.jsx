@@ -53,7 +53,7 @@ export default function TrueLaserScanner() {
         // Clamped gradient stops to prevent any browser negative-pixel gradient clipping
         const clamp = (val) => Math.max(0, Math.min(totalHeight, val));
 
-        let mask = '';
+        let mask;
         if (isMovingDown) {
           // Moving DOWN: Leading edge is AT the laser (sharp below), trailing decay is ABOVE
           const p0 = clamp(offset - tailLength);

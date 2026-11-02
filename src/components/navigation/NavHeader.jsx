@@ -79,6 +79,7 @@ export default function NavHeader() {
 
   // Close menus on route change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- close overlays on route change; NavHeader is split up in phase 5
     setIsMenuOpen(false);
     setIsSettingsOpen(false);
   }, [pathname]);

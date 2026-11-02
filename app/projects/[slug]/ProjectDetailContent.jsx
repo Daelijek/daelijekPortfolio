@@ -46,7 +46,10 @@ function InfiniteGalleryRibbon({
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const isHoveredRef = useRef(false);
-  isHoveredRef.current = isHovered || isModalOpen;
+  // Sync the rAF-readable flag after commit (writing refs during render breaks React purity rules)
+  useEffect(() => {
+    isHoveredRef.current = isHovered || isModalOpen;
+  }, [isHovered, isModalOpen]);
 
   const tapeRef = useRef(null);
   const set1Ref = useRef(null);

@@ -121,6 +121,9 @@ export default function InteractiveTerminal() {
 
   const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
+  // Monotonic counter for terminal line keys (Date.now() could collide within one millisecond)
+  const lineIdRef = useRef(0);
+  const nextLineId = (prefix) => `${prefix}-${++lineIdRef.current}`;
 
   // Auto-scroll to bottom of terminal on new outputs
   useEffect(() => {
@@ -229,7 +232,7 @@ export default function InteractiveTerminal() {
     const newLines = [
       ...outputLines,
       {
-        id: `cmd-${Date.now()}`,
+        id: nextLineId('cmd'),
         type: 'command',
         content: `dias@portfolio:~$ ${rawCmd}`
       }
@@ -258,7 +261,7 @@ export default function InteractiveTerminal() {
       setTimeout(() => setIsCelebrationActive(false), 5000);
 
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'easter-egg',
         content: `╔═══════════════════════════════════════════════════════════════════╗
 ║ >>> [ ACCESS GRANTED // CONTRACT OFFER PROTOCOL INITIALIZED ] <<< ║
@@ -282,7 +285,7 @@ export default function InteractiveTerminal() {
 
     if (mainCmd === 'help') {
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'output',
         content: `AVAILABLE COMMANDS:
   help               - Display this interactive command index
@@ -303,13 +306,13 @@ export default function InteractiveTerminal() {
       });
     } else if (mainCmd === 'skills' || mainCmd === 'matrix' || mainCmd === 'stack') {
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'skills-table',
         data: SKILLS_DATA
       });
     } else if (mainCmd === 'projects') {
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'output',
         content: `PRODUCTION CASE STUDIES:
   [01] fintrack   - FinTrack Personal Finance Management App (React Native, FastAPI)
@@ -321,20 +324,20 @@ export default function InteractiveTerminal() {
     } else if (mainCmd === 'open') {
       const target = args[1];
       if (target === 'fintrack' || target === 'finance') {
-        newLines.push({ id: `out-${Date.now()}`, type: 'success', content: '[SYS] Routing to FinTrack Case Study...' });
+        newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Routing to FinTrack Case Study...' });
         setTimeout(() => router.push('/projects/finance-management-app'), 350);
       } else if (target === 'opengov' || target === 'open-gov') {
-        newLines.push({ id: `out-${Date.now()}`, type: 'success', content: '[SYS] Routing to OpenGov.kz Case Study...' });
+        newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Routing to OpenGov.kz Case Study...' });
         setTimeout(() => router.push('/projects/opengov-kz'), 350);
       } else if (target === 'rolesieve' || target === 'role-sieve') {
-        newLines.push({ id: `out-${Date.now()}`, type: 'success', content: '[SYS] Routing to RoleSieve Case Study...' });
+        newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Routing to RoleSieve Case Study...' });
         setTimeout(() => router.push('/projects/rolesieve'), 350);
       } else {
-        newLines.push({ id: `out-${Date.now()}`, type: 'error', content: `Unknown project: "${target || ''}". Available: fintrack, opengov, rolesieve` });
+        newLines.push({ id: nextLineId('out'), type: 'error', content: `Unknown project: "${target || ''}". Available: fintrack, opengov, rolesieve` });
       }
     } else if (mainCmd === 'about' || mainCmd === 'bio') {
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'output',
         content: `DIAS YERMEK // SOFTWARE ENGINEER
 Location: Astana, Kazakhstan (UTC+5)
@@ -343,7 +346,7 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
       });
     } else if (mainCmd === 'contact') {
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'output',
         content: `DIRECT COMMUNICATION CHANNELS:
   [TELEGRAM]  https://t.me/daelijek_og  (@daelijek_og)
@@ -352,18 +355,18 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
   [GITHUB]    https://github.com/Daelijek`
       });
     } else if (mainCmd === 'telegram') {
-      newLines.push({ id: `out-${Date.now()}`, type: 'success', content: '[SYS] Opening Telegram: https://t.me/daelijek_og' });
+      newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Opening Telegram: https://t.me/daelijek_og' });
       if (typeof window !== 'undefined') window.open('https://t.me/daelijek_og', '_blank');
     } else if (mainCmd === 'linkedin') {
-      newLines.push({ id: `out-${Date.now()}`, type: 'success', content: '[SYS] Opening LinkedIn: https://www.linkedin.com/in/dias-yermek/' });
+      newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Opening LinkedIn: https://www.linkedin.com/in/dias-yermek/' });
       if (typeof window !== 'undefined') window.open('https://www.linkedin.com/in/dias-yermek/', '_blank');
     } else if (mainCmd === 'github') {
-      newLines.push({ id: `out-${Date.now()}`, type: 'success', content: '[SYS] Opening GitHub: https://github.com/Daelijek' });
+      newLines.push({ id: nextLineId('out'), type: 'success', content: '[SYS] Opening GitHub: https://github.com/Daelijek' });
       if (typeof window !== 'undefined') window.open('https://github.com/Daelijek', '_blank');
     } else if (mainCmd === 'cv' || mainCmd === 'resume') {
       handleDownloadCV();
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'cv-download',
         content: '[SYS] Initiating dossier download: Dias_Yermek_CV.pdf (111 KB)...'
       });
@@ -372,32 +375,32 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
       const validThemes = ['acid', 'cyan', 'amber', 'crimson', 'obsidian'];
       if (validThemes.includes(targetTheme)) {
         setTheme(targetTheme);
-        newLines.push({ id: `out-${Date.now()}`, type: 'success', content: `HUD Core Theme shifted to [${targetTheme.toUpperCase()}].` });
+        newLines.push({ id: nextLineId('out'), type: 'success', content: `HUD Core Theme shifted to [${targetTheme.toUpperCase()}].` });
       } else {
-        newLines.push({ id: `out-${Date.now()}`, type: 'error', content: `Usage: theme <${validThemes.join(' | ')}>` });
+        newLines.push({ id: nextLineId('out'), type: 'error', content: `Usage: theme <${validThemes.join(' | ')}>` });
       }
     } else if (mainCmd === 'audio' || mainCmd === 'sound') {
       const mode = args[1];
       if (mode === 'on' || mode === 'enable') {
         setSoundEnabled(true);
-        newLines.push({ id: `out-${Date.now()}`, type: 'success', content: 'Sound Engine status: ONLINE.' });
+        newLines.push({ id: nextLineId('out'), type: 'success', content: 'Sound Engine status: ONLINE.' });
       } else if (mode === 'off' || mode === 'disable') {
         setSoundEnabled(false);
-        newLines.push({ id: `out-${Date.now()}`, type: 'success', content: 'Sound Engine status: MUTED.' });
+        newLines.push({ id: nextLineId('out'), type: 'success', content: 'Sound Engine status: MUTED.' });
       } else {
-        newLines.push({ id: `out-${Date.now()}`, type: 'output', content: `Audio is currently ${soundEnabled ? 'ONLINE' : 'MUTED'}. Usage: audio <on|off>` });
+        newLines.push({ id: nextLineId('out'), type: 'output', content: `Audio is currently ${soundEnabled ? 'ONLINE' : 'MUTED'}. Usage: audio <on|off>` });
       }
     } else if (mainCmd === 'lang') {
       const targetLang = args[1];
       if (['en', 'ru', 'kk'].includes(targetLang)) {
         setLang(targetLang);
-        newLines.push({ id: `out-${Date.now()}`, type: 'success', content: `Localization switched to [${targetLang.toUpperCase()}].` });
+        newLines.push({ id: nextLineId('out'), type: 'success', content: `Localization switched to [${targetLang.toUpperCase()}].` });
       } else {
-        newLines.push({ id: `out-${Date.now()}`, type: 'error', content: 'Usage: lang <en | ru | kk>' });
+        newLines.push({ id: nextLineId('out'), type: 'error', content: 'Usage: lang <en | ru | kk>' });
       }
     } else if (mainCmd === 'whoami') {
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'output',
         content: 'guest_operator // elevated privileges granted (session: root)'
       });
@@ -405,14 +408,14 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
       const now = new Date();
       const astanaString = now.toLocaleString('en-US', { timeZone: 'Asia/Almaty' });
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'output',
         content: `Astana Local Time (UTC+5): ${astanaString}`
       });
     } else {
       soundFx.playTerminalError();
       newLines.push({
-        id: `out-${Date.now()}`,
+        id: nextLineId('out'),
         type: 'error',
         content: `command not found: "${rawCmd}". Type "help" to view available instructions.`
       });
