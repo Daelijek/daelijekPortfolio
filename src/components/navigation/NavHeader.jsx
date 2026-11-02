@@ -153,7 +153,6 @@ export default function NavHeader() {
             onMouseEnter={playHover}
             onClick={playClick}
             className="group block"
-            aria-label="Dias Yermek - Home"
           >
             <div className="flex items-center gap-3.5">
               <div className="text-right">
@@ -350,7 +349,7 @@ export default function NavHeader() {
                           <span className="block font-mono text-xs text-[var(--heading-tint)] group-hover:text-[var(--accent-color)] transition-colors">
                             {cvDownloaded ? content.nav.cvDownloaded : content.nav.downloadCv}
                           </span>
-                          <span className="block text-[9px] text-[var(--text-muted)] font-mono tracking-widest">
+                          <span className="block text-[10px] text-[var(--text-muted)] font-mono tracking-widest">
                             {content.nav.cvSubtitle}
                           </span>
                         </div>
@@ -417,7 +416,6 @@ export default function NavHeader() {
                 }
               }}
               aria-expanded={isMenuOpen}
-              aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               className="group flex items-center justify-between pl-4 xs:pl-5 sm:pl-6 pr-1.5 xs:pr-2 h-[48px] xs:h-[52px] sm:h-[58px] cursor-pointer gap-2 xs:gap-3"
             >
               {/* Index & Label */}
@@ -434,6 +432,8 @@ export default function NavHeader() {
                 >
                   {currentNav.label}
                 </span>
+                {/* Accessible name = visible label + this hint (an aria-label would replace the visible text) */}
+                <span className="sr-only">{isMenuOpen ? ' — close navigation menu' : ' — open navigation menu'}</span>
               </div>
 
               {/* Theme-Tinted Matrix Icon Button */}
@@ -508,7 +508,7 @@ export default function NavHeader() {
               <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3.5">
                 <div>
                   <h3 className="text-base font-black text-white uppercase tracking-wider font-display">{content.nav.systemTitle}</h3>
-                  <p className="text-[10px] text-white/40 tracking-widest font-mono uppercase">{content.nav.systemSub}</p>
+                  <p className="text-[10px] text-white/55 tracking-widest font-mono uppercase">{content.nav.systemSub}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="px-2.5 py-1 rounded-md bg-white/10 border border-white/15 text-[10px] text-white font-mono font-bold">
@@ -528,7 +528,7 @@ export default function NavHeader() {
               <div className="mb-3.5">
                 <div className="flex items-center justify-between text-xs text-white/60 mb-2 font-mono font-bold">
                   <span>{content.nav.coreTheme}</span>
-                  <span className="text-[10px] text-white/40 font-mono">V_1.0</span>
+                  <span className="text-[10px] text-white/55 font-mono">V_1.0</span>
                 </div>
                 <div className="flex items-center justify-between bg-white/5 p-2 rounded-2xl border border-white/10">
                   {themeOptions.map((t) => {
@@ -586,7 +586,7 @@ export default function NavHeader() {
                   >
                     <div>
                       <p className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">{content.nav.audioDefault}</p>
-                      <p className="text-[10px] text-white/40 tracking-wider font-mono mt-0.5">{content.nav.audioDefaultSub}</p>
+                      <p className="text-[10px] text-white/55 tracking-wider font-mono mt-0.5">{content.nav.audioDefaultSub}</p>
                     </div>
                     {soundEnabled && audioProfile === 'default' && (
                       <div className="flex items-center gap-1">
@@ -611,7 +611,7 @@ export default function NavHeader() {
                   >
                     <div>
                       <p className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">{content.nav.audioMinimal}</p>
-                      <p className="text-[10px] text-white/40 tracking-wider font-mono mt-0.5">{content.nav.audioMinimalSub}</p>
+                      <p className="text-[10px] text-white/55 tracking-wider font-mono mt-0.5">{content.nav.audioMinimalSub}</p>
                     </div>
                     {soundEnabled && audioProfile === 'minimal' && (
                       <div className="flex items-center gap-1">
@@ -637,7 +637,7 @@ export default function NavHeader() {
                       <p className={`text-xs sm:text-sm font-bold uppercase tracking-wider ${!soundEnabled ? 'text-rose-400' : 'text-white'}`}>
                         {content.nav.audioMute || 'Mute All Sounds'}
                       </p>
-                      <p className="text-[10px] text-white/40 tracking-wider font-mono mt-0.5">
+                      <p className="text-[10px] text-white/55 tracking-wider font-mono mt-0.5">
                         {content.nav.audioMuteSub || 'SILENT MODE / NO SFX'}
                       </p>
                     </div>
@@ -657,7 +657,7 @@ export default function NavHeader() {
               <div className="mb-3.5">
                 <div className="flex items-center justify-between text-xs text-white/60 mb-2 font-mono font-bold">
                   <span>{content.nav.perfTier}</span>
-                  <span className="text-[10px] text-white/40 font-mono">SYS</span>
+                  <span className="text-[10px] text-white/55 font-mono">SYS</span>
                 </div>
                 <div className="grid grid-cols-3 gap-1.5 p-1.5 bg-white/5 rounded-xl border border-white/10 font-mono">
                   {[
@@ -684,7 +684,7 @@ export default function NavHeader() {
               </div>
 
               {/* System Active Status Indicator matching reference */}
-              <div className="flex items-center justify-center gap-2 py-1.5 text-[10px] text-white/40 tracking-widest font-mono border-t border-white/10">
+              <div className="flex items-center justify-center gap-2 py-1.5 text-[10px] text-white/55 tracking-widest font-mono border-t border-white/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
                 <span>{content.nav.systemActive}</span>
               </div>

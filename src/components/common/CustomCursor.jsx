@@ -34,8 +34,36 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!isEnabled) return;
 
-    let animId;
+    let animId = null;
+    let lastTime = null;
     let hasMoved = false;
+
+    // Trailing-ring LERP. Runs only while the ring is catching up with the pointer and
+    // stops once it settles, so an idle mouse costs zero frames.
+    const renderLoop = (now) => {
+      const ring = ringRef.current;
+      if (!ring) {
+        animId = null;
+        return;
+      }
+      // 0.16 per 60 fps frame, adjusted for the real frame time (same feel at 60/120/144 Hz)
+      const dt = lastTime === null ? 1 : Math.min((now - lastTime) / (1000 / 60), 4);
+      lastTime = now;
+      const lerp = 1 - Math.pow(1 - 0.16, dt);
+
+      const dx = mousePos.current.x - ringPos.current.x;
+      const dy = mousePos.current.y - ringPos.current.y;
+      if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+        ringPos.current.x = mousePos.current.x;
+        ringPos.current.y = mousePos.current.y;
+        animId = null;
+      } else {
+        ringPos.current.x += dx * lerp;
+        ringPos.current.y += dy * lerp;
+        animId = requestAnimationFrame(renderLoop);
+      }
+      ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%)`;
+    };
 
     const handleMouseMove = (e) => {
       mousePos.current.x = e.clientX;
@@ -52,21 +80,12 @@ export default function CustomCursor() {
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
       }
-    };
 
-    // 60-120 FPS hardware-accelerated LERP loop for smooth trailing ring
-    const renderLoop = () => {
-      if (hasMoved && ringRef.current) {
-        const lerpFactor = 0.16;
-        ringPos.current.x += (mousePos.current.x - ringPos.current.x) * lerpFactor;
-        ringPos.current.y += (mousePos.current.y - ringPos.current.y) * lerpFactor;
-
-        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%)`;
+      if (animId === null) {
+        lastTime = null;
+        animId = requestAnimationFrame(renderLoop);
       }
-      animId = requestAnimationFrame(renderLoop);
     };
-
-    animId = requestAnimationFrame(renderLoop);
 
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
@@ -92,7 +111,7 @@ export default function CustomCursor() {
     window.addEventListener('mouseover', handleMouseOver, { passive: true });
 
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId !== null) cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);

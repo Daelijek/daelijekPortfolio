@@ -64,7 +64,7 @@
   --heading-tint: #FFEAC2;
   --text-primary: #FFF9E8;
   --text-secondary: #D4BE98;
-  --text-muted: #8E7750;
+  --text-muted: #9A8258; /* >= 4.5:1 on bg and surface */
 
   --card-bg: rgba(20, 14, 4, 0.75);
   --card-border: rgba(255, 184, 0, 0.18);
@@ -87,7 +87,7 @@
   --heading-tint: #FFD2E2;
   --text-primary: #FFE8F0;
   --text-secondary: #D898B4;
-  --text-muted: #945270;
+  --text-muted: #B0648A; /* >= 4.5:1 on bg and surface */
 
   --card-bg: rgba(22, 5, 12, 0.75);
   --card-border: rgba(255, 0, 85, 0.18);
@@ -110,7 +110,7 @@
   --heading-tint: #FFFFFF;
   --text-primary: #FFFFFF;
   --text-secondary: #9EB0C4;
-  --text-muted: #58687E;
+  --text-muted: #70829A; /* >= 4.5:1 on bg and surface */
 
   --card-bg: rgba(10, 14, 20, 0.75);
   --card-border: rgba(255, 255, 255, 0.14);
@@ -352,4 +352,30 @@ body:has(#hud-preloader) .hud-cli-trigger {
 
 .hud-cli-trigger {
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
+}
+/* ===================== Accessibility ===================== */
+
+/* Visible keyboard focus everywhere (mouse clicks don't trigger :focus-visible). */
+:where(a, button, input, textarea, select, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Respect the OS "reduce motion" setting for every CSS animation/transition
+   (marquee, border beams, scanlines, hover transitions). Canvas/JS animations
+   handle the same preference in src/lib/animationLoop.js and via MotionConfig. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

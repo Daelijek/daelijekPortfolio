@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
+import { startAnimationLoop, FPS_BY_TIER } from '../../lib/animationLoop';
 
 export default function ParticlesCanvas() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
   const { theme, perfTier } = useThemeAudio();
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,7 +17,7 @@ export default function ParticlesCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId;
+    let drawStatic = null; // set once render exists; used to repaint after resize
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -28,6 +31,8 @@ export default function ParticlesCanvas() {
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      // Resizing clears the canvas; redraw the single static frame in reduced-motion mode.
+      if (drawStatic) drawStatic();
     };
     window.addEventListener('resize', handleResize);
 
@@ -80,18 +85,9 @@ export default function ParticlesCanvas() {
     }
 
     let time = 0;
-    let lastTime = null;
 
-    const render = (currentTime = performance.now()) => {
-      if (lastTime === null) {
-        lastTime = currentTime;
-      }
-      const deltaMs = currentTime - lastTime;
-      lastTime = currentTime;
-
-      const clampedDelta = Math.min(Math.max(deltaMs, 0), 100);
-      const dtModifier = clampedDelta / (1000 / 60);
-
+    // dtModifier: elapsed time in 60 fps frames (provided by the shared loop driver)
+    const render = (dtModifier) => {
       time += 0.025 * dtModifier;
 
       // On touch / mobile devices, provide autonomous gentle orbital drifting
@@ -194,10 +190,14 @@ export default function ParticlesCanvas() {
         }
       }
 
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    if (reducedMotion) drawStatic = () => render(0);
+
+    const stopLoop = startAnimationLoop(render, {
+      fps: FPS_BY_TIER[perfTier] ?? 60,
+      staticFrame: Boolean(reducedMotion),
+    });
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -205,9 +205,9 @@ export default function ParticlesCanvas() {
         window.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseleave', handleMouseLeave);
       }
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
     };
-  }, [theme, perfTier]);
+  }, [theme, perfTier, reducedMotion]);
 
   return (
     <canvas

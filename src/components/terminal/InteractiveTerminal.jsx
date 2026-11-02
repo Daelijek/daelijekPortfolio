@@ -7,6 +7,7 @@ import { Terminal as TerminalIcon, X, Maximize2, Minimize2, CornerDownLeft, Exte
 import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { soundFx } from '../../audio/soundEffects';
 import { track } from '../../lib/analytics';
+import { useDialogFocus } from '../../hooks/useDialogFocus';
 
 const AVAILABLE_COMMANDS = [
   'help',
@@ -121,6 +122,8 @@ export default function InteractiveTerminal() {
 
   const terminalBodyRef = useRef(null);
   const inputRef = useRef(null);
+  const dialogRef = useRef(null);
+  const trapFocus = useDialogFocus(isOpen, dialogRef, { initialFocusRef: inputRef });
   // Monotonic counter for terminal line keys (Date.now() could collide within one millisecond)
   const lineIdRef = useRef(0);
   const nextLineId = (prefix) => `${prefix}-${++lineIdRef.current}`;
@@ -482,13 +485,15 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
           }}
           className="group flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 rounded-xl sm:rounded-2xl bg-[#060a0f]/80 hover:bg-[#081018] border border-white/15 hover:border-[var(--accent-color)] text-[var(--heading-tint)] hover:text-white transition-all shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-2xl font-mono text-xs cursor-pointer"
           title="Toggle Terminal (~ or `)"
-          aria-label="Toggle Interactive Terminal"
+          aria-haspopup="dialog"
+          aria-expanded={isOpen}
         >
-          <TerminalIcon className="w-3.5 h-3.5 text-[var(--accent-color)] group-hover:rotate-12 transition-transform" />
+          <TerminalIcon aria-hidden="true" className="w-3.5 h-3.5 text-[var(--accent-color)] group-hover:rotate-12 transition-transform" />
           <span className="font-bold tracking-wider hidden sm:inline">&gt;_ CLI</span>
           <span className="text-[10px] px-1 py-0.5 rounded bg-white/10 text-white/50 border border-white/10 font-mono hidden md:inline">
             ~
           </span>
+          <span className="sr-only">Interactive terminal (shortcut: backtick)</span>
         </button>
       </div>
 
@@ -518,6 +523,11 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
             )}
 
             <motion.div
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Interactive terminal"
+              onKeyDown={trapFocus}
               initial={{ opacity: 0, scale: 0.95, y: 25 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 25 }}
@@ -539,6 +549,7 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                       setIsOpen(false);
                     }}
                     title="Close"
+                    aria-hidden="true"
                   />
                   <div
                     className="w-3 h-3 rounded-full bg-yellow-500/80 cursor-pointer hover:opacity-100 transition-opacity"
@@ -547,6 +558,7 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                       setIsMaximized((m) => !m);
                     }}
                     title="Toggle Size"
+                    aria-hidden="true"
                   />
                   <div
                     className="w-3 h-3 rounded-full bg-green-500/80 cursor-pointer hover:opacity-100 transition-opacity"
@@ -555,6 +567,7 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                       setIsMaximized((m) => !m);
                     }}
                     title="Maximize"
+                    aria-hidden="true"
                   />
                   <span className="ml-3 text-xs tracking-wider text-white/60 font-semibold flex items-center gap-2">
                     <TerminalIcon className="w-3.5 h-3.5 text-[var(--accent-color)]" />
@@ -570,8 +583,9 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                     }}
                     className="p-1 rounded hover:bg-white/10 text-white/60 hover:text-white transition-colors"
                     title={isMaximized ? 'Restore' : 'Maximize'}
+                    aria-label={isMaximized ? 'Restore terminal size' : 'Maximize terminal'}
                   >
-                    {isMaximized ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                    {isMaximized ? <Minimize2 aria-hidden="true" className="w-3.5 h-3.5" /> : <Maximize2 aria-hidden="true" className="w-3.5 h-3.5" />}
                   </button>
                   <button
                     onClick={() => {
@@ -580,8 +594,9 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                     }}
                     className="p-1 rounded hover:bg-white/10 text-white/60 hover:text-white transition-colors"
                     title="Close (ESC or ~)"
+                    aria-label="Close terminal"
                   >
-                    <X className="w-3.5 h-3.5" />
+                    <X aria-hidden="true" className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
@@ -703,7 +718,7 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
 
               {/* Quick Action Suggestion Chips for Fast Clicking */}
               <div className="px-4 py-2 bg-[#05090f] border-t border-white/5 flex items-center gap-1.5 overflow-x-auto no-scrollbar select-none text-[11px]">
-                <span className="text-white/40 mr-1 shrink-0 font-semibold">[QUICK]</span>
+                <span className="text-white/55 mr-1 shrink-0 font-semibold">[QUICK]</span>
                 {['help', 'skills', 'projects', 'sudo hire dias', 'contact', 'cv', 'clear'].map((cmd) => (
                   <button
                     key={cmd}
@@ -729,6 +744,7 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
+                  aria-label="Terminal command"
                   placeholder="type command (e.g. 'help', 'skills', 'sudo hire dias')..."
                   className="flex-1 bg-transparent border-none outline-none text-white text-xs sm:text-sm font-mono placeholder:text-white/25 caret-[var(--accent-color)]"
                   autoFocus
@@ -740,8 +756,9 @@ Philosophy: Clean Architecture, Deterministic State Management, 60 FPS Micro-Int
                   }}
                   className="p-1.5 rounded-lg bg-[var(--accent-color)]/10 hover:bg-[var(--accent-color)]/20 border border-[var(--accent-color)]/30 text-[var(--accent-color)] transition-colors active:scale-95 cursor-pointer"
                   title="Execute command (Enter)"
+                  aria-label="Run command"
                 >
-                  <CornerDownLeft className="w-3.5 h-3.5" />
+                  <CornerDownLeft aria-hidden="true" className="w-3.5 h-3.5" />
                 </button>
               </div>
             </motion.div>

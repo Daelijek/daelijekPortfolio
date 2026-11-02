@@ -32,7 +32,7 @@ export default function ProjectsContent() {
             {projects.tag || '// PORTFOLIO SHOWCASE'}
           </span>
         </div>
-        <div className="text-xs text-white/40 hidden sm:flex items-center gap-2">
+        <div className="text-xs text-white/55 hidden sm:flex items-center gap-2">
           <span>PORTFOLIO 2026</span>
           <span>&bull;</span>
           <span>DIAS YERMEK</span>
@@ -50,7 +50,7 @@ export default function ProjectsContent() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             {/* Mobile inline breadcrumbs */}
-            <div className="sm:hidden text-[10px] font-mono text-white/40 tracking-widest uppercase mb-1 flex items-center gap-1.5">
+            <div className="sm:hidden text-[10px] font-mono text-white/55 tracking-widest uppercase mb-1 flex items-center gap-1.5">
               <Link href="/" onClick={playClick} className="hover:text-white transition-colors">HOME</Link>
               <span>/</span>
               <span className="text-[var(--accent-color)] font-bold">PROJECTS</span>
@@ -62,7 +62,7 @@ export default function ProjectsContent() {
               {projects.subtitle || 'High-performance web, mobile, and AI production architectures.'}
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs font-mono text-white/40 shrink-0 pb-1">
+          <div className="flex items-center gap-2 text-xs font-mono text-white/55 shrink-0 pb-1">
             <span className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-[var(--accent-color)] font-bold tracking-wider">
               {projects.featured.length.toString().padStart(2, '0')} // PRODUCTION_BUILDS
             </span>
@@ -124,7 +124,7 @@ export default function ProjectsContent() {
                     {/* Technology Stack Pills */}
                     {proj.tags && proj.tags.length > 0 && (
                       <div className="space-y-1.5 pt-1">
-                        <span className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-wider block">
+                        <span className="text-[10px] font-mono font-bold text-white/55 uppercase tracking-wider block">
                           // STACK_ARCHITECTURE
                         </span>
                         <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -153,7 +153,7 @@ export default function ProjectsContent() {
                             <span className="block text-xl sm:text-2xl font-black text-[var(--accent-color)] font-display truncate">
                               {m.value}
                             </span>
-                            <span className="block text-[10px] sm:text-[11px] text-white/40 font-mono uppercase tracking-wider truncate">
+                            <span className="block text-[10px] sm:text-[11px] text-white/55 font-mono uppercase tracking-wider truncate">
                               {m.label}
                             </span>
                           </div>
@@ -184,10 +184,10 @@ export default function ProjectsContent() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70 pointer-events-none" />
                       
                       {/* Floating HUD Tags */}
-                      <div className="absolute top-3 right-3 text-[9px] font-mono text-white/60 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+                      <div className="absolute top-3 right-3 text-[10px] font-mono text-white/60 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
                         [SYS_BUILD // 0x0{idx + 1}]
                       </div>
-                      <div className="absolute bottom-3 left-3 text-[9px] font-mono text-[var(--accent-color)] bg-black/80 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+                      <div className="absolute bottom-3 left-3 text-[10px] font-mono text-[var(--accent-color)] bg-black/80 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
                         // 60FPS_FLUID
                       </div>
                     </div>
@@ -232,7 +232,7 @@ export default function ProjectsContent() {
         </div>
 
         {/* Ledger Table Header (Desktop) */}
-        <div className="hidden md:grid md:grid-cols-12 gap-4 pb-2 border-b border-white/[0.06] text-[11px] font-mono text-white/40 uppercase tracking-wider">
+        <div className="hidden md:grid md:grid-cols-12 gap-4 pb-2 border-b border-white/[0.06] text-[11px] font-mono text-white/55 uppercase tracking-wider">
           <div className="md:col-span-2">// IDENTIFIER</div>
           <div className="md:col-span-5">SYSTEM & ARCHITECTURE</div>
           <div className="md:col-span-3">CORE_STACK</div>

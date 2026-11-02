@@ -1,13 +1,16 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
+import { startAnimationLoop, FPS_BY_TIER } from '../../lib/animationLoop';
 import { Activity } from 'lucide-react';
 
 // Dedicated Hardware-Accelerated 60fps Telemetry Oscilloscope Canvas
 function TelemetryWaveCanvas() {
   const canvasRef = useRef(null);
-  const { theme } = useThemeAudio();
+  const { theme, perfTier } = useThemeAudio();
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -15,7 +18,7 @@ function TelemetryWaveCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animId;
+    let drawStatic = null;
     let width = (canvas.width = canvas.parentElement.offsetWidth || 300);
     let height = (canvas.height = 36);
 
@@ -40,6 +43,7 @@ function TelemetryWaveCanvas() {
       if (!canvas.parentElement) return;
       width = canvas.width = canvas.parentElement.offsetWidth || 300;
       height = canvas.height = 36;
+      if (drawStatic) drawStatic();
     };
     window.addEventListener('resize', handleResize);
 
@@ -92,17 +96,21 @@ function TelemetryWaveCanvas() {
       }
       ctx.stroke();
       ctx.shadowBlur = 0;
-
-      animId = requestAnimationFrame(draw);
     };
 
-    animId = requestAnimationFrame(draw);
+    if (reducedMotion) drawStatic = () => draw(performance.now());
+
+    const stopLoop = startAnimationLoop((_dt, now) => draw(now), {
+      element: canvas,
+      fps: FPS_BY_TIER[perfTier] ?? 60,
+      staticFrame: Boolean(reducedMotion),
+    });
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animId);
+      stopLoop();
     };
-  }, [theme]);
+  }, [theme, perfTier, reducedMotion]);
 
   return (
     <canvas
@@ -144,7 +152,7 @@ export default function TelemetryHUDPod() {
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
             {lang === 'kk' ? 'ЖОБАЛАР' : (lang === 'ru' ? 'ПРОЕКТОВ' : 'PROJECTS')}
           </p>
-          <p className="text-[8.5px] text-white/40 leading-tight">
+          <p className="text-[10px] text-white/55 leading-tight">
             Mobile & Web
           </p>
         </div>
@@ -157,7 +165,7 @@ export default function TelemetryHUDPod() {
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
             {lang === 'kk' ? 'ЖЫЛ ТӘЖІРИБЕ' : (lang === 'ru' ? 'ГОДА ОПЫТА' : 'YEARS EXP')}
           </p>
-          <p className="text-[8.5px] text-white/40 leading-tight">
+          <p className="text-[10px] text-white/55 leading-tight">
             Production Dev
           </p>
         </div>
@@ -170,7 +178,7 @@ export default function TelemetryHUDPod() {
           <p className="text-[10px] font-bold text-white/80 uppercase leading-tight">
             {lang === 'kk' ? 'ҚОЛДАНУШЫ' : (lang === 'ru' ? 'ПОЛЬЗОВАТЕЛЕЙ' : 'USERS')}
           </p>
-          <p className="text-[8.5px] text-white/40 leading-tight">
+          <p className="text-[10px] text-white/55 leading-tight">
             TrustMe platform
           </p>
         </div>
@@ -178,7 +186,7 @@ export default function TelemetryHUDPod() {
 
       {/* 3. Live Animated Oscilloscope / Activity Wave */}
       <div className="space-y-1.5 pt-1">
-        <div className="flex items-center justify-between text-[9px] text-white/40 uppercase">
+        <div className="flex items-center justify-between text-[10px] text-white/55 uppercase">
           <span>REALTIME_PROCESSING</span>
           <span className="text-[var(--accent-color)] font-bold">60 FPS // LOW_LATENCY</span>
         </div>
@@ -189,7 +197,7 @@ export default function TelemetryHUDPod() {
 
       {/* 4. Core Specialization Stack Tags (Clean inline tags) */}
       <div className="space-y-1.5 pt-1">
-        <span className="text-[9.5px] text-white/40 uppercase tracking-wider block">
+        <span className="text-[10px] text-white/55 uppercase tracking-wider block">
           CORE_ENGINEERING_STACK
         </span>
         <div className="flex flex-wrap gap-x-3.5 gap-y-1 text-xs font-mono text-[var(--accent-color)]">
@@ -202,7 +210,7 @@ export default function TelemetryHUDPod() {
       </div>
 
       {/* 5. Live System Stream Diagnostics */}
-      <div className="pt-2 border-t border-white/10 text-[9.5px] text-white/50 space-y-1 font-mono">
+      <div className="pt-2 border-t border-white/10 text-[10px] text-white/50 space-y-1 font-mono">
         {content.system.stats.terminalLog.map((log, idx) => (
           <div key={idx} className="hover:text-[var(--accent-color)] transition-colors truncate">
             {log}

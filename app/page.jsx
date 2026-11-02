@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { startAnimationLoop } from '../src/lib/animationLoop';
+import { useDialogFocus } from '../src/hooks/useDialogFocus';
 import { useThemeAudio } from '../src/context/ThemeAudioContext';
 import { portfolioContent } from '../src/data/portfolioData';
 import { soundFx } from '../src/audio/soundEffects';
@@ -15,6 +17,7 @@ import { Volume2, VolumeX, ArrowRight } from 'lucide-react';
 // Full-height Cyber Terminal Matrix Rain Canvas
 function CyberMatrixRain() {
   const canvasRef = React.useRef(null);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,7 +25,6 @@ function CyberMatrixRain() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId;
     let width = (canvas.width = canvas.parentElement.offsetWidth);
     let height = (canvas.height = canvas.parentElement.offsetHeight);
 
@@ -58,19 +60,8 @@ function CyberMatrixRain() {
 
     window.addEventListener('resize', handleResize);
 
-    let lastTime = null;
-
-    const draw = (currentTime = performance.now()) => {
-      if (lastTime === null) {
-        lastTime = currentTime;
-      }
-      const deltaMs = currentTime - lastTime;
-      lastTime = currentTime;
-
-      // Delta time normalized to standard 60 FPS (16.667ms)
-      // Clamped to 100ms to prevent giant leaps on tab switches / backgrounding
-      const clampedDelta = Math.min(Math.max(deltaMs, 0), 100);
-      const dtModifier = clampedDelta / (1000 / 60);
+    // dtModifier: elapsed time in 60 fps frames (provided by the shared loop driver)
+    const draw = (dtModifier) => {
 
       // Clear canvas completely to keep 100% transparency
       ctx.clearRect(0, 0, width, height);
@@ -113,16 +104,22 @@ function CyberMatrixRain() {
         drops[i] += speeds[i] * 0.35 * dtModifier;
       }
 
-      animationFrameId = requestAnimationFrame(draw);
     };
 
-    animationFrameId = requestAnimationFrame(draw);
+    // Reduced motion: no falling characters at all (a static frame would be empty anyway).
+    if (reducedMotion) {
+      return () => window.removeEventListener('resize', handleResize);
+    }
+
+    // Fixed 60 fps cap: the rain only plays on the boot screen, where the visitor switches
+    // perf tiers — depending on the tier would restart the animation on every click.
+    const stopLoop = startAnimationLoop(draw, { element: canvas, fps: 60 });
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
     };
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <canvas
@@ -140,6 +137,10 @@ export default function HomePage() {
   const [progress, setProgress] = useState(0);
   const [stepText, setStepText] = useState(content.system.preloader.initCore);
   const [astanaTime, setAstanaTime] = useState('');
+  const gateRef = React.useRef(null);
+  // Boot screen behaves as a modal dialog for keyboard / screen-reader users. Initial focus
+  // goes to the container itself (tabIndex -1, no focus ring), so Tab starts inside the screen.
+  const trapGateFocus = useDialogFocus(!isBooted, gateRef, { initialFocusRef: gateRef });
 
   // Live Astana clock
   useEffect(() => {
@@ -251,6 +252,22 @@ export default function HomePage() {
     }
   };
 
+  // Keyboard entry once loading is done: Esc always enters, Enter enters unless it is
+  // activating one of the screen's own buttons (sound / performance choice).
+  const isReady = !isBooted && progress === 100;
+  useEffect(() => {
+    if (!isReady) return;
+    const onKeyDown = (e) => {
+      const onControl = e.target instanceof Element && e.target.closest('button, a, input');
+      if (e.key === 'Escape' || (e.key === 'Enter' && !onControl)) {
+        e.preventDefault();
+        handleEnter();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isReady]);
+
   const _triggerBoot = () => {
     try {
       sessionStorage.removeItem('daelijek_booted');
@@ -268,13 +285,19 @@ export default function HomePage() {
         {!isBooted && (
           <motion.div
             id="hud-preloader"
+            ref={gateRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Dias Yermek portfolio — choose sound and performance, then enter"
+            onKeyDown={trapGateFocus}
+            tabIndex={-1}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.02 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => {
               if (progress === 100) handleEnter();
             }}
-            className={`fixed inset-0 z-50 bg-[#020504]/55 backdrop-blur-md font-mono select-none overflow-hidden ${progress === 100 ? 'cursor-pointer' : ''
+            className={`fixed inset-0 z-50 outline-none bg-[#020504]/55 backdrop-blur-md font-mono select-none overflow-hidden ${progress === 100 ? 'cursor-pointer' : ''
               }`}
           >
             {/* ================= BACKGROUND LAYER: SPLIT GLASS BACKDROP ================= */}
@@ -341,7 +364,7 @@ export default function HomePage() {
                   <div suppressHydrationWarning className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl font-condensed font-black tracking-tight text-[var(--heading-tint)] leading-none select-none drop-shadow-[0_0_40px_var(--accent-glow)]">
                     {progress}%
                   </div>
-                  <div suppressHydrationWarning className="text-[9px] xs:text-[10px] sm:text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase mt-1 truncate">
+                  <div suppressHydrationWarning className="text-[10px] xs:text-[10px] sm:text-xs text-[var(--accent-color)] font-mono tracking-widest uppercase mt-1 truncate">
                     &gt; {stepText}
                   </div>
                 </div>
@@ -386,7 +409,7 @@ export default function HomePage() {
                   className="flex flex-col items-start gap-1 xs:gap-1.5 pointer-events-auto w-full sm:w-[240px] md:w-[280px]"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="w-full flex items-center justify-between text-[9px] xs:text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
+                  <div className="w-full flex items-center justify-between text-[10px] xs:text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
                     <span>PERFORMANCE_TIER</span>
                     <span className="text-[var(--accent-color)] font-bold">[{perfTier.toUpperCase()}]</span>
                   </div>
@@ -413,7 +436,7 @@ export default function HomePage() {
                   className="flex flex-col items-stretch sm:items-end gap-1 xs:gap-1.5 pointer-events-auto w-full sm:w-[240px] md:w-[280px]"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="w-full flex items-center justify-between text-[9px] xs:text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
+                  <div className="w-full flex items-center justify-between text-[10px] xs:text-[10px] text-[var(--text-muted)] font-mono tracking-wider uppercase">
                     <span>SYSTEM_CORE</span>
                     <span suppressHydrationWarning>{progress === 100 ? '[READY // ENTER]' : `${progress}%`}</span>
                   </div>
@@ -496,7 +519,7 @@ export default function HomePage() {
 
             {/* Top-Right Availability Status Pill on Mobile & Tablet Portrait */}
             <div className="md:max-xl:landscape:hidden xl:hidden pointer-events-auto flex items-center gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/60 border border-white/15 backdrop-blur-md text-[10px] sm:text-xs font-mono shadow-lg">
-              <span className="text-white/40 tracking-wider text-[9px] sm:text-[10px] uppercase">{content.system.availabilityBadge}</span>
+              <span className="text-white/55 tracking-wider text-[10px] sm:text-[10px] uppercase">{content.system.availabilityBadge}</span>
               <span className="w-[1px] h-3 bg-white/20" />
               <span className="text-[var(--accent-color)] font-bold tracking-wider flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
@@ -534,7 +557,7 @@ export default function HomePage() {
 
       {/* TOP-RIGHT Availability Status Pill for Tablet Landscape */}
       <div className="hidden md:max-xl:landscape:flex xl:hidden fixed top-4 sm:top-5 right-4 sm:right-6 z-30 pointer-events-auto items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/15 backdrop-blur-md text-xs font-mono shadow-lg">
-        <span className="text-white/40 tracking-wider text-[10px] uppercase">{content.system.availabilityBadge}</span>
+        <span className="text-white/55 tracking-wider text-[10px] uppercase">{content.system.availabilityBadge}</span>
         <span className="w-[1px] h-3 bg-white/20" />
         <span className="text-[var(--accent-color)] font-bold tracking-wider flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] animate-ping" />
