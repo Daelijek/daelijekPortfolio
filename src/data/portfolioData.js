@@ -22,7 +22,7 @@ export const portfolioContent = {
         experienceCount: "3+",
         experienceProgress: "88%",
         terminalLog: [
-          "> ACTIVE_STACK: NEXT15_FLUTTER_REACT_NATIVE",
+          "> ACTIVE_STACK: NEXT16_FLUTTER_REACT_NATIVE",
           "> AVAILABILITY_TYPE: REMOTE / HYBRID / RELOCATE",
           "> CORE_DOMAINS: EDTECH · FINTECH · GOVTECH · BLOCKCHAIN",
           "> SYSTEM_PERF: [HIGH] 60 FPS @ 1.0 DPR"
@@ -38,7 +38,7 @@ export const portfolioContent = {
         loaded: "LOADED"
       },
       marquee: [
-        { label: "RENDERING", value: "NEXT.JS 15 / REACT 19" },
+        { label: "RENDERING", value: "NEXT.JS 16 / REACT 19" },
         { label: "MOBILE_CORE", value: "FLUTTER & RIVERPOD" },
         { label: "CROSS_PLATFORM", value: "REACT NATIVE (EXPO)" },
         { label: "CORE_ID", value: "FRONTEND & MOBILE" },
@@ -96,7 +96,7 @@ export const portfolioContent = {
       tag: "SECTOR_00 // BIOGRAPHY",
       title: "ENGINEERING PHILOSOPHY",
       downloadDossier: "DOWNLOAD FULL CV // DOSSIER.PDF",
-      dossierSize: "VERIFIED · 2026 EDITION · 1 PAGE PDF",
+      dossierSize: "VERIFIED · 2026 EDITION · 2 PAGE PDF",
       lead: "I'm Dias Yermek, a software engineer based in Astana, Kazakhstan. I transform ambitious concepts into rock-solid, visually striking, and performant web & mobile experiences.",
       story: "With a Bachelor's in Software Engineering from Astana IT University, I've engineered products across EdTech, GovTech, FinTech, and Blockchain SaaS. From leading full mobile app recovery and App Store releases at BeyimTech (EdTech startup in Astana Hub) to building smart contract workflows at TrustMe for 1.5M+ users, I obsess over UI fluidity, clean architecture, and technical resilience.",
       sectorsTitle: "COMPETENCY MATRIX",
@@ -108,7 +108,7 @@ export const portfolioContent = {
           skills: [
             { hex: "0x00", name: "TypeScript" },
             { hex: "0x01", name: "React 19" },
-            { hex: "0x02", name: "Next.js 15 (App Router)" },
+            { hex: "0x02", name: "Next.js 16 (App Router)" },
             { hex: "0x03", name: "Vue.js / Nuxt" },
             { hex: "0x04", name: "Tailwind CSS" },
             { hex: "0x05", name: "HTML5 / CSS3" }
@@ -843,45 +843,6 @@ export const portfolioContent = {
         { id: "SYS_RETRIEVAL", slug: "sys-retrieval", title: "Parameters Retrieval", desc: "Hardware diagnostic and telemetry GUI for OS resource and parameter monitoring.", tags: ["Python", "GUI", "Diagnostics"], url: "https://github.com/Daelijek/ParametersRetrieval" }
       ]
     },
-    experience: {
-      tag: "SECTOR_03 // CAREER TELEMETRY",
-      title: "EXPERIENCE LOGS",
-      subtitle: "Production engineering & startup track record",
-      logs: [
-        {
-          id: "finance",
-          title: "Finance AI Manager",
-          category: "React Native // Expo // FastAPI",
-          tag: "MOBILE & AI",
-          status: "PRODUCTION",
-          desc: "Smart financial tracking app with AI receipt processing and analytics."
-        },
-        {
-          id: "rolesieve",
-          title: "RoleSieve Analytics",
-          category: "Next.js 16 // React 19 // FastAPI // NLP",
-          tag: "AI & CAREER INTELLIGENCE",
-          status: "PRODUCTION",
-          desc: "HeadHunter job posting intelligence engine converting live requirements into actionable resume plans."
-        },
-        {
-          id: "opengov",
-          title: "OpenGov.kz Platform",
-          category: "React 19 // Vite // i18n // GovTech",
-          tag: "GOVTECH SPA",
-          status: "ENTERPRISE",
-          desc: "Trilingual open governance portal with MSW API layer, civic initiative registers, and real-time open data."
-        },
-        {
-          id: "berikweb",
-          title: "BerikWeb Portfolio",
-          category: "HTML5 // CSS3 // JS // i18n",
-          tag: "CREATIVE SAAS",
-          status: "SHIPPED",
-          desc: "Ultra-fast multilanguage personal branding portal with 3D interactions."
-        }
-      ]
-    },
     contact: {
       tag: "SECTOR_04 // COMMUNICATION PORT",
       title: "INITIALIZE CONTACT",
@@ -912,14 +873,6 @@ export const portfolioContent = {
       messageSentDesc: "Thank you for reaching out. Transmission received. I will respond to your channel within 24 hours.",
       sendAnother: "SEND ANOTHER TRANSMISSION",
       localTimeLabel: "ASTANA LOCAL TIME"
-    },
-    footer: {
-      rights: "DIAS YERMEK // ALL SYSTEMS OPERATIONAL",
-      engine: "ENGINEERED WITH NEXT.JS 15, TAILWIND & WEB AUDIO API",
-      year: "2026",
-      wannaSayHello: "Wanna Say Hello?",
-      localTime: "Local Time",
-      astanaCity: "Astana"
     }
   },
 
@@ -946,7 +899,7 @@ export const portfolioContent = {
         experienceCount: "3+ года",
         experienceProgress: "88%",
         terminalLog: [
-          "> ACTIVE_STACK: NEXT15_FLUTTER_REACT_NATIVE",
+          "> ACTIVE_STACK: NEXT16_FLUTTER_REACT_NATIVE",
           "> AVAILABILITY_TYPE: REMOTE / HYBRID / RELOCATE",
           "> CORE_DOMAINS: EDTECH · FINTECH · GOVTECH · BLOCKCHAIN",
           "> SYSTEM_PERF: [HIGH] 60 FPS @ 1.0 DPR"
@@ -962,7 +915,7 @@ export const portfolioContent = {
         loaded: "ГОТОВО"
       },
       marquee: [
-        { label: "РЕНДЕРИНГ", value: "NEXT.JS 15 / REACT 19" },
+        { label: "РЕНДЕРИНГ", value: "NEXT.JS 16 / REACT 19" },
         { label: "МОБИЛЬНОЕ_ЯДРО", value: "FLUTTER & RIVERPOD" },
         { label: "КРОССПЛАТФОРМА", value: "REACT NATIVE (EXPO)" },
         { label: "НАПРАВЛЕНИЕ", value: "FRONTEND & MOBILE" },
@@ -1020,7 +973,7 @@ export const portfolioContent = {
       tag: "СЕКТОР_00 // БИОГРАФИЯ",
       title: "ИНЖЕНЕРНАЯ ФИЛОСОФИЯ",
       downloadDossier: "СКАЧАТЬ ПОЛНОЕ РЕЗЮМЕ // CV.PDF",
-      dossierSize: "АКТУАЛЬНО · 2026 ГОД · 1 СТРАНИЦА PDF",
+      dossierSize: "АКТУАЛЬНО · 2026 ГОД · 2 СТРАНИЦЫ PDF",
       lead: "Я Диас Ермек — программный инженер из Астаны. Превращаю смелые идеи в надежные, быстрые и визуально безупречные web и mobile решения.",
       story: "Окончил Astana IT University по специальности Software Engineering. Разрабатывал продукты в сферах EdTech, GovTech, FinTech и Blockchain SaaS. От полного восстановления и релиза мобильного приложения в BeyimTech (EdTech в Astana Hub) до смарт-контрактных систем в TrustMe с 1.5M+ пользователей — для меня важна плавность UI, чистота архитектуры и надежность кода.",
       sectorsTitle: "МАТРИЦА КОМПЕТЕНЦИЙ",
@@ -1032,7 +985,7 @@ export const portfolioContent = {
           skills: [
             { hex: "0x00", name: "TypeScript" },
             { hex: "0x01", name: "React 19" },
-            { hex: "0x02", name: "Next.js 15 (App Router)" },
+            { hex: "0x02", name: "Next.js 16 (App Router)" },
             { hex: "0x03", name: "Vue.js / Nuxt" },
             { hex: "0x04", name: "Tailwind CSS" },
             { hex: "0x05", name: "HTML5 / CSS3" }
@@ -1767,45 +1720,6 @@ export const portfolioContent = {
         { id: "SYS_RETRIEVAL", slug: "sys-retrieval", title: "Parameters Retrieval", desc: "Утилита с графическим интерфейсом для мониторинга параметров и диагностики системы.", tags: ["Python", "GUI", "Diagnostics"], url: "https://github.com/Daelijek/ParametersRetrieval" }
       ]
     },
-    experience: {
-      tag: "СЕКТОР_03 // ТЕЛЕМЕТРИЯ КАРЬЕРЫ",
-      title: "СИСТЕМНЫЕ ЛОГИ ОПЫТА",
-      subtitle: "История коммерческой и стартап-разработки",
-      logs: [
-        {
-          id: "finance",
-          title: "Finance AI Manager",
-          category: "React Native // Expo // FastAPI",
-          tag: "MOBILE & AI",
-          status: "PRODUCTION",
-          desc: "Умный финансовый трекер с AI-распознаванием чеков и аналитикой трат."
-        },
-        {
-          id: "rolesieve",
-          title: "RoleSieve Аналитика",
-          category: "Next.js 16 // React 19 // FastAPI // NLP",
-          tag: "AI & КАРЬЕРНАЯ АНАЛИТИКА",
-          status: "ПРОДАКШН",
-          desc: "Платформа анализа вакансий HeadHunter, превращающая рыночные требования в план усиления резюме."
-        },
-        {
-          id: "opengov",
-          title: "OpenGov.kz Platform",
-          category: "React 19 // Vite // i18n // GovTech",
-          tag: "GOVTECH SPA",
-          status: "ENTERPRISE",
-          desc: "Трехъязычный портал открытого правительства с 10 неймспейсами i18n, слоем MSW и каталогами открытых данных."
-        },
-        {
-          id: "berikweb",
-          title: "BerikWeb Portfolio",
-          category: "HTML5 // CSS3 // JS // i18n",
-          tag: "CREATIVE SAAS",
-          status: "SHIPPED",
-          desc: "Быстрый мультиязычный персональный брендинг-портал с 3D интерактивностью."
-        }
-      ]
-    },
     contact: {
       tag: "СЕКТОР_04 // КАНАЛ СВЯЗИ",
       title: "ИНИЦИАЛИЗАЦИЯ КОНТАКТА",
@@ -1836,14 +1750,6 @@ export const portfolioContent = {
       messageSentDesc: "Спасибо за обращение. Сообщение получено. Я отвечу вам по указанным каналам в течение 24 часов.",
       sendAnother: "ОТПРАВИТЬ ЕЩЕ ОДНО СООБЩЕНИЕ",
       localTimeLabel: "МЕСТНОЕ ВРЕМЯ В АСТАНЕ"
-    },
-    footer: {
-      rights: "ДИАС ЕРМЕК // ВСЕ СИСТЕМЫ В НОРМЕ",
-      engine: "РАЗРАБОТАНО НА NEXT.JS 15, TAILWIND И WEB AUDIO API",
-      year: "2026",
-      wannaSayHello: "Связаться со мной",
-      localTime: "Местное время",
-      astanaCity: "Астана"
     }
   },
 
@@ -1870,7 +1776,7 @@ export const portfolioContent = {
         experienceCount: "3+ жыл",
         experienceProgress: "88%",
         terminalLog: [
-          "> ACTIVE_STACK: NEXT15_FLUTTER_REACT_NATIVE",
+          "> ACTIVE_STACK: NEXT16_FLUTTER_REACT_NATIVE",
           "> AVAILABILITY_TYPE: REMOTE / HYBRID / RELOCATE",
           "> CORE_DOMAINS: EDTECH · FINTECH · GOVTECH · BLOCKCHAIN",
           "> SYSTEM_PERF: [HIGH] 60 FPS @ 1.0 DPR"
@@ -1886,7 +1792,7 @@ export const portfolioContent = {
         loaded: "ДАЙЫН"
       },
       marquee: [
-        { label: "РЕНДЕРИНГ", value: "NEXT.JS 15 / REACT 19" },
+        { label: "РЕНДЕРИНГ", value: "NEXT.JS 16 / REACT 19" },
         { label: "МОБИЛЬДІК_ӨЗЕК", value: "FLUTTER & RIVERPOD" },
         { label: "КРОСС-ПЛАТФОРМА", value: "REACT NATIVE (EXPO)" },
         { label: "БАҒЫТ", value: "FRONTEND & MOBILE" },
@@ -1944,7 +1850,7 @@ export const portfolioContent = {
       tag: "СЕКТОР_00 // ӨМІРБАЯН",
       title: "ИНЖЕНЕРЛІК ФИЛОСОФИЯ",
       downloadDossier: "ТОЛЫҚ ТҮЙІНДЕМЕНІ ЖҮКТЕУ // CV.PDF",
-      dossierSize: "РАСТАЛҒАН · 2026 ЖЫЛ · 1 БЕТ PDF",
+      dossierSize: "РАСТАЛҒАН · 2026 ЖЫЛ · 2 БЕТ PDF",
       lead: "Мен Диас Ермек — Астана қаласынан бағдарламалық инженермін. Өршіл идеяларды сенімді, жылдам әрі көз тартарлық веб және мобильді интерфейстерге айналдырамын.",
       story: "Astana IT University-ін Software Engineering мамандығы бойынша тәмамдадым. EdTech, GovTech, FinTech және Blockchain SaaS салаларында өнімдер әзірледім. BeyimTech (Astana Hub стартапы) мобильді қосымшасын толық жаңғыртып шығарудан бастап, TrustMe платформасында 1.5M+ қолданушыға арналған смарт-келісімшарт жүйелеріне дейін — мен үшін UI жеңілдігі, архитектура тазалығы және жүйе сенімділігі маңызды.",
       sectorsTitle: "ҚҰЗЫРЕТТІЛІК МАТРИЦАСЫ",
@@ -1956,7 +1862,7 @@ export const portfolioContent = {
           skills: [
             { hex: "0x00", name: "TypeScript" },
             { hex: "0x01", name: "React 19" },
-            { hex: "0x02", name: "Next.js 15 (App Router)" },
+            { hex: "0x02", name: "Next.js 16 (App Router)" },
             { hex: "0x03", name: "Vue.js / Nuxt" },
             { hex: "0x04", name: "Tailwind CSS" },
             { hex: "0x05", name: "HTML5 / CSS3" }
@@ -2614,12 +2520,70 @@ export const portfolioContent = {
           tagline: "Танымал мүсінші және CG суретшісіне арналған атмосфералық кинетикалық портфолио",
           category: "Creative Showcase",
           isPrivate: false,
-          description: "Мүсінші, актер және CG суретшісі Берік Жүнісбекке арналған сандық портфолио мен мультимедиа галереясы. Жоғары сапалы визуалды эстетика, 3D интерактивтілік және үш тілде қолдау.",
+          description: "Мүсінші, актер және CG суретшісі Берік Жүнісбекке арналған сандық портфолио мен мультимедиа галереясы. Жоғары сапалы визуалды эстетика, интерактивті галерея және көптілді қолдау.",
           tags: ["HTML5", "CSS3", "JavaScript", "Portfolio", "Multilanguage"],
           image: "/assets/berikWeb.png",
           liveUrl: null,
           githubUrl: "https://github.com/Daelijek/BerikWeb",
-          status: "LIVE_PRODUCTION"
+          status: "LIVE_PRODUCTION",
+          dossier: {
+            projectType: "Бейнелеу өнері және сандық портфолио",
+            entryYear: "2024",
+            targetPlatform: "Әмбебап веб және High-DPI дисплейлер",
+            primaryRole: "Creative Frontend инженер және визуалды дизайнер",
+            technologies: {
+              core: ["HTML5", "CSS3 / Modern Layouts", "Vanilla JavaScript"],
+              multimedia: ["Бейімделгіш lightbox", "Жоғары ажыратымдылықты суреттерді сығу"],
+              features: ["Тілдерді ауыстыру", "Тегіс кинетикалық айналдыру", "Минималистік эстетика"]
+            },
+            colorPalette: [
+              { name: "Жылы қола", hex: "#C69255" },
+              { name: "Галерея қарасы", hex: "#0D0D0D" },
+              { name: "Пергамент", hex: "#EAE6DF" },
+              { name: "Көмір", hex: "#1F1F1F" }
+            ],
+            status: "LIVE_PRODUCTION"
+          },
+          overview: {
+            lead: "Мүсінші, актер және CG суретшісі Берік Жүнісбекке арналған сандық витрина. Портфолио монументалды мүсіндерді, фильм түсірілімінің сахна сыртындағы кадрларын және сандық туындыларды талғампаз минимализм атмосферасында ұсынады.",
+            targetAudience: "Портфолио мен тапсырыстарды қарастыратын өнер коллекционерлері, кураторлар, галерея директорлары және кино продюсерлері.",
+            challenge: "Жоғары ажыратымдылықтағы туындылар мен фотосуреттерді жүктелу жылдамдығын төмендетпей және көркемдік тазалығын бұзбай көрсету.",
+            solution: "Кинетикалық типографиясы, суреттерді біртіндеп декодтауы, жеке lightbox модальдары және көптілді қолдауы бар минималистік қараңғы галерея макеті жобаланды.",
+            myRole: "Визуалды концепция дизайны, бейімделгіш вёрстка, өнімділікті оңтайландыру және халықаралық доменге деплой."
+          },
+          walkthrough: {
+            concept: {
+              title: "Мүсіндік минимализм және кураторлық ағын",
+              desc: "Интерфейс үнсіз галерея қабырғасы сияқты: басты назар қоланың, мәрмәрдің және кинематографияның текстурасына ауады.",
+              highlights: [
+                "Тактильді үлкейтуі бар кураторлық бейнелеу өнері галереясы",
+                "Кинетикалық микро-интеракциялар және тегіс айналдыру",
+                "Қазақ және орыс тілдеріндегі екітілді таныстырылым"
+              ]
+            },
+            architecture: {
+              title: "High-DPI үшін оңтайландырылған медиа қозғалтқышы",
+              desc: "Тәуелділіксіз vanilla JavaScript және оңтайландырылған CSS архитектурасы лезде рендерлеу мен тегіс айналдыруды қамтамасыз етеді.",
+              highlights: [
+                "Біртіндеп жүктелетін жеңіл бейімделгіш сурет жиынтықтары",
+                "Ұзақ қызмет ету үшін runtime тәуелділіктері жоқ",
+                "Экран еніне қарай динамикалық масштабталатын икемді типография"
+              ]
+            },
+            features: [
+              { num: "01", title: "Жоғары ажыратымдылықтағы мүсін галереясы", desc: "Тегіс үлкейтуі және туынды мәліметтері бар интерактивті медиа торы.", metric: "Лезде ашылу" },
+              { num: "02", title: "Екітілді тәжірибе", desc: "Қазақ және орыс тілдеріндегі мәтіндер арасында кедергісіз ауысу.", metric: "Қайта жүктеусіз" },
+              { num: "03", title: "Тактильді мобильді галерея", desc: "Монументалды туындыларды мобильді экрандарда retina анықтығымен үлкейтіп, сырғытып қарау.", metric: "Retina Ready" }
+            ],
+            impact: {
+              metrics: [
+                { label: "ASSET_LOAD", value: "-45%" },
+                { label: "IMAGE_CLARITY", value: "4K" },
+                { label: "UPTIME", value: "100%" },
+                { label: "BOUNCE_RATE", value: "22%" }
+              ]
+            }
+          }
         }
       ],
       otherTitle: "ЖҮЙЕ АРХИВІ ЖӘНЕ ТӘЖІРИБЕЛЕР",
@@ -2663,14 +2627,6 @@ export const portfolioContent = {
       messageSentDesc: "Хабарласқаныңызға рахмет. Хабарлама қабылданды. Мен сізге 24 сағат ішінде жауап беремін.",
       sendAnother: "ТАҒЫ БІР ХАБАРЛАМА ЖІБЕРУ",
       localTimeLabel: "АСТАНАДАҒЫ ЖЕРГІЛІКТІ УАҚЫТ"
-    },
-    footer: {
-      rights: "ДИАС ЕРМЕК // БАРЛЫҚ ЖҮЙЕЛЕР ҚАЛЫПТЫ ЖҰМЫС ІСТЕП ТҰР",
-      engine: "NEXT.JS 15, TAILWIND ЖӘНЕ WEB AUDIO API НЕГІЗІНДЕ ЖАСАЛҒАН",
-      year: "2026",
-      wannaSayHello: "Хабарласқыңыз келе ме?",
-      localTime: "Жергілікті уақыт",
-      astanaCity: "Астана"
     }
   }
 };

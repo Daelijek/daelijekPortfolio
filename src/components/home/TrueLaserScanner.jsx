@@ -170,7 +170,7 @@ export default function TrueLaserScanner() {
             </span>
             <span className="hidden sm:inline text-white/25 font-light">|</span>
             <span className="hidden sm:inline text-white/80 font-bold">
-              <span className="text-[var(--accent-color)] font-black text-xs xs:text-sm sm:text-base">1.5M+</span> USERS
+              <span className="text-[var(--accent-color)] font-black text-xs xs:text-sm sm:text-base">1.5M+</span> PLATFORM USERS
             </span>
           </div>
         </div>

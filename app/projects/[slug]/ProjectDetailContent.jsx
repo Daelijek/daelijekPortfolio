@@ -26,6 +26,27 @@ import {
 } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 
+// Tech callouts per case study. Each line must be verifiable in the project's repository;
+// projects without an entry render no callout block.
+const PROJECT_CALLOUTS = {
+  'finance-management-app': {
+    reliability: 'JWT & bcrypt • OAuth2 password flow',
+    engineering: 'FastAPI async • Swagger / OpenAPI docs',
+  },
+  rolesieve: {
+    reliability: 'Official dev.hh.ru API • 429 / Retry-After backoff',
+    engineering: 'FastAPI + Redis / RQ job queue',
+  },
+  'opengov-kz': {
+    reliability: 'MSW mock API layer',
+    engineering: 'i18next • KZ / RU / EN',
+  },
+  'berik-zhunusbek': {
+    reliability: 'Zero runtime dependencies',
+    engineering: 'HTML5 • CSS3 • Vanilla JS',
+  },
+};
+
 /**
  * Infinite Interactive Gallery Ribbon
  * - Infinite seamless auto-scrolling with GPU translate3d compositing
@@ -404,76 +425,7 @@ export default function ProjectDetailContent({ slug: propSlug }) {
     );
     if (featuredMatch) return featuredMatch;
 
-    const otherMatch = projectsData.otherProjects.find(
-      (p) => p.slug === slug || p.id.toLowerCase() === slug
-    );
-    if (otherMatch) {
-      return {
-        num: otherMatch.id,
-        id: otherMatch.id,
-        slug: otherMatch.slug || otherMatch.id.toLowerCase(),
-        title: otherMatch.title,
-        tagline: otherMatch.desc,
-        category: 'Archive Experiment / Utility',
-        isPrivate: false,
-        description: otherMatch.desc,
-        tags: otherMatch.tags,
-        image: '/assets/Finance.png',
-        liveUrl: null,
-        githubUrl: otherMatch.url,
-        status: 'ARCHIVE_DEPLOYED',
-        dossier: {
-          projectType: 'System Utility & Experiment',
-          entryYear: '2023 - 2024',
-          targetPlatform: 'Terminal / Web / Desktop',
-          primaryRole: 'Software Engineer',
-          technologies: {
-            core: otherMatch.tags,
-            backend: ['REST API', 'Data Pipeline'],
-            aiCloud: ['Containerized'],
-            tools: ['Git', 'CLI']
-          },
-          colorPalette: [
-            { name: 'Cyber Neon', hex: '#00FF9F' },
-            { name: 'Dark Void', hex: '#060A10' },
-            { name: 'Slate Gray', hex: '#8E9CA8' }
-          ],
-          status: 'DEPLOYED'
-        },
-        overview: {
-          lead: otherMatch.desc,
-          targetAudience: 'Engineers & Developers',
-          challenge: 'Repetitive workflows with high execution overhead.',
-          solution: 'Lightweight standalone architecture with minimal dependencies.',
-          myRole: 'Full application development and deployment'
-        },
-        walkthrough: {
-          concept: {
-            title: 'Concept & Implementation',
-            desc: otherMatch.desc,
-            highlights: ['Minimal runtime footprint', 'Zero external heavy dependencies', 'Direct hardware/network telemetry']
-          },
-          architecture: {
-            title: 'Architectural Pipeline',
-            desc: 'Streamlined logic designed for fast execution, deterministic outputs, and modular extensions.',
-            highlights: ['Clean decoupled module design', 'Structured error handling', 'High-throughput data parsing']
-          },
-          features: [
-            { num: '01', title: 'Modular Design', desc: 'Plug-and-play architecture for rapid integration into larger workflows.', metric: 'Sub-10ms' },
-            { num: '02', title: 'Telemetry Readout', desc: 'Direct status logs and real-time execution feedback.', metric: '100% Stable' }
-          ],
-          impact: {
-            metrics: [
-              { label: 'EXECUTION', value: '<10MS' },
-              { label: 'STABILITY', value: '100%' },
-              { label: 'MEMORY', value: '<25MB' },
-              { label: 'UPTIME', value: '99.9%' }
-            ]
-          }
-        }
-      };
-    }
-
+    // Archive repositories have no case study: their cards link straight to GitHub.
     return projectsData.featured[0];
   }, [slug, projectsData]);
 
@@ -999,25 +951,23 @@ export default function ProjectDetailContent({ slug: propSlug }) {
                 ))}
               </div>
 
-              {/* Security & Reliability Callouts */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-white/[0.06]">
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span className="text-xs text-white/80 font-mono">
-                    {project.slug === 'finance-management-app'
-                      ? 'JWT & bcrypt • Session Auth • OAuth2'
-                      : 'AES-256 • TLS 1.3 • Production Ready'}
-                  </span>
+              {/* Reliability Callouts — only verifiable, project-specific facts */}
+              {PROJECT_CALLOUTS[project.slug] && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-white/[0.06]">
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span className="text-xs text-white/80 font-mono">
+                      {PROJECT_CALLOUTS[project.slug].reliability}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <Zap className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
+                    <span className="text-xs text-white/80 font-mono">
+                      {PROJECT_CALLOUTS[project.slug].engineering}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                  <Zap className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
-                  <span className="text-xs text-white/80 font-mono">
-                    {project.slug === 'finance-management-app'
-                      ? 'FastAPI Async • <50ms P99 Latency'
-                      : 'Sub-100ms API Latency'}
-                  </span>
-                </div>
-              </div>
+              )}
             </div>
 
             {/* Design System Palette & Metadata (4 cols) */}
