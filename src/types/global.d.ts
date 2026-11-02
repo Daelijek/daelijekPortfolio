@@ -8,3 +8,10 @@ declare global {
 }
 
 export {};
+
+declare module 'csstype' {
+  interface Properties {
+    /** Non-standard WebKit property used to stop image dragging in galleries. */
+    WebkitUserDrag?: 'auto' | 'element' | 'none';
+  }
+}

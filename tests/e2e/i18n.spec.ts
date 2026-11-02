@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
-const skipBootScreen = async (page) => {
+const skipBootScreen = async (page: Page) => {
   await page.addInitScript(() => sessionStorage.setItem('daelijek_booted', 'true'));
 };
 

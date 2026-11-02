@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 // Skip the once-per-session boot screen, except in the test that covers it.
-const skipBootScreen = async (page) => {
+const skipBootScreen = async (page: Page) => {
   await page.addInitScript(() => sessionStorage.setItem('daelijek_booted', 'true'));
 };
 
@@ -12,7 +12,7 @@ test.describe('pages render', () => {
 
   for (const path of ['/', '/about', '/contact', '/projects', ...CASE_STUDIES.map((s) => `/projects/${s}`)]) {
     test(`${path} responds 200 with a heading and no runtime errors`, async ({ page }) => {
-      const errors = [];
+      const errors: string[] = [];
       page.on('pageerror', (err) => errors.push(err.message));
 
       const response = await page.goto(path);
@@ -71,6 +71,9 @@ test.describe('interactions', () => {
     test.skip(isMobile, 'keyboard shortcut is a desktop feature');
     await skipBootScreen(page);
     await page.goto('/about');
+    // The shortcut listener is attached on hydration; wait for the app to settle first.
+    await page.waitForLoadState('networkidle');
+    await expect(page.getByRole('button', { name: /Interactive terminal/ })).toBeVisible();
 
     await page.keyboard.press('`');
     const terminal = page.getByRole('dialog', { name: 'Interactive terminal' });
