@@ -167,6 +167,7 @@ export default function ContactContent() {
 
           {/* 2. EMAIL (Click to Copy) */}
           <button
+            data-analytics-event="Email Copied"
             onClick={handleCopyEmail}
             onMouseEnter={playHover}
             className="w-full group flex flex-col sm:flex-row items-center justify-between py-5 sm:py-6 px-4 border-b border-[var(--border-subtle)] hover:border-[var(--accent-color)] transition-all duration-300 cursor-pointer text-left"

@@ -1,7 +1,11 @@
 import ContactContent from './ContactContent';
+import { DEFAULT_OG_IMAGE } from '../../src/lib/site';
+
+const title = 'Contact Dias Yermek | Telegram, Email & LinkedIn';
+const description = 'Reach Dias Yermek via Telegram, email, GitHub or LinkedIn. Available for full-time engineering roles and contract work.';
 
 export const metadata = {
-  title: 'Contact Dias Yermek | Telegram Stream, Email & Inquiries // Direct HUD Channel',
+  title: `${title} // Direct HUD Channel`,
   description: 'Connect with Dias Yermek directly via Telegram (@daelijek_og), Email (dias1605ermek@gmail.com), GitHub, or LinkedIn. Available for full-time engineering roles, contract work, and AI consultations.',
   keywords: [
     'Contact Dias Yermek',
@@ -11,24 +15,18 @@ export const metadata = {
     'Contract Software Engineer Kazakhstan',
     'Astana IT Developer'
   ],
+  alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact Dias Yermek | Direct Communication Port',
-    description: 'Connect with Dias Yermek via Telegram, Email, or secure transmission form. Available for full-time and contract roles.',
-    url: 'https://daelijek-portfolio.vercel.app/contact',
-    images: [
-      {
-        url: '/assets/linkedIn_Dias_square.png',
-        width: 1200,
-        height: 630,
-        alt: 'Dias Yermek Contact',
-      },
-    ],
+    title,
+    description,
+    url: '/contact',
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contact Dias Yermek | Direct Communication Port',
-    description: 'Connect with Dias Yermek via Telegram, Email, or direct transmission form.',
-    images: ['/assets/linkedIn_Dias_square.png'],
+    title,
+    description,
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 

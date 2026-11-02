@@ -322,7 +322,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "Full-stack personal finance application built with React Native (Expo) and FastAPI/PostgreSQL. Provides multi-account balance management, drag-and-drop category budgeting, visual expense analytics, multi-currency support (USD, EUR, KZT, RUB, GBP), and secure JWT/OAuth authentication.",
           tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
-          image: "/assets/Finance.png",
+          image: "/assets/Finance.webp",
           liveUrl: null,
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
           status: "PRODUCTION",
@@ -548,7 +548,7 @@ export const portfolioContent = {
               title: "Full Product Landing Architecture",
               subtitle: "End-to-end full-length capture of the entire landing page and interface hierarchy",
               tag: "FULL ARCHITECTURE",
-              image: "/assets/projects/rolesieve/all-landing-page.png"
+              image: "/assets/projects/rolesieve/all-landing-page.webp"
             }
           ],
           dossier: {
@@ -768,7 +768,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "A digital portfolio and multimedia showcase created for sculptor, actor, CG artist, and specialist Berik Zhunusbek. Built with high-fidelity visual aesthetics, interactive gallery components, and multi-language support.",
           tags: ["HTML5", "CSS3", "JavaScript", "Portfolio", "Multilanguage"],
-          image: "/assets/berikWeb.png",
+          image: "/assets/berikWeb.webp",
           liveUrl: null,
           githubUrl: "https://github.com/Daelijek/BerikWeb",
           status: "LIVE_PRODUCTION",
@@ -1199,7 +1199,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "Full-Stack экосистема для учета личных финансов, разработанная на React Native (Expo) и FastAPI/PostgreSQL. Включает агрегацию банковских счетов, гибкое бюджетирование с drag-and-drop сортировкой категорий, наглядную аналитику расходов, мультивалютность (KZT, USD, EUR, RUB, GBP) и безопасную авторизацию.",
           tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
-          image: "/assets/Finance.png",
+          image: "/assets/Finance.webp",
           liveUrl: null,
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
           status: "PRODUCTION",
@@ -1425,7 +1425,7 @@ export const portfolioContent = {
               title: "Сквозная структура лендинга",
               subtitle: "Полная панорама архитектуры экранов и информационных блоков продуктовой страницы",
               tag: "ПОЛНЫЙ ОБЗОР",
-              image: "/assets/projects/rolesieve/all-landing-page.png"
+              image: "/assets/projects/rolesieve/all-landing-page.webp"
             }
           ],
           dossier: {
@@ -1645,7 +1645,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "Цифровое портфолио для скульптора, актера и CG-художника Берика Жунусбека. Сайт передает творческую атмосферу с интерактивной галереей и мультиязычной поддержкой.",
           tags: ["HTML5", "CSS3", "JavaScript", "Portfolio", "Multilanguage"],
-          image: "/assets/berikWeb.png",
+          image: "/assets/berikWeb.webp",
           liveUrl: null,
           githubUrl: "https://github.com/Daelijek/BerikWeb",
           status: "LIVE_PRODUCTION",
@@ -2076,7 +2076,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "React Native (Expo) және FastAPI/PostgreSQL негізінде әзірленген жеке қаржыны басқаруға арналған Full-Stack экожүйесі. Банктік шоттарды біріктіру, санаттарды drag-and-drop арқылы реттеу, шығындар аналитикасы, мультивалюта (KZT, USD, EUR, RUB, GBP) және қауіпсіз JWT аутентификациясы қарастырылған.",
           tags: ["React Native", "FastAPI", "PostgreSQL", "SQLAlchemy", "Expo", "JWT Auth"],
-          image: "/assets/Finance.png",
+          image: "/assets/Finance.webp",
           liveUrl: null,
           githubUrl: "https://github.com/Daelijek/FinanceManagementApp",
           status: "PRODUCTION",
@@ -2302,7 +2302,7 @@ export const portfolioContent = {
               title: "Лендингтің толық құрылымы",
               subtitle: "Өнімдік парақшаның барлық экрандары мен ақпараттық блоктарының толық панорамасы",
               tag: "ТОЛЫҚ ШОЛУ",
-              image: "/assets/projects/rolesieve/all-landing-page.png"
+              image: "/assets/projects/rolesieve/all-landing-page.webp"
             }
           ],
           dossier: {
@@ -2522,7 +2522,7 @@ export const portfolioContent = {
           isPrivate: false,
           description: "Мүсінші, актер және CG суретшісі Берік Жүнісбекке арналған сандық портфолио мен мультимедиа галереясы. Жоғары сапалы визуалды эстетика, интерактивті галерея және көптілді қолдау.",
           tags: ["HTML5", "CSS3", "JavaScript", "Portfolio", "Multilanguage"],
-          image: "/assets/berikWeb.png",
+          image: "/assets/berikWeb.webp",
           liveUrl: null,
           githubUrl: "https://github.com/Daelijek/BerikWeb",
           status: "LIVE_PRODUCTION",

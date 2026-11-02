@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { useThemeAudio } from '../../src/context/ThemeAudioContext';
 import { portfolioContent } from '../../src/data/portfolioData';
@@ -276,10 +277,13 @@ export default function AboutContent() {
           >
             {/* Minimalist Photo Container with Architectural Vignette */}
             <div className="relative w-full aspect-[4/4.3] max-h-[340px] rounded-2xl overflow-hidden border border-white/10 bg-[#04070C] shadow-2xl group">
-              <img
-                src="/assets/linkedIn_Dias_square.png"
+              <Image
+                src="/assets/linkedIn_Dias_square.webp"
                 alt="Dias Yermek"
-                className="w-full h-full object-cover grayscale brightness-95 contrast-105 group-hover:scale-[1.03] group-hover:grayscale-0 transition-all duration-700"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 340px"
+                className="object-cover grayscale brightness-95 contrast-105 group-hover:scale-[1.03] group-hover:grayscale-0 transition-all duration-700"
               />
 
               {/* Theme Hue Tint */}

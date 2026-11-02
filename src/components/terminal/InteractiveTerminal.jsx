@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal as TerminalIcon, X, Maximize2, Minimize2, CornerDownLeft, ExternalLink, Download } from 'lucide-react';
 import { useThemeAudio } from '../../context/ThemeAudioContext';
 import { soundFx } from '../../audio/soundEffects';
-import * as amplitude from '@amplitude/unified';
+import { track } from '../../lib/analytics';
 
 const AVAILABLE_COMMANDS = [
   'help',
@@ -166,11 +166,7 @@ export default function InteractiveTerminal() {
       const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 120);
-      try {
-        amplitude.track('Terminal Opened', { prompt_version: 'BA400.4' });
-      } catch (err) {
-        void err;
-      }
+      track('Terminal Opened');
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
@@ -219,11 +215,8 @@ export default function InteractiveTerminal() {
     if (!rawCmd) return;
 
     soundFx.playClick();
-    try {
-      amplitude.track('Terminal Command Executed', { command: rawCmd });
-    } catch (err) {
-      void err;
-    }
+    // Only the command name is sent, never the free-text arguments the visitor typed.
+    track('Terminal Command Executed', { command: rawCmd.split(/\s+/)[0].toLowerCase() });
 
     // Add to history navigation (avoid duplicate consecutive commands)
     setCommandHistory((prev) => (prev[0] === rawCmd ? prev : [rawCmd, ...prev]));

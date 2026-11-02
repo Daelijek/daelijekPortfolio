@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { soundFx } from '../audio/soundEffects';
+import { track } from '../lib/analytics';
 
 const ThemeAudioContext = createContext({
   theme: 'acid',
@@ -76,11 +77,13 @@ export function ThemeAudioProvider({ children }) {
       // Storage access safe ignore
     }
     soundFx.playSwitch();
+    track('Theme Changed', { theme: newTheme });
   };
 
   const setSoundEnabled = (val) => {
     setSoundEnabledState(val);
     soundFx.setEnabled(val);
+    track('Sound Toggled', { enabled: val });
     try {
       localStorage.setItem('daelijek_sound', val ? 'true' : 'false');
     } catch {
@@ -102,6 +105,7 @@ export function ThemeAudioProvider({ children }) {
 
   const setLang = (newLang) => {
     setLangState(newLang);
+    track('Language Changed', { lang: newLang });
     try {
       localStorage.setItem('daelijek_lang', newLang);
     } catch {
