@@ -25,3 +25,10 @@ out/
 *.sln
 # PDF documents
 *.pdf
+
+# Test artifacts
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+next-env.d.ts

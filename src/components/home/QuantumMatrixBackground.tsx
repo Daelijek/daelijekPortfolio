@@ -1,0 +1,304 @@
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { useThemeAudio } from '../../context/ThemeAudioContext';
+import { startAnimationLoop, FPS_BY_TIER } from '../../lib/animationLoop';
+
+/** A projected lattice vertex for the current frame. */
+interface GridPoint {
+  x: number;
+  y: number;
+  z: number;
+  scale: number;
+  depthAlpha: number;
+  isNearCursor: boolean;
+  pulse: number;
+}
+
+export default function QuantumMatrixBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
+  const { theme, perfTier } = useThemeAudio();
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let drawStatic: (() => void) | null = null; // set once render exists; used to repaint after resize
+    let height = 0;
+    let time = 0;
+
+    const getColor = () => {
+      switch (theme) {
+        case 'cyan': return { r: 0, g: 243, b: 255 };
+        case 'amber': return { r: 255, g: 184, b: 0 };
+        case 'crimson': return { r: 255, g: 0, b: 85 };
+        case 'obsidian': return { r: 255, g: 255, b: 255 };
+        default: return { r: 0, g: 255, b: 159 }; // Acid Green
+      }
+    };
+
+    const resize = () => {
+      const parent = canvas.parentElement;
+      const rect = parent ? parent.getBoundingClientRect() : { width: window.innerWidth / 2, height: window.innerHeight };
+      const dpr = Math.min(window.devicePixelRatio || 1, perfTier === 'high' ? 2 : 1);
+
+      width = rect.width;
+      height = rect.height;
+
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      // Resizing clears the canvas; redraw the single static frame in reduced-motion mode.
+      if (drawStatic) drawStatic();
+    };
+
+    resize();
+    const resizeObserver = new ResizeObserver(resize);
+    if (canvas.parentElement) {
+      resizeObserver.observe(canvas.parentElement);
+    }
+    window.addEventListener('resize', resize);
+
+    const isMobileOrTouch =
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(pointer: coarse)').matches ||
+       'ontouchstart' in window ||
+       (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
+       window.innerWidth < 1024);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current.targetX = e.clientX - rect.left;
+      mouseRef.current.targetY = e.clientY - rect.top;
+    };
+
+    const handleMouseLeave = () => {
+      mouseRef.current.targetX = -1000;
+      mouseRef.current.targetY = -1000;
+    };
+
+    if (!isMobileOrTouch) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    }
+
+    // 3D Grid Parameters
+    const cols = perfTier === 'saver' ? 18 : perfTier === 'med' ? 24 : 30;
+    const rows = perfTier === 'saver' ? 24 : perfTier === 'med' ? 32 : 40;
+
+    const project3D = (x: number, y: number, z: number, fov = 450) => {
+      const scale = fov / (fov + z);
+      return {
+        x: width * 0.5 + x * scale,
+        y: height * 0.5 + y * scale,
+        scale,
+        depthAlpha: Math.max(0, Math.min(1, 1 - z / 600)),
+      };
+    };
+
+    // dt: elapsed time in 60 fps frames, so speed no longer depends on the display refresh rate
+    const render = (dt: number) => {
+      time += (perfTier === 'saver' ? 0.012 : 0.018) * dt;
+      const ease = Math.min(1, 0.08 * dt);
+      const idleEase = Math.min(1, 0.04 * dt);
+
+      let mx, my;
+      if (isMobileOrTouch) {
+        // Continuous, organic autonomous motion on mobile/touch screens
+        mx = width * 0.5 + Math.sin(time * 0.85) * (width * 0.28);
+        my = height * 0.5 + Math.cos(time * 0.65) * (height * 0.24);
+      } else {
+        // Desktop: follow cursor smoothly if hovered, otherwise float smoothly
+        if (mouseRef.current.targetX > -500) {
+          mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * ease;
+          mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * ease;
+        } else {
+          const idleX = width * 0.5 + Math.sin(time * 0.85) * (width * 0.28);
+          const idleY = height * 0.5 + Math.cos(time * 0.65) * (height * 0.24);
+          mouseRef.current.x += (idleX - mouseRef.current.x) * idleEase;
+          mouseRef.current.y += (idleY - mouseRef.current.y) * idleEase;
+        }
+        mx = mouseRef.current.x;
+        my = mouseRef.current.y;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Deep dark obsidian background
+      ctx.fillStyle = '#040608';
+      ctx.fillRect(0, 0, width, height);
+
+      const color = getColor();
+      const rgb = `${color.r}, ${color.g}, ${color.b}`;
+
+      // Subtle diffuse ambient glow on canvas
+      const ambientGrad = ctx.createRadialGradient(width * 0.45, height * 0.5, 20, width * 0.45, height * 0.5, width * 0.65);
+      ambientGrad.addColorStop(0, `rgba(${rgb}, 0.055)`);
+      ambientGrad.addColorStop(0.6, `rgba(${rgb}, 0.02)`);
+      ambientGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = ambientGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Center point for 3D coordinate space
+      const gridWidth = width * 1.35;
+      const gridHeight = height * 1.35;
+      const cellW = gridWidth / (cols - 1);
+      const cellH = gridHeight / (rows - 1);
+
+      // Compute grid vertices in 3D
+      const grid: GridPoint[][] = [];
+
+      for (let r = 0; r < rows; r++) {
+        grid[r] = [];
+        for (let c = 0; c < cols; c++) {
+          const baseX = -gridWidth * 0.5 + c * cellW;
+          const baseY = -gridHeight * 0.5 + r * cellH;
+
+          // Quantum harmonic breathing wave
+          const wave1 = Math.sin(c * 0.35 + time * 0.8) * Math.cos(r * 0.35 + time * 0.6);
+          const wave2 = Math.sin((c + r) * 0.25 - time * 1.2) * 18;
+          const radial = Math.sin(Math.sqrt(c * c + r * r) * 0.4 - time * 1.5) * 12;
+
+          let z = (wave1 * 28 + wave2 + radial);
+
+          // 2D screen projection of base coordinates to check cursor proximity
+          const screenX = width * 0.5 + baseX;
+          const screenY = height * 0.5 + baseY;
+
+          // Gravitational warp / distortion under cursor or autonomous epicenter
+          let warpX = 0;
+          let warpY = 0;
+          let isNearCursor = false;
+
+          const dx = screenX - mx;
+          const dy = screenY - my;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const maxDist = isMobileOrTouch ? 180 : 200;
+
+          if (dist < maxDist) {
+            isNearCursor = true;
+            const force = (1 - dist / maxDist);
+            warpX = -dx * force * (isMobileOrTouch ? 0.26 : 0.35);
+            warpY = -dy * force * (isMobileOrTouch ? 0.26 : 0.35);
+            z -= force * (isMobileOrTouch ? 50 : 70);
+          }
+
+          const proj = project3D(baseX + warpX, baseY + warpY, z + 120);
+          grid[r][c] = {
+            ...proj,
+            z,
+            isNearCursor,
+            pulse: Math.sin(time * 2 + c * 0.2 + r * 0.2) * 0.5 + 0.5,
+          };
+        }
+      }
+
+      // Draw horizontal lattice lines with enhanced glow
+      for (let r = 0; r < rows; r++) {
+        ctx.beginPath();
+        for (let c = 0; c < cols; c++) {
+          const pt = grid[r][c];
+          if (c === 0) ctx.moveTo(pt.x, pt.y);
+          else ctx.lineTo(pt.x, pt.y);
+        }
+        ctx.strokeStyle = `rgba(${rgb}, 0.17)`;
+        ctx.lineWidth = 0.85;
+        ctx.stroke();
+      }
+
+      // Draw vertical lattice lines with enhanced glow
+      for (let c = 0; c < cols; c++) {
+        ctx.beginPath();
+        for (let r = 0; r < rows; r++) {
+          const pt = grid[r][c];
+          if (r === 0) ctx.moveTo(pt.x, pt.y);
+          else ctx.lineTo(pt.x, pt.y);
+        }
+        ctx.strokeStyle = `rgba(${rgb}, 0.17)`;
+        ctx.lineWidth = 0.85;
+        ctx.stroke();
+      }
+
+      // Draw diagonal quantum energy cross-threads
+      ctx.beginPath();
+      for (let r = 0; r < rows - 1; r += 2) {
+        for (let c = 0; c < cols - 1; c += 2) {
+          const p1 = grid[r][c];
+          const p2 = grid[r + 1][c + 1];
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+        }
+      }
+      ctx.strokeStyle = `rgba(${rgb}, 0.07)`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+
+      // Draw glowing Quantum Lattice Nodes
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const pt = grid[r][c];
+
+          // Draw node points
+          const isMajorNode = (r % 3 === 0 && c % 3 === 0);
+          const isGlowNode = pt.isNearCursor || (isMajorNode && pt.pulse > 0.75);
+
+          if (isGlowNode) {
+            ctx.fillStyle = `rgba(${rgb}, ${0.4 + pt.pulse * 0.45})`;
+            ctx.shadowColor = `rgba(${rgb}, 0.6)`;
+            ctx.shadowBlur = 6;
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, (1.8 + pt.pulse * 1.2) * pt.scale, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0; // reset
+          } else if (isMajorNode) {
+            ctx.fillStyle = `rgba(${rgb}, 0.25)`;
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 1.2 * pt.scale, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+    };
+
+    if (reducedMotion) drawStatic = () => render(0);
+
+    const stopLoop = startAnimationLoop(render, {
+      element: canvas,
+      fps: FPS_BY_TIER[perfTier] ?? 60,
+      staticFrame: Boolean(reducedMotion),
+    });
+
+    return () => {
+      stopLoop();
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [theme, perfTier, reducedMotion]);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+      {/* 3D Quantum Matrix Canvas */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 block w-full h-full"
+      />
+
+      {/* Atmospheric edge gradients */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e14]/60 via-transparent to-[#0a0e14]/70 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0a0e14]/70 via-transparent to-transparent pointer-events-none" />
+    </div>
+  );
+}
