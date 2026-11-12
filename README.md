@@ -20,10 +20,11 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Next.js-16.3-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js 16">
+  <img src="https://img.shields.io/badge/Next.js-16.4-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js 16">
   <img src="https://img.shields.io/badge/React-19.2-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React 19">
   <img src="https://img.shields.io/badge/Turbopack-Enabled-00F3FF?style=for-the-badge&logo=vercel&logoColor=black" alt="Turbopack">
   <img src="https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/TypeScript-strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/Framer_Motion-13.1-FF0055?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion">
   <img src="https://img.shields.io/badge/Web_Audio_API-0_Assets-00FF9F?style=for-the-badge" alt="Web Audio API">
   <img src="https://img.shields.io/badge/i18n-KZ%20%7C%20RU%20%7C%20EN-FCEE0A?style=for-the-badge" alt="i18n">
@@ -78,10 +79,12 @@
 - **BerikWeb 3D Gallery** (HTML5, Vanilla JS, 3D Canvas, Retina Multilanguage).
 - Каждое досье включает стек, целевую аудиторию, вызовы безопасности, метрики производительности и прямые ссылки на production/demo.
 
-### 4. Полноценная интернационализация (KZ / RU / EN)
-- 100% паритет ключей во всех трех локалях: **Казахский (`kk`)**, **Русский (`ru`)**, **Английский (`en`)**.
-- Мгновенное переключение без перезагрузки страницы с сохранением в `localStorage`.
-- Локализовано абсолютно всё: системный лог прелоадера, бегущая строка, матрица из 8 секторов, досье проектов и формы обратной связи.
+### 4. Интернационализация через URL (EN / RU / KK)
+- Английский — на основных адресах (`/about`), русский и казахский — с префиксом (`/ru/about`, `/kk/about`).
+- Страницы рендерятся на сервере **сразу на нужном языке** (`<html lang>`, заголовки, мета-теги); в браузер уходят только тексты текущего языка.
+- `hreflang`-альтернативы и `x-default` на каждой странице, sitemap со всеми локалями.
+- Выбранный язык запоминается (cookie) — по языку браузера сайт не перенаправляет: ссылка из английского CV всегда открывает английскую версию.
+- Словари типизированы: русский и казахский проверяются против английского компилятором и тестами (одинаковые ключи, картинки, ссылки).
 
 ### 5. Динамические темы HUD
 - **Obsidian White** (`#FFFFFF`) — строгий высококонтрастный режим.
@@ -90,175 +93,105 @@
 - **Amber Gold** (`#FFB800`) — теплый янтарный HUD.
 - **Crimson Red** (`#FF0055`) — агрессивный системный алерт.
 
-### 6. Продакшн SEO & OpenGraph микроразметка
-- Серверная генерация тегов `metadata`, `openGraph` и `twitter` для каждого маршрута.
-- Автоматическая генерация [`app/sitemap.js`](file:///c:/WorkProject/My%20Projects/daelijekPortfolio/app/sitemap.js) и [`app/robots.js`](file:///c:/WorkProject/My%20Projects/daelijekPortfolio/app/robots.js).
-- Внедрена разметка **Schema.org** (`Person`, `WebSite`, `ProfilePage`).
+### 6. SEO и OpenGraph
+- `canonical`, `hreflang`, OpenGraph и Twitter-карточки для каждой страницы на каждом языке.
+- Превью 1200×630 для сайта и каждого кейса (`npm run og:generate`).
+- [`app/sitemap.ts`](app/sitemap.ts), [`app/robots.ts`](app/robots.ts), разметка **Schema.org** (`Person`, `ProfilePage`).
+
+### 7. Доступность и уважение к настройкам
+- `prefers-reduced-motion`: статичные фоны, без инерционного скролла и автопрокрутки.
+- Терминал, лайтбокс и стартовый экран — модальные диалоги с ловушкой и возвратом фокуса; всё управляется с клавиатуры.
+- Контраст текста ≥ 4.5:1 во всех пяти темах.
 
 ---
 
-## 🏗 Архитектура системы
-
-Проект построен по модульному принципу в парадигме Next.js App Router:
+## 🏗 Архитектура
 
 ```mermaid
 flowchart TD
-  subgraph Root ["app/layout.jsx (Server Root Shell)"]
-    SEO[Metadata & Schema.org JSON-LD]
-    Analytics["@vercel/analytics"]
-    
-    subgraph ClientProviders ["Client State Providers"]
-      ThemeAudioContext[ThemeAudioContext: Themes, Audio Synthesis, i18n State]
-      Cursor[CustomCursor: Desktop only]
-      Noise[NoiseOverlay & Scanlines]
-      Veil[RouteVeil: Smooth Page Transitions]
-      Particles[ParticlesCanvas: Delta-Time Constellation]
-    end
+  Proxy["proxy.ts: /ru, /kk как есть · /en → 308 · иначе rewrite на /en (+ cookie)"]
+  subgraph Layout ["app/[lang]/layout.tsx (Server)"]
+    Meta[Metadata · hreflang · Schema.org]
+    I18n["I18nProvider: locale + общие строки"]
+    Theme["ThemeAudioProvider: тема, звук, perf tier, MotionConfig"]
+    Chrome["NavHeader · InteractiveTerminal · ParticlesCanvas · CustomCursor"]
   end
-
-  subgraph AppRouter ["Next.js App Router Pages"]
-    Home["/ (app/page.jsx): Laser Scanner, Live Terminal, Matrix Rain"]
-    Projects["/projects (app/projects/page.jsx): Featured Flow & Archive"]
-    ProjectDetail["/projects/[slug]: Technical Dossier, Architecture & Metrics"]
-    About["/about (app/about/page.jsx): 8-Sector Competency Matrix & Timeline"]
-    Contact["/contact (app/contact/page.jsx): Direct Telegram Port & Form"]
+  subgraph Pages ["app/[lang]/* (Server, SSG × 3 языка)"]
+    Home["/"] --- About["/about"] --- Projects["/projects"] --- Case["/projects/[slug]"] --- Contact["/contact"]
   end
+  Content["src/content: getDictionary(locale) — только нужный язык"]
+  Engine["src/lib: animationLoop (fps cap, пауза, reduced motion) · analytics · site"]
 
-  subgraph Engine ["Core Engine Layer (src/)"]
-    AudioEngine["soundEffects.js: Procedural Oscillator Envelopes (Web Audio API)"]
-    DataLayer["portfolioData.js: Centralized i18n Store (KZ / RU / EN)"]
-    HUDNav["NavHeader.jsx & FloatingFooter.jsx: System Ticker & Quick Controls"]
-  end
-
-  Root --> ClientProviders
-  ClientProviders --> AppRouter
-  AppRouter --> DataLayer
-  AppRouter --> AudioEngine
-  AppRouter --> HUDNav
+  Proxy --> Layout --> Pages
+  Pages -- "секции словаря как props" --> Client["src/components/* (Client)"]
+  Content --> Pages
+  Client --> Engine
 ```
 
-### Разделение ответственности компонентов:
-
-| Компонент / Директория | Роль в системе | Особенности реализации |
-| --- | --- | --- |
-| `app/layout.jsx` | Серверная оболочка | Инъекция SEO, Schema.org, предзагрузка системных шрифтов (`woff2`), провайдеры контекста |
-| `app/projects/[slug]/` | Динамические кейсы | Детальный парсинг слага, фолбэк для архивных утилит, вкладки спецификаций |
-| `src/context/ThemeAudioContext.jsx` | Глобальное состояние | Управление цветовой темой, профилем звука, уровнем производительности и языком |
-| `src/audio/soundEffects.js` | Звуковой движок | Чистый Web Audio API, Zero-Latency синтез через стек `GainNode` и `OscillatorNode` |
-| `src/components/home/` | Визуальные HUD-модули | `TrueLaserScanner`, `TelemetryHUDPod`, `QuantumMatrixBackground`, `CyberMatrixRain` |
-| `src/components/common/` | Системные оверлеи | `CustomCursor` (с определением `pointer: fine`), `ParticlesCanvas`, `RouteVeil`, `NoiseOverlay` |
-| `src/data/portfolioData.js` | Единая база знаний | 100% строгая типизированная структура для `en`, `ru`, `kk` |
+| Директория | Роль |
+| --- | --- |
+| `app/[lang]/` | Маршруты всех языков: серверные страницы, метаданные, localized 404 |
+| `proxy.ts` | Маршрутизация языков (Next.js 16 Proxy) |
+| `src/content/` | Типизированные словари `en`/`ru`/`kk` и серверный загрузчик |
+| `src/i18n/` | Конфиг языков, `I18nProvider`, хуки ссылок и переключения языка |
+| `src/components/` | Клиентские компоненты по разделам (`home`, `about`, `project`, `navigation`, `terminal`, …) |
+| `src/lib/animationLoop.ts` | Общий rAF-движок: кап fps по tier, пауза вне экрана/в фоне, единый шаг времени |
+| `src/audio/soundEffects.ts` | Процедурный синтез звука (Web Audio API, 0 KB ассетов) |
+| `tests/unit`, `tests/e2e` | Vitest (контент, i18n, команды терминала, аналитика) и Playwright |
 
 ---
 
 ## 🛠 Технологический стек
 
 ```text
-├── Фреймворк:          Next.js 16.3.3 (App Router, Turbopack)
-├── UI-библиотека:      React 19.2.8
-├── Стилизация:         Tailwind CSS 3.4.19 + кастомные CSS-переменные дизайн-системы
-├── Анимации:           Framer Motion 13.1.1 + Canvas 2D Context API
-├── Звуковой синтез:    Web Audio API (Procedural Oscillators)
-├── Иконки:             Lucide React + React Icons (FaGithub, SiTelegram)
-├── Интерактивность:    Canvas Confetti 1.9.4
-├── Аналитика:          @vercel/analytics 1.6.1
-└── Шрифты:             CsGenio & Denominary (локальные woff2 без внешних запросов)
+├── Фреймворк:        Next.js 16 (App Router, Turbopack, Proxy)
+├── Язык:             TypeScript 5 (strict)
+├── UI:               React 19, Tailwind CSS 3.4, Framer Motion
+├── Графика и звук:   Canvas 2D, Web Audio API
+├── Изображения:      next/image (AVIF/WebP), sharp-скрипты оптимизации
+├── Аналитика:        Amplitude (ленивая загрузка, session replay 10%)
+├── Тесты:            Vitest, Playwright
+└── CI:               GitHub Actions, Lighthouse CI, Dependabot
 ```
 
 ---
 
-## 📁 Структура репозитория
+## 💻 Быстрый старт
 
-```text
-daelijekPortfolio/
-├── app/                              # Next.js App Router (Маршруты и серверные страницы)
-│   ├── about/
-│   │   ├── AboutContent.jsx          # Клиентский UI: философия, матрица секторов, таймлайн
-│   │   └── page.jsx                  # Серверный компонент с SEO-метаданными
-│   ├── contact/
-│   │   ├── ContactContent.jsx        # Клиентский UI: форма, копирование email, конфетти
-│   │   └── page.jsx                  # Серверный компонент с SEO-метаданными
-│   ├── projects/
-│   │   ├── [slug]/
-│   │   │   └── page.jsx              # Интерактивное досье кейса (архитектура, метрики, стек)
-│   │   ├── ProjectsContent.jsx       # Список проектов, бейджи, ссылки на кейсы
-│   │   └── page.jsx                  # Серверный компонент с SEO-метаданными
-│   ├── layout.jsx                    # Главный layout: метаданные, провайдеры, оверлеи
-│   ├── page.jsx                      # Главная страница: лазерный сканер, матрица, телеметрия
-│   ├── robots.js                     # Автогенератор /robots.txt
-│   └── sitemap.js                    # Автогенератор /sitemap.xml
-├── public/                           # Публичные статические ассеты
-│   ├── assets/                       # Оптимизированные превью проектов и портрет
-│   ├── fonts/                        # Локальные оптимизированные шрифты woff2
-│   └── images/                       # Системный логотип
-├── src/
-│   ├── audio/
-│   │   └── soundEffects.js           # Процедурный синтез аудио (Web Audio API)
-│   ├── components/
-│   │   ├── common/                   # Курсор, шум, частицы, шторка переходов
-│   │   ├── footer/                   # Плавающий HUD-футер со статусом системы
-│   │   ├── home/                     # Лазерный сканер, телеметрия, 3D сетка, дождь матрицы
-│   │   └── navigation/               # HUD-хедер, переключатель KZ/RU/EN, модалка настроек
-│   ├── context/
-│   │   └── ThemeAudioContext.jsx     # Управление темами, аудио и языком
-│   ├── data/
-│   │   └── portfolioData.js          # Единая база контента и переводов (KZ / RU / EN)
-│   └── styles/
-│       └── globals.css               # Дизайн-токены, сканлайны, неоновые свечения
-├── next.config.mjs                   # Конфигурация Next.js
-├── tailwind.config.js                # Конфигурация Tailwind CSS
-└── package.json                      # Зависимости и скрипты проекта
-```
+Требования: Node.js ≥ 22.6.
 
----
-
-## 💻 Быстрый старт и локальная разработка
-
-### Требования
-- **Node.js**: версии `20.x` или новее
-- **Пакетный менеджер**: `npm` / `pnpm` / `yarn`
-
-### 1. Клонирование репозитория
 ```bash
 git clone https://github.com/Daelijek/daelijekPortfolio.git
 cd daelijekPortfolio
-```
-
-### 2. Установка зависимостей
-```bash
 npm install
+npm run dev            # http://localhost:3000
 ```
 
-### 3. Запуск сервера для разработки (Turbopack)
-```bash
-npm run dev
-```
-Сервер будет доступен по адресу: [http://localhost:3000](http://localhost:3000).
+| Команда | Назначение |
+| --- | --- |
+| `npm run build` / `npm start` | Продакшн-сборка и запуск |
+| `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
+| `npm test` | Unit-тесты (Vitest) |
+| `npm run test:e2e` | E2E-тесты (Playwright; локально — установленный Chrome, нужен `npm run build`) |
+| `npm run images:optimize -- <файлы>` | Перевод изображений в WebP с ограничением ширины |
+| `npm run og:generate` | Пересборка OpenGraph-превью после смены обложек или фото |
 
-### 4. Продакшн-сборка
-```bash
-npm run build
-npm run start
-```
-> Продакшн-сборка через Turbopack компилирует все статические маршруты менее чем за 1 секунду.
-
-### 5. Проверка линтером
-```bash
-npm run lint
-```
+**Добавить кейс:** запись в `projects.featured` во всех трёх словарях `src/content/locales/*.ts` (TypeScript и тесты подскажут, если что-то пропущено) → картинки в `public/assets/projects/<slug>/` → `npm run og:generate`. Страницы, sitemap и hreflang появятся автоматически.
 
 ---
 
-## 📊 Производительность и оптимизация
+## 📊 Производительность
 
-| Метрика | Значение | Как достигнуто |
-| --- | --- | --- |
-| **Lighthouse Performance** | **98 - 100** | Локальные WOFF2 шрифты, динамические импорты, оптимизация Next Image |
-| **Lighthouse Accessibility** | **100** | Семантические HTML5-теги, ARIA-атрибуты, фокус-состояния, контрастные токены |
-| **Lighthouse Best Practices**| **100** | HTTPS, современные стандарты ECMAScript, чистый консольный вывод |
-| **Lighthouse SEO** | **100** | Динамический OpenGraph, robots.js, sitemap.xml, микроразметка Schema.org |
-| **Размер аудио-ассетов** | **0 KB** | Полная замена аудиофайлов на процедурный Web Audio API код |
-| **Кадровая частота (FPS)** | **Стабильные 60 FPS** | Delta-Time нормализация анимаций Canvas и аппаратное ускорение `transform` |
+Честные замеры Lighthouse (mobile, локальный прод-сервер) и история изменений — в [`docs/perf-baseline.md`](docs/perf-baseline.md).
+
+| Метрика | Значение |
+| --- | --- |
+| Performance (mobile) | 86–89 |
+| Accessibility | 100 |
+| Best Practices | 96–100 |
+| SEO | 100 |
+| Вес страницы | ~0.4–0.5 MB (было до 7 MB) |
+| Аудио-ассеты | 0 KB (процедурный синтез) |
 
 ---
 
