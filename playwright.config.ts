@@ -4,9 +4,9 @@ const PORT = 3210;
 const isCI = Boolean(process.env.CI);
 
 /**
- * End-to-end smoke tests against a production build (`next build && next start`).
- * Locally the installed Google Chrome is used (no browser download);
- * CI installs Playwright's Chromium.
+ * End-to-end tests against a production build (`next build && next start`).
+ * Chromium projects use the installed Google Chrome locally (Playwright's Chromium in CI);
+ * WebKit (Safari) and Firefox need `npx playwright install webkit firefox`.
  */
 export default defineConfig({
   testDir: './tests/e2e',
@@ -27,6 +27,10 @@ export default defineConfig({
       name: 'mobile',
       use: { ...devices['Pixel 7'], ...(isCI ? {} : { channel: 'chrome' }) },
     },
+    // Safari and Firefox engines (Playwright's WebKit / Firefox builds).
+    { name: 'webkit', use: { ...devices['Desktop Safari'] } },
+    { name: 'iphone', use: { ...devices['iPhone 14'] } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
   ],
   webServer: {
     command: `npx next start -p ${PORT}`,

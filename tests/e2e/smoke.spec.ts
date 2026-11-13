@@ -146,8 +146,9 @@ test.describe('interactions', () => {
 
     const bar = page.locator('[data-case-bar]');
     await expect(bar).toHaveAttribute('inert', '');
+    // Scroll in steps (mouse.wheel is not available in mobile WebKit).
     for (let i = 0; i < 6; i++) {
-      await page.mouse.wheel(0, 250);
+      await page.evaluate(() => window.scrollBy(0, 250));
       await page.waitForTimeout(150);
     }
     await expect(bar).not.toHaveAttribute('inert');

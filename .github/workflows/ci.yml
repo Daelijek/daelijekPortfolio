@@ -28,7 +28,8 @@ jobs:
       - run: npm run build
         env:
           CASE_FIXTURES: '1'
-      - run: npx playwright install --with-deps chromium
+      # Chromium plus the Safari (WebKit) and Firefox engines for the cross-browser projects.
+      - run: npx playwright install --with-deps chromium webkit firefox
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: failure()
