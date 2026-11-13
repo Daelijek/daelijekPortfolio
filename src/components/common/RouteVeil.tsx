@@ -4,11 +4,18 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
+/**
+ * Short fade-through between pages on client-side navigation.
+ *
+ * `initial={false}`: on the first load the veil starts transparent. It used to be rendered
+ * opaque by the server and faded only after hydration, which hid every page (and its largest
+ * contentful paint) behind a dark screen until the JavaScript had run.
+ */
 export default function RouteVeil() {
   const pathname = usePathname();
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={pathname}
         initial={{ opacity: 1 }}
