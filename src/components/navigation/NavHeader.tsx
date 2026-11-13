@@ -37,6 +37,39 @@ export default function NavHeader() {
     setIsSettingsOpen(false);
   }
 
+  // Phones: the bottom dock (menu, settings, terminal) slides away while reading downwards and
+  // returns on any upward scroll, near the top and at the end of the page. The state is a
+  // <html data-dock-hidden> attribute, so every dock element (including the terminal trigger,
+  // which lives elsewhere) follows it through CSS.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (!isMobile || isMenuOpen || isSettingsOpen) {
+      root.removeAttribute('data-dock-hidden');
+      return;
+    }
+    let lastY = window.scrollY;
+    let hidden = false;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      const nearEdge = y < 80 || window.innerHeight + y >= root.scrollHeight - 80;
+      if (nearEdge || y - lastY < -6) hidden = false;
+      else if (y - lastY > 6) hidden = true;
+      lastY = y;
+      root.toggleAttribute('data-dock-hidden', hidden);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+      root.removeAttribute('data-dock-hidden');
+    };
+  }, [isMobile, isMenuOpen, isSettingsOpen]);
+
   // Outside click and Escape close both overlays.
   useEffect(() => {
     const onPointerDown = (e: MouseEvent) => {
@@ -63,7 +96,7 @@ export default function NavHeader() {
     <>
       <PageHeader />
 
-      <div className="fixed bottom-3 sm:bottom-4 lg:bottom-5 right-3 sm:right-4 lg:right-5 z-50 flex items-end gap-3 font-mono select-none">
+      <div className="mobile-dock fixed bottom-3 sm:bottom-4 lg:bottom-5 right-3 sm:right-4 lg:right-5 z-50 flex items-end gap-2 xs:gap-3 font-mono select-none">
         <NavMenu
           ref={menuRef}
           isOpen={isMenuOpen}
@@ -75,13 +108,8 @@ export default function NavHeader() {
           onNavigate={() => setIsMenuOpen(false)}
         />
 
-        {/* Settings gear (vertically centred on the right edge on mobile) */}
-        <div
-          ref={settingsButtonRef}
-          className={`fixed right-2.5 xs:right-3.5 top-1/2 -translate-y-1/2 md:translate-y-0 md:relative md:top-auto md:right-auto md:self-end select-none font-mono transition-opacity duration-300 z-30 ${
-            isMenuOpen ? 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto' : 'opacity-100'
-          }`}
-        >
+        {/* Settings gear: beside the menu capsule (it makes room while the menu is open on phones) */}
+        <div ref={settingsButtonRef} className={`relative self-end select-none font-mono ${isMenuOpen && isMobile ? 'hidden' : ''}`}>
           <button
             type="button"
             onClick={() => {
@@ -92,7 +120,7 @@ export default function NavHeader() {
             onMouseEnter={playHover}
             aria-expanded={isSettingsOpen}
             aria-label="Global System Settings"
-            className={`w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 md:w-[60px] md:h-[60px] rounded-xl sm:rounded-2xl md:rounded-3xl backdrop-blur-3xl border transition-all flex items-center justify-center shadow-2xl box-border ${
+            className={`w-12 h-12 xs:w-[52px] xs:h-[52px] sm:w-[58px] sm:h-[58px] md:w-[60px] md:h-[60px] rounded-2xl sm:rounded-2xl md:rounded-3xl backdrop-blur-3xl border transition-all flex items-center justify-center shadow-2xl box-border ${
               isSettingsOpen
                 ? 'bg-white text-black border-white shadow-[0_0_25px_rgba(255,255,255,0.5)]'
                 : 'bg-[#060a0f]/70 border-white/15 hover:border-white/35 text-[var(--heading-tint)] hover:text-white shadow-[0_15px_35px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.25)]'

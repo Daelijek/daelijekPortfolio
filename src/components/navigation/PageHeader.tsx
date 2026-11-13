@@ -19,7 +19,7 @@ export default function PageHeader() {
 
   return (
     <>
-      <header className="fixed top-8 left-8 sm:left-12 z-40 font-mono select-none">
+      <header className="brand-stamp fixed top-8 left-8 sm:left-12 z-40 font-mono select-none transition-opacity duration-300">
         <Link href={href('/')} onMouseEnter={playHover} onClick={playClick} className="group block">
           <div className="flex items-center gap-3.5">
             <div className="text-right">

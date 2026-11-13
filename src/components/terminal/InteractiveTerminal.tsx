@@ -177,7 +177,7 @@ export default function InteractiveTerminal() {
   return (
     <>
       {/* Trigger pill (bottom-left) */}
-      <div className="hud-cli-trigger fixed bottom-3 sm:bottom-4 lg:bottom-5 left-3 sm:left-4 lg:left-5 z-40 select-none">
+      <div className="hud-cli-trigger mobile-dock fixed bottom-3 sm:bottom-4 lg:bottom-5 left-3 sm:left-4 lg:left-5 z-40 select-none">
         <button
           type="button"
           onClick={toggle}
