@@ -7,6 +7,8 @@ import { CARD, Reveal, SECTION, SectionHeading, trackSpotlight } from './ui';
 export default function ProjectCapabilities({ project, t, index }: { project: FeaturedProject; t: DetailUi; index: string }) {
   const features = project.walkthrough?.features ?? [];
   if (features.length === 0) return null;
+  // Two columns for 2 and 4 cards, three otherwise; cards grow, so a short last row fills.
+  const largeBasis = features.length === 2 || features.length === 4 ? 'lg:basis-[calc(50%-0.625rem)]' : 'lg:basis-[calc(33.333%-0.834rem)]';
 
   return (
     <section id="features" className={SECTION}>
@@ -14,9 +16,9 @@ export default function ProjectCapabilities({ project, t, index }: { project: Fe
         <SectionHeading index={index} title={t.coreCapabilities} />
       </Reveal>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+      <div className="flex flex-wrap gap-4 sm:gap-5">
         {features.map((feature, i) => (
-          <Reveal key={feature.num} delay={i * 0.08}>
+          <Reveal key={feature.num} delay={i * 0.08} className={`grow basis-full md:basis-[calc(50%-0.625rem)] ${largeBasis}`}>
             <article
               onMouseMove={trackSpotlight}
               className={`${CARD} group h-full overflow-hidden p-6 sm:p-8`}

@@ -62,6 +62,20 @@ export default function ProjectHeader({ project, name, sections, t }: ProjectHea
       const back = backRef.current;
       const title = titleRef.current;
       if (!back || !title || title.offsetHeight === 0) return;
+
+      // Fit guard: the CSS size is an estimate from the character count. If the real name is
+      // wider than the row (wide glyphs, unusual names), shrink it to fit exactly.
+      const page = title.closest<HTMLElement>('.case-study');
+      const row = title.parentElement;
+      if (page && row) {
+        page.style.removeProperty('--case-title-size');
+        const estimate = Number.parseFloat(getComputedStyle(title).fontSize) || 80;
+        const available = row.clientWidth;
+        if (title.scrollWidth > available) {
+          page.style.setProperty('--case-title-size', `${Math.floor((estimate * available) / title.scrollWidth)}px`);
+        }
+      }
+
       const fontSize = Number.parseFloat(getComputedStyle(title).fontSize) || 80;
       dockX.set(back.offsetLeft + back.offsetWidth + 18);
       // From "top edge at the bottom of the row" to "centred in the row".
@@ -221,6 +235,7 @@ export default function ProjectHeader({ project, name, sections, t }: ProjectHea
             {/* Hero title: sits under the bar at the top of the page, docks beside the back button on scroll */}
             <Motion.div
               ref={titleRef}
+              data-case-title=""
               style={{ x: titleX, y: titleY, scale: titleScale, transformOrigin: '0% 50%', top: ROW_HEIGHT }}
               className="absolute left-0 will-change-transform pointer-events-auto text-[length:var(--case-title-size)]"
             >

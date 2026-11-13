@@ -26,14 +26,6 @@ interface ProjectDetailContentProps {
   media: MediaMap;
 }
 
-/** Phone mockups for mobile apps, wide frames for web projects. */
-function isMobileApp(project: FeaturedProject) {
-  const platform = (project.dossier?.targetPlatform || '').toLowerCase();
-  const category = (project.category || '').toLowerCase();
-  const mentionsMobile = platform.includes('ios') || platform.includes('android') || category.includes('mobile');
-  return mentionsMobile && !category.includes('web') && !platform.includes('web');
-}
-
 /**
  * Case-study page. Reading order: overview (pitch, spec sheet, cover, key numbers) ->
  * challenge & solution -> screens -> capabilities -> architecture -> next case study.
@@ -47,13 +39,16 @@ export default function ProjectDetailContent({ project, nextProject, ui: t, medi
   const [name, descriptor] = splitTitle(project.title);
   const gallery: GalleryItem[] = project.gallery ?? [];
   const hasFeatures = (project.walkthrough?.features?.length ?? 0) > 0;
-  const isMobileGallery = isMobileApp(project);
+  // "Challenge & Solution" only when there is a challenge, a solution or a role to show.
+  const hasStory = Boolean(project.overview?.challenge || project.overview?.solution || project.overview?.myRole);
+  // Phone mockups for mobile apps, window frames for web projects (set per project in the content).
+  const isMobileGallery = project.galleryKind === 'phone';
   const address = frameAddress(project);
 
   // Sections present on this page, numbered in reading order (drives headings and the rail).
   const sections: CaseSection[] = [
     { id: 'overview', label: t.navOverview },
-    { id: 'story', label: t.navStory },
+    ...(hasStory ? [{ id: 'story', label: t.navStory }] : []),
     ...(gallery.length > 0 ? [{ id: 'screens', label: t.navScreens }] : []),
     ...(hasFeatures ? [{ id: 'features', label: t.navFeatures }] : []),
     { id: 'stack', label: t.navStack },
@@ -95,7 +90,7 @@ export default function ProjectDetailContent({ project, nextProject, ui: t, medi
           onViewScreens={() => jumpToSection('screens', Boolean(reducedMotion))}
         />
 
-        <ProjectNarrative project={project} t={t} index={indexOf('story')} />
+        {hasStory && <ProjectNarrative project={project} t={t} index={indexOf('story')} />}
 
         <ScreenDeck
           items={gallery}

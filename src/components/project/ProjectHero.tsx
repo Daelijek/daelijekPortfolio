@@ -55,7 +55,7 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
             {project.category}
           </p>
 
-          <h1 className="md:hidden font-display font-bold uppercase tracking-tight text-[var(--heading-tint)] text-4xl leading-[1.05] break-words">
+          <h1 data-case-title="" className="md:hidden font-display font-bold uppercase tracking-tight text-[var(--heading-tint)] text-4xl leading-[1.05] break-words">
             {name}
           </h1>
 
@@ -202,9 +202,10 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
 
           {metrics.length > 0 && (
             <figcaption className="mt-4 sm:mt-5">
-              <dl className="grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
+              {/* Tiles grow to fill each row, so no count (1, 3, 5...) leaves an empty cell */}
+              <dl className="flex flex-wrap gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08]">
                 {metrics.map((metric) => (
-                  <div key={metric.label} className="flex flex-col-reverse justify-end gap-1.5 min-w-0 bg-[var(--bg-secondary)] px-4 py-5 sm:px-7 sm:py-6">
+                  <div key={metric.label} className="flex flex-[1_1_40%] lg:flex-[1_1_0%] flex-col-reverse justify-end gap-1.5 min-w-0 bg-[var(--bg-secondary)] px-4 py-5 sm:px-7 sm:py-6">
                     <dt className={LABEL}>{humanize(metric.label)}</dt>
                     <dd className="font-display font-bold text-[var(--accent-color)] text-[clamp(1.3rem,2.5vw,2.25rem)] leading-tight tracking-tight break-words">
                       {metric.value}

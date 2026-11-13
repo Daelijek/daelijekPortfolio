@@ -24,7 +24,7 @@ function get(obj: Json, dotted: string): Json {
 
 // Fields that must be identical in every language: assets, links, identifiers,
 // and the machine-style project status ("system.status" is translated on purpose).
-const LANGUAGE_NEUTRAL = /\.(image|liveUrl|githubUrl|url|slug|id|hex)$|^projects\.featured\.\d+\.status$/;
+const LANGUAGE_NEUTRAL = /\.(image|liveUrl|githubUrl|url|slug|id|hex|galleryKind)$|^projects\.featured\.\d+\.status$/;
 
 describe('locale dictionaries', () => {
   const enPaths = leafPaths(en);
@@ -37,6 +37,10 @@ describe('locale dictionaries', () => {
     for (const p of enPaths.filter((x) => LANGUAGE_NEUTRAL.test(x))) {
       expect(get(locales[lang], p), p).toEqual(get(en, p));
     }
+  });
+
+  it('every case study says how its screens are framed (web window or phone)', () => {
+    for (const project of en.projects.featured) expect(['web', 'phone'], project.slug).toContain(project.galleryKind);
   });
 
   it('has no empty strings', () => {
