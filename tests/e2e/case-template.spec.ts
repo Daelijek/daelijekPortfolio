@@ -34,7 +34,7 @@ test.describe('case-study template with edge-case data', () => {
         // The visible hero title stays inside the viewport and does not overflow its own box.
         const titleFits = await page.evaluate(() =>
           [...document.querySelectorAll<HTMLElement>('[data-case-title]')]
-            .filter((el) => el.getClientRects().length > 0)
+            .filter((el) => el.getBoundingClientRect().width > 2) // visible ones (the desktop <h1> is screen-reader only)
             .every((el) => el.getBoundingClientRect().right <= window.innerWidth && el.scrollWidth <= el.clientWidth + 1)
         );
         expect(titleFits, `hero title fits at ${width}px`).toBe(true);
