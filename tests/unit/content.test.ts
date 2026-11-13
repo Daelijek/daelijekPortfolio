@@ -5,6 +5,7 @@ import en from '../../src/content/locales/en';
 import ru from '../../src/content/locales/ru';
 import kk from '../../src/content/locales/kk';
 import { getCaseStudy, getCaseStudySlugs, getDictionary } from '../../src/content';
+import manifest from '../../src/content/imageManifest.json';
 
 const locales = { en, ru, kk } as const;
 const PUBLIC_DIR = path.resolve(__dirname, '../../public');
@@ -61,6 +62,34 @@ describe('assets referenced by content exist', () => {
     for (const slug of await getCaseStudySlugs()) {
       expect(fs.existsSync(path.join(PUBLIC_DIR, 'og', `${slug}.jpg`)), slug).toBe(true);
     }
+  });
+});
+
+/** Width and height from a WebP file header (VP8, VP8L and VP8X). */
+function webpSize(buf: Buffer): [number, number] {
+  const chunk = buf.toString('ascii', 12, 16);
+  if (chunk === 'VP8X') return [1 + buf.readUIntLE(24, 3), 1 + buf.readUIntLE(27, 3)];
+  if (chunk === 'VP8 ') return [buf.readUInt16LE(26) & 0x3fff, buf.readUInt16LE(28) & 0x3fff];
+  if (chunk === 'VP8L') {
+    const bits = buf.readUInt32LE(21);
+    return [(bits & 0x3fff) + 1, ((bits >> 14) & 0x3fff) + 1];
+  }
+  throw new Error(`not a WebP file (${chunk})`);
+}
+
+describe('image manifest (npm run images:manifest)', () => {
+  const entries = manifest as Record<string, { width: number; height: number; blur: string }>;
+  const images = [...new Set(leafPaths(en).filter((p) => p.endsWith('.image')).map((p) => get(en, p) as string))];
+
+  it.each(images)('%s is listed with its real size and a blurred preview', (src) => {
+    const entry = entries[src];
+    expect(entry, 'missing: run `npm run images:manifest`').toBeDefined();
+    if (src.endsWith('.webp')) {
+      expect([entry.width, entry.height], 'stale size: run `npm run images:manifest`').toEqual(
+        webpSize(fs.readFileSync(path.join(PUBLIC_DIR, src)))
+      );
+    }
+    expect(entry.blur).toMatch(/^data:image\/webp;base64,/);
   });
 });
 

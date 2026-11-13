@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ProjectDetailContent from '@/components/project/ProjectDetailContent';
 import { getCaseStudy, getCaseStudySlugs, getDictionary } from '@/content';
+import { mediaFor } from '@/content/media';
 import { resolveLocale } from '@/i18n/params';
 import { pageMetadata, projectOgImage } from '@/lib/site';
 
@@ -55,5 +56,8 @@ export default async function CaseStudyPage({ params }: CaseStudyParams) {
     image: next.image,
   };
 
-  return <ProjectDetailContent project={project} nextProject={nextProject} ui={projects.detailUi} />;
+  // Sizes and blurred previews of the images this page shows (cover, screens, next cover).
+  const media = mediaFor([project.image, ...(project.gallery ?? []).map((item) => item.image), next.image]);
+
+  return <ProjectDetailContent project={project} nextProject={nextProject} ui={projects.detailUi} media={media} />;
 }

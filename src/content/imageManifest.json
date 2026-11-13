@@ -1,0 +1,182 @@
+{
+  "/assets/Finance.webp": {
+    "width": 1920,
+    "height": 1236,
+    "blur": "data:image/webp;base64,UklGRuoAAABXRUJQVlA4WAoAAAAQAAAAFwAADgAAQUxQSCIAAAABH6CgbRuGP962+4dGRMQbGgSSNvJkj/6ADxDR/wgM9CcwVlA4IKIAAACQBACdASoYAA8APu1iqU2ppaQiMAgBMB2JbACdMoRisArpE1b9b9a/M5AbEwAA/tAtMSeYjJ/1Wuvaew6P7Z1vwAXrjHEENVh4KN3PtSnelfOrtTILdLO0cEQMqFikcC/s0a0AO6xDlEKOygWSikTOUgr06k3Y20WRwQQnQ2rSXq1UExWPBXlsD4tC90eT35r4H/fmskCk3jEF0P61yg7tAAA="
+  },
+  "/assets/berikWeb.webp": {
+    "width": 1650,
+    "height": 1062,
+    "blur": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4WAoAAAAQAAAAFwAADgAAQUxQSBMAAAABD/D0/4iIIBAgONevIKL/KXFJAFZQOCB0AAAAsAMAnQEqGAAPAD7tYqlNqaWjojAIATAdiWUAAFvpAIl5/smKFQAA/vQlUyuCTAYP2Qoy9YYefdU9s93ImTLoT80Dy0EXC5h/ZmXLjUZQAFjD4Avub58RaE8DK4RdhDDfP4TcFctw24o0pTXmBx3QbvSnmAA="
+  },
+  "/assets/linkedIn_Dias_square.webp": {
+    "width": 1024,
+    "height": 1024,
+    "blur": "data:image/webp;base64,UklGRsgAAABXRUJQVlA4ILwAAABQBQCdASoYABgAPu1or1CppaQiqAqpMB2JQBlAAias/aUKTjiMYrQ9jl8qNALHkEJ7hAAA/tOEsV8QsWIN9jDBS7Ns4FNP5h1bH2Yru9t59c2AHytajHKiRlz022A3rvq3trR6jiuRv9+O5mOVO0kPnr/w/LKWFytzKyyWGyZakhnn2yKjNN/Y/oii6wEMInnGnRd02gbFn+T3ehmjvLstNITa77Wy21sJ9EzEJIO8TiP1Hz3vs37ywNfkAA=="
+  },
+  "/assets/projects/fintrack/screen-01-home.webp": {
+    "width": 590,
+    "height": 1280,
+    "blur": "data:image/webp;base64,UklGRkQBAABXRUJQVlA4IDgBAAAwCACdASoYADQAPu1qr0+ppiSiLBqpmTAdiWQAz8/BbKo8Ggh2x5X5sTUNJdrNikN6bYhbHn4WGx/SLrlgkQtt+ELLYMOu1E7pAAD+8eEWpWxdcDC9wqzAt5qLgbgccgfkS69gj4z//lswy2tCoWjUOZDP/IpzUzPAA/qoOKV7rUgmCWrAVuN+d/FNNaJ0Qj8lT9YO+jmU5BgH5i6xwKkCi3yFG1KQATY8HYybERn2sgkwKqcgvFEGsHRGbNVEcwgIp5c5sbSEXB32yR+i29XI4dhtUGX00PXrUo89wK0CBh71oT3FeMSGrZj3chLuvDsJxgPyTlR3m4XsYe3JBrYNIQLCCwLI38nw7bt0JpB5vX1BSheTpBnHla9SqRxFsHdSvjMqavvRZQNOVzCjImOTIsOAyhAAAAA="
+  },
+  "/assets/projects/fintrack/screen-02-transactions.webp": {
+    "width": 295,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRjYBAABXRUJQVlA4ICoBAADwBwCdASoYADQAPu1uqlAppqOirBVbMTAdiWgAwikI+ryqbQAC728VvpLUv548IuwfHr5n3NLPCRmbziB7ljRCRmq3KI/+oUAA/vN2/axW5XPy4M+0z03yvxhQkwBLZZWIRXw4qRzQI/pMYu60vNY/yVwsEn/0pRnBFDK8XQ6EN8GQZ4rShmPt1vYRn9QqkN8VeV/egwns7LPrdh/Vr1ZjpL+0xFnJ2BjlqLn/m3ZmODS1X+I3AATqo1qN+mOHk8b85nW9VKhQuetDn0MKkpEgewgSAK5fP/ybcOSOrgDPHRXl3EfB8/VXsjtynSbcPDZQViMIoHBVuTcRT13luXux+75OSkfqvVWbK0HcalHFfHG2u2cw+UbKCZ7YKqaJl3DdvLPpc0S6AAAA"
+  },
+  "/assets/projects/fintrack/screen-03-budget.webp": {
+    "width": 354,
+    "height": 768,
+    "blur": "data:image/webp;base64,UklGRh4BAABXRUJQVlA4IBIBAAAwCACdASoYADQAPulgok2pJaMiM/maqSAdCWQAynwJ/aEK3+u294EMY9QqHibtxb6JcqrrpWiMAI5hzNWsyHGMAuvP7cijZqg5wAD+8eEVgor3bqIomzuUpOOKcc+r6DAj6e+VyVEWtmilb5J5+4Z9qlzsictxIbUxxe3y8MB2NcGs88mIyJn/CVigSjroeje8ZwPklxpujTbFDb9NRN5rKe1YOJojaX0rW0t+MFcRhn04Ymygv+48dQ7hqIcdU1eZAqgXK6AYAZAzXAEM5P2Cs6fm+yd0WzdGPePMyTO2+OwP/l13lOlmIOXnI9pq22OxqQwVjWtY4farJwUANaQeOUYsqArcKD2PnwMbS5UwoAAA"
+  },
+  "/assets/projects/fintrack/screen-04-analytics.webp": {
+    "width": 295,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRgYBAABXRUJQVlA4IPoAAAAwBwCdASoYADQAPu1kqVEppSQirBVcyTAdiUAZVwE/tULAA9EyN6wgIf5AScBm2Kp0l4YzoN4+cX6CWbwVnoYT+AAA/vHhFVD9dNIuem9TaSru5PnDZOGGnMxnXB9lbFBdme2d/MgXRePwjmOwI+z+uBgoYlnGvlhfRw56RBhqeNNyLxmHmRyjbJ4B0EAbXQf3R0190XaNr5pX3dajeBLygke6UcPKN9VgOs/CEtM6lr22yPa/eCG3cvbXPlLLPaMtDNSKF8R5PYkL8zUoqCin/R54lIjJu30eO8xozB1kbwlFbhZzsLCV3bmmt5lS4/x28RIp9V/+AAAA"
+  },
+  "/assets/projects/fintrack/screen-05-reports.webp": {
+    "width": 295,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRhYBAABXRUJQVlA4IAoBAABwBwCdASoYADQAPuVepk2pJSOiM/ZtUSAciWIAy7IgBsIA3gs/ukpbJQ2m+gt7Nd7dZSnS5iP+XzzfH+MsSZl8lqkCgAD+8eEViJmO1XmKqrsudi9cH4R6VJQ20gMxXCr0cdxqBKGZ2hIMPYWxxgfaj1nB0UuEn7Alg6UkGf+w4gszqXUm3W/HsQDsrQoT+mRtlPtI6a0q+Nfxtmu0FNzTRKJVYPRRP6VsmP6VXFb/Fo8htmtG3MPPRPCTKTlwgsifuWVJcOCRjDoAyil3kiE2hiBHRtOlWN9FK8O7H3gccKYWhofDbaHUTHS3XG7BVGUtGL5B7Rhh4yraTjxU/HzRaWmox7xHwAAAAA=="
+  },
+  "/assets/projects/fintrack/screen-06-export.webp": {
+    "width": 295,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRtQAAABXRUJQVlA4IMgAAADQBQCdASoYADQAPu1wslMppiSipApJMB2JaScCaqPZ8BYnY42ThH6qGNU/zVQ+mQOh1kYOmrlQAP7x0lnPzHiCUKrKxTasAMP7GOANv/GcCsL2GgMgnDyzHxnJWMbpKv2+RLCNvJ/fgpK0mQSRI21mYzhKxtRufBCjmcx8cPw75RNuU3jrEGkEGBl+mRE4MYu5Whi+7lBj/wQH3LAEYU2oBWbL3aOfwBd6e5xndpH0U5UnvcICFYk9UKi4QBsfAfWX3boCMgAAAA=="
+  },
+  "/assets/projects/fintrack/screen-07-profile.webp": {
+    "width": 295,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRhQBAABXRUJQVlA4IAgBAABQBwCdASoYADQAPu1gqE4ppSOiMBgMATAdiUAZaS/+7g6P8sWQt1qIBc6iZQyoYb5hsIB1dsWDmzeKkOYZbG2JfeagAP7q8g4ktsvSKhBPaKLbtf6LDiEJgHtee9AqP2LJft/Mzk/vrFWj87EI8tjy8+wsbHiR7E/dY2Z2Kv35JC3EUDLUjwf5y3kfz2N/zve+vwFAoLQbBSsQ3qUe3deUUT81/u9yEKfKjncl1L7SlzMm3qdL0Ksm8vdUTNjdzuZ4dUvu3vHvHAvt5gIkK0TUTRzIf8f/kLyoSwqWNIu6gPbx0gu0Xn+7Hkho63nPS9BKQyoUAKsr/10yGPahOwQ+9jLGpgAAAAA="
+  },
+  "/assets/projects/fintrack/screen-08-ai-assistant.webp": {
+    "width": 295,
+    "height": 640,
+    "blur": "data:image/webp;base64,UklGRsYAAABXRUJQVlA4ILoAAAAwBgCdASoYADQAPu1wsFMppiSipApJMB2JaR9ACagAZ1M7ybMbE8ZkPH/J9x31JzTr3hX0loH4jc1AAP7x0lq6IRXY7mpzRd8cBeAMHudhZpgsbF1lsRqFkOot3t/zW7bGS7MR2gbQhIMPYYf9+wbwLBIQymgeOsJf6dbE+cG9XY2p4n7oGpEgd7PXdHlmT3EUEvrjvabzd0yYKEBI2mNCC9SakQuTtQFycTJMKFinNvbAPaH6fWOAAAA="
+  },
+  "/assets/projects/openGov/hero-section.webp": {
+    "width": 2560,
+    "height": 1267,
+    "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADQAwCdASoYAAwAPu1iqk2ppaQiMAgBMB2JbACdFQAAce2ZuniP8/AA8pgoRkn+SdmmOnmikfTPdP8Ud66RzrWUf46PcgUHhSu0dp50WVwxtbMp3cS5yZYnjG8mlu1hJFPS+j+9+ef/PX6n/+MCbiGR+zV+rqAA"
+  },
+  "/assets/projects/openGov/key-platform-and-legislation.webp": {
+    "width": 2560,
+    "height": 1427,
+    "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAABQAwCdASoYAA0APu1oqk6ppiQiMAgBMB2JaQAAW+nyDa3gAAD+83PqICfNmSJUMEwa+4AaDWNdI7hiBAA="
+  },
+  "/assets/projects/openGov/latest-news.webp": {
+    "width": 2560,
+    "height": 1221,
+    "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAABQAwCdASoYAAsAPu1iqk2ppaQiMAgBMB2JaQAAUqW4G7/oYAD+84K4wuNaFWg7wRFHhCEeQnf3NcC8qZEeGZx4UBAAAA=="
+  },
+  "/assets/projects/openGov/news-detail.webp": {
+    "width": 2559,
+    "height": 1534,
+    "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAwCdASoYAA4APu1mqk2ppaQiMAgBMB2JZwAAUqkCBTbno6BiqAD+84Cfj7O/kSuwKCf/SW8Jxggm510opQ6O5nAJzHZif3Bf/sFeW3scAA=="
+  },
+  "/assets/projects/openGov/news.webp": {
+    "width": 2560,
+    "height": 1460,
+    "blur": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAwCdASoYAA4APu1iqk2ppaQiMAgBMB2JaQAAW+yehxxpN/9MOAD+84F4qGzgfTaDgjhSGT6nTfEyZi7WkS5QTgJkhCUnKgjl6xuYhH67n1KkI4ZEjCmjYcIAAA=="
+  },
+  "/assets/projects/openGov/open-data-in-kazakhstan.webp": {
+    "width": 2560,
+    "height": 1162,
+    "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAwCdASoYAAsAPu1mqk4ppaOiMAgBMB2JZACdEf/gJx7OAnXiOgAA6tJrX+O4CFsoNQ/DLnnJEJTVkNA/jl/qdH102LXC6HjtH4iAUQAAAA=="
+  },
+  "/assets/projects/openGov/open-gov-showcase.webp": {
+    "width": 1920,
+    "height": 1072,
+    "blur": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAACwAwCdASoYAA0APu1iqU2ppaOiMAgBMB2JZgCdABH4ETSyYfZssADNx6J7slH8pPfVQkB+mM9HZZBFAlcKMP0nof5yjFf2NUyWJ5T0vOc5ZF4eXe1nvZE1tm8VFFahgk/IytTBOrPEMn+Wvrqn6gF5wmV+IxCAUnEcxNJDAETlQiLgAAA="
+  },
+  "/assets/projects/openGov/projects.webp": {
+    "width": 2560,
+    "height": 1463,
+    "blur": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAACQAwCdASoYAA4APu1iqU2ppaOiMAgBMB2JZwAD43oN+/4+ZylgAP7ze/7aCD8R+7Ws/UlrcmTOGf7KtY7OXd9lzaFz29UCYAAAZ7elXVp/O5xqYJ3hVxRNpLo6uCqAAAA="
+  },
+  "/assets/projects/openGov/successfull-use-cases.webp": {
+    "width": 2560,
+    "height": 1124,
+    "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAwCdASoYAAsAPu1krU2ppaSiMAgBMB2JZwAD4WoLtcWQJ0cxhgAA/vN0WQbc5I0DKtkbxvtGl/JK5FD0+3leUf2oriAy9dHcLgBdcEZngEj4HAA="
+  },
+  "/assets/projects/openGov/the-role-of-opengov.webp": {
+    "width": 2560,
+    "height": 680,
+    "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAwAwCdASoYAAYAPu1iqU2ppaQiMAgBMB2JQBUkUAAIkcGAAP6e1DrR7zw/3+q8QZntf8OWPYqtum3aXlibwAAA"
+  },
+  "/assets/projects/openGov/what-is-open-data.webp": {
+    "width": 2560,
+    "height": 1216,
+    "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAwAwCdASoYAAsAPu1iqU2ppaQiMAgBMB2JaQAAUqtHQj2AAP7zgf/ZmiWF04Sd/B+eo3U8W6Ks6pt6+/VCAAAA"
+  },
+  "/assets/projects/rolesieve/all-landing-page.webp": {
+    "width": 1440,
+    "height": 8450,
+    "blur": "data:image/webp;base64,UklGRuIAAABXRUJQVlA4INYAAACwCACdASoYAI0APu1irFMppKOiqPM8STAdiWkA0YADw3IadLDGpUWMiWetBgojejpicl8Bk7xGeo7X+7Uix9YmF89aba5jtJDOxZQS0AAA/ujwA1cM+sGSmf8puOIGJbL5mEaqsmN/WOS37DCZ0oLdSkuYhyw3wH882agRYt1JHtJ586DRWl8evWTcRGG9pHXIWBH4dj2L2Vg97TJlXZYd0czmnMhq6AZIh+k10QvxQFaSu8Xa9ABsigV7kUDaaH4Ef+jc1r5sBiGecOrSzJJTLKAIAAAA"
+  },
+  "/assets/projects/rolesieve/by-the-numbers-section.webp": {
+    "width": 2560,
+    "height": 1279,
+    "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAAAQAwCdASoYAAwAPu1iqU2ppaOiMAgBMB2JZwAAifP6uAAA/vCiwcPZvcHX7nixgobvcrCLZKi5ZaMCAAA="
+  },
+  "/assets/projects/rolesieve/contacts-page.webp": {
+    "width": 2560,
+    "height": 1279,
+    "blur": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAgCdASoYAAwAPu1iqU2ppaQiMAgBMB2JZwAAifQAAP7wtqYkLVpnquyAMTxBb9oHz7YCAAA="
+  },
+  "/assets/projects/rolesieve/documentation-quic-start-page.webp": {
+    "width": 2560,
+    "height": 1291,
+    "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoYAAwAPu1iqk2ppaQiMAgBMB2JZwDImC0H5hDMAAD+8KK3dUuDYvJmgdGgy140CK3YwQEEh6zYT1bAAAA="
+  },
+  "/assets/projects/rolesieve/hero-section.webp": {
+    "width": 2560,
+    "height": 1212,
+    "blur": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACwAwCdASoYAAsAPu1iqU2ppaOiMAgBMB2JZQDG9B8x1q0pM5j4AAD+5CNWqGvmQdEdBVpvhJbbw99hGnITR108wKZ6TCy6QqjYAA=="
+  },
+  "/assets/projects/rolesieve/how-it-works-section.webp": {
+    "width": 2560,
+    "height": 1279,
+    "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAAAwAwCdASoYAAwAPu1kqU2ppaQiMAgBMB2JZwAAW+lpeEoAAP7xEE+0xEA84jcxd3nipgMu99fUsDRo0e2tEDwA"
+  },
+  "/assets/projects/rolesieve/role-sieve-showcase.webp": {
+    "width": 1920,
+    "height": 1072,
+    "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAABQAwCdASoYAA0APu1kqU4ppaOiMAgBMB2JZwAAesN7pkligAD+7+BJo8V+/2RSn2dCIrHFCbS5B81fCnejZ1fhYBZcbEymDeyGrA9bI/RQCdLrAAA="
+  },
+  "/assets/projects/rolesieve/run-results-list.webp": {
+    "width": 2559,
+    "height": 935,
+    "blur": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAQAwCdASoYAAkAPu1oqk6ppiQiMAgBMB2JZwAAidpQm9gA/vAm8U0BCjvDtT1zohZNHYAO8IBAAA=="
+  },
+  "/assets/projects/rolesieve/run-results-neural-skill.webp": {
+    "width": 2559,
+    "height": 825,
+    "blur": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAgCdASoYAAgAPu1iqU2ppaOiMAgBMB2JZwAAivIAAP7wjS3V7g+4xIZWi0JpcPMypaqhiouq8AAA"
+  },
+  "/assets/projects/rolesieve/run-results-section.webp": {
+    "width": 2559,
+    "height": 1017,
+    "blur": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABQAwCdASoYAAoAPu1iqU2ppaQiMAgBMB2JZwDImDKT/4o+oAD+8HUVGmD8iKz4iUWYQMuXahh2f3JUXKnIAAAA"
+  },
+  "/assets/projects/rolesieve/success-stories-section.webp": {
+    "width": 2560,
+    "height": 1023,
+    "blur": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAwCdASoYAAoAPu1iqU2ppaOiMAgBMB2JZwAAibHNu8AA/vCitTqZ/Yw7kEJH5eHus0lrtk2MUXHoQzkAAA=="
+  },
+  "/assets/projects/rolesieve/try-it-now-section.webp": {
+    "width": 2560,
+    "height": 1086,
+    "blur": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAABQAwCdASoYAAoAPu1iqU2ppaOiMAgBMB2JZ2R5AD3v/m384AD+8KLA04D+6XMq7nxo3mdNu34GRejgAAA="
+  },
+  "/assets/projects/rolesieve/two-modes-section.webp": {
+    "width": 2560,
+    "height": 1279,
+    "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABQAwCdASoYAAwAPu1iqU2ppaOiMAgBMB2JZwAAYcxIQDzAAAD+7rEjWI0n0yOzJRpM3xtKYd8bwwOheQiWEs13zRpM4TvHAAA="
+  },
+  "/assets/projects/rolesieve/what-you-get-section.webp": {
+    "width": 2560,
+    "height": 1279,
+    "blur": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoYAAwAPu1kqk4ppaQiMAgBMB2JZwAAW+vbhsGSnqizWAAA/vKj2BLzWT2NVfyvggwzHV7YktzHCbqpO2EAAA=="
+  }
+}

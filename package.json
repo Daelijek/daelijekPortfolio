@@ -13,7 +13,8 @@
     "og:generate": "node --experimental-strip-types scripts/generate-og.mjs",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "images:manifest": "node scripts/generate-image-manifest.mjs"
   },
   "dependencies": {
     "@amplitude/unified": "^1.2.0",
