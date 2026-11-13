@@ -209,7 +209,7 @@ const NavMenu = forwardRef<HTMLDivElement, NavMenuProps>(function NavMenu({ isOp
               {current.label}
             </span>
             {/* Accessible name = visible label + this hint (an aria-label would replace the visible text) */}
-            <span className="sr-only">{isOpen ? ' — close navigation menu' : ' — open navigation menu'}</span>
+            <span className="sr-only">{` — ${isOpen ? content.nav.menuCloseHint : content.nav.menuOpenHint}`}</span>
           </span>
 
           <span

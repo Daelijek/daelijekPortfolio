@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Settings } from 'lucide-react';
 import { useThemeAudio } from '@/context/ThemeAudioContext';
-import { useLocalizedPath } from '@/i18n/I18nProvider';
+import { useI18n, useLocalizedPath } from '@/i18n/I18nProvider';
 import NavMenu from './NavMenu';
 import PageHeader from './PageHeader';
 import SettingsPanel from './SettingsPanel';
@@ -15,6 +15,7 @@ import SettingsPanel from './SettingsPanel';
 export default function NavHeader() {
   const { playHover, playClick } = useThemeAudio();
   const { path } = useLocalizedPath();
+  const { common } = useI18n();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -119,7 +120,7 @@ export default function NavHeader() {
             }}
             onMouseEnter={playHover}
             aria-expanded={isSettingsOpen}
-            aria-label="Global System Settings"
+            aria-label={common.nav.settingsLabel}
             className={`w-12 h-12 xs:w-[52px] xs:h-[52px] sm:w-[58px] sm:h-[58px] md:w-[60px] md:h-[60px] rounded-2xl sm:rounded-2xl md:rounded-3xl backdrop-blur-3xl border transition-all flex items-center justify-center shadow-2xl box-border ${
               isSettingsOpen
                 ? 'bg-white text-black border-white shadow-[0_0_25px_rgba(255,255,255,0.5)]'

@@ -134,9 +134,10 @@ export default function ProfileSidebar({ scrollPercent }: { scrollPercent: numbe
               rel="noopener noreferrer"
               onMouseEnter={playHover}
               title="Telegram"
+              aria-label="Telegram"
               className="flex items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/10 text-white/60 hover:text-[#229ED9] hover:border-[#229ED9] hover:bg-[#229ED9]/10 hover:shadow-[0_0_15px_rgba(34,158,217,0.35)] transition-all"
             >
-              <FaTelegram className="w-4 h-4" />
+              <FaTelegram aria-hidden="true" className="w-4 h-4" />
             </a>
 
             <a
@@ -145,9 +146,10 @@ export default function ProfileSidebar({ scrollPercent }: { scrollPercent: numbe
               rel="noopener noreferrer"
               onMouseEnter={playHover}
               title="GitHub"
+              aria-label="GitHub"
               className="flex items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/10 text-white/60 hover:text-white hover:border-white/80 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all"
             >
-              <FaGithub className="w-4 h-4" />
+              <FaGithub aria-hidden="true" className="w-4 h-4" />
             </a>
 
             <a
@@ -156,9 +158,10 @@ export default function ProfileSidebar({ scrollPercent }: { scrollPercent: numbe
               rel="noopener noreferrer"
               onMouseEnter={playHover}
               title="LinkedIn"
+              aria-label="LinkedIn"
               className="flex items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/10 text-white/60 hover:text-[#0A66C2] hover:border-[#0A66C2] hover:bg-[#0A66C2]/10 hover:shadow-[0_0_15px_rgba(10,102,194,0.35)] transition-all"
             >
-              <FaLinkedin className="w-4 h-4" />
+              <FaLinkedin aria-hidden="true" className="w-4 h-4" />
             </a>
 
             <a
@@ -167,9 +170,10 @@ export default function ProfileSidebar({ scrollPercent }: { scrollPercent: numbe
               rel="noopener noreferrer"
               onMouseEnter={playHover}
               title="LeetCode"
+              aria-label="LeetCode"
               className="flex items-center justify-center p-3 rounded-xl bg-white/[0.03] border border-white/10 text-white/60 hover:text-[#FFA116] hover:border-[#FFA116] hover:bg-[#FFA116]/10 hover:shadow-[0_0_15px_rgba(255,161,22,0.35)] transition-all"
             >
-              <SiLeetcode className="w-4 h-4" />
+              <SiLeetcode aria-hidden="true" className="w-4 h-4" />
             </a>
           </div>
         </div>

@@ -247,7 +247,7 @@ export default function ContactContent() {
                 onMouseEnter={playHover}
                 className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-all group"
               >
-                <Icon className="w-3.5 h-3.5 text-[var(--accent-color)] group-hover:scale-110 transition-transform" />
+                <Icon aria-hidden="true" className="w-3.5 h-3.5 text-[var(--accent-color)] group-hover:scale-110 transition-transform" />
                 <span className="font-bold tracking-wider">{s.name}</span>
                 <span className="text-[11px] text-[var(--text-muted)] group-hover:text-[var(--accent-color)] transition-colors">
                   {s.handle}

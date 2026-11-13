@@ -94,7 +94,8 @@ test.describe('language switcher', () => {
     await page.goto('/contact');
     await expect(page).toHaveURL(/\/ru\/contact$/);
 
-    await page.getByRole('button', { name: 'Global System Settings' }).click();
+    // Labels follow the page language.
+    await page.getByRole('button', { name: 'Глобальные настройки системы' }).click();
     await page.getByRole('button', { name: 'EN', exact: true }).click();
     await expect(page).toHaveURL(/\/contact$/);
     await expect(page).not.toHaveURL(/\/ru\//);
