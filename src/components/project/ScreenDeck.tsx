@@ -362,7 +362,7 @@ export default function ScreenDeck({ items, t, index, isMobileGallery, address, 
             <div className="min-w-0 md:min-h-[6.25rem]" aria-live={isPlaying ? 'off' : 'polite'}>
               <div className="flex items-center gap-3 font-mono">
                 <span className="text-sm font-bold tabular-nums text-[var(--accent-color)]">{pad(active + 1)}</span>
-                <span className="text-xs tabular-nums text-white/40">/ {pad(count)}</span>
+                <span className="text-xs tabular-nums text-white/60">/ {pad(count)}</span>
                 <span className="px-2 py-0.5 rounded-md border border-[var(--card-border)] text-[11px] font-semibold uppercase tracking-wider text-[var(--accent-color)] truncate">
                   {current.tag}
                 </span>
@@ -390,7 +390,7 @@ export default function ScreenDeck({ items, t, index, isMobileGallery, address, 
                     setAutoplay((on) => !on);
                   }}
                   onMouseEnter={playHover}
-                  aria-label={autoplay ? 'Pause autoplay' : 'Start autoplay'}
+                  aria-label={autoplay ? t.pauseAutoplay : t.startAutoplay}
                   className="w-11 h-11 inline-flex items-center justify-center rounded-full border border-white/10 hover:border-white/30 bg-white/[0.04] hover:bg-white/[0.1] text-white/70 hover:text-white transition-colors"
                 >
                   {autoplay ? <Pause aria-hidden="true" className="w-4 h-4" /> : <Play aria-hidden="true" className="w-4 h-4" />}
@@ -401,7 +401,7 @@ export default function ScreenDeck({ items, t, index, isMobileGallery, address, 
                 onClick={() => go(-1)}
                 onMouseEnter={playHover}
                 disabled={active === 0}
-                aria-label="Previous screen"
+                aria-label={t.previousScreen}
                 className="w-11 h-11 inline-flex items-center justify-center rounded-full border border-white/10 hover:border-white/30 bg-white/[0.04] hover:bg-white/[0.1] text-white/70 hover:text-white transition-colors disabled:opacity-30 disabled:pointer-events-none"
               >
                 <ChevronLeft aria-hidden="true" className="w-4 h-4" />
@@ -411,7 +411,7 @@ export default function ScreenDeck({ items, t, index, isMobileGallery, address, 
                 onClick={() => go(1)}
                 onMouseEnter={playHover}
                 disabled={active === count - 1}
-                aria-label="Next screen"
+                aria-label={t.nextScreen}
                 className="w-11 h-11 inline-flex items-center justify-center rounded-full border border-white/10 hover:border-white/30 bg-white/[0.04] hover:bg-white/[0.1] text-white/70 hover:text-white transition-colors disabled:opacity-30 disabled:pointer-events-none"
               >
                 <ChevronRight aria-hidden="true" className="w-4 h-4" />

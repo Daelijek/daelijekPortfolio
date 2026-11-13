@@ -11,7 +11,7 @@ import { EASE, HudCorners, LABEL, Reveal, SECTION, WindowBar, frameAddress, huma
 
 interface ProjectHeroProps {
   project: FeaturedProject;
-  /** Short project name; the desktop <h1> lives in ProjectHeader, this one is mobile-only. */
+  /** Short project name: the page's <h1> (visible on phones, screen-reader only on larger screens). */
   name: string;
   /** Second half of the title ("Personal Finance Management"), may be empty. */
   descriptor: string;
@@ -55,7 +55,8 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
             {project.category}
           </p>
 
-          <h1 data-case-title="" className="md:hidden font-display font-bold uppercase tracking-tight text-[var(--heading-tint)] text-4xl leading-[1.05] break-words">
+          {/* The page's only <h1>: visible on phones; on larger screens the docking title in the header shows the name */}
+          <h1 data-case-title="" className="md:sr-only font-display font-bold uppercase tracking-tight text-[var(--heading-tint)] text-4xl leading-[1.05] break-words">
             {name}
           </h1>
 
@@ -113,7 +114,7 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
                 className="group inline-flex items-center gap-2 h-12 px-2 text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-[var(--accent-color)] transition-colors"
               >
                 <span>
-                  {t.viewScreens} <span className="tabular-nums text-white/40 group-hover:text-inherit">({screensCount})</span>
+                  {t.viewScreens} <span className="tabular-nums text-white/60 group-hover:text-inherit">({screensCount})</span>
                 </span>
                 <ArrowDown aria-hidden="true" className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
               </button>
@@ -175,7 +176,7 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
                 aside={
                   <Maximize2
                     aria-hidden="true"
-                    className="w-3.5 h-3.5 text-white/40 group-hover:text-[var(--accent-color)] transition-colors"
+                    className="w-3.5 h-3.5 text-white/55 group-hover:text-[var(--accent-color)] transition-colors"
                   />
                 }
               />

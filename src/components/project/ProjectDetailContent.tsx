@@ -76,7 +76,7 @@ export default function ProjectDetailContent({ project, nextProject, ui: t, medi
       style={{ '--case-name-len': name.length } as CSSProperties}
     >
       <ProjectHeader project={project} name={name} sections={sections} t={t} />
-      <SectionRail sections={sections} />
+      <SectionRail sections={sections} label={t.caseSections} />
 
       {/* Desktop top padding reserves the line occupied by the hero title (see ProjectHeader). */}
       <main className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 md:pt-[calc(var(--case-title-size)_+_1.75rem)]">

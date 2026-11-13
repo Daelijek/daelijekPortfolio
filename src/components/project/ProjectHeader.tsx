@@ -239,9 +239,10 @@ export default function ProjectHeader({ project, name, sections, t }: ProjectHea
               style={{ x: titleX, y: titleY, scale: titleScale, transformOrigin: '0% 50%', top: ROW_HEIGHT }}
               className="absolute left-0 will-change-transform pointer-events-auto text-[length:var(--case-title-size)]"
             >
-              <h1 className="font-display font-bold uppercase tracking-tight leading-none whitespace-nowrap text-[var(--heading-tint)]">
+              {/* Visual copy: the page's one <h1> is in the hero (screen-reader only on desktop) */}
+              <p aria-hidden="true" className="font-display font-bold uppercase tracking-tight leading-none whitespace-nowrap text-[var(--heading-tint)]">
                 {name}
-              </h1>
+              </p>
             </Motion.div>
 
             {/* Right: case number, plus quick links once the hero buttons have scrolled away */}

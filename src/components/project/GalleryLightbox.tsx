@@ -352,7 +352,7 @@ export default function GalleryLightbox({ state, t, address, onNavigate, onClose
                   {zoom ? <ZoomOut aria-hidden="true" className="w-5 h-5" /> : <ZoomIn aria-hidden="true" className="w-5 h-5" />}
                 </button>
               )}
-              <button ref={closeRef} type="button" onClick={onClose} aria-label="Close preview" className={roundButton}>
+              <button ref={closeRef} type="button" onClick={onClose} aria-label={t.closePreview} className={roundButton}>
                 <X aria-hidden="true" className="w-5 h-5" />
               </button>
             </div>
@@ -389,7 +389,7 @@ export default function GalleryLightbox({ state, t, address, onNavigate, onClose
                 <button
                   type="button"
                   onClick={() => step(-1)}
-                  aria-label="Previous screen"
+                  aria-label={t.previousScreen}
                   className="hidden sm:inline-flex absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center rounded-full bg-black/70 hover:bg-white/15 border border-white/20 text-white backdrop-blur-md transition-colors"
                 >
                   <ChevronLeft aria-hidden="true" className="w-5 h-5" />
@@ -397,7 +397,7 @@ export default function GalleryLightbox({ state, t, address, onNavigate, onClose
                 <button
                   type="button"
                   onClick={() => step(1)}
-                  aria-label="Next screen"
+                  aria-label={t.nextScreen}
                   className="hidden sm:inline-flex absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center rounded-full bg-black/70 hover:bg-white/15 border border-white/20 text-white backdrop-blur-md transition-colors"
                 >
                   <ChevronRight aria-hidden="true" className="w-5 h-5" />
@@ -447,10 +447,10 @@ export default function GalleryLightbox({ state, t, address, onNavigate, onClose
             {/* Phones: arrows live here, off the screenshot (swiping works too) */}
             {count > 1 && (
               <div className="sm:hidden flex shrink-0 gap-2">
-                <button type="button" onClick={() => step(-1)} aria-label="Previous screen" className={roundButton}>
+                <button type="button" onClick={() => step(-1)} aria-label={t.previousScreen} className={roundButton}>
                   <ChevronLeft aria-hidden="true" className="w-5 h-5" />
                 </button>
-                <button type="button" onClick={() => step(1)} aria-label="Next screen" className={roundButton}>
+                <button type="button" onClick={() => step(1)} aria-label={t.nextScreen} className={roundButton}>
                   <ChevronRight aria-hidden="true" className="w-5 h-5" />
                 </button>
               </div>

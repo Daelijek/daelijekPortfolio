@@ -44,14 +44,14 @@ export function useActiveSection(sections: CaseSection[]) {
  * Quick-jump rail in the left gutter (wide screens only): one tick per section, the current
  * one highlighted by a scroll spy. Labels appear when the rail is hovered or focused.
  */
-export default function SectionRail({ sections }: { sections: CaseSection[] }) {
+export default function SectionRail({ sections, label }: { sections: CaseSection[]; label: string }) {
   const { playHover, playClick } = useThemeAudio();
   const reducedMotion = useReducedMotion();
   const active = useActiveSection(sections);
 
   return (
     <nav
-      aria-label="Case study sections"
+      aria-label={label}
       className="group/rail hidden xl:flex fixed left-4 2xl:left-6 top-1/2 -translate-y-1/2 z-30 flex-col font-mono select-none"
     >
       {sections.map((section) => {
