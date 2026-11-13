@@ -16,11 +16,25 @@ export const CARD = 'hud-card rounded-2xl sm:rounded-3xl border border-white/[0.
 /** Small monospace label used above values and lists. */
 export const LABEL = 'font-mono text-[11px] font-semibold uppercase tracking-[0.12em] sm:tracking-[0.18em] text-[var(--text-muted)]';
 
-/** Fades a block in once, the first time it enters the viewport (never replays on scroll-back). */
-export function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+/**
+ * Slides a block in once, the first time it enters the viewport (never replays on scroll-back).
+ * `aboveTheFold`: for first-screen content (largest-contentful-paint candidates) the block is
+ * visible from the server render and only settles into place, so it paints before hydration.
+ */
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+  aboveTheFold = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  aboveTheFold?: boolean;
+}) {
   return (
     <Motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={aboveTheFold ? { y: 24 } : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '0px 0px -8% 0px' }}
       transition={{ duration: 0.65, ease: EASE, delay }}

@@ -44,10 +44,10 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
       {/* Phones read pitch -> cover -> spec sheet (an image on the first screen); desktop puts the
           spec sheet beside the pitch and the cover underneath. */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-x-14 lg:gap-y-16">
-        {/* Pitch */}
+        {/* Pitch (first-screen content moves into place but is never hidden: it paints before hydration) */}
         <Motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 16 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.6, ease: EASE }}
           className="order-1 lg:col-span-7 flex flex-col gap-5"
         >
@@ -124,8 +124,8 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
 
         {/* Spec sheet */}
         <Motion.dl
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 16 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
           className="relative order-3 lg:order-2 lg:col-span-5 self-start w-full rounded-2xl border border-white/[0.08] bg-[var(--card-bg)] backdrop-blur-sm divide-y divide-white/[0.06]"
         >
@@ -156,7 +156,7 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
         </Motion.dl>
 
         {/* Cover + key numbers */}
-        <Reveal className="order-2 lg:order-3 lg:col-span-12">
+        <Reveal aboveTheFold className="order-2 lg:order-3 lg:col-span-12">
           <figure>
           {/* Stage + window frame: the cover reads as a picture of the product, not as this page */}
           <div className="hud-stage relative rounded-2xl sm:rounded-3xl border border-white/[0.08] p-2.5 sm:p-8 lg:p-12">
