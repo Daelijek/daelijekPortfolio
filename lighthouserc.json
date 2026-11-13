@@ -7,20 +7,53 @@
         "http://localhost:3300/",
         "http://localhost:3300/about",
         "http://localhost:3300/ru/projects",
-        "http://localhost:3300/projects/rolesieve"
+        "http://localhost:3300/projects/rolesieve",
+        "http://localhost:3300/projects/finance-management-app"
       ],
       "numberOfRuns": 1
     },
     "assert": {
       "assertions": {
-        "categories:performance": ["warn", { "minScore": 0.85 }],
-        "categories:accessibility": ["warn", { "minScore": 0.95 }],
-        "categories:seo": ["warn", { "minScore": 0.95 }],
-        "largest-contentful-paint": ["warn", { "maxNumericValue": 4000 }],
-        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.05 }],
-        "total-byte-weight": ["warn", { "maxNumericValue": 800000 }]
+        "categories:performance": [
+          "warn",
+          {
+            "minScore": 0.85
+          }
+        ],
+        "categories:accessibility": [
+          "warn",
+          {
+            "minScore": 0.95
+          }
+        ],
+        "categories:seo": [
+          "warn",
+          {
+            "minScore": 0.95
+          }
+        ],
+        "largest-contentful-paint": [
+          "warn",
+          {
+            "maxNumericValue": 4000
+          }
+        ],
+        "cumulative-layout-shift": [
+          "warn",
+          {
+            "maxNumericValue": 0.05
+          }
+        ],
+        "total-byte-weight": [
+          "warn",
+          {
+            "maxNumericValue": 800000
+          }
+        ]
       }
     },
-    "upload": { "target": "temporary-public-storage" }
+    "upload": {
+      "target": "temporary-public-storage"
+    }
   }
 }
