@@ -5,6 +5,7 @@ import { motion as Motion } from 'framer-motion';
 import { ArrowDown, ExternalLink, Lock, Maximize2 } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 import { useThemeAudio } from '@/context/ThemeAudioContext';
+import { blurProps, useMedia } from './media';
 import type { DetailUi, FeaturedProject } from './types';
 import { EASE, HudCorners, LABEL, Reveal, SECTION, WindowBar, frameAddress, humanize } from './ui';
 
@@ -30,6 +31,7 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
   const hasCode = Boolean(project.githubUrl && !project.isPrivate);
   const metrics = project.walkthrough?.impact?.metrics ?? [];
   const address = frameAddress(project);
+  const cover = useMedia()(project.image);
 
   const specs: { label: string; value: string }[] = [
     { label: t.role, value: project.dossier?.primaryRole ?? '' },
@@ -178,12 +180,13 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
                 }
               />
               <span className="relative block overflow-hidden">
-                {/* width/height only reserve space: `h-auto` lets every cover keep its own aspect ratio */}
+                {/* Real size from the image manifest: the space is reserved exactly, no layout shift */}
                 <Image
                   src={project.image}
                   alt={project.title}
-                  width={1920}
-                  height={1080}
+                  width={cover?.width ?? 1920}
+                  height={cover?.height ?? 1080}
+                  {...blurProps(cover)}
                   preload
                   draggable={false}
                   sizes="(max-width: 1240px) 92vw, 1100px"

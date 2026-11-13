@@ -21,4 +21,6 @@ export interface LightboxState {
   index: number;
   /** Portrait phone screenshots (framed as a device) instead of wide web captures. */
   phone: boolean;
+  /** Opened from the screen deck (the deck follows it) or from the cover. */
+  source: 'gallery' | 'cover';
 }

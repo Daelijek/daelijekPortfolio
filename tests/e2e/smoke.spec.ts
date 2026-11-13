@@ -114,6 +114,31 @@ test.describe('interactions', () => {
     await expect(card).toBeFocused();
   });
 
+  test('lightbox zooms, jumps by thumbnail, and the deck follows it', async ({ page, isMobile }) => {
+    test.skip(isMobile, 'the thumbnail strip is a tablet and desktop feature');
+    await skipBootScreen(page);
+    await page.goto('/projects/rolesieve');
+
+    const slides = page.locator('[data-deck-slide]');
+    await slides.first().scrollIntoViewIfNeeded();
+    await slides.first().focus();
+    await page.keyboard.press('Enter');
+
+    const preview = page.getByRole('dialog').last();
+    await preview.getByRole('button', { name: 'Go to screen 6' }).click();
+    await expect(preview).toContainText('06 / 13');
+
+    await preview.getByRole('button', { name: 'Zoom in' }).click();
+    await expect(preview.locator('[data-zoomed="true"]')).toBeVisible();
+    await page.keyboard.press('Escape'); // the first Escape only zooms out
+    await expect(preview.locator('[data-zoomed="false"]')).toBeVisible();
+
+    await page.keyboard.press('Escape');
+    await expect(preview).toBeHidden();
+    await expect(slides.nth(5)).toHaveAttribute('data-active', 'true');
+    await expect(slides.nth(5)).toBeFocused();
+  });
+
   test('screen deck moves with its controls and the cover opens full-screen', async ({ page }) => {
     await skipBootScreen(page);
     await page.goto('/projects/rolesieve');

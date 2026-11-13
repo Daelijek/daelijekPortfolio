@@ -17,6 +17,7 @@ import { AnimatePresence, motion as Motion, useReducedMotion } from 'framer-moti
 import { ChevronLeft, ChevronRight, Maximize2, Pause, Play } from 'lucide-react';
 import { useThemeAudio } from '@/context/ThemeAudioContext';
 import type { DetailUi, GalleryItem } from './types';
+import { blurProps, useMedia } from './media';
 import { Reveal, SECTION, SectionHeading, WindowBar, type FrameAddress } from './ui';
 
 /** Time each screen stays centred while the deck plays by itself. */
@@ -56,6 +57,8 @@ interface ScreenDeckProps {
   address: FrameAddress;
   /** True while the lightbox is open: autoplay waits. */
   isPaused: boolean;
+  /** Screen to jump to after the lightbox closes (the deck follows the lightbox). */
+  syncTo?: { index: number; n: number } | null;
   onOpen: (index: number) => void;
 }
 
@@ -67,9 +70,10 @@ interface ScreenDeckProps {
  *  - plays by itself until the visitor touches it (never with prefers-reduced-motion)
  *  - click the centred screen (or press Enter on any) to open it full-screen
  */
-export default function ScreenDeck({ items, t, index, isMobileGallery, address, isPaused, onOpen }: ScreenDeckProps) {
+export default function ScreenDeck({ items, t, index, isMobileGallery, address, isPaused, syncTo, onOpen }: ScreenDeckProps) {
   const { playHover, playClick } = useThemeAudio();
   const reducedMotion = useReducedMotion();
+  const mediaOf = useMedia();
 
   const deckRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -122,6 +126,16 @@ export default function ScreenDeck({ items, t, index, isMobileGallery, address, 
       window.clearTimeout(snapTimer.current);
     };
   }, []);
+
+  // After the lightbox closes, jump (instantly: the dialog still covers the deck) to the screen
+  // the visitor stopped on, and move keyboard focus there if it was inside the deck.
+  useEffect(() => {
+    const track = trackRef.current;
+    const slide = syncTo && track ? getSlides(track)[syncTo.index] : undefined;
+    if (!track || !slide) return;
+    track.scrollTo({ left: slide.offsetLeft + slide.offsetWidth / 2 - track.clientWidth / 2, behavior: 'auto' });
+    if (track.contains(document.activeElement)) slide.focus({ preventScroll: true });
+  }, [syncTo]);
 
   // Autoplay only runs while the deck is actually on screen.
   useEffect(() => {
@@ -296,6 +310,7 @@ export default function ScreenDeck({ items, t, index, isMobileGallery, address, 
                           <Image
                             src={item.image}
                             alt=""
+                            {...blurProps(mediaOf(item.image))}
                             fill
                             draggable={false}
                             sizes="(max-width: 420px) 60vw, 250px"
@@ -310,6 +325,7 @@ export default function ScreenDeck({ items, t, index, isMobileGallery, address, 
                         <Image
                           src={item.image}
                           alt=""
+                          {...blurProps(mediaOf(item.image))}
                           fill
                           draggable={false}
                           sizes="(max-width: 1160px) 86vw, 1000px"
@@ -429,7 +445,7 @@ export default function ScreenDeck({ items, t, index, isMobileGallery, address, 
                     playClick();
                     scrollToIndex(i);
                   }}
-                  aria-label={`Go to screen ${i + 1}`}
+                  aria-label={t.goToScreen.replace('{n}', String(i + 1))}
                   className="group/seg relative h-6 flex-1"
                 >
                   <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[3px] rounded-full overflow-hidden bg-white/[0.12] group-hover/seg:bg-white/30 transition-colors">
