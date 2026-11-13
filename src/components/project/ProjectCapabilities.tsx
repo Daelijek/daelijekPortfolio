@@ -19,7 +19,7 @@ export default function ProjectCapabilities({ project, t, index }: { project: Fe
           <Reveal key={feature.num} delay={i * 0.08}>
             <article
               onMouseMove={trackSpotlight}
-              className={`${CARD} group h-full overflow-hidden p-6 sm:p-8 hover:border-[var(--card-hover-border)] transition-colors duration-300`}
+              className={`${CARD} group h-full overflow-hidden p-6 sm:p-8`}
             >
               {/* Oversized ghost numeral */}
               <span

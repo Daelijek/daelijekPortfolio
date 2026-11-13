@@ -168,7 +168,7 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
               }}
               onMouseEnter={playHover}
               aria-label={`${project.title} — ${t.preview}`}
-              className="group relative mx-auto flex w-full max-w-[1100px] flex-col overflow-hidden rounded-xl sm:rounded-2xl border border-white/15 hover:border-[var(--card-hover-border)] bg-[#020407] text-left shadow-[0_24px_70px_rgba(0,0,0,0.75)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.8),0_0_40px_var(--card-hover-glow)] transition-[border-color,box-shadow] duration-300"
+              className="group relative mx-auto flex w-full max-w-[1100px] min-[1800px]:max-w-[1360px] flex-col overflow-hidden rounded-xl sm:rounded-2xl border border-white/15 hover:border-[var(--card-hover-border)] bg-[#020407] text-left shadow-[0_24px_70px_rgba(0,0,0,0.75)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.8),0_0_40px_var(--card-hover-glow)] transition-[border-color,box-shadow] duration-300"
             >
               <WindowBar
                 address={address}
@@ -189,7 +189,7 @@ export default function ProjectHero({ project, name, descriptor, t, screensCount
                   {...blurProps(cover)}
                   preload
                   draggable={false}
-                  sizes="(max-width: 1240px) 92vw, 1100px"
+                  sizes="(max-width: 1240px) 92vw, (max-width: 1799px) 1100px, 1360px"
                   className="w-full h-auto select-none transition-transform duration-700 ease-out group-hover:scale-[1.015]"
                 />
                 <span className="absolute bottom-3 right-3 sm:bottom-5 sm:right-5 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 font-mono text-xs font-medium text-white opacity-0 translate-y-1 [@media(hover:none)]:opacity-100 [@media(hover:none)]:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0 transition-all duration-300">

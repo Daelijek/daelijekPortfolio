@@ -54,6 +54,7 @@ export default async function CaseStudyPage({ params }: CaseStudyParams) {
     category: next.category,
     tags: next.tags,
     image: next.image,
+    liveUrl: next.liveUrl,
   };
 
   // Sizes and blurred previews of the images this page shows (cover, screens, next cover).
