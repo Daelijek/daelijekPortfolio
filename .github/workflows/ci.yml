@@ -24,7 +24,10 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      # CASE_FIXTURES adds edge-case case studies for the template tests (never in production builds).
       - run: npm run build
+        env:
+          CASE_FIXTURES: '1'
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ProjectDetailContent from '@/components/project/ProjectDetailContent';
 import { getCaseStudy, getCaseStudySlugs, getDictionary } from '@/content';
+import { CASE_FIXTURES } from '@/content/fixtures';
 import { mediaFor } from '@/content/media';
 import { resolveLocale } from '@/i18n/params';
 import { pageMetadata, projectOgImage } from '@/lib/site';
@@ -15,12 +16,17 @@ interface CaseStudyParams {
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  return (await getCaseStudySlugs()).map((slug) => ({ slug }));
+  // Edge-case fixtures exist only in CASE_FIXTURES=1 builds (template tests), see src/content/fixtures.ts.
+  const slugs = [...(await getCaseStudySlugs()), ...CASE_FIXTURES.map((fixture) => fixture.slug)];
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: CaseStudyParams): Promise<Metadata> {
   const locale = await resolveLocale(params);
   const { slug } = await params;
+  if (CASE_FIXTURES.some((fixture) => fixture.slug === slug)) {
+    return { title: `Template fixture: ${slug} // Dias Yermek`, robots: { index: false, follow: false } };
+  }
   const project = await getCaseStudy(locale, slug);
   if (!project) return {};
   const { meta } = await getDictionary(locale);
@@ -41,12 +47,13 @@ export default async function CaseStudyPage({ params }: CaseStudyParams) {
   const { slug } = await params;
   const { projects } = await getDictionary(locale);
 
-  const index = projects.featured.findIndex((p) => p.slug === slug);
+  const caseStudies = [...projects.featured, ...CASE_FIXTURES];
+  const index = caseStudies.findIndex((p) => p.slug === slug);
   if (index === -1) notFound();
-  const project = projects.featured[index];
+  const project = caseStudies[index];
 
   // Only the teaser fields of the next case study are sent to the client, not the whole list.
-  const next = projects.featured[(index + 1) % projects.featured.length];
+  const next = caseStudies[(index + 1) % caseStudies.length];
   const nextProject = {
     num: next.num,
     slug: next.slug,
