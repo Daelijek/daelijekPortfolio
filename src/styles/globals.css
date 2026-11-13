@@ -353,6 +353,80 @@ body:has(#hud-preloader) .hud-cli-trigger {
 .hud-cli-trigger {
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+/* ===================== Case study page (/projects/[slug]) ===================== */
+
+.case-study {
+  /* Hero title: one line, as large as the project name allows.
+     --case-name-len (character count) is set inline by ProjectDetailContent. */
+  --case-title-size: clamp(1.75rem, calc((90vw - 6rem) / (var(--case-name-len, 12) * 0.72)), 5.75rem);
+  /* Left inset that keeps the header row clear of the fixed brand stamp (top-left). */
+  --case-brand-clearance: max(0px, calc(12.25rem - max(5vw, (100vw - 1920px) / 2)));
+}
+
+/* Card with a radial highlight that follows the pointer (--mx / --my set by trackSpotlight). */
+.hud-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.hud-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--card-hover-glow), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+@media (hover: hover) {
+  .hud-card:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Stage behind framed screenshots: dot grid plus a soft accent light from the top. */
+.hud-stage {
+  background-color: var(--bg-secondary);
+  background-image:
+    radial-gradient(ellipse 70% 55% at 50% 0%, var(--card-hover-glow), transparent 70%),
+    radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1.2px);
+  background-size: 100% 100%, 22px 22px;
+}
+
+/* Dot grid only (lightbox stage). */
+.hud-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+/* Horizontal scroller without a visible scrollbar (screen deck). */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Autoplay timer of the active screen-deck segment. */
+@keyframes deckProgress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.deck-progress-fill {
+  transform-origin: left center;
+  animation: deckProgress var(--deck-interval, 5000ms) linear forwards;
+}
+
 /* ===================== Accessibility ===================== */
 
 /* Visible keyboard focus everywhere (mouse clicks don't trigger :focus-visible). */
