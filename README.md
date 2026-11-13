@@ -77,7 +77,11 @@
 - **RoleSieve** (Next.js 16, React 19, Tailwind 4, FastAPI, NLP — аналитика вакансий HeadHunter).
 - **OpenGov.kz Portal** (стажировка в QB Solutions на Next.js; текущая версия — React 19 + Vite, i18next).
 - **BerikWeb 3D Gallery** (HTML5, Vanilla JS, 3D Canvas, Retina Multilanguage).
-- Каждое досье включает стек, целевую аудиторию, вызовы безопасности, метрики производительности и прямые ссылки на production/demo.
+- Все кейсы строятся по одному шаблону: hero со спецификацией и обложкой в рамке окна → задача и решение → галерея экранов
+  (свайп/перетаскивание, автопрокрутка, лайтбокс с зумом и миниатюрами) → возможности → архитектура по слоям → следующий кейс.
+- Скриншоты всегда показаны как объект (окно браузера или корпус телефона), а не как часть страницы.
+- Навигация: сжимающийся заголовок с прогрессом чтения, боковой навигатор секций (≥1200px), меню секций на планшетах
+  и компактная панель на телефонах. Шаблон проверяется на крайних данных (тестовые кейсы `fixture-minimal` / `fixture-maximal`).
 
 ### 4. Интернационализация через URL (EN / RU / KK)
 - Английский — на основных адресах (`/about`), русский и казахский — с префиксом (`/ru/about`, `/kk/about`).
@@ -172,11 +176,14 @@ npm run dev            # http://localhost:3000
 | `npm run build` / `npm start` | Продакшн-сборка и запуск |
 | `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
 | `npm test` | Unit-тесты (Vitest) |
-| `npm run test:e2e` | E2E-тесты (Playwright; локально — установленный Chrome, нужен `npm run build`) |
+| `npm run test:e2e` | E2E-тесты: Chrome, Android, Safari (WebKit), iPhone, Firefox, axe-аудит доступности. Нужен `npm run build`; для WebKit/Firefox один раз `npx playwright install webkit firefox` |
+| `CASE_FIXTURES=1 npm run build` | Сборка с тестовыми кейсами для проверки шаблона на крайних данных (как в CI; в production их нет) |
+| `npx playwright test visual` | Визуальные снапшоты шаблона (только локально, нужна сборка с `CASE_FIXTURES=1`; обновить: `--update-snapshots`) |
+| `npm run images:manifest` | Размеры и размытые превью всех картинок для шаблона (запускать после добавления/замены изображений; тест напомнит) |
 | `npm run images:optimize -- <файлы>` | Перевод изображений в WebP с ограничением ширины |
 | `npm run og:generate` | Пересборка OpenGraph-превью после смены обложек или фото |
 
-**Добавить кейс:** запись в `projects.featured` во всех трёх словарях `src/content/locales/*.ts` (TypeScript и тесты подскажут, если что-то пропущено) → картинки в `public/assets/projects/<slug>/` → `npm run og:generate`. Страницы, sitemap и hreflang появятся автоматически.
+**Добавить кейс:** запись в `projects.featured` во всех трёх словарях `src/content/locales/*.ts` (TypeScript и тесты подскажут, если что-то пропущено) (поле `galleryKind`: `web` — экраны в окне браузера, `phone` — в корпусе телефона) → картинки в `public/assets/projects/<slug>/` → `npm run images:manifest` → `npm run og:generate`. Страницы, sitemap и hreflang появятся автоматически.
 
 ---
 
