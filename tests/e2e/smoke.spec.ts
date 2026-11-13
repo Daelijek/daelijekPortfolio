@@ -93,7 +93,7 @@ test.describe('interactions', () => {
     await skipBootScreen(page);
     await page.goto('/projects/rolesieve');
 
-    const card = page.locator('[role="button"][tabindex="0"]').filter({ hasText: /preview|открыть|ашу/i }).first();
+    const card = page.locator('[data-deck-slide]').first();
     await card.scrollIntoViewIfNeeded();
     await card.focus();
     await page.keyboard.press('Enter');
@@ -101,10 +101,39 @@ test.describe('interactions', () => {
     const preview = page.getByRole('dialog').last();
     await expect(preview).toBeVisible();
     await expect(preview.getByRole('button', { name: 'Close preview' })).toBeFocused();
+    await expect(preview).toContainText('01 / 13');
+
+    // Arrow keys move between screens without leaving the dialog.
+    await page.keyboard.press('ArrowRight');
+    await expect(preview).toContainText('02 / 13');
+    await page.keyboard.press('ArrowLeft');
+    await expect(preview).toContainText('01 / 13');
 
     await page.keyboard.press('Escape');
     await expect(preview).toBeHidden();
     await expect(card).toBeFocused();
+  });
+
+  test('screen deck moves with its controls and the cover opens full-screen', async ({ page }) => {
+    await skipBootScreen(page);
+    await page.goto('/projects/rolesieve');
+
+    const slides = page.locator('[data-deck-slide]');
+    await slides.first().scrollIntoViewIfNeeded();
+    await expect(slides.first()).toHaveAttribute('data-active', 'true');
+
+    await page.getByRole('button', { name: 'Next screen' }).click();
+    await expect(slides.nth(1)).toHaveAttribute('data-active', 'true');
+    await page.getByRole('button', { name: 'Previous screen' }).click();
+    await expect(slides.first()).toHaveAttribute('data-active', 'true');
+
+    // The cover image is a single-screen preview: no counter, no side arrows.
+    await page.getByRole('button', { name: /RoleSieve.*Preview/ }).first().click();
+    const preview = page.getByRole('dialog').last();
+    await expect(preview).toBeVisible();
+    await expect(preview.getByRole('button', { name: 'Next screen' })).toHaveCount(0);
+    await preview.getByRole('button', { name: 'Close preview' }).click();
+    await expect(preview).toBeHidden();
   });
 });
 
@@ -116,11 +145,12 @@ test.describe('reduced motion', () => {
     expect(await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches)).toBe(true);
     await expect(page.locator('html')).not.toHaveClass(/lenis/);
 
-    // The gallery ribbon does not auto-scroll.
-    const ribbon = page.locator('[role="button"][tabindex="0"]').filter({ hasText: /preview/i }).first();
-    await ribbon.scrollIntoViewIfNeeded();
-    const before = await ribbon.boundingBox();
+    // The screen deck does not play by itself (and offers no autoplay toggle).
+    const slide = page.locator('[data-deck-slide]').first();
+    await slide.scrollIntoViewIfNeeded();
+    await expect(page.getByRole('button', { name: /autoplay/i })).toHaveCount(0);
+    const before = await slide.boundingBox();
     await page.waitForTimeout(1200);
-    expect((await ribbon.boundingBox())?.x).toBe(before?.x);
+    expect((await slide.boundingBox())?.x).toBe(before?.x);
   });
 });
