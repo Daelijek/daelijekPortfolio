@@ -1,17 +1,18 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { motion as Motion } from 'framer-motion';
-import { useThemeAudio } from '@/context/ThemeAudioContext';
+import { useCallback, useState, type CSSProperties } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import GalleryLightbox from './GalleryLightbox';
-import GalleryRibbon from './GalleryRibbon';
 import NextProjectFooter from './NextProjectFooter';
 import ProjectArchitecture from './ProjectArchitecture';
 import ProjectCapabilities from './ProjectCapabilities';
 import ProjectHeader from './ProjectHeader';
 import ProjectHero from './ProjectHero';
 import ProjectNarrative from './ProjectNarrative';
-import type { DetailUi, FeaturedProject, GalleryItem, NextProjectTeaser } from './types';
+import ScreenDeck from './ScreenDeck';
+import SectionRail, { jumpToSection } from './SectionRail';
+import type { CaseSection, DetailUi, FeaturedProject, GalleryItem, LightboxState, NextProjectTeaser } from './types';
+import { frameAddress, splitTitle } from './ui';
 
 interface ProjectDetailContentProps {
   /** The case study being shown (resolved on the server). */
@@ -21,53 +22,86 @@ interface ProjectDetailContentProps {
   ui: DetailUi;
 }
 
-export default function ProjectDetailContent({ project, nextProject, ui: t }: ProjectDetailContentProps) {
-  const { playHover, playClick } = useThemeAudio();
-  const [activeModalScreen, setActiveModalScreen] = useState<GalleryItem | null>(null);
+/** Phone mockups for mobile apps, wide frames for web projects. */
+function isMobileApp(project: FeaturedProject) {
+  const platform = (project.dossier?.targetPlatform || '').toLowerCase();
+  const category = (project.category || '').toLowerCase();
+  const mentionsMobile = platform.includes('ios') || platform.includes('android') || category.includes('mobile');
+  return mentionsMobile && !category.includes('web') && !platform.includes('web');
+}
 
-  // Phone mockups for mobile apps, browser windows for web projects.
-  const isMobileProject = useMemo(() => {
-    if (project.slug === 'finance-management-app') return true;
-    const platform = (project.dossier?.targetPlatform || '').toLowerCase();
-    const category = (project.category || '').toLowerCase();
-    return (platform.includes('ios') || platform.includes('android') || category.includes('mobile')) && !category.includes('web') && !platform.includes('web');
-  }, [project]);
+/**
+ * Case-study page. Reading order: overview (pitch, spec sheet, cover, key numbers) ->
+ * challenge & solution -> screens -> capabilities -> architecture -> next case study.
+ */
+export default function ProjectDetailContent({ project, nextProject, ui: t }: ProjectDetailContentProps) {
+  const reducedMotion = useReducedMotion();
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
+
+  const [name, descriptor] = splitTitle(project.title);
+  const gallery: GalleryItem[] = project.gallery ?? [];
+  const hasFeatures = (project.walkthrough?.features?.length ?? 0) > 0;
+  const isMobileGallery = isMobileApp(project);
+  const address = frameAddress(project);
+
+  // Sections present on this page, numbered in reading order (drives headings and the rail).
+  const sections: CaseSection[] = [
+    { id: 'overview', label: t.navOverview },
+    { id: 'story', label: t.navStory },
+    ...(gallery.length > 0 ? [{ id: 'screens', label: t.navScreens }] : []),
+    ...(hasFeatures ? [{ id: 'features', label: t.navFeatures }] : []),
+    { id: 'stack', label: t.navStack },
+  ].map((section, i) => ({ ...section, index: String(i + 1).padStart(2, '0') }));
+  const indexOf = (id: string) => sections.find((section) => section.id === id)?.index ?? '';
+
+  const openCover = () =>
+    setLightbox({
+      items: [{ id: '00', title: project.title, subtitle: project.tagline || project.description, tag: project.category, image: project.image }],
+      index: 0,
+      phone: false,
+    });
+  const navigateLightbox = useCallback((index: number) => setLightbox((state) => state && { ...state, index }), []);
+  const closeLightbox = useCallback(() => setLightbox(null), []);
 
   return (
-    <div className="min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0 overflow-x-clip">
-      <ProjectHeader project={project} t={t} />
+    <div
+      className="case-study min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0 overflow-x-clip"
+      style={{ '--case-name-len': name.length } as CSSProperties}
+    >
+      <ProjectHeader project={project} name={name} t={t} />
+      <SectionRail sections={sections} />
 
-      <div className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 md:pt-16">
-        <ProjectHero project={project} t={t} />
+      {/* Desktop top padding reserves the line occupied by the hero title (see ProjectHeader). */}
+      <main className="w-[90%] max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 md:pt-[calc(var(--case-title-size)_+_1.75rem)]">
+        <ProjectHero
+          project={project}
+          name={name}
+          descriptor={descriptor}
+          t={t}
+          screensCount={gallery.length}
+          onOpenCover={openCover}
+          onViewScreens={() => jumpToSection('screens', Boolean(reducedMotion))}
+        />
 
-        {project.gallery && project.gallery.length > 0 && (
-          <Motion.section
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.05 }}
-            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-16 sm:mb-24 space-y-6"
-          >
-            <GalleryRibbon
-              items={project.gallery}
-              t={t}
-              playClick={playClick}
-              playHover={playHover}
-              onOpenModal={setActiveModalScreen}
-              isModalOpen={Boolean(activeModalScreen)}
-              isMobileGallery={isMobileProject}
-            />
-          </Motion.section>
-        )}
+        <ProjectNarrative project={project} t={t} index={indexOf('story')} />
 
-        <ProjectNarrative project={project} t={t} />
-        <ProjectArchitecture project={project} t={t} />
-        <ProjectCapabilities project={project} t={t} />
-      </div>
+        <ScreenDeck
+          items={gallery}
+          t={t}
+          index={indexOf('screens')}
+          isMobileGallery={isMobileGallery}
+          address={address}
+          isPaused={lightbox !== null}
+          onOpen={(index) => setLightbox({ items: gallery, index, phone: isMobileGallery })}
+        />
+
+        <ProjectCapabilities project={project} t={t} index={indexOf('features')} />
+        <ProjectArchitecture project={project} t={t} index={indexOf('stack')} />
+      </main>
 
       <NextProjectFooter nextProject={nextProject} t={t} />
 
-      <GalleryLightbox screen={activeModalScreen} onClose={() => setActiveModalScreen(null)} isMobileProject={isMobileProject} />
+      <GalleryLightbox state={lightbox} t={t} address={address} onNavigate={navigateLightbox} onClose={closeLightbox} />
     </div>
   );
 }

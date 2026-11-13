@@ -1,133 +1,336 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState, type SyntheticEvent, type TouchEvent } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion as Motion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, X } from 'lucide-react';
 import { useDialogFocus } from '@/hooks/useDialogFocus';
-import type { GalleryItem } from './types';
+import type { DetailUi, LightboxState } from './types';
+import { WINDOW_BAR_HEIGHT, WindowBar, type FrameAddress } from './ui';
 
-/** Full-size preview of a gallery screen (modal dialog with focus trap; Escape closes). */
-export default function GalleryLightbox({ screen: activeModalScreen, onClose, isMobileProject }: { screen: GalleryItem | null; onClose: () => void; isMobileProject: boolean }) {
-  const lightboxRef = useRef<HTMLDivElement>(null);
-  const trapLightboxFocus = useDialogFocus(Boolean(activeModalScreen), lightboxRef);
+const pad = (n: number) => String(n).padStart(2, '0');
+
+/** Horizontal travel (px) that counts as a swipe to the next / previous screen. */
+const SWIPE_DISTANCE = 50;
+/** Aspect ratio assumed for a web screen until its real size is known. */
+const DEFAULT_RATIO = 16 / 9;
+
+const isFullPageCapture = (src: string) => src.includes('all-landing-page');
+const sizesFor = (phone: boolean) => (phone ? '(max-width: 640px) 90vw, 480px' : '(max-width: 1920px) 96vw, 1920px');
+
+interface GalleryLightboxProps {
+  /** `null` while closed. */
+  state: LightboxState | null;
+  t: DetailUi;
+  /** Address in the window bar of web screens. */
+  address: FrameAddress;
+  onNavigate: (index: number) => void;
+  onClose: () => void;
+}
+
+/** Placeholder shown inside a frame until its image has loaded. */
+function LoadingVeil() {
+  return (
+    <span className="absolute inset-0 flex items-center justify-center bg-white/[0.02] animate-pulse">
+      <Loader2 aria-hidden="true" className="w-6 h-6 text-white/40 animate-spin" />
+    </span>
+  );
+}
+
+/**
+ * Full-screen viewer for a screen (modal dialog with a focus trap).
+ * Every screen sits on a dotted stage inside a window or device frame sized to its real
+ * proportions, so it reads as a screenshot rather than as part of the page.
+ * Arrow keys, the side buttons or a swipe move between screens; Escape closes.
+ */
+export default function GalleryLightbox({ state, t, address, onNavigate, onClose }: GalleryLightboxProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const isOpen = state !== null;
+  const trapFocus = useDialogFocus(isOpen, dialogRef);
+
+  // Stage size and the real proportions of every screen seen so far (keyed by src).
+  const [stageEl, setStageEl] = useState<HTMLDivElement | null>(null);
+  const [stage, setStage] = useState({ width: 0, height: 0 });
+  const [ratios, setRatios] = useState<Record<string, number>>({});
+  const [loaded, setLoaded] = useState<Record<string, true>>({});
+
+  const count = state?.items.length ?? 0;
+  const index = state?.index ?? 0;
+  const step = useCallback(
+    (direction: 1 | -1) => {
+      if (count > 1) onNavigate((index + direction + count) % count);
+    },
+    [count, index, onNavigate]
+  );
 
   useEffect(() => {
-    if (!activeModalScreen) return;
-    const onKeyDown = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      else if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'ArrowLeft') step(-1);
+    };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [activeModalScreen, onClose]);
+  }, [isOpen, onClose, step]);
+
+  // The page behind must not scroll while the dialog is open.
+  useEffect(() => {
+    if (!isOpen) return;
+    window.__lenis?.stop();
+    const { overflow } = document.documentElement.style;
+    document.documentElement.style.overflow = 'hidden';
+    return () => {
+      document.documentElement.style.overflow = overflow;
+      window.__lenis?.start();
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!stageEl) return;
+    const observer = new ResizeObserver(([entry]) =>
+      setStage({ width: entry.contentRect.width, height: entry.contentRect.height })
+    );
+    observer.observe(stageEl);
+    return () => observer.disconnect();
+  }, [stageEl]);
+
+  const onImageLoad = (src: string) => (e: SyntheticEvent<HTMLImageElement>) => {
+    const { naturalWidth, naturalHeight } = e.currentTarget;
+    if (naturalWidth > 0 && naturalHeight > 0) setRatios((all) => ({ ...all, [src]: naturalWidth / naturalHeight }));
+    setLoaded((all) => ({ ...all, [src]: true }));
+  };
+
+  const onTouchStart = (e: TouchEvent) => {
+    const touch = e.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const onTouchEnd = (e: TouchEvent) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - start.x;
+    const dy = touch.clientY - start.y;
+    if (Math.abs(dx) > SWIPE_DISTANCE && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+  };
+
+  const screen = state?.items[index];
+
+  const renderScreen = () => {
+    if (!state || !screen) return null;
+    const src = screen.image;
+    const isLoaded = Boolean(loaded[src]);
+    const imageFade = `select-none transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`;
+
+    // Phone: device frame as tall as the stage allows.
+    if (state.phone) {
+      return (
+        <span className="relative block h-full max-w-full aspect-[9/19.5] rounded-[2.2rem] p-2 bg-[#090D14] border border-white/15 shadow-[0_30px_100px_rgba(0,0,0,0.9)]">
+          <span className="relative block h-full w-full rounded-[1.75rem] overflow-hidden bg-black">
+            {!isLoaded && <LoadingVeil />}
+            <Image
+              src={src}
+              alt={screen.title}
+              fill
+              loading="eager"
+              draggable={false}
+              sizes={sizesFor(true)}
+              onLoad={onImageLoad(src)}
+              className={`object-cover object-top ${imageFade}`}
+            />
+          </span>
+        </span>
+      );
+    }
+
+    // Full-page capture: a window whose body scrolls (inside the dialog, not the page).
+    if (isFullPageCapture(src)) {
+      return (
+        <span className="flex h-full w-full max-w-[1200px] flex-col overflow-hidden rounded-xl sm:rounded-2xl border border-white/15 bg-[#020407] shadow-[0_30px_100px_rgba(0,0,0,0.9)]">
+          <WindowBar address={address} />
+          <span data-lenis-prevent="" tabIndex={0} className="relative block min-h-0 flex-1 overflow-y-auto overscroll-contain">
+            {!isLoaded && <LoadingVeil />}
+            <Image
+              src={src}
+              alt={screen.title}
+              width={1440}
+              height={8450}
+              loading="eager"
+              draggable={false}
+              sizes="(max-width: 1240px) 96vw, 1200px"
+              onLoad={onImageLoad(src)}
+              className={`block w-full h-auto ${imageFade}`}
+            />
+          </span>
+        </span>
+      );
+    }
+
+    // Web screen: a window frame sized to the screen's real proportions.
+    const ratio = ratios[src] ?? DEFAULT_RATIO;
+    const width = Math.max(0, Math.min(stage.width, (stage.height - WINDOW_BAR_HEIGHT) * ratio));
+    return (
+      <span
+        style={{ width }}
+        className="flex flex-col overflow-hidden rounded-xl sm:rounded-2xl border border-white/15 bg-[#020407] shadow-[0_30px_100px_rgba(0,0,0,0.9)]"
+      >
+        <WindowBar address={address} />
+        <span className="relative block w-full" style={{ aspectRatio: ratio }}>
+          {!isLoaded && <LoadingVeil />}
+          <Image
+            src={src}
+            alt={screen.title}
+            fill
+            loading="eager"
+            draggable={false}
+            sizes={sizesFor(false)}
+            onLoad={onImageLoad(src)}
+            className={`object-cover ${imageFade}`}
+          />
+        </span>
+      </span>
+    );
+  };
+
+  // Neighbouring screens are fetched in the background, so stepping through is instant.
+  const neighbours =
+    state && count > 1
+      ? [...new Set([state.items[(index + 1) % count], state.items[(index - 1 + count) % count]])].filter(
+          (item) => item && !loaded[item.image] && !isFullPageCapture(item.image)
+        )
+      : [];
 
   return (
     <AnimatePresence>
-      {activeModalScreen && (
+      {state && screen && (
         <Motion.div
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={screen.title}
+          onKeyDown={trapFocus}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 lg:p-6 bg-black/92 backdrop-blur-2xl"
-          onClick={() => onClose()}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[60] flex flex-col bg-[#030507]/[0.97] backdrop-blur-xl"
         >
-          <Motion.div
-            ref={lightboxRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label={activeModalScreen.title}
-            onKeyDown={trapLightboxFocus}
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-            onClick={(e) => e.stopPropagation()}
-            className={`relative ${
-              isMobileProject
-                ? 'max-w-md sm:max-w-lg w-[90%]'
-                : 'w-[90%] max-w-[1920px]'
-            } max-h-[94vh] rounded-3xl p-3.5 sm:p-5 lg:p-6 bg-[#070B12]/98 border border-white/15 shadow-[0_30px_100px_rgba(0,0,0,0.95)] flex flex-col space-y-3.5`}
-          >
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => onClose()}
-              className="absolute -top-3 -right-3 z-30 p-2 sm:p-2.5 rounded-full bg-black/80 hover:bg-white/20 border border-white/25 text-white transition-all hover:scale-110 active:scale-95 shadow-xl backdrop-blur-md"
-              aria-label="Close preview"
-            >
-              <X aria-hidden="true" className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-
-            {/* Desktop window top bar if not mobile */}
-            {!isMobileProject && (
-              <div className="flex items-center justify-between pb-2.5 px-2 border-b border-white/[0.08] select-none text-xs font-mono text-white/50">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                </div>
-                <div className="flex items-center gap-2 truncate max-w-[280px] sm:max-w-xl text-white/80">
-                  <span className="font-bold text-white truncate">{activeModalScreen.title}</span>
-                  <span className="text-white/30 hidden sm:inline">&bull;</span>
-                  <span className="text-xs text-white/50 hidden sm:inline truncate">{activeModalScreen.subtitle}</span>
-                </div>
-                <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[var(--accent-color)] font-bold px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10 shrink-0">
-                  {activeModalScreen.tag}
+          {/* Top bar */}
+          <div className="flex items-center justify-between gap-4 px-4 sm:px-8 py-3 sm:py-4 border-b border-white/[0.08] bg-black/40">
+            <div className="flex items-center gap-3 min-w-0 font-mono">
+              {count > 1 && (
+                <span className="shrink-0 text-xs tabular-nums text-white/45">
+                  <span className="text-sm font-bold text-[var(--accent-color)]">{pad(index + 1)}</span> / {pad(count)}
                 </span>
-              </div>
-            )}
-
-            {/* High-res Screen */}
-            {isMobileProject ? (
-              <div className="relative aspect-[9/19.5] w-full max-h-[72vh] rounded-[2rem] overflow-hidden bg-black shadow-inner select-none mx-auto">
-                <Image
-                  src={activeModalScreen.image}
-                  alt={activeModalScreen.title}
-                  fill
-                  priority
-                  draggable={false}
-                  onDragStart={(e) => e.preventDefault()}
-                  className="object-cover object-top select-none pointer-events-none"
-                  sizes="500px"
-                  style={{ userSelect: 'none', WebkitUserDrag: 'none' }}
-                />
-              </div>
-            ) : activeModalScreen.image?.includes('all-landing-page') ? (
-              <div className="relative w-full h-[72vh] sm:h-[76vh] md:h-[80vh] overflow-y-auto rounded-2xl bg-[#03060B] border border-white/10 select-none custom-scrollbar">
-                <Image
-                  src={activeModalScreen.image}
-                  alt={activeModalScreen.title}
-                  width={1440}
-                  height={8450}
-                  sizes="(max-width: 1920px) 90vw, 1440px"
-                  priority
-                  className="w-full h-auto block select-none pointer-events-auto"
-                />
-              </div>
-            ) : (
-              <div className="relative w-full h-[68vh] sm:h-[75vh] md:h-[80vh] rounded-2xl overflow-hidden bg-[#03060B] flex items-center justify-center border border-white/10 select-none shadow-inner">
-                <Image
-                  src={activeModalScreen.image}
-                  alt={activeModalScreen.title}
-                  fill
-                  priority
-                  draggable={false}
-                  onDragStart={(e) => e.preventDefault()}
-                  className="object-contain object-center select-none"
-                  sizes="(max-width: 1920px) 90vw, 1920px"
-                />
-              </div>
-            )}
-
-            {/* Caption */}
-            <div className="px-2 pt-1 pb-1 flex items-center justify-between text-xs font-mono text-white/50 select-none">
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-white/60">HIGH_RES_PREVIEW // 100% SCALE</span>
-              </div>
-              <span className="text-[11px] text-white/55 hidden sm:inline">
-                ESC or click outside to dismiss
+              )}
+              <span className="font-display font-bold text-sm sm:text-base text-white truncate">{screen.title}</span>
+              <span className="hidden sm:inline shrink-0 px-2 py-0.5 rounded-md border border-[var(--card-border)] text-[11px] font-semibold uppercase tracking-wider text-[var(--accent-color)]">
+                {screen.tag}
               </span>
             </div>
-          </Motion.div>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close preview"
+              className="shrink-0 w-11 h-11 inline-flex items-center justify-center rounded-full bg-white/[0.06] hover:bg-white/20 border border-white/20 text-white transition-colors"
+            >
+              <X aria-hidden="true" className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Stage (clicking the empty area around the screen closes the viewer) */}
+          <div
+            className="hud-dots relative flex-1 min-h-0 flex"
+            onClick={(e) => e.target === e.currentTarget && onClose()}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            <div
+              ref={setStageEl}
+              className="flex-1 min-w-0 flex items-center justify-center px-3 sm:px-24 py-4 sm:py-8"
+              onClick={(e) => e.target === e.currentTarget && onClose()}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <Motion.div
+                  key={screen.image}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex h-full w-full items-center justify-center pointer-events-none [&>*]:pointer-events-auto"
+                >
+                  {renderScreen()}
+                </Motion.div>
+              </AnimatePresence>
+            </div>
+
+            {count > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => step(-1)}
+                  aria-label="Previous screen"
+                  className="hidden sm:inline-flex absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center rounded-full bg-black/70 hover:bg-white/15 border border-white/20 text-white backdrop-blur-md transition-colors"
+                >
+                  <ChevronLeft aria-hidden="true" className="w-5 h-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => step(1)}
+                  aria-label="Next screen"
+                  className="hidden sm:inline-flex absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 items-center justify-center rounded-full bg-black/70 hover:bg-white/15 border border-white/20 text-white backdrop-blur-md transition-colors"
+                >
+                  <ChevronRight aria-hidden="true" className="w-5 h-5" />
+                </button>
+              </>
+            )}
+
+            {/* Background prefetch of the neighbouring screens */}
+            <div aria-hidden="true" className="hidden">
+              {neighbours.map((item) => (
+                <Image
+                  key={item.image}
+                  src={item.image}
+                  alt=""
+                  width={1920}
+                  height={1080}
+                  loading="eager"
+                  sizes={sizesFor(state.phone)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Caption */}
+          <div className="flex items-center justify-between gap-6 px-4 sm:px-8 py-3 sm:py-4 border-t border-white/[0.08] bg-black/40">
+            <p className="text-sm text-white/70 leading-snug line-clamp-2">{screen.subtitle}</p>
+            <p className="hidden md:block shrink-0 font-mono text-[11px] uppercase tracking-wider text-white/45">
+              {t.lightboxHint}
+            </p>
+            {/* Phones: arrows live here, off the screenshot (swiping works too) */}
+            {count > 1 && (
+              <div className="sm:hidden flex shrink-0 gap-2">
+                <button
+                  type="button"
+                  onClick={() => step(-1)}
+                  aria-label="Previous screen"
+                  className="w-11 h-11 inline-flex items-center justify-center rounded-full bg-white/[0.06] border border-white/20 text-white"
+                >
+                  <ChevronLeft aria-hidden="true" className="w-5 h-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => step(1)}
+                  aria-label="Next screen"
+                  className="w-11 h-11 inline-flex items-center justify-center rounded-full bg-white/[0.06] border border-white/20 text-white"
+                >
+                  <ChevronRight aria-hidden="true" className="w-5 h-5" />
+                </button>
+              </div>
+            )}
+          </div>
         </Motion.div>
       )}
     </AnimatePresence>
