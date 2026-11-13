@@ -11,6 +11,18 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => sessionStorage.setItem('daelijek_booted', 'true'));
 });
 
+/** Pixels the page scrolls sideways (0 = none). */
+const horizontalOverflow = (page: Page) =>
+  page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+
+/** The visible hero title stays inside the viewport and does not overflow its own box. */
+const heroTitleFits = (page: Page) =>
+  page.evaluate(() =>
+    [...document.querySelectorAll<HTMLElement>('[data-case-title]')]
+      .filter((el) => el.getBoundingClientRect().width > 2) // visible ones (the desktop <h1> is screen-reader only)
+      .every((el) => el.getBoundingClientRect().right <= window.innerWidth && el.scrollWidth <= el.clientWidth + 1)
+  );
+
 async function skipWithoutFixtures(page: Page) {
   const res = await page.request.get('/projects/fixture-minimal');
   test.skip(res.status() === 404, 'fixtures are only built with CASE_FIXTURES=1');
@@ -28,16 +40,8 @@ test.describe('case-study template with edge-case data', () => {
         await page.setViewportSize({ width, height: 900 });
         await page.goto(`/projects/${slug}`);
 
-        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        expect(overflow, `horizontal overflow at ${width}px`).toBeLessThanOrEqual(0);
-
-        // The visible hero title stays inside the viewport and does not overflow its own box.
-        const titleFits = await page.evaluate(() =>
-          [...document.querySelectorAll<HTMLElement>('[data-case-title]')]
-            .filter((el) => el.getBoundingClientRect().width > 2) // visible ones (the desktop <h1> is screen-reader only)
-            .every((el) => el.getBoundingClientRect().right <= window.innerWidth && el.scrollWidth <= el.clientWidth + 1)
-        );
-        expect(titleFits, `hero title fits at ${width}px`).toBe(true);
+        expect(await horizontalOverflow(page), `horizontal overflow at ${width}px`).toBeLessThanOrEqual(0);
+        expect(await heroTitleFits(page), `hero title fits at ${width}px`).toBe(true);
 
         // Metric tiles fill every row: no empty cells, whatever the count.
         const rowsFilled = await page.evaluate(() => {
@@ -70,4 +74,35 @@ test.describe('case-study template with edge-case data', () => {
     await expect(page.locator('nav[aria-label="Case study sections"] button')).toHaveCount(3);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   });
+});
+
+// Real content: every case study, in every language, on every configured browser and device.
+const CASES = ['finance-management-app', 'rolesieve', 'opengov-kz', 'berik-zhunusbek'];
+const LOCALE_PREFIXES = ['', '/ru', '/kk'];
+
+test.describe('every case study in every language', () => {
+  for (const slug of CASES) {
+    for (const prefix of LOCALE_PREFIXES) {
+      test(`${prefix || '/en'}/projects/${slug}: no overflow, title fits, screens open`, async ({ page }) => {
+        const errors: string[] = [];
+        page.on('pageerror', (err) => errors.push(err.message));
+        await page.goto(`${prefix}/projects/${slug}`);
+
+        expect(await horizontalOverflow(page)).toBeLessThanOrEqual(0);
+        expect(await heroTitleFits(page)).toBe(true);
+
+        const slides = page.locator('[data-deck-slide]');
+        if ((await slides.count()) > 0) {
+          await slides.first().scrollIntoViewIfNeeded();
+          await slides.first().focus();
+          await page.keyboard.press('Enter');
+          const preview = page.getByRole('dialog').last();
+          await expect(preview).toBeVisible();
+          await page.keyboard.press('Escape');
+          await expect(preview).toBeHidden();
+        }
+        expect(errors).toEqual([]);
+      });
+    }
+  }
 });
