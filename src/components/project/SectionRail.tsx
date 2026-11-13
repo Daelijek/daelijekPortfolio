@@ -14,17 +14,14 @@ export function jumpToSection(id: string, instant = false) {
 }
 
 /**
- * Quick-jump rail in the left gutter (wide screens only): one tick per section, the current
- * one highlighted by a scroll spy. Labels appear when the rail is hovered or focused.
+ * Scroll spy: id of the section that currently crosses a thin band just above the middle
+ * of the viewport (shared by the desktop rail and the mobile case bar).
  */
-export default function SectionRail({ sections }: { sections: CaseSection[] }) {
-  const { playHover, playClick } = useThemeAudio();
-  const reducedMotion = useReducedMotion();
+export function useActiveSection(sections: CaseSection[]) {
   const [active, setActive] = useState(sections[0]?.id);
   const ids = sections.map((s) => s.id).join(',');
 
   useEffect(() => {
-    // A section is "current" while it crosses a thin band just above the middle of the viewport.
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -39,6 +36,18 @@ export default function SectionRail({ sections }: { sections: CaseSection[] }) {
     }
     return () => observer.disconnect();
   }, [ids]);
+
+  return active;
+}
+
+/**
+ * Quick-jump rail in the left gutter (wide screens only): one tick per section, the current
+ * one highlighted by a scroll spy. Labels appear when the rail is hovered or focused.
+ */
+export default function SectionRail({ sections }: { sections: CaseSection[] }) {
+  const { playHover, playClick } = useThemeAudio();
+  const reducedMotion = useReducedMotion();
+  const active = useActiveSection(sections);
 
   return (
     <nav

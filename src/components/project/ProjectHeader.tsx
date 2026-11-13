@@ -7,7 +7,9 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa6';
 import { useThemeAudio } from '@/context/ThemeAudioContext';
 import { useLocalizedPath } from '@/i18n/I18nProvider';
-import type { DetailUi, FeaturedProject } from './types';
+import { useActiveSection } from './SectionRail';
+import SectionsMenu from './SectionsMenu';
+import type { CaseSection, DetailUi, FeaturedProject } from './types';
 
 /** Scroll distance (px) over which the hero title travels into the bar. */
 const DOCK_RANGE = 150;
@@ -23,6 +25,8 @@ interface ProjectHeaderProps {
   project: FeaturedProject;
   /** Short project name (title without the descriptor). */
   name: string;
+  /** Sections of this page, for the section menus (mobile bar and tablet header). */
+  sections: CaseSection[];
   t: DetailUi;
 }
 
@@ -31,9 +35,11 @@ interface ProjectHeaderProps {
  *  - a reading-progress beam on the top edge
  *  - a scrim that fades in on scroll, so docked chrome never collides with the content
  *  - desktop: the hero title, which shrinks into the sticky bar next to the back button
- *  - mobile: the fixed "back to projects" button
+ *  - mobile: the "back to projects" button; once the hero has scrolled away, a compact bar
+ *    with back, the current section, a section menu and the Demo / Code links
+ *  - tablet (md..xl, no side rail): a section menu in the sticky bar
  */
-export default function ProjectHeader({ project, name, t }: ProjectHeaderProps) {
+export default function ProjectHeader({ project, name, sections, t }: ProjectHeaderProps) {
   const { playHover, playClick } = useThemeAudio();
   const { href } = useLocalizedPath();
   const { scrollY, scrollYProgress } = useScroll();
@@ -41,6 +47,9 @@ export default function ProjectHeader({ project, name, t }: ProjectHeaderProps) 
   const backRef = useRef<HTMLAnchorElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const [isDocked, setIsDocked] = useState(false);
+  const [showMobileBar, setShowMobileBar] = useState(false);
+  const active = useActiveSection(sections);
+  const current = sections.find((section) => section.id === active) ?? sections[0];
 
   // Where the title lands (relative to its hero position). The hero position itself is pure
   // CSS, so the first paint is correct before any measurement.
@@ -75,7 +84,17 @@ export default function ProjectHeader({ project, name, t }: ProjectHeaderProps) 
   const titleScale = useTransform([scrollY, dockScale], ([y, s]: number[]) => 1 + dockProgress(y) * (s - 1));
   const scrimOpacity = useTransform(scrollY, [0, DOCK_RANGE], [0, 1]);
 
-  useMotionValueEvent(scrollY, 'change', (y) => setIsDocked(y > DOCK_RANGE * 0.7));
+  // While the mobile bar is shown, the global brand stamp (top-left) steps aside (see globals.css).
+  useEffect(() => {
+    const root = document.documentElement;
+    root.toggleAttribute('data-case-bar-open', showMobileBar);
+    return () => root.removeAttribute('data-case-bar-open');
+  }, [showMobileBar]);
+
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    setIsDocked(y > DOCK_RANGE * 0.7);
+    setShowMobileBar(y > window.innerHeight * 0.6);
+  });
 
   const hasCode = Boolean(project.githubUrl && !project.isPrivate);
 
@@ -99,8 +118,13 @@ export default function ProjectHeader({ project, name, t }: ProjectHeaderProps) 
         className="fixed top-0 inset-x-0 z-30 h-32 md:h-36 pointer-events-none"
       />
 
-      {/* Mobile: back button */}
-      <div className="md:hidden fixed top-8 right-6 z-40 select-none">
+      {/* Mobile: back button (until the compact bar takes over) */}
+      <div
+        inert={showMobileBar}
+        className={`md:hidden fixed top-8 right-6 z-40 select-none transition-opacity duration-300 ${
+          showMobileBar ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+      >
         <Link
           href={href('/projects')}
           onClick={playClick}
@@ -112,6 +136,68 @@ export default function ProjectHeader({ project, name, t }: ProjectHeaderProps) 
           </span>
           <span className="font-mono font-bold text-xs uppercase tracking-wider text-white">{t.projects}</span>
         </Link>
+      </div>
+
+      {/* Mobile: compact bar once the hero has scrolled away */}
+      <div
+        data-case-bar=""
+        inert={!showMobileBar}
+        className={`md:hidden fixed inset-x-0 top-0 z-[45] transition-transform duration-300 ease-out ${
+          showMobileBar ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        <div className="flex h-14 items-center gap-1 border-b border-white/10 bg-[var(--bg-primary)]/95 px-2 backdrop-blur-xl">
+          <Link
+            href={href('/projects')}
+            onClick={playClick}
+            aria-label={t.allProjects}
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white/85 active:bg-white/10"
+          >
+            <ArrowLeft aria-hidden="true" className="h-5 w-5" />
+          </Link>
+          <div className="min-w-0 flex-1 px-1">
+            <p className="truncate font-display text-sm font-bold uppercase leading-tight text-[var(--heading-tint)]">{name}</p>
+            {current && (
+              <p className="truncate font-mono text-[11px] leading-tight text-[var(--accent-color)]">
+                {current.index} / {String(sections.length).padStart(2, '0')} · {current.label}
+              </p>
+            )}
+          </div>
+          {/* Remounted when the bar hides, so the panel never reappears open */}
+          <SectionsMenu
+            key={String(showMobileBar)}
+            sections={sections}
+            active={active}
+            label={t.sectionsMenu}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl text-white/85 active:bg-white/10"
+            wrapperClassName=""
+            panelClassName="inset-x-2 top-14"
+          />
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClick}
+              aria-label={t.openLiveDemo}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-[var(--accent-color)] active:bg-white/10"
+            >
+              <ExternalLink aria-hidden="true" className="h-[18px] w-[18px]" />
+            </a>
+          )}
+          {hasCode && (
+            <a
+              href={project.githubUrl ?? undefined}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={playClick}
+              aria-label={t.sourceCode}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white/85 active:bg-white/10"
+            >
+              <FaGithub aria-hidden="true" className="h-[18px] w-[18px]" />
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Desktop: sticky bar with the docking title */}
@@ -145,6 +231,15 @@ export default function ProjectHeader({ project, name, t }: ProjectHeaderProps) 
 
             {/* Right: case number, plus quick links once the hero buttons have scrolled away */}
             <div className="relative z-10 flex items-center gap-2.5 font-mono text-xs">
+              {/* Tablet: no side rail, so the sections live in a menu here */}
+              <div className="pointer-events-auto xl:hidden">
+                <SectionsMenu
+                  sections={sections}
+                  active={active}
+                  label={t.sectionsMenu}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-[var(--bg-secondary)] text-white/80 hover:border-white/25 hover:text-white transition-colors"
+                />
+              </div>
               <span className="px-2.5 h-7 inline-flex items-center rounded-full border border-[var(--card-border)] bg-[var(--bg-primary)] text-[var(--accent-color)] font-bold text-[11px] tracking-wider">
                 {project.num}
               </span>

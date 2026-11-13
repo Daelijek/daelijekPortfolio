@@ -139,6 +139,26 @@ test.describe('interactions', () => {
     await expect(slides.nth(5)).toBeFocused();
   });
 
+  test('phones: compact case bar with a section menu; the dock steps aside while reading', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'phone layout');
+    await skipBootScreen(page);
+    await page.goto('/projects/finance-management-app');
+
+    const bar = page.locator('[data-case-bar]');
+    await expect(bar).toHaveAttribute('inert', '');
+    for (let i = 0; i < 6; i++) {
+      await page.mouse.wheel(0, 250);
+      await page.waitForTimeout(150);
+    }
+    await expect(bar).not.toHaveAttribute('inert');
+    await expect(page.locator('html')).toHaveAttribute('data-dock-hidden', '');
+
+    await bar.getByRole('button', { name: 'Sections' }).click();
+    await bar.getByRole('button', { name: /Stack/ }).click();
+    await expect(bar).toContainText('Stack');
+    await expect(page.locator('#stack')).toBeInViewport();
+  });
+
   test('screen deck moves with its controls and the cover opens full-screen', async ({ page }) => {
     await skipBootScreen(page);
     await page.goto('/projects/rolesieve');

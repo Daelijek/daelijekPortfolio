@@ -395,6 +395,7 @@ const kk: Dictionary = {
       navScreens: "Экрандар",
       navFeatures: "Мүмкіндіктер",
       navStack: "Стек",
+      sectionsMenu: "Бөлімдер",
     },
     ui: {
       exploreCaseStudy: "Кейсті ашу",

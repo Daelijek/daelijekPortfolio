@@ -14,7 +14,7 @@ export const SECTION = 'scroll-mt-40 mb-20 sm:mb-32';
 export const CARD = 'hud-card rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-[var(--card-bg)]';
 
 /** Small monospace label used above values and lists. */
-export const LABEL = 'font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]';
+export const LABEL = 'font-mono text-[11px] font-semibold uppercase tracking-[0.12em] sm:tracking-[0.18em] text-[var(--text-muted)]';
 
 /** Fades a block in once, the first time it enters the viewport (never replays on scroll-back). */
 export function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {

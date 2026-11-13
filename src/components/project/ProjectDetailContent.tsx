@@ -80,7 +80,7 @@ export default function ProjectDetailContent({ project, nextProject, ui: t, medi
       className="case-study min-h-screen text-white font-sans selection:bg-[var(--accent-color)] selection:text-[#040608] pb-0 overflow-x-clip"
       style={{ '--case-name-len': name.length } as CSSProperties}
     >
-      <ProjectHeader project={project} name={name} t={t} />
+      <ProjectHeader project={project} name={name} sections={sections} t={t} />
       <SectionRail sections={sections} />
 
       {/* Desktop top padding reserves the line occupied by the hero title (see ProjectHeader). */}

@@ -394,6 +394,7 @@ const en = {
       navScreens: "Screens",
       navFeatures: "Features",
       navStack: "Stack",
+      sectionsMenu: "Sections",
     },
     ui: {
       exploreCaseStudy: "Explore Case Study",

@@ -395,6 +395,7 @@ const ru: Dictionary = {
       navScreens: "Экраны",
       navFeatures: "Функции",
       navStack: "Стек",
+      sectionsMenu: "Разделы",
     },
     ui: {
       exploreCaseStudy: "Смотреть кейс",
