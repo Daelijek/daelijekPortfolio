@@ -1,107 +1,116 @@
 'use client';
 
-import { motion as Motion } from 'framer-motion';
-import { CheckCircle2, UserCheck, Users } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Users } from 'lucide-react';
 import type { DetailUi, FeaturedProject } from './types';
+import { CARD, LABEL, Reveal, SECTION, SectionHeading, trackSpotlight } from './ui';
 
-/** Challenge and solution, audience and role. */
-export default function ProjectNarrative({ project, t }: { project: FeaturedProject; t: DetailUi }) {
-  const challengeTitle = t.theChallenge;
-  const solutionTitle = t.theSolution;
-  const audienceLabel = t.targetAudience;
-  const roleLabel = t.role;
+const BODY = 'text-[15px] sm:text-base text-white/80 leading-[1.75] max-w-[64ch]';
+
+/** Problem -> solution -> role, as three cards under a one-sentence summary of the case. */
+export default function ProjectNarrative({ project, t, index }: { project: FeaturedProject; t: DetailUi; index: string }) {
+  const { overview } = project;
+  const outcomes = project.walkthrough?.concept?.highlights ?? [];
+  const roleTitle = project.dossier?.primaryRole;
 
   return (
-    <Motion.section
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.05 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      className="mb-16 sm:mb-24 space-y-8"
-    >
-      {/* Section Introduction */}
-      <div className="space-y-3">
-        <span className="text-xs font-mono font-bold text-[var(--accent-color)] tracking-wider uppercase">
-          // CASE_STUDY_OVERVIEW
-        </span>
-        <p className="text-lg sm:text-2xl text-white font-display font-bold leading-relaxed max-w-4xl">
-          {project.overview?.lead || project.description}
+    <section id="story" className={SECTION}>
+      <Reveal>
+        <SectionHeading index={index} title={t.challengeAndSolution} />
+        <p className="font-display font-semibold text-[var(--heading-tint)] text-lg sm:text-2xl lg:text-3xl leading-snug max-w-[48ch] mb-8 sm:mb-14">
+          {overview?.lead || project.description}
         </p>
+      </Reveal>
+
+      <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* 01 — the problem */}
+        {overview?.challenge && (
+          <Reveal className="lg:col-span-5">
+            <article onMouseMove={trackSpotlight} className={`${CARD} h-full flex flex-col p-6 sm:p-8`}>
+              <h3 className="flex items-center gap-2.5 font-mono text-xs font-bold uppercase tracking-[0.18em] text-amber-400">
+                <span aria-hidden="true" className="tabular-nums">01</span>
+                <span aria-hidden="true" className="h-px w-5 bg-amber-400/60" />
+                {t.theChallenge}
+              </h3>
+              <p className={`${BODY} mt-5`}>{overview.challenge}</p>
+
+              {overview.targetAudience && (
+                <div className="mt-auto pt-6">
+                  <div className="flex items-start gap-3 pt-5 border-t border-white/[0.07]">
+                    <Users aria-hidden="true" className="w-4 h-4 text-amber-400/90 shrink-0 mt-0.5" />
+                    <div>
+                      <p className={LABEL}>{t.targetAudience}</p>
+                      <p className="mt-1.5 text-sm text-white/70 leading-relaxed">{overview.targetAudience}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+          </Reveal>
+        )}
+
+        {/* Flow marker on the seam between the two cards */}
+        {overview?.challenge && overview?.solution && (
+          <span
+            aria-hidden="true"
+            className="hidden lg:flex absolute z-10 top-6 w-9 h-9 -translate-x-1/2 items-center justify-center rounded-full border border-[var(--border-bright)] bg-[var(--bg-primary)] text-[var(--accent-color)] shadow-[0_0_18px_var(--card-hover-glow)]"
+            style={{ left: 'calc((100% - 13.75rem) * 5 / 12 + 5.625rem)' }}
+          >
+            <ArrowRight className="w-4 h-4" />
+          </span>
+        )}
+
+        {/* 02 — the answer */}
+        {overview?.solution && (
+          <Reveal className="lg:col-span-7" delay={0.08}>
+            <article
+              onMouseMove={trackSpotlight}
+              className="hud-card h-full rounded-2xl sm:rounded-3xl border border-[var(--border-bright)] bg-[var(--card-bg)] p-6 sm:p-8 lg:pl-10"
+            >
+              <h3 className="flex items-center gap-2.5 font-mono text-xs font-bold uppercase tracking-[0.18em] text-[var(--accent-color)]">
+                <span aria-hidden="true" className="tabular-nums">02</span>
+                <span aria-hidden="true" className="h-px w-5 bg-[var(--accent-border)]" />
+                {t.theSolution}
+              </h3>
+              <p className={`${BODY} mt-5 text-white/90`}>{overview.solution}</p>
+
+              {outcomes.length > 0 && (
+                <ul className="mt-6 pt-6 border-t border-white/[0.07] grid gap-3">
+                  {outcomes.map((outcome) => (
+                    <li key={outcome} className="flex items-start gap-3 text-sm sm:text-[15px] text-white/85 leading-relaxed">
+                      <CheckCircle2 aria-hidden="true" className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-1" />
+                      <span>{outcome}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          </Reveal>
+        )}
+
+        {/* 03 — what I did */}
+        {overview?.myRole && (
+          <Reveal className="lg:col-span-12">
+            <article
+              onMouseMove={trackSpotlight}
+              className={`${CARD} grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-5 p-6 sm:p-8`}
+            >
+              <div className="lg:col-span-5">
+                <h3 className="flex items-center gap-2.5 font-mono text-xs font-bold uppercase tracking-[0.18em] text-white/70">
+                  <span aria-hidden="true" className="tabular-nums">03</span>
+                  <span aria-hidden="true" className="h-px w-5 bg-white/30" />
+                  {t.myRole}
+                </h3>
+                {roleTitle && (
+                  <p className="mt-4 font-display font-bold text-lg sm:text-xl text-[var(--heading-tint)] leading-snug lg:pr-6">
+                    {roleTitle}
+                  </p>
+                )}
+              </div>
+              <p className={`${BODY} lg:col-span-7 lg:pl-2`}>{overview.myRole}</p>
+            </article>
+          </Reveal>
+        )}
       </div>
-
-      {/* Two-Column Problem vs Solution */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-        {/* The Challenge Column */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] space-y-4">
-          <div className="flex items-center gap-2.5 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
-            <span>{challengeTitle}</span>
-          </div>
-          <p className="text-sm sm:text-base text-white/75 leading-relaxed font-sans">
-            {project.overview?.challenge ||
-              'Managing fragmented financial workflows with slow mobile interactions and lack of automated insights.'}
-          </p>
-          {project.walkthrough?.concept?.highlights && (
-            <ul className="space-y-2.5 pt-4 border-t border-white/[0.06] text-xs sm:text-sm text-white/70 font-sans">
-              {project.walkthrough.concept.highlights.map((h, hIdx) => (
-                <li key={hIdx} className="flex items-start gap-2.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 mt-1.5 shrink-0" />
-                  <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        {/* The Solution Column */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-[var(--accent-color)]/30 space-y-4 relative overflow-hidden">
-          <div className="flex items-center gap-2.5 text-[var(--accent-color)] font-mono text-xs font-bold uppercase tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-[var(--accent-color)]" />
-            <span>{solutionTitle}</span>
-          </div>
-          <p className="text-sm sm:text-base text-white/85 leading-relaxed font-sans">
-            {project.overview?.solution ||
-              'Engineered a high-performance React Native & FastAPI system with local encryption, modular API, and AI advisory.'}
-          </p>
-          {project.walkthrough?.architecture?.highlights && (
-            <ul className="space-y-2.5 pt-4 border-t border-white/[0.06] text-xs sm:text-sm text-white/80 font-sans">
-              {project.walkthrough.architecture.highlights.map((h, hIdx) => (
-                <li key={hIdx} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-0.5" />
-                  <span>{h}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-
-      {/* Scope & Audience Context */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-2">
-        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-start gap-3.5">
-          <Users className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-1" />
-          <div className="space-y-1">
-            <span className="block text-xs font-mono font-bold text-white/50 uppercase tracking-wider">
-              {audienceLabel}
-            </span>
-            <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
-              {project.overview?.targetAudience || 'Modern users seeking organized finance'}
-            </p>
-          </div>
-        </div>
-
-        <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-start gap-3.5">
-          <UserCheck className="w-4 h-4 text-[var(--accent-color)] shrink-0 mt-1" />
-          <div className="space-y-1">
-            <span className="block text-xs font-mono font-bold text-white/50 uppercase tracking-wider">
-              {roleLabel}
-            </span>
-            <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
-              {project.overview?.myRole || project.dossier?.primaryRole || 'Lead Frontend & Mobile Engineer'}
-            </p>
-          </div>
-        </div>
-      </div>
-    </Motion.section>
+    </section>
   );
 }

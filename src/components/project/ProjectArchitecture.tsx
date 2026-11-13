@@ -1,117 +1,165 @@
 'use client';
 
-import { motion as Motion } from 'framer-motion';
-import { Cpu, ShieldCheck, Zap } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown, ShieldCheck, Zap } from 'lucide-react';
+import { useThemeAudio } from '@/context/ThemeAudioContext';
 import { PROJECT_CALLOUTS } from './callouts';
 import type { DetailUi, FeaturedProject } from './types';
+import { CARD, LABEL, Reveal, SECTION, SectionHeading, trackSpotlight } from './ui';
 
-/** Architecture, technologies, verified callouts and the colour palette. */
-export default function ProjectArchitecture({ project, t }: { project: FeaturedProject; t: DetailUi }) {
-  const archTitle = t.architectureTechStack;
+/** Display names of the technology groups in `dossier.technologies` (tech terms, not translated). */
+const LAYER_LABELS: Record<string, string> = {
+  core: 'Core',
+  frontendUI: 'Frontend / UI',
+  backend: 'Backend',
+  security: 'Security',
+  nlpQueue: 'NLP & Queue',
+  i18n: 'i18n',
+  styling: 'Styling',
+  api: 'API layer',
+  deploy: 'Deploy',
+  multimedia: 'Media',
+  features: 'Features',
+};
+
+/** How the system is built: the key engineering decisions next to the stack, layer by layer. */
+export default function ProjectArchitecture({ project, t, index }: { project: FeaturedProject; t: DetailUi; index: string }) {
+  const { playClick } = useThemeAudio();
+  // Phones show the core layer first; the remaining layers open on demand (always open from `sm` up).
+  const [isStackExpanded, setIsStackExpanded] = useState(false);
+  const architecture = project.walkthrough?.architecture;
+  const decisions = architecture?.highlights ?? [];
+  const callouts = PROJECT_CALLOUTS[project.slug];
+  const palette = project.dossier?.colorPalette ?? [];
+
+  const groups = Object.entries(project.dossier?.technologies ?? {}).filter(
+    (entry): entry is [string, string[]] => Array.isArray(entry[1]) && entry[1].length > 0
+  );
+  // Projects without a grouped stack fall back to their flat tag list.
+  const layers: [string, string[]][] = groups.length > 0 ? groups : [['core', project.tags]];
 
   return (
-    <Motion.section
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.05 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      className="mb-16 sm:mb-24 space-y-6"
-    >
-      <div className="border-b border-white/[0.08] pb-4 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <Cpu className="w-4 h-4 text-[var(--accent-color)]" />
-          <h2 className="text-lg sm:text-xl font-bold text-white font-display uppercase tracking-wide">
-            {archTitle}
-          </h2>
-        </div>
-        <span className="text-xs text-white/55 font-mono hidden sm:inline">
-          PRODUCTION STACK
-        </span>
-      </div>
+    <section id="stack" className={SECTION}>
+      <Reveal>
+        <SectionHeading index={index} title={t.architectureTechStack} />
+      </Reveal>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
-        {/* Tech Tags & Categorized Stack (8 cols) */}
-        <div className="lg:col-span-8 p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] space-y-6">
-          <div className="space-y-2">
-            <h3 className="text-sm font-mono font-bold text-[var(--accent-color)] uppercase tracking-wider">
-              {t.technologiesLibraries}
-            </h3>
-            <p className="text-xs sm:text-sm text-white/60 font-sans leading-relaxed">
-              {project.walkthrough?.architecture?.desc ||
-                'Architected for high throughput, local offline resilience, and enterprise grade security.'}
-            </p>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* Decisions */}
+        <Reveal className="lg:col-span-5">
+          <article onMouseMove={trackSpotlight} className={`${CARD} h-full flex flex-col p-6 sm:p-8`}>
+            {architecture?.title && (
+              <h3 className="font-display font-bold text-xl sm:text-2xl text-[var(--heading-tint)] leading-snug">
+                {architecture.title}
+              </h3>
+            )}
+            {architecture?.desc && (
+              <p className="mt-3 text-sm sm:text-[15px] text-white/70 leading-relaxed">{architecture.desc}</p>
+            )}
 
-          {/* All Tech Badges */}
-          <div className="flex flex-wrap gap-2 pt-2">
-            {project.tags.map((t, idx) => (
-              <span
-                key={idx}
-                className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white/85 font-mono hover:border-[var(--accent-color)]/50 hover:text-white transition-all"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
+            {decisions.length > 0 && (
+              <>
+                <p className={`${LABEL} mt-7`}>{t.engineeringDecisions}</p>
+                <ol className="mt-3 divide-y divide-white/[0.06]">
+                  {decisions.map((decision, i) => (
+                    <li key={decision} className="flex items-start gap-4 py-3.5">
+                      <span aria-hidden="true" className="font-mono text-xs font-bold tabular-nums text-[var(--accent-color)] pt-0.5">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-sm sm:text-[15px] text-white/85 leading-relaxed">{decision}</span>
+                    </li>
+                  ))}
+                </ol>
+              </>
+            )}
 
-          {/* Reliability Callouts — only verifiable, project-specific facts */}
-          {PROJECT_CALLOUTS[project.slug] && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-white/[0.06]">
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span className="text-xs text-white/80 font-mono">
-                  {PROJECT_CALLOUTS[project.slug].reliability}
-                </span>
+            {/* Only verifiable, project-specific facts (see callouts.ts) */}
+            {callouts && (
+              <div className="mt-auto pt-6 grid gap-2.5">
+                <p className="flex items-center gap-3 px-3.5 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02] font-mono text-xs text-white/80">
+                  <ShieldCheck aria-hidden="true" className="w-4 h-4 text-emerald-400 shrink-0" />
+                  {callouts.reliability}
+                </p>
+                <p className="flex items-center gap-3 px-3.5 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02] font-mono text-xs text-white/80">
+                  <Zap aria-hidden="true" className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
+                  {callouts.engineering}
+                </p>
               </div>
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                <Zap className="w-4 h-4 text-[var(--accent-color)] shrink-0" />
-                <span className="text-xs text-white/80 font-mono">
-                  {PROJECT_CALLOUTS[project.slug].engineering}
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
+            )}
+          </article>
+        </Reveal>
 
-        {/* Design System Palette & Metadata (4 cols) */}
-        <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] flex flex-col justify-between space-y-6">
-          <div className="space-y-3">
-            <span className="text-xs font-mono font-bold text-white/50 uppercase tracking-wider block">
-              {t.interfacePalette}
-            </span>
-            <p className="text-xs text-white/60 font-sans leading-relaxed">
-              {project.slug === 'finance-management-app'
-                ? t.productionUiColorTokens
-                : `${project.title}: ${t.officialDesignTokens}`}
-            </p>
-          </div>
+        {/* Stack, layer by layer */}
+        <Reveal className="lg:col-span-7" delay={0.08}>
+          <article onMouseMove={trackSpotlight} className={`${CARD} h-full flex flex-col p-6 sm:p-8`}>
+            <p className={LABEL}>{t.technologiesLibraries}</p>
 
-          {project.dossier?.colorPalette && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
-              {project.dossier.colorPalette.map((c, idx) => (
-                <div
-                  key={idx}
-                  className="group flex flex-col items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/30 hover:bg-white/[0.06] transition-all min-w-0"
-                  title={`${c.name}: ${c.hex}`}
+            <ol className="relative mt-4 before:absolute before:left-[3.5px] before:top-5 before:bottom-5 before:w-px before:bg-white/10">
+              {layers.map(([key, items], i) => (
+                <li
+                  key={key}
+                  className={`group relative grid-cols-1 sm:grid-cols-[8.5rem_1fr] gap-2 sm:gap-4 pl-7 pr-2 py-3.5 -mr-2 rounded-xl hover:bg-white/[0.03] transition-colors ${
+                    i === 0 || isStackExpanded ? 'grid' : 'hidden sm:grid'
+                  }`}
                 >
-                  <div
-                    className="w-full h-10 rounded-lg border border-white/20 shadow-md group-hover:scale-105 transition-transform"
-                    style={{ backgroundColor: c.hex }}
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-0 top-[1.15rem] w-2 h-2 rounded-full border border-[var(--accent-color)] bg-[var(--bg-primary)] group-hover:bg-[var(--accent-color)] group-hover:shadow-[0_0_10px_var(--accent-color)] transition-all"
                   />
-                  <div className="w-full text-center min-w-0">
-                    <span className="block text-[11px] text-white font-mono font-semibold truncate tracking-tight">
-                      {c.hex}
-                    </span>
-                    <span className="block text-[10px] text-white/50 truncate tracking-tight mt-0.5" title={c.name}>
-                      {c.name}
-                    </span>
-                  </div>
-                </div>
+                  <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)] group-hover:text-[var(--accent-color)] transition-colors sm:pt-1.5">
+                    {LAYER_LABELS[key] ?? key}
+                  </span>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {items.map((item) => (
+                      <li key={item} className="px-2.5 py-1 rounded-lg border border-white/10 bg-white/[0.04] font-mono text-xs text-white/85">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
               ))}
-            </div>
-          )}
-        </div>
+            </ol>
+
+            {layers.length > 1 && (
+              <button
+                type="button"
+                aria-expanded={isStackExpanded}
+                onClick={() => {
+                  playClick();
+                  setIsStackExpanded((open) => !open);
+                }}
+                className="sm:hidden mt-2 inline-flex items-center justify-center gap-2 h-11 rounded-xl border border-white/10 bg-white/[0.03] font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent-color)]"
+              >
+                {isStackExpanded ? t.showLess : `${t.showFullStack} (+${layers.length - 1})`}
+                <ChevronDown aria-hidden="true" className={`w-4 h-4 transition-transform ${isStackExpanded ? 'rotate-180' : ''}`} />
+              </button>
+            )}
+
+            {palette.length > 0 && (
+              <div className="mt-auto pt-6">
+                <div className="pt-5 border-t border-white/[0.07]">
+                  <p className={LABEL}>{t.interfacePalette}</p>
+                  <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-3">
+                    {palette.map((color) => (
+                      <li key={color.hex + color.name} className="flex items-center gap-2.5">
+                        <span
+                          aria-hidden="true"
+                          className="w-6 h-6 rounded-md border border-white/20 shadow-md"
+                          style={{ backgroundColor: color.hex }}
+                        />
+                        <span className="leading-tight">
+                          <span className="block font-mono text-[11px] font-semibold text-white">{color.hex}</span>
+                          <span className="block text-[11px] text-white/55">{color.name}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+          </article>
+        </Reveal>
       </div>
-    </Motion.section>
+    </section>
   );
 }

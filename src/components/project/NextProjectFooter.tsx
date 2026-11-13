@@ -69,7 +69,7 @@ export default function NextProjectFooter({ nextProject, t }: { nextProject: Nex
                 <ArrowRight className="w-6 h-6 sm:w-8 sm:h-8 text-[var(--accent-color)] opacity-70 group-hover:opacity-100 group-hover:translate-x-3 transition-all inline-block ml-2" />
               </div>
               <p className="text-xs sm:text-sm text-white/50 font-mono">
-                {nextProject.category} &bull; {nextProject.tags.join(' &bull; ')}
+                {[nextProject.category, ...nextProject.tags].join(' • ')}
               </p>
             </div>
 

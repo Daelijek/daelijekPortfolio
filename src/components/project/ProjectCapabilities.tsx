@@ -1,65 +1,46 @@
 'use client';
 
-import { motion as Motion } from 'framer-motion';
-import { Layers, Sparkles } from 'lucide-react';
 import type { DetailUi, FeaturedProject } from './types';
+import { CARD, Reveal, SECTION, SectionHeading, trackSpotlight } from './ui';
 
-/** Core capabilities (feature cards). */
-export default function ProjectCapabilities({ project, t }: { project: FeaturedProject; t: DetailUi }) {
-  const featuresTitle = t.coreCapabilities;
-  const features = project.walkthrough?.features;
-  if (!features) return null;
+/** Core capabilities: one card per feature, each led by its number and headline metric. */
+export default function ProjectCapabilities({ project, t, index }: { project: FeaturedProject; t: DetailUi; index: string }) {
+  const features = project.walkthrough?.features ?? [];
+  if (features.length === 0) return null;
 
   return (
-    <Motion.section
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.05 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      className="mb-20 sm:mb-28 space-y-8"
-    >
-      <div className="border-b border-white/[0.08] pb-4 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <Sparkles className="w-4 h-4 text-[var(--accent-color)]" />
-          <h2 className="text-lg sm:text-xl font-bold text-white font-display uppercase tracking-wide">
-            {featuresTitle}
-          </h2>
-        </div>
-        <span className="text-xs text-white/55 font-mono">
-          {project.walkthrough.features.length} MODULES
-        </span>
-      </div>
+    <section id="features" className={SECTION}>
+      <Reveal>
+        <SectionHeading index={index} title={t.coreCapabilities} />
+      </Reveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 items-stretch">
-        {project.walkthrough.features.map((f, idx) => (
-          <div
-            key={idx}
-            className="p-6 sm:p-7 rounded-3xl bg-[#06090E]/90 border border-white/[0.08] hover:border-[var(--accent-color)]/40 transition-all duration-300 flex flex-col justify-between space-y-5 group"
-          >
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xl sm:text-2xl font-black text-[var(--accent-color)] font-display">
-                  {f.num}
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10 text-[11px] text-white/60 font-mono font-medium">
-                  {f.metric}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+        {features.map((feature, i) => (
+          <Reveal key={feature.num} delay={i * 0.08}>
+            <article
+              onMouseMove={trackSpotlight}
+              className={`${CARD} group h-full overflow-hidden p-6 sm:p-8 hover:border-[var(--card-hover-border)] transition-colors duration-300`}
+            >
+              {/* Oversized ghost numeral */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute z-[-1] -bottom-7 -right-1 font-display font-bold text-[8rem] leading-none text-white/[0.035] group-hover:text-white/[0.07] transition-colors duration-500 select-none"
+              >
+                {feature.num}
+              </span>
+
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-mono text-xs font-bold tracking-[0.18em] text-[var(--accent-color)]">{feature.num}</span>
+                <span className="px-2.5 py-1 rounded-full border border-[var(--card-border)] font-mono text-[11px] font-semibold text-[var(--accent-color)] text-right">
+                  {feature.metric}
                 </span>
               </div>
-              <h3 className="text-base sm:text-lg font-bold text-white font-display group-hover:text-[var(--accent-color)] transition-colors">
-                {f.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-white/70 font-sans leading-relaxed">
-                {f.desc}
-              </p>
-            </div>
-
-            <div className="pt-3 border-t border-white/[0.06] flex items-center gap-2 text-xs font-mono text-white/55">
-              <Layers className="w-3.5 h-3.5 text-[var(--accent-color)]" />
-              <span>PRODUCTION VERIFIED</span>
-            </div>
-          </div>
+              <h3 className="mt-6 font-display font-bold text-lg sm:text-xl text-white leading-snug">{feature.title}</h3>
+              <p className="mt-3 text-sm sm:text-[15px] text-white/70 leading-relaxed">{feature.desc}</p>
+            </article>
+          </Reveal>
         ))}
       </div>
-    </Motion.section>
+    </section>
   );
 }
